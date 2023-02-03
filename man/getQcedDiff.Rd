@@ -4,7 +4,7 @@
 \alias{getQcedDiff}
 \title{Visual diff of last QCed version of a file to the local version.}
 \usage{
-getQcedDiff(.file = "script/data-assembly.Rmd")
+getQcedDiff(.file)
 }
 \arguments{
 \item{.file}{file path from working directory}
@@ -13,4 +13,10 @@ getQcedDiff(.file = "script/data-assembly.Rmd")
 Compares the local version of a script with the most recent QCed version.
 The output will appear in the viewer and only rows where there have been
 additions, deletions or modifications in the script will be shown.
+}
+\examples{
+\dontrun{
+getQcedDiff(.file = "script/data-assembly.Rmd")
+}
+
 }

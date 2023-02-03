@@ -5,8 +5,10 @@
 #' accepted in the QClog.
 #'
 #' @param .file file path from working directory
-#' @usage 
+#' @examples  
+#' \dontrun{
 #' getQcedRevision(.file = "script/data-assembly.Rmd")
+#' }
 #' 
 #' @importFrom dplyr %>%
 #' 

@@ -4,7 +4,7 @@
 \alias{getQcedRevision}
 \title{Determine most recent QCed revision number for a file}
 \usage{
-getQcedRevision(.file = "script/data-assembly.Rmd")
+getQcedRevision(.file)
 }
 \arguments{
 \item{.file}{file path from working directory}
@@ -12,4 +12,11 @@ getQcedRevision(.file = "script/data-assembly.Rmd")
 \description{
 Returns the most recent revision number of when the specified file was
 accepted in the QClog.
+}
+\examples{
+ 
+\dontrun{
+getQcedRevision(.file = "script/data-assembly.Rmd")
+}
+
 }
