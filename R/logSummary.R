@@ -1,5 +1,25 @@
-`logSummary` <-
-function(directory=getwd()){
+#' Summarize a Review Log
+#' 
+#' @description 
+#' Summarize the review log associated with a particular directory.
+#' 
+#' @param directory the directory containing the log, or any directory below it
+#' 
+#' @details 
+#' Whereas the review log can have any number of records for the same file, the
+#' summary reduces the data to one record per file.  It is an error if any element
+#' of the file column is missing.  
+#'
+#' The log is read, then sorted on file, revision, time.  The last record 
+#' for each file is retained.
+#' 
+#' @usage 
+#' logSummary(directory = getwd())
+#' 
+#' @author Tim Bergsma
+#' 
+#' @export
+logSummary <- function(directory=getwd()){
 	log <- logRead(directory)
 	if(any(is.na(log$file)))stop("missing file names in log")
 	log <- log[order(log$file, log$revf, log$time),]
@@ -14,6 +34,8 @@ function(directory=getwd()){
 	class(log) <- c('logSummary','data.frame')
 	log
 }
+
+#' @keywords internal
 print.logSummary <- function(x,...){
 	x$origin[x$origin==x$file] <- ''
 	x$revo[x$origin=='' & x$revo == x$revf] <- ''

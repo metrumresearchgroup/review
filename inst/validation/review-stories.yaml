@@ -1,0 +1,8 @@
+VAL-S001:
+  name: logAccept
+  description: As a user, I want to track what the most recent QCed version of 
+    all project files is.
+  ProductRisk: High
+  requirements:
+  - ACC-R001
+ 

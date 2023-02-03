@@ -1,17 +1,32 @@
 Package: review
-Type: Package
 Title: Manage Review Logs
-Version: 2.5
-Date: 2013-04-18
-Author: Tim Bergsma
-Maintainer: Tim Bergsma <timb@metrumrg.com>
-Depends: XML, Hmisc
-Suggests:
+Version: 2.5.0.8000
+Authors@R: 
+    c(
+    person(given = "Eric", family = "Anderson", email = "andersone@metrumrg.com", role = c("aut")),
+    person(given = "Michael", family = "McDermott", email = "michaelm@metrumrg.com", role = c("aut")),
+    person(given = "Tim", family = "Bergsma", email = "timb@metrumrg.com", role = c("cre"))
+    )
 Description: Functions for managing logs of reviews of subversioned
         files (http://subversion.apache.org/).
-License: GPL-2
-LazyLoad: yes
-Packaged: 2013-04-18 18:14:08 UTC; timb
-NeedsCompilation: no
-Repository: CRAN
-Date/Publication: 2013-04-18 22:49:09
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    cli (>= 3.3.0),
+    dplyr,
+    XML,
+    Hmisc,
+    utils,
+    glue,
+    diffobj,
+    stringr
+Suggests: 
+    knitr,
+    testthat (>= 3.0.0),
+    readr,
+    withr (>= 2.5.0)
+Config/testthat/edition: 3
+VignetteBuilder: 
+    knitr

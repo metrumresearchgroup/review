@@ -1,5 +1,7 @@
-`logAppend` <-
-function(new,directory=logRoot(),...){
+#' @keywords internal
+logAppend <- function(new,
+                      directory=logRoot(),
+                      ...){
 	old <- logRead(directory)
 	mix <- rbind(old,new)
 	if(with(mix,any(file==origin & revf!=revo)))stop('matching file/origin must have matching revisions')
@@ -14,6 +16,8 @@ function(new,directory=logRoot(),...){
 	#if(newrows > 0) assign("log.history",history,pos=1)
 	invisible(newrows)
 }
+
+#' @keywords internal
 logOrigin <- function(file, directory=logRoot(),...){
 	old <- logRead(directory)
 	precedent <- old$origin

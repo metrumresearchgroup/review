@@ -1,5 +1,6 @@
-`absDir` <-
-function(directory){
+#' @importFrom utils file_test
+#' @keywords internal
+absDir <- function(directory){
 	if(missing(directory))stop("argument 'directory' is missing")
 	start <- getwd()
 	if(!file_test("-d",directory))stop(paste("nonexistent directory:",directory))
