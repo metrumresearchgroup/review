@@ -17,8 +17,7 @@ test_that("getQcedRevision finds the latest accepted revision number [REV-GQR-00
 })
 
 system("echo 'something else' > script/file.txt")
-system("svn add script/file.txt")
-system("svn commit -m 'first commit'") 
+system("svn commit -m 'second commit'") 
 
 logAssign(file = "script/file.txt")
 logAccept(file = "script/file.txt")
