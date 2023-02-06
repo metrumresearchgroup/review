@@ -9,12 +9,12 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' getQcedDiff(.file = "script/data-assembly.Rmd")
+#' diffQced(.file = "script/data-assembly.Rmd")
 #' }
 #' 
 #' @export
-getQcedDiff <- function(.file){
+diffQced <- function(.file){
   
-  getPreviousRevisionDiff(.file = .file, .previous_revision = getQcedRevision(.file))
+  diffPreviousRevisions(.file = .file, .previous_revision = getQcedRevision(.file))
 
 }

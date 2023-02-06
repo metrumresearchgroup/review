@@ -11,11 +11,11 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' getPreviousRevisionDiff(.file = "script/data-assembly.Rmd", .previous_revision = 5)
+#' diffPreviousRevisions(.file = "script/data-assembly.Rmd", .previous_revision = 5)
 #' }
 #' 
 #' @export
-getPreviousRevisionDiff <- function(.file, .previous_revision, .current_revision = NULL){
+diffPreviousRevisions <- function(.file, .previous_revision, .current_revision = NULL){
   
   .previous_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
   

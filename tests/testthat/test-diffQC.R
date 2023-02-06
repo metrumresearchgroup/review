@@ -11,16 +11,16 @@ system("svn commit -m 'first commit'")
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
-diffqc <- getQcedDiff("file.txt")
+diffqc <- diffQced("file.txt")
 
-test_that("getQcedDiff reports no difference between identical files [REV-GQD-001]", {
+test_that("diffQced reports no difference between identical files [REV-GQD-001]", {
   expect_true(diffqc@target == diffqc@current)
 })
 
 system("echo 'something else' > file.txt")
-diffqc <- getQcedDiff("file.txt")
+diffqc <- diffQced("file.txt")
 
-test_that("getQcedDiff identifies difference between local and QCed file version [REV-GQD-002]", {
+test_that("diffQced identifies difference between local and QCed file version [REV-GQD-002]", {
   expect_true(diffqc@target != diffqc@current)
 })
 

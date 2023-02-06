@@ -22,6 +22,6 @@ reference:
   - title: QC Tools
     desc: View difference between script versions
     contents:
-    - getPreviousRevisionDiff
-    - getQcedDiff
+    - diffPreviousRevisions
+    - diffQC
     - getQcedRevision
