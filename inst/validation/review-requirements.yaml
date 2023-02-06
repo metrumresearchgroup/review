@@ -37,3 +37,11 @@ GQD-R002:
   description: getQcedDiff identifies differences between two files
   tests:
   - REV-GQD-002
+GPR-R001:
+  description: getPreviousRevisionDiff outputs difference between two previous specified file versions
+  tests:
+  - REV-GQD-001
+GPR-R002:
+  description: getPreviousRevisionDiff outputs difference between local and specified revision version
+  tests:
+  - REV-GQD-002

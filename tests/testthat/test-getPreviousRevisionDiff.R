@@ -24,14 +24,14 @@ logAccept(file = "file.txt")
 
 system("echo 'something5' > file.txt")
 
-test_that("getPreviousRevisionDiff outputs diff between two previous specified versions", {
+test_that("getPreviousRevisionDiff outputs diff between two previous specified versions [REV-GQD-001]", {
   diffVer <- getPreviousRevisionDiff(.file = "file.txt", .previous_revision = 2, .current_revision = 4)
   expect_true(diffVer@target != diffVer@current)
   expect_equal(diffVer@target, "something2")
   expect_equal(diffVer@current, "something4")
 })
 
-test_that("getPreviousRevisionDiff defaults current version of diff to local version", {
+test_that("getPreviousRevisionDiff defaults current version of diff to local version [REV-GQD-002]", {
   diffVer <- getPreviousRevisionDiff(.file = "file.txt", .previous_revision = 2)
   expect_true(diffVer@target != diffVer@current)
   expect_equal(diffVer@target, "something2")
