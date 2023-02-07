@@ -47,7 +47,7 @@ in RStudio). renv will activate and find the project library.
 
 ## Getting help
 
-If you encounter a clear bug, please file an issue with a minimal reproducible example on [mrgda](https://github.com/mrgda/issues). 
+If you encounter a clear bug, please file an issue with a minimal reproducible example on [review](https://github.com/review/issues). 
 
 ```{r setup, include = FALSE}
 ## Package coverage
