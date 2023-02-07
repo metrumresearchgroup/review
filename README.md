@@ -22,7 +22,6 @@ run `logSummary()` to see the revision number for the most recent QC of each scr
 ## Documentation
 Public documentation of all functions is hosted at [https://metrumresearchgroup.github.io/review/](https://metrumresearchgroup.github.io/review/)
 
-
 ## Development
 
 `review` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to manage
