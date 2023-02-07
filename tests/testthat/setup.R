@@ -11,4 +11,13 @@ createRepo <- function() {
   return("/tmp/svn-testing/test")
 }
 
+add_commit <- function(.name) {
+  if (.name == "first") {
+    system("svn add *")
+  }
+  system(glue::glue("svn commit -m '{.name} commit'")) 
+}
 
+add_file <- function(.name, .content) {
+  system(glue::glue("echo '{.content}' > {.name}"))
+}

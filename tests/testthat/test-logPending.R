@@ -1,14 +1,13 @@
 test_dir <- createRepo()
 withr::local_dir(test_dir)
 
-system("echo 'something' > file.txt")
-system("echo 'something' > file2.txt")
-system("echo 'something' > file3.txt")
+add_file("file.txt", "something")
+add_file("file2.txt", "something")
+add_file("file3.txt", "something")
 
 logCreate()
 
-system("svn add *")
-system("svn commit -m 'first commit'") 
+add_commit("first")
 
 logAssign(file = "file.txt")
 logAssign(file = "file2.txt")

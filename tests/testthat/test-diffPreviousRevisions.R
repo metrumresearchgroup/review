@@ -1,28 +1,27 @@
 test_dir <- createRepo()
 withr::local_dir(test_dir)
 
-system("echo 'something' > file.txt")
+add_file("file.txt", "something")
 
 logCreate()
 
-system("svn add *")
-system("svn commit -m 'first commit'") 
+add_commit("first")
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
-system("echo 'something2' > file.txt")
-system("svn commit -m 'second commit'") 
+add_file("file.txt", "something2")
+add_commit("second")
 logAccept(file = "file.txt")
 
-system("echo 'something3' > file.txt")
-system("svn commit -m 'third commit'") 
+add_file("file.txt", "something3")
+add_commit("third")
 logAccept(file = "file.txt")
 
-system("echo 'something4' > file.txt")
-system("svn commit -m 'fourth commit'") 
+add_file("file.txt", "something4")
+add_commit("fourth")
 logAccept(file = "file.txt")
 
-system("echo 'something5' > file.txt")
+add_file("file.txt", "something5")
 
 test_that("diffPreviousRevisions outputs diff between two previous specified versions [REV-GQD-001]", {
   diffVer <- diffPreviousRevisions(.file = "file.txt", .previous_revision = 2, .current_revision = 4)

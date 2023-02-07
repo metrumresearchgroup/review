@@ -1,1 +1,63 @@
-# review
+## Overview
+
+review provides helpful tools for organizing and performing quality control (QC)
+tasks.
+
+With review, you are able to create and manage a QC log to track the QC history
+of all relevant files in your repository. While performing QC, `diffQced()` will
+show all the changes to the file since it had last been QCed.
+
+## Setup
+
+To start using review, run `logCreate()`. This will create the QC log in the form
+of `QClog.csv`. 
+
+You can use `logAssign()` to add scripts needing to be QCed to the QC log. After
+completing QC, run `logAccept()`. This will add a row to the `QClog.csv` recording
+the current revision number to indicate when the file was QCed.
+
+To identify which files need to be QCed, you can run `logPending()`. You can also
+run `logSummary()` to see the revision number for the most recent QC of each script.
+
+## Documentation
+Public documentation of all functions is hosted at [https://metrumresearchgroup.github.io/review/](https://metrumresearchgroup.github.io/review/)
+
+
+## Development
+
+`review` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to manage
+development dependencies and [renv](https://rstudio.github.io/renv/) to
+provide isolation. To replicate this environment,
+
+1.  clone the repo
+
+2.  install pkgr
+
+3.  open package in an R session and run `renv::init(bare = TRUE)`
+
+    -   install `renv` \> 0.8.3-4 into default `.libPaths()` if not
+        already installed
+
+4.  run `pkgr install` in terminal within package directory
+
+5.  restart session
+
+Then, launch R with the repo as the working directory (open the project
+in RStudio). renv will activate and find the project library.
+
+## Getting help
+
+If you encounter a clear bug, please file an issue with a minimal reproducible example on [mrgda](https://github.com/mrgda/issues). 
+
+```{r setup, include = FALSE}
+## Package coverage
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+if (basename(getwd()) == "docs") {
+  knitr::opts_knit$set(root.dir = file.path(getwd(), ".."))
+}
+```

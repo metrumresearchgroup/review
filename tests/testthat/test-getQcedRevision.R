@@ -1,27 +1,25 @@
 test_dir <- createRepo()
 withr::local_dir(test_dir)
 
-system("mkdir script")
-system("echo 'something' > script/file.txt")
+add_file("file.txt", "something")
 
 logCreate()
 
-system("svn add *")
-system("svn commit -m 'first commit'") 
+add_commit("first")
 
-logAssign(file = "script/file.txt")
-logAccept(file = "script/file.txt")
+logAssign(file = "file.txt")
+logAccept(file = "file.txt")
 
 test_that("getQcedRevision finds the latest accepted revision number [REV-GQR-001]", {
-  expect_true(getQcedRevision("script/file.txt") == 1)
+  expect_true(getQcedRevision("file.txt") == 1)
 })
 
-system("echo 'something else' > script/file.txt")
-system("svn commit -m 'second commit'") 
+system("echo 'something else' > file.txt")
+add_commit("second")
 
-logAssign(file = "script/file.txt")
-logAccept(file = "script/file.txt")
+logAssign(file = "file.txt")
+logAccept(file = "file.txt")
 
 test_that("getQcedRevision finds the latest accepted revision number [REV-GQR-001]", {
-  expect_true(getQcedRevision("script/file.txt") == 2)
+  expect_true(getQcedRevision("file.txt") == 2)
 })
