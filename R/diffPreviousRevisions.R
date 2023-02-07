@@ -42,14 +42,15 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
   if (tools::md5sum(.previous_revision_temp_file) == tools::md5sum(.current_revision_temp_file)) {
     message("Specified files are identical")
     return(invisible(NULL))
-  } else {
-    diffobj::diffFile(
-      target = .previous_revision_temp_file,
-      current = .current_revision_temp_file, 
-      color.mode = "rgb",
-      tar.banner = .previous_revision_header,
-      cur.banner = .current_revision_header
-    )
   }
+  
+  diffobj::diffFile(
+    target = .previous_revision_temp_file,
+    current = .current_revision_temp_file, 
+    color.mode = "rgb",
+    tar.banner = .previous_revision_header,
+    cur.banner = .current_revision_header
+  )
+  
   
 }
