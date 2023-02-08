@@ -2,7 +2,7 @@ library(testthat)
 
 createRepo <- function() {
   if (dir.exists("/tmp/svn-testing")) {
-    try(system("rm -r /tmp/svn-testing"))
+    try(system("rm -rf /tmp/svn-testing"))
   }
   system("mkdir /tmp/svn-testing")
   system("svnadmin create /tmp/svn-testing/svn-proj-ABC-123")
