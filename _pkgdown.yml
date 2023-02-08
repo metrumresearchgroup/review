@@ -1,0 +1,27 @@
+url: https://metrumresearchgroup.github.io/review
+
+title: review
+template:
+  params:
+    bootswatch: flatly
+navbar:
+  type: inverse
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/metrumresearchgroup/review
+
+reference:
+  - title: QC Log Tools
+    desc: Create a QC logs and accept file versions
+    contents:
+    - logAccept
+    - logAssign
+    - logCreate
+    - logPending
+    - logSummary
+  - title: QC Tools
+    desc: View difference between script versions
+    contents:
+    - diffPreviousRevisions
+    - diffQC
+    - getQcedRevision

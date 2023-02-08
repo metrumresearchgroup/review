@@ -1,3 +1,5 @@
-`logName` <-
-function(directory=logRoot())file.path(absDir(directory),"QClog.csv")
+#' @keywords internal
+logName <- function(directory=logRoot()) {
+  file.path(absDir(directory),"QClog.csv")
+}
 

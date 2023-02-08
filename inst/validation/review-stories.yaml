@@ -1,0 +1,29 @@
+TQC-S001:
+  name: Track QC history of a file
+  description: As a user, I want to track what the most recently QCed version of 
+    a file is and track the revision number of each accepted version.
+  ProductRisk: High
+  requirements:
+  - CRT-R001
+  - ASN-R001
+  - ACC-R001
+TQC-S001:
+  name: View files to QC
+  description: As a user, I want to view all files in a repository that need to
+    be QCed and see a summary of the latest accepted versions for all files.
+  ProductRisk: High
+  requirements:
+  - PND-R001
+  - SUM-R001
+TQC-S001:
+  name: View difference between files
+  description: As a user, I want to view the difference between two versions of 
+    a script. The difference should show all additions, deletions and modifications
+    to the script.
+  ProductRisk: High
+  requirements:
+  - GQR-R001
+  - GQD-R001
+  - GQD-R002
+  - GPR-R001
+  - GPR-R002

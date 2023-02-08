@@ -1,0 +1,47 @@
+ACC-R001:
+  description: logAccept creates a new row in the QC log with the current 
+    revision number
+  tests:
+  - REV-ACC-001
+ASN-R001:
+  description: logAssign adds a non-accepted new row to the QC log for the 
+    specified file
+  tests:
+  - REV-ASN-001
+CRT-R001:
+  description: logCreate generates an empty QC log file and saves it to the 
+    working directory
+  tests:
+  - REV-CRT-001
+PND-R001:
+  description: logPending returns all scripts whose local version is not identical
+    to the most recent accepted version
+  tests:
+  - REV-PND-001
+SUM-R001:
+  description: logSummary returns the last accepted revisions for each script
+    in the QC log
+  tests:
+  - REV-SUM-001
+GQR-R001:
+  description: getQcedRevision returns the most recent accepted revision number
+    from the QC log for a specified file
+  tests:
+  - REV-GQR-001
+GQD-R001:
+  description: diffQC lets user know local file is identical to latest 
+    QCed version
+  tests:
+  - REV-GQD-001
+GQD-R002:
+  description: diffQC identifies differences between two files
+  tests:
+  - REV-GQD-002
+GPR-R001:
+  description: diffPreviousRevisions outputs difference between two previous specified file versions
+  tests:
+  - REV-GQD-001
+GPR-R002:
+  description: diffPreviousRevisions outputs difference between local and specified revision version
+  tests:
+  - REV-GQD-002

@@ -1,14 +1,13 @@
-`logQueue` <-
-function(
-	file=dir(),
-	directory=getwd(),
-	origin=file,
-	revf=0,
-	revo=0,
-	reviewer="anyone",
-	time=gmt(),
-	force=FALSE
-){
+#' @keywords internal
+logQueue <- function(file=dir(),
+                     directory=getwd(),
+                     origin=file,
+                     revf=0,
+                     revo=0,
+                     reviewer="anyone",
+                     time=paste(as.character(as.POSIXlt(Sys.time(), "GMT")),"GMT"),
+                     force=FALSE){
+  
 	coerce <- function(arg){
 		x <- get(arg)
 		if(length(x)==1) x <- rep(x,length(file))
