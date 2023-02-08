@@ -1,6 +1,5 @@
 #' @importFrom utils file_test
 #' @importFrom utils read.table
-#' @importFrom utils write.table
 #' @keywords internal
 logRead <- function(directory=getwd()){
 	if(is.null(directory))stop("directory is null: log may not exist")
