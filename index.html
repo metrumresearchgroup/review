@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0.8000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
       </span>
     </div>
 
@@ -42,6 +42,9 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -63,10 +66,49 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="review">review<a class="anchor" aria-label="anchor" href="#review"></a>
-</h1></div>
+
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>review provides helpful tools for organizing and performing quality control (QC) tasks.</p>
+<p>With review, you are able to create and manage a QC log to track the QC history of all relevant files in your repository. While performing QC, <code><a href="reference/diffQced.html">diffQced()</a></code> will show all the changes to the file since it had last been QCed.</p>
 </div>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>To start using review, run <code><a href="reference/logCreate.html">logCreate()</a></code>. This will create the QC log in the form of <code>QClog.csv</code>.</p>
+<p>You can use <code><a href="reference/logAssign.html">logAssign()</a></code> to add scripts needing to be QCed to the QC log. After completing QC, run <code><a href="reference/logAccept.html">logAccept()</a></code>. This will add a row to the <code>QClog.csv</code> recording the current revision number to indicate when the file was QCed.</p>
+<p>To identify which files need to be QCed, you can run <code><a href="reference/logPending.html">logPending()</a></code>. You can also run <code><a href="reference/logSummary.html">logSummary()</a></code> to see the revision number for the most recent QC of each script.</p>
+</div>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>Public documentation of all functions is hosted at <a href="https://metrumresearchgroup.github.io/review/">https://metrumresearchgroup.github.io/review/</a></p>
+</div>
+<div class="section level2">
+<h2 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h2>
+<p><code>review</code> uses <a href="https://github.com/metrumresearchgroup/pkgr" class="external-link">pkgr</a> to manage development dependencies and <a href="https://rstudio.github.io/renv/" class="external-link">renv</a> to provide isolation. To replicate this environment,</p>
+<ol style="list-style-type: decimal">
+<li><p>clone the repo</p></li>
+<li><p>install pkgr</p></li>
+<li>
+<p>open package in an R session and run <code>renv::init(bare = TRUE)</code></p>
+<ul>
+<li>install <code>renv</code> &gt; 0.8.3-4 into default <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> if not already installed</li>
+</ul>
+</li>
+<li><p>run <code>pkgr install</code> in terminal within package directory</p></li>
+<li><p>restart session</p></li>
+</ol>
+<p>Then, launch R with the repo as the working directory (open the project in RStudio). renv will activate and find the project library.</p>
+</div>
+<div class="section level2">
+<h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
+<p>If you encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/review/issues" class="external-link">review</a>.</p>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

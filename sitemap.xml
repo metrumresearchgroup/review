@@ -10,10 +10,13 @@
     <loc>https://metrumresearchgroup.github.io/review/index.html</loc>
   </url>
   <url>
-    <loc>https://metrumresearchgroup.github.io/review/reference/getPreviousRevisionDiff.html</loc>
+    <loc>https://metrumresearchgroup.github.io/review/news/index.html</loc>
   </url>
   <url>
-    <loc>https://metrumresearchgroup.github.io/review/reference/getQcedDiff.html</loc>
+    <loc>https://metrumresearchgroup.github.io/review/reference/diffPreviousRevisions.html</loc>
+  </url>
+  <url>
+    <loc>https://metrumresearchgroup.github.io/review/reference/diffQced.html</loc>
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/getQcedRevision.html</loc>
@@ -35,5 +38,8 @@
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/logSummary.html</loc>
+  </url>
+  <url>
+    <loc>https://metrumresearchgroup.github.io/review/reference/review-package.html</loc>
   </url>
 </urlset>
