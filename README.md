@@ -47,16 +47,3 @@ in RStudio). renv will activate and find the project library.
 ## Getting help
 
 If you encounter a clear bug, please file an issue with a minimal reproducible example on [review](https://github.com/review/issues). 
-
-```{r setup, include = FALSE}
-## Package coverage
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-if (basename(getwd()) == "docs") {
-  knitr::opts_knit$set(root.dir = file.path(getwd(), ".."))
-}
-```
