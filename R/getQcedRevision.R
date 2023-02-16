@@ -19,6 +19,12 @@ getQcedRevision <- function(.file){
   
   qc_log <- logRead()
   
+  if (suppressWarnings(anyNA(as.numeric(qc_log$revf)))) {
+    
+    stop("Non numeric values found in 'revf' column of QC log")
+    
+  }
+  
   project_file_path <- logTarget(.file)
   project_file_path <- tools::file_path_as_absolute(project_file_path)
   project_file_path <- 
