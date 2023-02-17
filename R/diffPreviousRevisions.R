@@ -48,6 +48,7 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     target = .previous_revision_temp_file,
     current = .current_revision_temp_file, 
     color.mode = "rgb",
+    mode = "sidebyside",
     tar.banner = .previous_revision_header,
     cur.banner = .current_revision_header
   )
