@@ -7,7 +7,7 @@ TQC-S001:
   - CRT-R001
   - ASN-R001
   - ACC-R001
-TQC-S001:
+VQC-S001:
   name: View files to QC
   description: As a user, I want to view all files in a repository that need to
     be QCed and see a summary of the latest accepted versions for all files.
@@ -15,7 +15,7 @@ TQC-S001:
   requirements:
   - PND-R001
   - SUM-R001
-TQC-S001:
+VDF-S001:
   name: View difference between files
   description: As a user, I want to view the difference between two versions of 
     a script. The difference should show all additions, deletions and modifications
