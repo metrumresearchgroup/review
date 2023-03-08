@@ -19,7 +19,8 @@ Imports:
     utils,
     glue,
     diffobj,
-    stringr
+    stringr,
+    fs
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

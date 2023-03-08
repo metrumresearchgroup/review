@@ -14,8 +14,3 @@ test_that("logAccept creates a row in the QClog for the specified file [REV-ACC-
   expect_true(tempdf$reviewer[2] == Sys.info()[["effective_user"]])
   expect_true(tempdf$revf[2] == 1)
 })
-
-
-
-
-
