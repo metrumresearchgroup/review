@@ -12,7 +12,7 @@
 #######################################################
 
 PKGNAME <- "review"
-PKGVERSION <- "3.0.0"
+PKGVERSION <- "3.0.1"
 STYLE_REF_DIR <- "docx-ref-header-image" # set to NULL if not using style ref
 
 # set up directories and clear existing output dirs, if they exist
@@ -63,9 +63,9 @@ mrgvalidate::create_package_docs(
   product_name = PKGNAME,
   version = PKGVERSION,
   language = "R",
-  repo_url = "https://github.com/metrumresearchgroup/mrgda",
+  repo_url = "https://github.com/metrumresearchgroup/review",
   specs = spec,
-  release_notes_file = file.path("NEWS_release.md"),
+  release_notes_file = file.path("NEWS.md"),
   auto_test_dir = test_dir,
   output_dir = docs_dir,
   style_dir = style_ref_path,
