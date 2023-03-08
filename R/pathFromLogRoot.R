@@ -4,7 +4,7 @@ pathFromLogRoot <- function(.path){
   cur_dir <- getwd()
   on.exit(setwd(cur_dir))
   
-  log_root <- review:::logRoot()
+  log_root <- logRoot()
   setwd(log_root)
   
   full_path <- as.character(fs::path_abs(.path))
