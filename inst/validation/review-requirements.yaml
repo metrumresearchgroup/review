@@ -18,6 +18,10 @@ PND-R001:
     to the most recent accepted version
   tests:
   - REV-PND-001
+PND-R002:
+  description: logPending returns only unique scripts in the QClog (without showing duplicates)
+  tests:
+  - REV-PND-002
 SUM-R001:
   description: logSummary returns the last accepted revisions for each script
     in the QC log
@@ -45,3 +49,7 @@ GPR-R002:
   description: diffPreviousRevisions outputs difference between local and specified revision version
   tests:
   - REV-GQD-002
+REL-R001:
+  description: file paths are recorded relative to the location of the QClog, regardless of input path format
+  tests:
+  - REV-REL-001

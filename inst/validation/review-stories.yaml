@@ -14,6 +14,7 @@ VQC-S001:
   ProductRisk: High
   requirements:
   - PND-R001
+  - PND-R002
   - SUM-R001
 VDF-S001:
   name: View difference between files
@@ -27,3 +28,11 @@ VDF-S001:
   - GQD-R002
   - GPR-R001
   - GPR-R002
+REL-S001:
+  name: File paths in QC log
+  description: As a user, I want the file paths in the QC log to be relative to 
+    the directory where the QClog.csv file exists. 
+  ProductRisk: Low
+  requirements:
+  - REL-R001
+  - PND-R002
