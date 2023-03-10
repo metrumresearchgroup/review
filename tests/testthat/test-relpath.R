@@ -16,13 +16,19 @@ test_that("relpath outputs script paths relative to the QC log location: for unr
 })
 
 logAssign("script/file.txt")
+Sys.sleep(1)
 logAssign("data/../script/file.txt")
+Sys.sleep(1)
 logAssign("script/../data/filespec.txt")
 add_commit("first")
 qclog <- readr::read_csv("QClog.csv")
 
 test_that("relpath outputs script paths relative to the QC log location - only resolved file paths are stored in the QClog [REV-REL-001]", {
-  expect_true(length(unique(qclog$file)) == 2)
+  expect_true(nrow(qclog) == 3)
+  expect_identical(
+    unique(qclog$file), 
+    c("script/file.txt", "data/filespec.txt")
+  )
 })
 
 # Add test for legacy logs with unresolved file paths
@@ -34,6 +40,9 @@ readr::write_csv(qclog_combine, "QClog.csv")
 # Confirm legacy QClogs will not show duplicate records for same file with different paths
 test_that("logPending only includes resolved paths when unresolved paths present [REV-PND-002]", {
   pendingcsv <- logPending()
-  expect_true(length(unique(pendingcsv$file)) == 2)
+  expect_identical(
+    pendingcsv$file, 
+    c("data/filespec.txt", "script/file.txt")
+  )
 })
 
