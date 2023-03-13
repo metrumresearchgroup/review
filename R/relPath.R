@@ -5,6 +5,6 @@ relPath <- function( file=dir(),
 	relPath <- file.path(relDir,file)
 	relPath[!file.exists(file.path(directory,file))] <- NA
 	relPath <- sub("^/","",relPath)
-	relPath
+	pathFromLogRoot(relPath)
 }
 

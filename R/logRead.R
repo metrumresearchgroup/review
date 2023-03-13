@@ -14,6 +14,17 @@ logRead <- function(directory=getwd()){
 		na.strings=".",
 		strip.white=TRUE
 	)
+	
+	if (nrow(log) > 0) {
+  	for (i in 1:nrow(log)) {
+  	  log$file[i] <- pathFromLogRoot(log$file[i])
+  	  log$origin[i] <- pathFromLogRoot(log$origin[i])
+  	}
+  	unique_rows <- !duplicated(log)
+  	log <- log[unique_rows,]
+  	rm(unique_rows)
+	}
+	
 	if('revision' %in% names(log))stop(paste(
 		'please install review 1.5 to support this log',
 		logName(logRoot(directory))
