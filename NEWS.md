@@ -3,13 +3,13 @@
 ## New features and changes
 
 - `logAssign()` and `logAccept()` now resolve file paths before adding records
-  to the QC log. Absolute paths can now be used as well.
+  to the QC log. Absolute paths can now be used as well. (#9)
 
 ## Bug fixes
 
 - `logPending()` returns multiple outputs for the same file with different
   file paths in the QClog. `script/file.txt` is viewed as a different file
-  than `data/../script/file.txt`. Now returns only resolved paths.
+  than `data/../script/file.txt`. Now returns only resolved paths. (#9)
 
 # review 3.0.1
 
