@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1.0</span>
       </span>
     </div>
 
@@ -47,6 +47,19 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.1.0" id="review-310">review 3.1.0<a class="anchor" aria-label="anchor" href="#review-310"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-changes-3-1-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-1-0"></a></h3>
+<ul><li>
+<code><a href="../reference/logAssign.html">logAssign()</a></code> and <code><a href="../reference/logAccept.html">logAccept()</a></code> now resolve file paths before adding records to the QC log. Absolute paths can now be used as well. (#9)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-1-0"></a></h3>
+<ul><li>
+<code><a href="../reference/logPending.html">logPending()</a></code> returns multiple outputs for the same file with different file paths in the QClog. <code>script/file.txt</code> is viewed as a different file than <code>data/../script/file.txt</code>. Now returns only resolved paths. (#9)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.1" id="review-301">review 3.0.1<a class="anchor" aria-label="anchor" href="#review-301"></a></h2>
 <div class="section level3">
