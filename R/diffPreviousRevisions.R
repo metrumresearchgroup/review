@@ -19,7 +19,7 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
   
   .previous_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
   
-  system(glue::glue("svn export -r {.previous_revision} {.file} {.previous_revision_temp_file}"))
+  system(glue::glue("svn export -r {.previous_revision} {.file} {.previous_revision_temp_file} -q"))
   
   .previous_revision_header <- glue::glue("{basename(.file)}: Revision {.previous_revision}")
   
@@ -33,7 +33,7 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     
   } else {
     
-    system(glue::glue("svn export -r {.current_revision} {.file} {.current_revision_temp_file}"))
+    system(glue::glue("svn export -r {.current_revision} {.file} {.current_revision_temp_file} -q"))
     
     .current_revision_header <- glue::glue("{basename(.file)}: Revision {.current_revision}")
     

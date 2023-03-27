@@ -10,7 +10,7 @@ add_commit("first")
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
-diffqc <- diffQced("file.txt")
+diffqc <- diffQced("file.txt") %>% suppressMessages()
 
 test_that("diffQced reports no difference between identical files [REV-GQD-001]", {
   expect_true(is.null(diffqc))
