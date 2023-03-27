@@ -8,28 +8,37 @@
 #' This should be used when a new script has been created based off
 #' an existing script.
 #'
-#' @param .file_current file path of new file from working directory
-#' @param .file_previous file path of previous file from working directory
-#' @param .current_revision_header Header for current file in viewer (default: "Current file")
-#' @param .previous_revision_header Header for current file in viewer (default: "Previous file")
+#' @param .file_1 file path of first file from working directory
+#' @param .file_2 file path of second file from working directory
+#' @param .banner_1 Header for first file in viewer
+#' @param .banner_2 Header for second file in viewer
 #' @examples 
 #' \dontrun{
-#' diffFiles(.file_current = "script/data-assembly-v2.Rmd", 
-#'           .file_previous = "script/data-assembly-v1.Rmd")
+#' diffFiles(.file_1 = "script/data-assembly-v2.Rmd", 
+#'           .file_2 = "script/data-assembly-v1.Rmd")
 #' }
 #' 
 #' @export
-diffFiles <- function(.file_current, .file_previous, 
-                      .current_revision_header = "Current file",
-                      .previous_revision_header = "Previous file") {
+diffFiles <- function(.file_1, 
+                      .file_2, 
+                      .banner_1 = NULL,
+                      .banner_2 = NULL) {
+  
+  if (is.null(.banner_1)) {
+    .banner_1 = basename(.file_1)
+  }
+  
+  if (is.null(.banner_2)) {
+    .banner_2 = basename(.file_2)
+  }
   
   diffobj::diffFile(
-    target = .file_previous,
-    current = .file_current, 
+    target = .file_2,
+    current = .file_1, 
     color.mode = "rgb",
     mode = "sidebyside",
-    tar.banner = .previous_revision_header,
-    cur.banner = .current_revision_header
+    tar.banner = .banner_2,
+    cur.banner = .banner_1
   )
   
 }

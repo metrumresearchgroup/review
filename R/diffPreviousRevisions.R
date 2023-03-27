@@ -45,10 +45,10 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
   }
   
   diffFiles(
-    .file_current = .current_revision_temp_file, 
-    .file_previous = .previous_revision_temp_file, 
-    .current_revision_header = .current_revision_header,
-    .previous_revision_header = .previous_revision_header
+    .file_1 = .current_revision_temp_file, 
+    .file_2 = .previous_revision_temp_file, 
+    .banner_1 = .current_revision_header,
+    .banner_2 = .previous_revision_header
   )
 
 }
