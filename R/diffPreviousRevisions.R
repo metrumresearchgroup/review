@@ -44,14 +44,11 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     return(invisible(NULL))
   }
   
-  diffobj::diffFile(
-    target = .previous_revision_temp_file,
-    current = .current_revision_temp_file, 
-    color.mode = "rgb",
-    mode = "sidebyside",
-    tar.banner = .previous_revision_header,
-    cur.banner = .current_revision_header
+  diffFiles(
+    .file_current = .current_revision_temp_file, 
+    .file_previous = .previous_revision_temp_file, 
+    .current_revision_header = .current_revision_header,
+    .previous_revision_header = .previous_revision_header
   )
-  
-  
+
 }
