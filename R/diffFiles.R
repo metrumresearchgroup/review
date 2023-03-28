@@ -33,12 +33,12 @@ diffFiles <- function(.file_1,
   }
   
   diffobj::diffFile(
-    target = .file_2,
-    current = .file_1, 
+    target = .file_1,
+    current = .file_2, 
     color.mode = "rgb",
     mode = "sidebyside",
-    tar.banner = .banner_2,
-    cur.banner = .banner_1
+    tar.banner = .banner_1,
+    cur.banner = .banner_2
   )
   
 }
