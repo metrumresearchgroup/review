@@ -4,21 +4,16 @@
 \alias{diffFiles}
 \title{Visual diff between two different files}
 \usage{
-diffFiles(
-  .file_current,
-  .file_previous,
-  .current_revision_header = "Current file",
-  .previous_revision_header = "Previous file"
-)
+diffFiles(.file_1, .file_2, .banner_1 = NULL, .banner_2 = NULL)
 }
 \arguments{
-\item{.file_current}{file path of new file from working directory}
+\item{.file_1}{file path of first file from working directory}
 
-\item{.file_previous}{file path of previous file from working directory}
+\item{.file_2}{file path of second file from working directory}
 
-\item{.current_revision_header}{Header for current file in viewer (default: "Current file")}
+\item{.banner_1}{Header for first file in viewer}
 
-\item{.previous_revision_header}{Header for current file in viewer (default: "Previous file")}
+\item{.banner_2}{Header for second file in viewer}
 }
 \description{
 Compares the current version of two scripts against one another.
@@ -30,8 +25,8 @@ an existing script.
 }
 \examples{
 \dontrun{
-diffFiles(.file_current = "script/data-assembly-v2.Rmd", 
-          .file_previous = "script/data-assembly-v1.Rmd")
+diffFiles(.file_1 = "script/data-assembly-v2.Rmd", 
+          .file_2 = "script/data-assembly-v1.Rmd")
 }
 
 }
