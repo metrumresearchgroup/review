@@ -53,3 +53,7 @@ REL-R001:
   description: file paths are recorded relative to the location of the QClog, regardless of input path format
   tests:
   - REV-REL-001
+TDF-R001:
+  description: diffFiles outputs visual difference between two local files
+  tests:
+  - REV-DNF-001

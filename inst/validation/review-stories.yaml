@@ -28,6 +28,7 @@ VDF-S001:
   - GQD-R002
   - GPR-R001
   - GPR-R002
+  - TDF-R001
 REL-S001:
   name: File paths in QC log
   description: As a user, I want the file paths in the QC log to be relative to 

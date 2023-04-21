@@ -25,3 +25,4 @@ reference:
     - diffPreviousRevisions
     - diffQced
     - getQcedRevision
+    - diffFiles
