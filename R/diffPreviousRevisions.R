@@ -19,7 +19,7 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
   
   .previous_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
   
-  system(glue::glue("svn export -r {.previous_revision} {.file} {.previous_revision_temp_file}"))
+  system(glue::glue("svn export -r {.previous_revision} {.file} {.previous_revision_temp_file} -q"))
   
   .previous_revision_header <- glue::glue("{basename(.file)}: Revision {.previous_revision}")
   
@@ -33,7 +33,7 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     
   } else {
     
-    system(glue::glue("svn export -r {.current_revision} {.file} {.current_revision_temp_file}"))
+    system(glue::glue("svn export -r {.current_revision} {.file} {.current_revision_temp_file} -q"))
     
     .current_revision_header <- glue::glue("{basename(.file)}: Revision {.current_revision}")
     
@@ -44,14 +44,11 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     return(invisible(NULL))
   }
   
-  diffobj::diffFile(
-    target = .previous_revision_temp_file,
-    current = .current_revision_temp_file, 
-    color.mode = "rgb",
-    mode = "sidebyside",
-    tar.banner = .previous_revision_header,
-    cur.banner = .current_revision_header
+  diffFiles(
+    .file_1 = .previous_revision_temp_file, 
+    .file_2 = .current_revision_temp_file, 
+    .banner_1 = .previous_revision_header,
+    .banner_2 = .current_revision_header 
   )
-  
-  
+
 }
