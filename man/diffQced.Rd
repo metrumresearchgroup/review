@@ -4,10 +4,14 @@
 \alias{diffQced}
 \title{Visual diff of last QCed version of a file to the local version.}
 \usage{
-diffQced(.file)
+diffQced(.file, .side_by_side = TRUE, .ignore_white_space = FALSE)
 }
 \arguments{
 \item{.file}{file path from working directory}
+
+\item{.side_by_side}{Logical. Should diffs be displayed side by side?}
+
+\item{.ignore_white_space}{Logical. Should white space be ignored?}
 }
 \description{
 Compares the local version of a script with the most recent QCed version.

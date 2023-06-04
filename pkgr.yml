@@ -13,7 +13,7 @@ Packages:
 
 Repos:
   - CRAN: https://cran.rstudio.com
-  - MPN: https://mpn.metworx.com/snapshots/stable/2023-01-25 # used for mrgval
+  - MPN: https://mpn.metworx.com/snapshots/stable/2023-05-14 # used for mrgval
 
 Lockfile:
   Type: renv

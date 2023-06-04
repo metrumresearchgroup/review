@@ -4,7 +4,13 @@
 \alias{diffPreviousRevisions}
 \title{Visual diff of previous revision of a file to the local version.}
 \usage{
-diffPreviousRevisions(.file, .previous_revision, .current_revision = NULL)
+diffPreviousRevisions(
+  .file,
+  .previous_revision,
+  .current_revision = NULL,
+  .side_by_side = TRUE,
+  .ignore_white_space = FALSE
+)
 }
 \arguments{
 \item{.file}{file path from working directory}
@@ -12,6 +18,10 @@ diffPreviousRevisions(.file, .previous_revision, .current_revision = NULL)
 \item{.previous_revision}{revision to compare to current revision}
 
 \item{.current_revision}{current revision (defaults to local copy)}
+
+\item{.side_by_side}{Logical. Should diffs be displayed side by side?}
+
+\item{.ignore_white_space}{Logical. Should white space be ignored?}
 }
 \description{
 Compares the current version of a script with a previous revision.

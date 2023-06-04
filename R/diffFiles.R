@@ -12,6 +12,8 @@
 #' @param .file_2 file path of second file from working directory
 #' @param .banner_1 Header for first file in viewer
 #' @param .banner_2 Header for second file in viewer
+#' @param .side_by_side Logical. Should diffs be displayed side by side?
+#' @param .ignore_white_space Logical. Should white space be ignored?
 #' @examples 
 #' \dontrun{
 #' diffFiles(.file_1 = "script/data-assembly-v2.Rmd", 
@@ -22,7 +24,9 @@
 diffFiles <- function(.file_1, 
                       .file_2, 
                       .banner_1 = NULL,
-                      .banner_2 = NULL) {
+                      .banner_2 = NULL,
+                      .side_by_side = TRUE,
+                      .ignore_white_space = FALSE) {
   
   if (is.null(.banner_1)) {
     .banner_1 = basename(.file_1)
@@ -36,9 +40,10 @@ diffFiles <- function(.file_1,
     target = .file_1,
     current = .file_2, 
     color.mode = "rgb",
-    mode = "sidebyside",
+    mode = ifelse(.side_by_side, "sidebyside", "unified"),
     tar.banner = .banner_1,
-    cur.banner = .banner_2
+    cur.banner = .banner_2,
+    ignore.white.space = .ignore_white_space
   )
   
 }
