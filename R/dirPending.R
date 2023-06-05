@@ -6,16 +6,16 @@
 #' exist within it. Each file will be checked if it exists in the QC log and if
 #' it is returned by `logPending()`.
 #' 
-#' @param .dir_path Path to directory containing files to search
+#' @param .dir Path to directory containing files to search
 #'
 #' @examples 
 #'\dontrun{
 #' checkDirQC(here::here("script"))
 #'}
 #' @export
-checkDirQC <- function(.dir_path) {
+dirPending <- function(.dir) {
   
-  all_files <- pathFromLogRoot(list.files(.dir_path, full.names = TRUE, recursive = TRUE))
+  all_files <- pathFromLogRoot(list.files(.dir, full.names = TRUE, recursive = TRUE))
   
   qc_log <- 
     readr::read_csv(file.path(logRoot(), "QClog.csv")) %>% 

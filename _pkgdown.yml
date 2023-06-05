@@ -26,4 +26,4 @@ reference:
     - diffQced
     - getQcedRevision
     - diffFiles
-    - checkDirQC
+    - dirPending
