@@ -25,7 +25,7 @@ getQcedRevision <- function(.file){
     
   }
   
-  project_file_path <- logTarget(.file)
+  project_file_path <- logTarget(pathFromLogRoot(.file))
   project_file_path <- tools::file_path_as_absolute(project_file_path)
   project_file_path <- 
     gsub(pattern = paste0(logRoot(), "/"), replacement = "", x = project_file_path, fixed = TRUE)

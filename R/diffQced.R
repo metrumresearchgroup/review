@@ -6,6 +6,8 @@
 #' additions, deletions or modifications in the script will be shown.
 #'
 #' @param .file file path from working directory
+#' @param .side_by_side Logical. Should diffs be displayed side by side?
+#' @param .ignore_white_space Logical. Should white space be ignored?
 #' 
 #' @examples 
 #' \dontrun{
@@ -13,8 +15,13 @@
 #' }
 #' 
 #' @export
-diffQced <- function(.file){
+diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
   
-  diffPreviousRevisions(.file = .file, .previous_revision = getQcedRevision(.file))
-
+  diffPreviousRevisions(
+    .file = .file, 
+    .previous_revision = getQcedRevision(.file),
+    .side_by_side = .side_by_side, 
+    .ignore_white_space = .ignore_white_space
+  )
+  
 }

@@ -8,6 +8,8 @@
 #' @param .file file path from working directory
 #' @param .previous_revision revision to compare to current revision
 #' @param .current_revision current revision (defaults to local copy)
+#' @param .side_by_side Logical. Should diffs be displayed side by side?
+#' @param .ignore_white_space Logical. Should white space be ignored?
 #' 
 #' @examples 
 #' \dontrun{
@@ -15,7 +17,11 @@
 #' }
 #' 
 #' @export
-diffPreviousRevisions <- function(.file, .previous_revision, .current_revision = NULL){
+diffPreviousRevisions <- function(.file,
+                                  .previous_revision,
+                                  .current_revision = NULL,
+                                  .side_by_side = TRUE,
+                                  .ignore_white_space = FALSE){
   
   .previous_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
   
@@ -48,7 +54,9 @@ diffPreviousRevisions <- function(.file, .previous_revision, .current_revision =
     .file_1 = .previous_revision_temp_file, 
     .file_2 = .current_revision_temp_file, 
     .banner_1 = .previous_revision_header,
-    .banner_2 = .current_revision_header 
+    .banner_2 = .current_revision_header, 
+    .side_by_side = .side_by_side, 
+    .ignore_white_space = .ignore_white_space 
   )
 
 }

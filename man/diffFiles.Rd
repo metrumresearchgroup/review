@@ -4,7 +4,14 @@
 \alias{diffFiles}
 \title{Visual diff between two different files}
 \usage{
-diffFiles(.file_1, .file_2, .banner_1 = NULL, .banner_2 = NULL)
+diffFiles(
+  .file_1,
+  .file_2,
+  .banner_1 = NULL,
+  .banner_2 = NULL,
+  .side_by_side = TRUE,
+  .ignore_white_space = FALSE
+)
 }
 \arguments{
 \item{.file_1}{file path of first file from working directory}
@@ -14,6 +21,10 @@ diffFiles(.file_1, .file_2, .banner_1 = NULL, .banner_2 = NULL)
 \item{.banner_1}{Header for first file in viewer}
 
 \item{.banner_2}{Header for second file in viewer}
+
+\item{.side_by_side}{Logical. Should diffs be displayed side by side?}
+
+\item{.ignore_white_space}{Logical. Should white space be ignored?}
 }
 \description{
 Compares the current version of two scripts against one another.
