@@ -4,16 +4,19 @@
 \alias{checkDirQC}
 \title{Check if Files in Directory are in QC Log}
 \usage{
-checkDirQC(.dir_path, .only_not_in_QC_log = FALSE)
+checkDirQC(.dir_path)
 }
 \arguments{
 \item{.dir_path}{Path to directory containing files to search}
-
-\item{.only_not_in_QC_log}{Logical. Set to TRUE to have only files not in QC log returned}
 }
 \description{
 Helper function to ensure all files needing QC are added to the QC log.
 Provide a directory and it will be recursively searched for all files that
 exist within it. Each file will be checked if it exists in the QC log and if
 it is returned by \code{logPending()}.
+}
+\examples{
+\dontrun{
+checkDirQC(here::here("script"))
+}
 }

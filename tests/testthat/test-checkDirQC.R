@@ -24,7 +24,7 @@ add_file("file.txt", "something2")
 
 add_commit("second")
 
-tempdf <- checkDirQC(getwd())
+tempdf <- checkDirQC(.dir_path = getwd())
 
 test_that("checkDirQC correctly assigns categories for files in and not in QC log [REV-CQC-001]", {
   expect_equal(nrow(tempdf %>% dplyr::filter(QCLog == "Y")), 3)
