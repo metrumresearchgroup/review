@@ -17,7 +17,7 @@ dirPending <- function(.dir) {
   
   all_files <- pathFromLogRoot(list.files(.dir, full.names = TRUE, recursive = TRUE))
   extensions <- tools::file_ext(all_files)
-  all_files <- all_files[extensions %in% c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp")]
+  all_files <- all_files[extensions %in% c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp", "mod", "stan")]
   
   qc_log <- 
     readr::read_csv(file.path(logRoot(), "QClog.csv")) %>% 
