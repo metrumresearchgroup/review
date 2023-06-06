@@ -16,6 +16,8 @@
 dirPending <- function(.dir) {
   
   all_files <- pathFromLogRoot(list.files(.dir, full.names = TRUE, recursive = TRUE))
+  extensions <- tools::file_ext(all_files)
+  all_files <- all_files[extensions %in% c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp")]
   
   qc_log <- 
     readr::read_csv(file.path(logRoot(), "QClog.csv")) %>% 
@@ -32,7 +34,7 @@ dirPending <- function(.dir) {
     dplyr::tibble(
       file = all_files,
       `QCLog` = dplyr::if_else(file %in% qc_log, "Y", "N"),
-      `QCPending` = dplyr::if_else(file %in% pending_scripts, "Y", "N")
+      `QCed` = dplyr::if_else(file %in% qc_log & !file %in% pending_scripts, "Y", "N")
     )
   
   return(script_qc)
