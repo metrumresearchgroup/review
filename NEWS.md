@@ -4,7 +4,7 @@
 
 - `diffQced()` now includes arguments for diff mode and ignore white space. (#20)
 
-- `dirPending()` added to package to check if files in a directory are in QC log.
+- `dirPending()` added to package to check if files in a directory are in QC log.(#21)
 
 # review 3.2.0
 
