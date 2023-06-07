@@ -3,6 +3,7 @@
 export(diffFiles)
 export(diffPreviousRevisions)
 export(diffQced)
+export(dirPending)
 export(getQcedRevision)
 export(logAccept)
 export(logAssign)

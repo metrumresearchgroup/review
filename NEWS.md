@@ -1,7 +1,10 @@
 # review 3.3.0 development
 
 - `diffQced()` allows the file path to be wrapped in here::here. (#20)
+
 - `diffQced()` now includes arguments for diff mode and ignore white space. (#20)
+
+- `dirPending()` added to package to check if files in a directory are in QC log.
 
 # review 3.2.0
 
