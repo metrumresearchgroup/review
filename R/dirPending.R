@@ -10,7 +10,7 @@
 #'
 #' @examples 
 #'\dontrun{
-#' checkDirQC(here::here("script"))
+#' dirPending(here::here("script"))
 #'}
 #' @export
 dirPending <- function(.dir) {

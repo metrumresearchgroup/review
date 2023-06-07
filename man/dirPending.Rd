@@ -17,6 +17,6 @@ it is returned by \code{logPending()}.
 }
 \examples{
 \dontrun{
-checkDirQC(here::here("script"))
+dirPending(here::here("script"))
 }
 }
