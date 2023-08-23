@@ -7,9 +7,6 @@
 #' 
 #' @param .file Relative file path of the file of interest
 #' 
-#' @details 
-#' 
-#' 
 #' @export
 svnMeta <- function(.file) {
   
