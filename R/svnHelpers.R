@@ -1,7 +1,7 @@
 #' @keywords internal
 svnCommand <- function(.file, .command, .flags = NULL) {
   
-  temp_loc <- file.path(tempdir(), "repository_log.xml")
+  temp_loc <- file.path(tempfile(fileext = ".xml"))
   flags <- paste0(c(rep("-", length(.flags))), .flags, collapse = " ")
   
   if(!is.null(.flags)) {
