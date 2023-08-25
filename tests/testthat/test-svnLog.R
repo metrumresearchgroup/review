@@ -16,11 +16,10 @@ add_commit("fourth")
 add_file("file.txt", "something5")
 add_commit("fifth")
 
-metaList <- svnMeta("file.txt")
+metadf <- svnLog("file.txt")
 
-test_that("svnMeta includes both log and info meta data", {
-  expect_true(all(c("log", "info") %in% names(metaList)))
-  expect_equal(length(metaList), 2)
-  expect_equal(length(metaList$log), 5)
-  expect_equal(length(metaList$info), 1)
+test_that("svnLog includes all commits in dataframe format", {
+  expect_true(all(c("author", "date", "msg", "rev") %in% names(metadf)))
+  expect_equal(nrow(metadf), 5)
+  expect_equal(length(unique(metadf$rev)), 5)
 })

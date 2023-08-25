@@ -8,12 +8,8 @@
 #' @param .file Relative file path of the file of interest
 #' 
 #' @export
-svnMeta <- function(.file) {
+svnLog <- function(.file) {
   
-  return_list <- list()
-  
-  return_list$log <- svnCommand(.file = .file, .command = "log")
-  return_list$info <- svnCommand(.file = .file, .command = "info")
-  
-  return(return_list)
+  logdf <- svnCommand(.file = .file, .command = "log")
+  dplyr::bind_rows(logdf) %>% dplyr::rename(rev = .attrs)
 }
