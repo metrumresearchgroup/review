@@ -1,14 +1,9 @@
 #' @keywords internal
-svnCommand <- function(.file, .command, .flags = NULL) {
+svnCommand <- function(.file, .command) {
   
   temp_loc <- file.path(tempfile(fileext = ".xml"))
-  flags <- paste0(rep("-", length(.flags)), .flags, collapse = " ")
   
-  if(!is.null(.flags)) {
-    flags <- paste0(flags, " ")
-  }
-  
-  command <- paste0("svn ", .command, " ", flags, "--xml ", .file, " > ", temp_loc)
+  command <- paste0("svn ", .command, " ", "--xml ", .file, " > ", temp_loc)
   system(command)
   
   parsedLog <- XML::xmlParse(temp_loc)

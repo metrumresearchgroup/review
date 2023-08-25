@@ -16,7 +16,7 @@ add_commit("fourth")
 add_file("file.txt", "something5")
 add_commit("fifth")
 
-logList <- svnCommand(.file = "file.txt", .command = "log", .flags = c("v"))
+logList <- svnCommand(.file = "file.txt", .command = "log")
 infoList <- svnCommand(.file = "file.txt", .command = "info")
 
 test_that("svnCommand has a list output and expected size of entries", {

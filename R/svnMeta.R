@@ -12,7 +12,7 @@ svnMeta <- function(.file) {
   
   return_list <- list()
   
-  return_list$log <- svnCommand(.file = .file, .command = "log", .flags = c("v"))
+  return_list$log <- svnCommand(.file = .file, .command = "log")
   return_list$info <- svnCommand(.file = .file, .command = "info")
   
   return(return_list)
