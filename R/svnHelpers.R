@@ -1,10 +1,10 @@
 #' @keywords internal
 svnCommand <- function(.command, .file = NULL) {
   
-  command <- paste0("svn ", .command, " ", "--xml ", .file)
+  command <- paste("svn", .command, "--xml", .file, sep = " ")
   temp_loc <- system(command, intern = TRUE)
-  parsedLog <- XML::xmlParse(temp_loc)
-  listLog <- XML::xmlToList(parsedLog)
+  parsed_results <- XML::xmlParse(temp_loc)
+  list_results <- XML::xmlToList(parsed_results)
   
-  return(listLog)
+  return(list_results)
 }

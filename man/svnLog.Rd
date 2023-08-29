@@ -7,10 +7,8 @@
 svnLog(.file)
 }
 \arguments{
-\item{.file}{Relative file path of the file of interest}
+\item{.file}{File path of the file of interest}
 }
 \description{
-Returns the raw output of \verb{svn log} and \verb{svn info} for the specified
-file. \verb{svn log} provides information regarding each revision of the
-file and \verb{svn info} provides an overview of the latest update.
+Returns the \verb{svn log} in dataframe format.
 }

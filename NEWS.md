@@ -1,4 +1,10 @@
-# review 3.3.0 development
+# review development
+
+## New features and changes
+
+- `svnLog` added to package to return the svn log in dataframe format. (#25)
+
+# review 3.3.0 
 
 - `diffQced()` allows the file path to be wrapped in here::here. (#20)
 

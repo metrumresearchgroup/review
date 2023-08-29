@@ -3,6 +3,10 @@
 
 globalVariables(
   c(
-    "revf"
+    "revf",
+    ".attrs",
+    "author",
+    "datetime",
+    "msg"
   )
 )

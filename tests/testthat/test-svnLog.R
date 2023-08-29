@@ -19,7 +19,7 @@ add_commit("fifth")
 metadf <- svnLog("file.txt")
 
 test_that("svnLog includes all commits in dataframe format", {
-  expect_true(all(c("author", "date", "msg", "rev") %in% names(metadf)))
+  expect_true(all(c("author", "datetime", "rev", "msg") %in% names(metadf)))
   expect_equal(nrow(metadf), 5)
   expect_equal(length(unique(metadf$rev)), 5)
 })
