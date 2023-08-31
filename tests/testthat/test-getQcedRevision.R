@@ -10,7 +10,7 @@ add_commit("first")
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
-test_that("getQcedRevision finds the latest accepted revision number [REV-GQR-001]", {
+test_that("getQcedRevision finds the latest accepted revision number", {
   expect_true(getQcedRevision("file.txt") == 1)
 })
 
@@ -20,6 +20,6 @@ add_commit("second")
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
-test_that("getQcedRevision finds the latest accepted revision number [REV-GQR-001]", {
+test_that("getQcedRevision finds the latest accepted revision number", {
   expect_true(getQcedRevision("file.txt") == 2)
 })
