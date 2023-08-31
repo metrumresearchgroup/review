@@ -10,7 +10,7 @@ add_commit("first")
 logAssign(file = "file.txt")
 tempdf <- readr::read_csv("QClog.csv") %>% suppressMessages()
 
-test_that("logAssign creates a row in the QClog for the specified file [REV-ASN-001]", {
+test_that("logAssign creates a row in the QClog for the specified file", {
   expect_true(tempdf$file[1] == "file.txt")
 })
 

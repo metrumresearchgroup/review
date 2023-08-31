@@ -26,7 +26,7 @@ add_commit("second")
 
 tempdf <- dirPending(.dir = getwd())
 
-test_that("dirPending correctly assigns categories for files in and not in QC log [REV-CQC-001]", {
+test_that("dirPending correctly assigns categories for files in and not in QC log", {
   expect_equal(nrow(tempdf %>% dplyr::filter(QCLog == "Y")), 3)
   expect_equal(nrow(tempdf %>% dplyr::filter(QCLog == "N")), 3)
   expect_equal(nrow(tempdf %>% dplyr::filter(QCed == "N")), 4)

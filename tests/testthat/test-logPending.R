@@ -19,7 +19,7 @@ logAccept("file.txt")
 pending <- logPending()
 
 
-test_that("logPending creates a row in the QClog for all non QCed files [REV-PND-001]", {
+test_that("logPending creates a row in the QClog for all non QCed files", {
   expect_true(nrow(tempdf) == 3)
   expect_true(nrow(pending) == 2)
   expect_true(pending$headf[1] == 1)

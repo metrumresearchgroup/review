@@ -9,7 +9,7 @@ add_file("data/filespec.txt", "something")
 logCreate()
 
 # Confirm users are able to provide a path with ../ or give an absolute path
-test_that("relpath outputs script paths relative to the QC log location: for unresolved or absolute path [REV-REL-001]", {
+test_that("relpath outputs script paths relative to the QC log location: for unresolved or absolute path", {
   expect_identical("script/file.txt", pathFromLogRoot("data/../script/file.txt"))
   expect_identical("script/file.txt", relPath("data/../script/file.txt"))
   expect_identical("script/file.txt", pathFromLogRoot("/tmp/svn-testing/test/script/file.txt"))
@@ -23,7 +23,7 @@ logAssign("script/../data/filespec.txt")
 add_commit("first")
 qclog <- readr::read_csv("QClog.csv") %>% suppressMessages()
 
-test_that("relpath outputs script paths relative to the QC log location - only resolved file paths are stored in the QClog [REV-REL-001]", {
+test_that("relpath outputs script paths relative to the QC log location - only resolved file paths are stored in the QClog", {
   expect_true(nrow(qclog) == 3)
   expect_identical(
     unique(qclog$file), 
@@ -38,7 +38,7 @@ qclog_combine <- qclog %>% dplyr::bind_rows(qclog_old)
 readr::write_csv(qclog_combine, "QClog.csv") 
 
 # Confirm legacy QClogs will not show duplicate records for same file with different paths
-test_that("logPending only includes resolved paths when unresolved paths present [REV-PND-002]", {
+test_that("logPending only includes resolved paths when unresolved paths present", {
   pendingcsv <- logPending()
   expect_identical(
     pendingcsv$file, 

@@ -12,7 +12,7 @@ tempdf <- readr::read_csv("QClog.csv") %>% suppressMessages()
 
 tempdf_sum <- logSummary()
 
-test_that("logSummary only shows latest approved revision of a file [REV-SUM-001]", {
+test_that("logSummary only shows latest approved revision of a file", {
   expect_true(nrow(tempdf) > nrow(tempdf_sum))
   expect_true(tempdf_sum$revf == 1)
 })
