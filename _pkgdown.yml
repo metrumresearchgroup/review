@@ -27,3 +27,7 @@ reference:
     - getQcedRevision
     - diffFiles
     - dirPending
+  - title: SVN Tools
+    desc: Easily access information about SVN repos
+    contents:
+    - svnLog
