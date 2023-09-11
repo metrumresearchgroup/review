@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.4.0</span>
       </span>
     </div>
 
@@ -44,21 +44,29 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.3.0" id="review-330-development">review 3.3.0 development<a class="anchor" aria-label="anchor" href="#review-330-development"></a></h2>
-<ul><li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> allows the file path to be wrapped in here::here. (#20)</p></li>
-<li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> now includes arguments for diff mode and ignore white space. (#20)</p></li>
-<li><p><code><a href="../reference/dirPending.html">dirPending()</a></code> added to package to check if files in a directory are in QC log.(#21)</p></li>
+<h2 class="page-header" data-toc-text="3.4.0" id="review-340">review 3.4.0<a class="anchor" aria-label="anchor" href="#review-340"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-changes-3-4-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-4-0"></a></h3>
+<ul><li>
+<code>svnLog</code> added to package to return the svn log in dataframe format. (<a href="https://github.com/metrumresearchgroup/review/issues/25" class="external-link">#25</a>)</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.3.0" id="review-330">review 3.3.0<a class="anchor" aria-label="anchor" href="#review-330"></a></h2>
+<ul><li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> allows the file path to be wrapped in here::here. (<a href="https://github.com/metrumresearchgroup/review/issues/20" class="external-link">#20</a>)</p></li>
+<li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> now includes arguments for diff mode and ignore white space. (<a href="https://github.com/metrumresearchgroup/review/issues/20" class="external-link">#20</a>)</p></li>
+<li><p><code><a href="../reference/dirPending.html">dirPending()</a></code> added to package to check if files in a directory are in QC log.(<a href="https://github.com/metrumresearchgroup/review/issues/21" class="external-link">#21</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.2.0" id="review-320">review 3.2.0<a class="anchor" aria-label="anchor" href="#review-320"></a></h2>
 <div class="section level3">
 <h3 id="new-features-and-changes-3-2-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-2-0"></a></h3>
 <ul><li>
-<code><a href="../reference/diffFiles.html">diffFiles()</a></code> allows the user to compare the differences between two local files. (#14)</li>
+<code><a href="../reference/diffFiles.html">diffFiles()</a></code> allows the user to compare the differences between two local files. (<a href="https://github.com/metrumresearchgroup/review/issues/14" class="external-link">#14</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -66,12 +74,12 @@
 <div class="section level3">
 <h3 id="new-features-and-changes-3-1-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-1-0"></a></h3>
 <ul><li>
-<code><a href="../reference/logAssign.html">logAssign()</a></code> and <code><a href="../reference/logAccept.html">logAccept()</a></code> now resolve file paths before adding records to the QC log. Absolute paths can now be used as well. (#9)</li>
+<code><a href="../reference/logAssign.html">logAssign()</a></code> and <code><a href="../reference/logAccept.html">logAccept()</a></code> now resolve file paths before adding records to the QC log. Absolute paths can now be used as well. (<a href="https://github.com/metrumresearchgroup/review/issues/9" class="external-link">#9</a>)</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-3-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-1-0"></a></h3>
 <ul><li>
-<code><a href="../reference/logPending.html">logPending()</a></code> returns multiple outputs for the same file with different file paths in the QClog. <code>script/file.txt</code> is viewed as a different file than <code>data/../script/file.txt</code>. Now returns only resolved paths. (#9)</li>
+<code><a href="../reference/logPending.html">logPending()</a></code> returns multiple outputs for the same file with different file paths in the QClog. <code>script/file.txt</code> is viewed as a different file than <code>data/../script/file.txt</code>. Now returns only resolved paths. (<a href="https://github.com/metrumresearchgroup/review/issues/9" class="external-link">#9</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -79,16 +87,16 @@
 <div class="section level3">
 <h3 id="bug-fixes-3-0-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-0-1"></a></h3>
 <ul><li>
-<code><a href="../reference/diffQced.html">diffQced()</a></code> and <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code> now default to side by side view. (#4)</li>
+<code><a href="../reference/diffQced.html">diffQced()</a></code> and <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code> now default to side by side view. (<a href="https://github.com/metrumresearchgroup/review/issues/4" class="external-link">#4</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.0" id="review-300">review 3.0.0<a class="anchor" aria-label="anchor" href="#review-300"></a></h2>
 <div class="section level3">
 <h3 id="new-features-and-changes-3-0-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-0-0"></a></h3>
-<ul><li><p>Functions were carried over from the previous <code>review</code> package version 2.5, including: <code><a href="../reference/logAccept.html">logAccept()</a></code>, <code><a href="../reference/logAssign.html">logAssign()</a></code>, <code><a href="../reference/logCreate.html">logCreate()</a></code>, <code><a href="../reference/logPending.html">logPending()</a></code> and <code><a href="../reference/logSummary.html">logSummary()</a></code>. (#1)</p></li>
-<li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> and <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code> allow the user to view the differences between versions of files. <code><a href="../reference/diffQced.html">diffQced()</a></code> determines the difference using the local copy of the file and the most recently QCed version. (#1)</p></li>
-<li><p><code><a href="../reference/getQcedRevision.html">getQcedRevision()</a></code> returns the revision number for a file that’s been added to the QC log. (#1)</p></li>
+<ul><li><p>Functions were carried over from the previous <code>review</code> package version 2.5, including: <code><a href="../reference/logAccept.html">logAccept()</a></code>, <code><a href="../reference/logAssign.html">logAssign()</a></code>, <code><a href="../reference/logCreate.html">logCreate()</a></code>, <code><a href="../reference/logPending.html">logPending()</a></code> and <code><a href="../reference/logSummary.html">logSummary()</a></code>. (<a href="https://github.com/metrumresearchgroup/review/issues/1" class="external-link">#1</a>)</p></li>
+<li><p><code><a href="../reference/diffQced.html">diffQced()</a></code> and <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code> allow the user to view the differences between versions of files. <code><a href="../reference/diffQced.html">diffQced()</a></code> determines the difference using the local copy of the file and the most recently QCed version. (<a href="https://github.com/metrumresearchgroup/review/issues/1" class="external-link">#1</a>)</p></li>
+<li><p><code><a href="../reference/getQcedRevision.html">getQcedRevision()</a></code> returns the revision number for a file that’s been added to the QC log. (<a href="https://github.com/metrumresearchgroup/review/issues/1" class="external-link">#1</a>)</p></li>
 </ul></div>
 </div>
   </div>
@@ -105,7 +113,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
