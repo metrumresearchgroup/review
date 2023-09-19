@@ -7,6 +7,10 @@ globalVariables(
     ".attrs",
     "author",
     "datetime",
-    "msg"
+    "msg",
+    "lastauthor",
+    "lastedit",
+    "lastrev",
+    "reviewer"
   )
 )

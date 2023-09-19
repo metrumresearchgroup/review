@@ -1,5 +1,5 @@
 #' @keywords internal
-svnCommand <- function(.command, .file = NULL) {
+svnCommand <- function(.command, .file = NULL, .quiet = TRUE) {
   
   command <- paste("svn", .command, "--xml", .file, sep = " ")
   temp_loc <- system(command, intern = TRUE)
