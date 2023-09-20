@@ -42,4 +42,6 @@ renderQCSummary <- function(.dir, .output_dir = NULL) {
     utils::browseURL(output_path)
   }
   
+  return(invisible())
+  
 }
