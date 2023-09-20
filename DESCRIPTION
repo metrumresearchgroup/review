@@ -23,7 +23,9 @@ Imports:
     diffobj,
     stringr,
     fs,
-    cli
+    cli,
+    pmtables,
+    rmarkdown
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

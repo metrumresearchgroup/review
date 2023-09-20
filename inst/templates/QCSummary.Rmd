@@ -1,0 +1,94 @@
+---
+title: "QC Summary"
+author: "`r Sys.info()[['user']]`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document:
+    toc: true
+params: 
+  dirSummaryRes: "`r list()`"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include=FALSE}
+dir_summary_data <- params$dirSummaryRes$data
+
+dir_summary_data <-
+  dir_summary_data %>%
+  dplyr::arrange(Author) %>%
+  dplyr::filter(Status != "Not in SVN") %>%
+  dplyr::mutate(Status = factor(
+    Status,
+    levels = c("Not in QC log", "In QC log, needs QC", "QC up to date")
+  ))
+
+```
+
+\newpage
+
+# Summaries
+
+\newpage
+
+## QC Pending
+
+```{r, results='asis'}
+
+dir_summary_data %>%
+  dplyr::filter(Status == "In QC log, needs QC") %>%
+  dplyr::arrange(Author, File) %>% 
+  dplyr::add_count(Author) %>% 
+  dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
+  dplyr::select(Author, File) %>% 
+  pmtables::st_new() %>% 
+  pmtables::st_clear_reps("Author") %>%
+  pmtables::st_bold(cols = "Author") %>% 
+  pmtables::stable() %>%
+  pmtables::st_asis()
+
+```
+
+\newpage
+
+# Contributors
+
+\newpage
+
+```{r, results='asis'}
+authors <- 
+  dir_summary_data %>%
+  dplyr::distinct(Author) %>%
+  dplyr::pull(Author)
+
+for (author.i in authors) {
+  
+  writeLines(paste0("## ", author.i))
+  
+  tab.i <-
+    dir_summary_data %>%
+    dplyr::filter(Author == author.i) %>%
+    dplyr::select(File, `Latest edit`, QCer, Status) %>%
+    dplyr::arrange(Status) %>%
+    pmtables::st_new() %>%
+    pmtables::st_panel("Status") %>%
+    pmtables::stable_long(
+      lt_cap_text = paste0(
+        "Project ",
+        params$dirSummaryRes$project,
+        "- QC checker for all scripts in ",
+        basename(params$dirSummaryRes$directory),
+        " for ",
+        author.i
+      )
+    )
+  pmtables::st_wrap(tab.i)
+  
+  rm(tab.i)
+  
+  writeLines("\n")
+  writeLines("\\newpage")
+}
+
+```
