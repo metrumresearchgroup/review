@@ -23,7 +23,6 @@ Imports:
     diffobj,
     stringr,
     fs,
-    lubridate,
     cli
 Suggests: 
     knitr,

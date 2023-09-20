@@ -1,7 +1,7 @@
 #' @export
 dirSummary <- function(.dir) {
   
-  project_name <- tryCatch(basename(logRoot()), error = identity)
+  project_name <- tryCatch(basename(review:::logRoot()), error = identity)
   
   if (inherits(project_name, "error")) {
     stop("No QC log found")
@@ -18,19 +18,19 @@ dirSummary <- function(.dir) {
   
   extensions <- tools::file_ext(all_files)
   
-  relevant_files <- all_files[extensions %in% relevant_file_types] %>% pathFromLogRoot()
+  relevant_files <- all_files[extensions %in% relevant_file_types] %>% review:::pathFromLogRoot()
   
   relevant_files_df <- dplyr::tibble(
     file = relevant_files,
     lastauthor = NA_character_,
-    lastedit = lubridate::NA_POSIXct_,
+    lastedit = NA_real_,
     lastrev = NA_real_,
     insvn = NA_character_,
   )
   
   
   # Determine current log state ---------------------------------------------
-  log_summary <- logSummary()
+  log_summary <- review::logSummary()
   
   # Build data --------------------------------------------------------------
   relevant_files_df <- relevant_files_df %>% dplyr::left_join(log_summary, by = "file")
@@ -41,7 +41,7 @@ dirSummary <- function(.dir) {
   for (i in 1:n_iter) {
     
     log.i <- tryCatch(
-      suppressWarnings(suppressMessages(svnLog(relevant_files_df$file[i]))),
+      suppressWarnings(suppressMessages(review::svnLog(relevant_files_df$file[i]))),
       error = identity
     )
     
@@ -71,7 +71,7 @@ dirSummary <- function(.dir) {
     dplyr::transmute(
       File = file,
       Author = lastauthor,
-      `Latest edit` = lastedit,
+      `Latest edit` = as.POSIXct(lastedit, origin = "1970-01-01", tz = "UTC"),
       `Latest rev` = lastrev,
       Status = dplyr::case_when(
         insvn == "No" ~ "Not in SVN",

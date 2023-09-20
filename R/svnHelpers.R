@@ -1,8 +1,25 @@
 #' @keywords internal
-svnCommand <- function(.command, .file = NULL, .quiet = TRUE) {
+svnCommand <- function(.command,.file = NULL, .quiet = TRUE) {
   
-  command <- paste("svn", .command, "--xml", .file, sep = " ")
-  temp_loc <- system(command, intern = TRUE)
+  command_run <- paste("svn",
+                       .command,
+                       ifelse(.quiet, "2>/dev/null", ""),
+                       "--xml",
+                       .file,
+                       sep = " ")
+  
+  temp_loc <-
+    tryCatch(
+      system(command_run, intern = TRUE),
+      error = identity
+    ) %>% 
+    suppressWarnings() %>% 
+    suppressMessages()
+  
+  if (!is.null(attr(temp_loc, "errmsg"))) {
+    stop(attr(temp_loc, "errmsg"))
+  }
+  
   parsed_results <- XML::xmlParse(temp_loc)
   list_results <- XML::xmlToList(parsed_results)
   
