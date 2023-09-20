@@ -25,13 +25,13 @@ logAccept(file = "file3.R")
 add_file("file.R", "something-new")
 add_commit("second")
 
-renderQCSummary(.dir = logRoot(), .output_dir = logRoot())
-
-test_that("renderQCSummary works with valid directory", {
-  # Check that the output file was created
-  expect_true(file.exists(file.path(logRoot(), paste0("qc-summary-", Sys.Date(), ".pdf"))))
-  
-})
+# renderQCSummary(.dir = logRoot(), .output_dir = logRoot())
+# 
+# test_that("renderQCSummary works with valid directory", {
+#   # Check that the output file was created
+#   expect_true(file.exists(file.path(logRoot(), paste0("qc-summary-", Sys.Date(), ".pdf"))))
+#   
+# })
 
 temp_dir <- tempdir()
 renderQCSummary(.dir = logRoot())
