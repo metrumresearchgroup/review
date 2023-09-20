@@ -1,7 +1,36 @@
+#' QC Summary of Files within a Directory
+#'
+#' This function provides a QC summary of relevant files in a specified directory.
+#' It checks if the file has been checked into SVN, its latest modification date, 
+#' author, revision and QC status.
+#'
+#' @param .dir A character string indicating the directory to be checked.
+#'
+#' @return A list containing:
+#'   * `project`: the name of the project repository.
+#'   * `data`: a data.frame containing information about the relevant files including:
+#'     - `File`: the name of the file.
+#'     - `Author`: the last author to modify the file.
+#'     - `Latest edit`: the latest date and time of modification.
+#'     - `Latest rev`: the last revision number.
+#'     - `Status`: indicating whether the file is in SVN, in QC log, and if it needs QC.
+#'     - `QCer`: the reviewer name if the file is in QC log.
+#'   * `directory`: the provided directory.
+#'
+#' @seealso 
+#' \code{\link[review]{logSummary}}, \code{\link[review]{svnLog}}
+#'
+#' @examples 
+#' \dontrun{
+#' # Assuming appropriate setup and the presence of required 
+#' # helper functions like logSummary and svnLog.
+#' # dirSummary("/path/to/directory")
+#' }
+#'
 #' @export
 dirSummary <- function(.dir) {
   
-  project_name <- tryCatch(basename(review:::logRoot()), error = identity)
+  project_name <- tryCatch(basename(logRoot()), error = identity)
   
   if (inherits(project_name, "error")) {
     stop("No QC log found")
@@ -18,7 +47,7 @@ dirSummary <- function(.dir) {
   
   extensions <- tools::file_ext(all_files)
   
-  relevant_files <- all_files[extensions %in% relevant_file_types] %>% review:::pathFromLogRoot()
+  relevant_files <- all_files[extensions %in% relevant_file_types] %>% pathFromLogRoot()
   
   relevant_files_df <- dplyr::tibble(
     file = relevant_files,
