@@ -29,6 +29,13 @@ dir_summary_data <-
     levels = c("Not in QC log", "In QC log, needs QC", "QC up to date")
   ))
 
+qc_status <-
+  dir_summary_data %>%
+  dplyr::arrange(Author, File) %>% 
+  dplyr::add_count(Author, Status) %>% 
+  dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
+  dplyr::select(Author, File, Status)
+
 ```
 
 \newpage
@@ -41,19 +48,40 @@ dir_summary_data <-
 
 ```{r, results='asis'}
 
-needs_qc <- 
-  dir_summary_data %>%
+needs_qc <-
+  qc_status %>% 
   dplyr::filter(Status == "In QC log, needs QC") %>% 
-  dplyr::arrange(Author, File) %>% 
-  dplyr::add_count(Author) %>% 
-  dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
-  dplyr::select(Author, File)
+  dplyr::select(-Status)
 
 if (nrow(needs_qc) == 0) {
   needs_qc <- dplyr::tibble(Author = "None", File = "None")
 }
 
 needs_qc %>%   
+  pmtables::st_new() %>% 
+  pmtables::st_clear_reps("Author") %>%
+  pmtables::st_bold(cols = "Author") %>% 
+  pmtables::stable_long() %>%
+  pmtables::st_asis()
+
+```
+
+\newpage
+
+## QC Up to Date
+
+```{r, results='asis'}
+
+qc_up_to_date <-
+  qc_status %>% 
+  dplyr::filter(Status == "QC up to date") %>% 
+  dplyr::select(-Status)
+
+if (nrow(qc_up_to_date) == 0) {
+  qc_up_to_date <- dplyr::tibble(Author = "None", File = "None")
+}
+
+qc_up_to_date %>%   
   pmtables::st_new() %>% 
   pmtables::st_clear_reps("Author") %>%
   pmtables::st_bold(cols = "Author") %>% 
