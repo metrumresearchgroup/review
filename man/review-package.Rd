@@ -8,6 +8,14 @@
 \description{
 Functions for managing logs of reviews of subversioned files (http://subversion.apache.org/).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/metrumresearchgroup/review}
+  \item Report bugs at \url{https://github.com/metrumresearchgroup/review/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Tim Bergsma \email{timb@metrumrg.com}
 
