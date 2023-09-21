@@ -7,7 +7,7 @@
 dirSummary(.dir)
 }
 \arguments{
-\item{.dir}{A character string indicating the directory to be checked.}
+\item{.dir}{Character string. Path to the directory to perform the QC summary on.}
 }
 \value{
 A list containing:

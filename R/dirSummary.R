@@ -4,7 +4,7 @@
 #' It checks if the file has been checked into SVN, its latest modification date, 
 #' author, revision and QC status.
 #'
-#' @param .dir A character string indicating the directory to be checked.
+#' @param .dir Character string. Path to the directory to perform the QC summary on.
 #'
 #' @return A list containing:
 #'   * `project`: the name of the project repository.
