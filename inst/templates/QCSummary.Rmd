@@ -57,7 +57,7 @@ needs_qc %>%
   pmtables::st_new() %>% 
   pmtables::st_clear_reps("Author") %>%
   pmtables::st_bold(cols = "Author") %>% 
-  pmtables::stable() %>%
+  pmtables::stable_long() %>%
   pmtables::st_asis()
 
 ```
