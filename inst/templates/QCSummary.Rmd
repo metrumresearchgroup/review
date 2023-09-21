@@ -66,8 +66,8 @@ needs_qc %>%
 
 # Contributors
 
-```{r}
-print(
+```{r, results='asis'}
+writeLines(
   paste0("QC status of all files in '",
          params$dirSummaryRes$directory,
          "' by author")

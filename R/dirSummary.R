@@ -69,6 +69,8 @@ dirSummary <- function(.dir) {
   
   for (i in 1:n_iter) {
     
+    cli::cli_progress_update()
+    
     log.i <- tryCatch(
       review::svnLog(relevant_files_df$file[i]),
       error = identity
@@ -88,7 +90,6 @@ dirSummary <- function(.dir) {
     relevant_files_df$lastrev[i] <- log.i$rev
     relevant_files_df$insvn[i] <- "Yes"
     
-    cli::cli_progress_update()
     rm(log.i)
   }
   
