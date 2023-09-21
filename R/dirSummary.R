@@ -70,7 +70,7 @@ dirSummary <- function(.dir) {
   for (i in 1:n_iter) {
     
     log.i <- tryCatch(
-      suppressWarnings(suppressMessages(review::svnLog(relevant_files_df$file[i]))),
+      review::svnLog(relevant_files_df$file[i]),
       error = identity
     )
     

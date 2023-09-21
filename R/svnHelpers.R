@@ -3,25 +3,19 @@ svnCommand <- function(.command,.file = NULL, .quiet = TRUE) {
   
   command_run <- paste("svn",
                        .command,
-                       ifelse(.quiet, "2>/dev/null", ""),
                        "--xml",
                        .file,
+                       ifelse(.quiet, "2>/dev/null", ""),
                        sep = " ")
   
-  temp_loc <-
-    tryCatch(
-      system(command_run, intern = TRUE),
-      error = identity
-    ) %>% 
-    suppressWarnings() %>% 
-    suppressMessages()
+  temp_loc <- system(command_run, intern = TRUE) %>% suppressWarnings()
   
-  if (!is.null(attr(temp_loc, "errmsg"))) {
-    stop(attr(temp_loc, "errmsg"))
+  if (!is.null(attr(temp_loc, "status"))) {
+    stop("svn command failed")
   }
   
   parsed_results <- XML::xmlParse(temp_loc)
   list_results <- XML::xmlToList(parsed_results)
   
-  return(list_results)
+  list_results
 }

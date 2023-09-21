@@ -1,13 +1,18 @@
 ---
+params: 
+  dirSummaryRes: "`r list()`"
 title: "QC Summary"
-author: "`r Sys.info()[['user']]`"
+subtitle: "`r params$dirSummaryRes$project`"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   pdf_document:
     toc: true
-params: 
-  dirSummaryRes: "`r list()`"
+header-includes:
+    - \usepackage{caption}
 ---
+
+\captionsetup[table]{labelformat=empty}
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -36,12 +41,19 @@ dir_summary_data <-
 
 ```{r, results='asis'}
 
-dir_summary_data %>%
-  dplyr::filter(Status == "In QC log, needs QC") %>%
+needs_qc <- 
+  dir_summary_data %>%
+  dplyr::filter(Status == "In QC log, needs QC") %>% 
   dplyr::arrange(Author, File) %>% 
   dplyr::add_count(Author) %>% 
   dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
-  dplyr::select(Author, File) %>% 
+  dplyr::select(Author, File)
+
+if (nrow(needs_qc) == 0) {
+  needs_qc <- dplyr::tibble(Author = "None", File = "None")
+}
+
+needs_qc %>%   
   pmtables::st_new() %>% 
   pmtables::st_clear_reps("Author") %>%
   pmtables::st_bold(cols = "Author") %>% 
@@ -53,6 +65,16 @@ dir_summary_data %>%
 \newpage
 
 # Contributors
+
+```{r}
+print(
+  paste0("QC status of all files in '",
+         params$dirSummaryRes$directory,
+         "' by author")
+)
+
+```
+
 
 \newpage
 
@@ -73,16 +95,8 @@ for (author.i in authors) {
     dplyr::arrange(Status) %>%
     pmtables::st_new() %>%
     pmtables::st_panel("Status") %>%
-    pmtables::stable_long(
-      lt_cap_text = paste0(
-        "Project ",
-        params$dirSummaryRes$project,
-        "- QC checker for all scripts in ",
-        basename(params$dirSummaryRes$directory),
-        " for ",
-        author.i
-      )
-    )
+    pmtables::stable_long()
+  
   pmtables::st_wrap(tab.i)
   
   rm(tab.i)
