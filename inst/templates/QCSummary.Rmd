@@ -3,7 +3,7 @@ params:
   dirSummaryRes: "`r list()`"
 title: "QC Summary"
 subtitle: "`r params$dirSummaryRes$project`"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
 output:
   pdf_document:
     toc: true
