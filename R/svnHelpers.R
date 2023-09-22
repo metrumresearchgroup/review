@@ -1,8 +1,9 @@
 #' @keywords internal
-svnCommand <- function(.command,.file = NULL, .quiet = TRUE) {
+svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE) {
   
   command_run <- paste("svn",
                        .command,
+                       .flags,
                        "--xml",
                        .file,
                        ifelse(.quiet, "2>/dev/null", ""),

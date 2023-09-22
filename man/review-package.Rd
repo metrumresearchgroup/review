@@ -17,12 +17,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tim Bergsma \email{timb@metrumrg.com}
+\strong{Maintainer}: Michael McDermott \email{michaelm@metrumrg.com}
 
 Authors:
 \itemize{
   \item Eric Anderson \email{andersone@metrumrg.com}
-  \item Michael McDermott \email{michaelm@metrumrg.com}
+  \item Tim Bergsma \email{timb@metrumrg.com}
 }
 
 }

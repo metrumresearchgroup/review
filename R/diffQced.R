@@ -17,6 +17,18 @@
 #' @export
 diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
   
+  up_to_date <-
+    tryCatch(
+      svnCommand("status", .file, "-u"),
+      error = identity
+    )
+  
+  if (!inherits(up_to_date, "error")) {
+    if (!is.null(up_to_date$target$entry)) {
+      stop("Please svn up '", .file, "' before running comparison")
+    }
+  }
+  
   diffPreviousRevisions(
     .file = .file, 
     .previous_revision = getQcedRevision(.file),
