@@ -17,6 +17,11 @@ test_that("diffQced reports no difference between identical files", {
 })
 
 add_file("file.txt", "something else")
+test_that("diffQced throws a warning if the file hasn't been updated with svn up", {
+  expect_error(diffqc <- diffQced("file.txt"))
+})
+
+add_commit("second")
 diffqc <- diffQced("file.txt")
 
 test_that("diffQced identifies difference between local and QCed file version", {
