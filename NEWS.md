@@ -1,3 +1,11 @@
+# review 3.5.0
+
+## New features and changes
+
+- `dirSummary` added to provide QC status of all scripts/models in a given directory. (#29, #30)
+
+- `renderQCSummary` added to create a pdf summary of the QC status of scripts in a given directory. (#29, #31, #32, #33, #35, #36)
+
 # review 3.4.0
 
 ## New features and changes
