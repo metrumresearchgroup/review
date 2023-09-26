@@ -25,7 +25,7 @@ logAccept(file = "file3.R")
 add_file("file.R", "something-new")
 add_commit("second")
 
-if (interactive()) {
+if (Sys.getenv("METWORX_VERSION") != "") {
   test_that("renderQCSummary works with valid directory", {
     
     expect_silent({
@@ -36,7 +36,7 @@ if (interactive()) {
     expect_true(file.exists(file.path(logRoot(), paste0("qc-summary-", Sys.Date(), ".pdf"))))
     
   })
-  
+    
   test_that("renderQCSummary doesn't save file if directory not given", {
     
     temp_dir <- tempdir()
