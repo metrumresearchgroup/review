@@ -2,7 +2,7 @@
 params: 
   dirSummaryRes: "`r list()`"
 title: "QC Summary"
-subtitle: "`r params$dirSummaryRes$project`"
+subtitle: "`r paste0(params$dirSummaryRes$project, ' (/', params$dirSummaryRes$directory, ')')`"
 date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
 output:
   pdf_document:
