@@ -4,7 +4,7 @@ svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xm
   command_run <- paste("svn",
                        .command,
                        .flags,
-                       "--xml",
+                       ifelse(.xml, "--xml", ""),
                        .file,
                        ifelse(.quiet, "2>/dev/null", ""),
                        sep = " ")
