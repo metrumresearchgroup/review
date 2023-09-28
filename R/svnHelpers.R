@@ -1,5 +1,5 @@
 #' @keywords internal
-svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE) {
+svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xml = TRUE) {
   
   command_run <- paste("svn",
                        .command,
@@ -13,6 +13,10 @@ svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE) {
   
   if (!is.null(attr(temp_loc, "status"))) {
     stop("svn command failed")
+  }
+  
+  if (!.xml) {
+    return(invisible(NULL))
   }
   
   parsed_results <- XML::xmlParse(temp_loc)
