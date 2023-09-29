@@ -4,7 +4,7 @@
 \alias{svnExport}
 \title{Export a specific revision of a file from SVN}
 \usage{
-svnExport(.file, .revision, .output_dir = getwd())
+svnExport(.file, .revision, .output_dir = getwd(), .return_file = FALSE)
 }
 \arguments{
 \item{.file}{A character string specifying the path to the SVN file to be exported.}
@@ -13,9 +13,8 @@ svnExport(.file, .revision, .output_dir = getwd())
 
 \item{.output_dir}{A character string specifying the directory where the exported file should be saved.
 Defaults to the current working directory.}
-}
-\value{
-NULL invisibly.
+
+\item{.return_file}{Boolean. Should the newly created file name be returned as a string?}
 }
 \description{
 This function exports a specific revision of a file from SVN to a desired output directory.
