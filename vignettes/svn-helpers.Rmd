@@ -28,10 +28,10 @@ knitr::opts_chunk$set(
 
 ```{r, message=FALSE}
 library(review)
-library(dplyr)
 ```
 
 ```{r, include=FALSE}
+library(dplyr)
 ex_svnlog <- dplyr::tibble(
   author = rep("michaelm", 4),
   datetime = c("2023-09-29 13:54:00", "2023-09-29 08:53:00", 
@@ -44,7 +44,7 @@ ex_svnlog <- dplyr::tibble(
 # svnLog
 
 For the purposes of this vignette, an example SVN repository and file 
-`test-file.txt` were created. Multiple commits were made modifying the file. 
+(`test-file.txt`) were created. Multiple commits were made modifying the file. 
 
 To figure out when the modifications were made, we can use `svnLog()`.
 
@@ -83,7 +83,7 @@ svnExport(.file = "test-file.txt", .revision = 1)
 Notice how this creates a new file, `test-file-1.txt` in your working directory.
 
 ```{r, eval=FALSE}
-file.exists(file.path(test_dir, "test-file-1.txt"))
+file.exists("test-file-1.txt")
 ```
 
 ```{r, echo=FALSE}
