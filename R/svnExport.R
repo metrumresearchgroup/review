@@ -9,7 +9,7 @@
 #' @param .output_dir A character string specifying the directory where the exported file should be saved.
 #'   Defaults to the current working directory.
 #' @param .return_file Boolean. Should the newly created file name be returned as a string?
-#'
+#' @param .quiet Boolean. Should messages be printed?
 #' 
 #' @examples
 #' \dontrun{
@@ -17,7 +17,7 @@
 #' }
 #' 
 #' @export
-svnExport <- function(.file, .revision, .output_dir = getwd(), .return_file = FALSE) {
+svnExport <- function(.file, .revision, .output_dir = getwd(), .return_file = FALSE, .quiet = FALSE) {
   
   if (!file.exists(.file)) {
     stop(".file not found")
@@ -51,7 +51,9 @@ svnExport <- function(.file, .revision, .output_dir = getwd(), .return_file = FA
     stop("svn export failed")
   }
   
-  cli::cli_inform(paste0("File exported: ", .file_rev_path))
+  if (!.quiet) {
+    cli::cli_inform(paste0("File exported: ", .file_rev_path))
+  }
   
   if (.return_file) {
     return(.file_rev_path)

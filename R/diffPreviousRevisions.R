@@ -23,15 +23,22 @@ diffPreviousRevisions <- function(.file,
                                   .side_by_side = TRUE,
                                   .ignore_white_space = FALSE){
   
-  .previous_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
+  .previous_revision_temp_dir <- tempdir()
   
-  system(glue::glue("svn export -r {.previous_revision} {.file} {.previous_revision_temp_file} -q"))
+  .previous_revision_temp_file <- 
+    svnExport(
+      .file = .file, 
+      .revision = .previous_revision, 
+      .output_dir = .previous_revision_temp_dir, 
+      .return_file = TRUE,
+      .quiet = TRUE
+    )
   
   .previous_revision_header <- glue::glue("{basename(.file)}: Revision {.previous_revision}")
   
-  .current_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
-  
   if (is.null(.current_revision)) {
+    
+    .current_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
     
     system(glue::glue("cp {.file} {.current_revision_temp_file}"))
     
@@ -39,7 +46,16 @@ diffPreviousRevisions <- function(.file,
     
   } else {
     
-    system(glue::glue("svn export -r {.current_revision} {.file} {.current_revision_temp_file} -q"))
+    .current_revision_temp_dir <- tempdir()
+    
+    .current_revision_temp_file <- 
+      svnExport(
+        .file = .file, 
+        .revision = .current_revision, 
+        .output_dir = .current_revision_temp_dir, 
+        .return_file = TRUE,
+        .quiet = TRUE
+      )
     
     .current_revision_header <- glue::glue("{basename(.file)}: Revision {.current_revision}")
     
@@ -58,5 +74,5 @@ diffPreviousRevisions <- function(.file,
     .side_by_side = .side_by_side, 
     .ignore_white_space = .ignore_white_space 
   )
-
+  
 }
