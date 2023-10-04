@@ -30,6 +30,10 @@
 #' @export
 dirSummary <- function(.dir) {
   
+  if (!dir.exists(.dir)) {
+    stop(".dir not found")
+  }
+  
   project_name <- tryCatch(basename(logRoot()), error = identity)
   
   if (inherits(project_name, "error")) {

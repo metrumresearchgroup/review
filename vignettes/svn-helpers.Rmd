@@ -1,0 +1,107 @@
+---
+title: "svn-helpers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{svn-helpers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This is a vignette to help you become familiar with using `svnLog()` and 
+`svnExport()`.
+
+`svnLog()` provides the history of all edits made to a file, including the
+author, revision and date/time of the commit. `svnExport()` makes it easy to
+restore a file to a previous revision.
+
+Below we will go through examples of both, including cases where the information
+from `svnLog()` can be used to more efficiently use `svnExport()`. 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Load libraries
+
+```{r, message=FALSE}
+library(review)
+```
+
+```{r, include=FALSE}
+library(dplyr)
+ex_svnlog <- dplyr::tibble(
+  author = rep("michaelm", 4),
+  datetime = c("2023-09-29 13:54:00", "2023-09-29 08:53:00", 
+               "2023-09-28 13:00:30", "2023-09-21 09:10:30"),
+  rev = c(4, 3, 2, 1),
+  msg = c("fourth commit", "third commit", "second commit", "first commit")
+)
+```
+
+# svnLog
+
+For the purposes of this vignette, an example SVN repository and file 
+(`test-file.txt`) were created. Multiple commits were made modifying the file. 
+
+To figure out when the modifications were made, we can use `svnLog()`.
+
+```{r, eval=FALSE}
+svnLog("test-file.txt")
+```
+
+```{r, echo=FALSE}
+ex_svnlog
+```
+
+Notice how the output data.frame is sorted such that the most recent commit is
+shown on the first row. We can see every author and revision number where the 
+file was modified and checked into SVN. 
+
+# svnExport
+
+Now that we know the revision numbers, we can use `svnExport()` to view any of
+the previous revisions. First we can look at what the current version of 
+`test-file.txt` looks like:
+
+```{r, eval=FALSE}
+readLines("test-file.txt")
+```
+
+```{r, echo=FALSE}
+print("Modified text")
+```
+
+Then, we can use `svnExport()` to view the first revision of the file.
+
+```{r, eval=FALSE}
+svnExport(.file = "test-file.txt", .revision = 1)
+```
+
+Notice how this creates a new file, `test-file-1.txt` in your working directory.
+
+```{r, eval=FALSE}
+file.exists("test-file-1.txt")
+```
+
+```{r, echo=FALSE}
+print(TRUE)
+```
+
+Now we can take a look at the first revision of the file.
+
+```{r, eval=FALSE}
+readLines("test-file-1.txt")
+```
+
+```{r, echo=FALSE}
+print("Initial text")
+```
+
+This process can be done for any file that has been checked into your SVN
+repository. `svnLog()` can easily identify the revision numbers of past edits
+and `svnExport()` can restore the file with a file name following this syntax
+[{original file name}-{revision number}].
+

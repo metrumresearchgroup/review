@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `svnExport` created function to run svn export in R. (#39)
+
 # review 3.5.0
 
 ## New features and changes
