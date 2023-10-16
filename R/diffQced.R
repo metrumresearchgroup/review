@@ -29,6 +29,10 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
     }
   }
   
+  if (is.logical(getQcedRevision("file.txt") %>% suppressWarnings())) {
+    stop("File has no previous QC")
+  }
+  
   diffPreviousRevisions(
     .file = .file, 
     .previous_revision = getQcedRevision(.file),
