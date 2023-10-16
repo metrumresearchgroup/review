@@ -33,6 +33,12 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
     stop("File has no previous QC")
   }
   
+  file_info <- svnLog(.file) %>% dplyr::slice(1)
+  
+  cli::cli_h1("diffQced info")
+  cli::cli_alert_info(paste0("Last author: ", file_info$author))
+  cli::cli_alert_info(paste0("Previous edit revision: ", file_info$rev))
+  
   diffPreviousRevisions(
     .file = .file, 
     .previous_revision = getQcedRevision(.file),
