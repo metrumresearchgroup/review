@@ -36,8 +36,8 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
   file_info <- svnLog(.file) %>% dplyr::slice(1)
   
   cli::cli_h1("diffQced info")
-  cli::cli_alert_info(paste0("Last author: ", file_info$author))
-  cli::cli_alert_info(paste0("Previous edit revision: ", file_info$rev))
+  cli::cli_alert_info(paste0("Last Author: ", file_info$author))
+  cli::cli_alert_info(paste0("QCed Revision: ", getQcedRevision(.file)))
   
   diffPreviousRevisions(
     .file = .file, 
