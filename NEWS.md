@@ -1,8 +1,12 @@
-# review development
+# review 3.6.0
 
 ## New features and changes
 
 - `svnExport` created function to run svn export in R. (#39)
+
+## Bug fixes
+
+- `diffQced` has more informative error message when no previous QC revision is found (#44)
 
 # review 3.5.0
 
