@@ -17,6 +17,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
     dplyr,
+    magrittr (>= 2.0.3),
     XML,
     utils,
     glue,

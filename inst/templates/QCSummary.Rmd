@@ -26,7 +26,7 @@ dir_summary_data <-
   dplyr::filter(Status != "Not in SVN") %>%
   dplyr::mutate(Status = factor(
     Status,
-    levels = c("Not in QC log", "In QC log, needs QC", "QC up to date")
+    levels = c("In QC log, needs QC", "QC up to date", "Not in QC log")
   ))
 
 qc_status <-

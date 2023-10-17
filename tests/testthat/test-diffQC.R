@@ -7,6 +7,10 @@ logCreate()
 
 add_commit("first")
 
+test_that("diffQced produces error message if no previous QC", {
+  expect_error(diffQced("file.txt"))
+})
+
 logAssign(file = "file.txt")
 logAccept(file = "file.txt")
 
