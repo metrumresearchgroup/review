@@ -10,8 +10,6 @@
 #' getQcedRevision(.file = "script/data-assembly.Rmd")
 #' }
 #' 
-#' @importFrom dplyr %>%
-#' 
 #' @export
 getQcedRevision <- function(.file){
   
@@ -32,14 +30,18 @@ getQcedRevision <- function(.file){
   
   qced_revision <- 
     qc_log %>% 
-    dplyr::filter(
-      stringr::str_detect(file, project_file_path)
-    ) %>% 
-    dplyr::filter(
-      revf == max(revf)
-    ) %>% 
+    dplyr::filter(revf != 0) %>% 
+    dplyr::filter(stringr::str_detect(file, project_file_path))
+  
+  if (nrow(qced_revision) == 0) {
+    return(NA_real_)
+  }
+  
+  qced_revision <-
+    qced_revision %>% 
+    dplyr::filter(revf == max(revf)) %>% 
     dplyr::pull(revf)
   
-  return(qced_revision)
+  qced_revision
   
 }

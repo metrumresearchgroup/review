@@ -29,19 +29,21 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
     }
   }
   
-  if (is.logical(getQcedRevision("file.txt") %>% suppressWarnings())) {
-    stop("File has no previous QC")
+  qced_revision <- getQcedRevision(.file)
+  
+  if (is.na(qced_revision)) {
+    cli::cli_abort(glue::glue("'{.file}' has no record in the QC log"))
   }
   
   file_info <- svnLog(.file) %>% dplyr::slice(1)
   
-  cli::cli_h1("diffQced info")
-  cli::cli_alert_info(paste0("Last Author: ", file_info$author))
-  cli::cli_alert_info(paste0("QCed Revision: ", getQcedRevision(.file)))
+  cli::cli_h2(glue::glue("QC diff for: ", .file))
+  cli::cli_inform(glue::glue("Last QCed Revision: ", qced_revision))
+  cli::cli_inform(glue::glue("Last Author: ", file_info$author))
   
   diffPreviousRevisions(
     .file = .file, 
-    .previous_revision = getQcedRevision(.file),
+    .previous_revision = qced_revision,
     .side_by_side = .side_by_side, 
     .ignore_white_space = .ignore_white_space
   )
