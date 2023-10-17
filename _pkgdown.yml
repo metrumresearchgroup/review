@@ -32,3 +32,4 @@ reference:
     desc: Easily access information about SVN repos
     contents:
     - svnLog
+    - svnExport

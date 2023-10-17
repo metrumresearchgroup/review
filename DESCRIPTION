@@ -1,6 +1,6 @@
 Package: review
 Title: Manage Review Logs
-Version: 3.5.0.9000
+Version: 3.6.0
 Authors@R: 
     c(
     person(given = "Eric", family = "Anderson", email = "andersone@metrumrg.com", role = c("aut")),
