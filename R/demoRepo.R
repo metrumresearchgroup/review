@@ -15,86 +15,126 @@
 #'
 #' @export
 demoRepo <- function(.project_name) {
-  curdir <- getwd()
-  on.exit(setwd(curdir))
-  repodir <- tempdir()
-
+  
+  curDir <- getwd()
+  on.exit(setwd(curDir))
+  
+  repoInitPath <- fs::path_temp("svn-proj")
+  
+  if (fs::dir_exists(repoInitPath)) {
+    fs::dir_delete(repoInitPath)
+  }
+  
   # Create svn repo at specified locations
-  system(glue::glue("svnadmin create {repodir}/svn-proj-{.project_name}"))
-  system(glue::glue("svn co file://{repodir}/svn-proj-{.project_name} {repodir}/demo -q"))
+  system(glue::glue("svnadmin create {repoInitPath}"))
+  
+  repoDir <- file.path(repoInitPath, .project_name)
+  
+  if (fs::dir_exists(repoDir)) {
+    fs::dir_delete(repoDir)
+  }
+  
+  fs::dir_create(repoDir)
+  
+  system(glue::glue("svn co file://{repoInitPath} {repoDir} -q"))
+  
+  setwd(repoDir)
+  
   # Add scripts to the repo
-  system(glue::glue("mkdir {repodir}/demo/script"))
-  system(glue::glue("mkdir {repodir}/demo/script/pk"))
+  fs::dir_create("script/pk", recurse = TRUE)
   
+  writeLines(
+    c(
+      "library(tidyverse)",
+      'src_abc <- mrgda::read_src_dir(here::here("data", "source", "STUDY-ABC"))',
+      "derived <- list(sl = list(),tv = list())",
+      'dm_0 <- src_abc$dm %>% filter(ACTARM != "Screen Failure")',
+      "derived$sl$dm <- dm_0"
+    ),
+    "script/data-assembly.R"
+  )
   
-  setwd(glue::glue("{repodir}/demo"))
+  writeLines(
+    c(
+      "library(tidyverse)",
+      "studies <- list()",
+      'studies$pk_abc <- readr::read_rds(here::here("data", "derived", "studies", "pk-abc.rds"))',
+      "pk_0 <- bind_rows(studies) %>% arrange(USUBJID, DATETIME)",
+      'pk_1 <- pk_0 %>% mrgda::assign_id(., "USUBJID")',
+      "pk_out <- pk_1"
+    ),
+    "script/combine-da.R"
+  )
   
-  create_file("script/data-assembly.R",
-           paste("library(tidyverse)",
-                 'src_abc <- mrgda::read_src_dir(here::here("data", "source", "STUDY-ABC"))',
-                 "derived <- list(sl = list(),tv = list())",
-                 'dm_0 <- src_abc$dm %>% filter(ACTARM != "Screen Failure")',
-                 "derived$sl$dm <- dm_0",
-                 sep = "\n"))
-  create_file("script/combine-da.R",
-           paste("library(tidyverse)",
-                 "studies <- list()",
-                 'studies$pk_abc <- readr::read_rds(here::here("data", "derived", "studies", "pk-abc.rds"))',
-                 "pk_0 <- bind_rows(studies) %>% arrange(USUBJID, DATETIME)",
-                 'pk_1 <- pk_0 %>% mrgda::assign_id(., "USUBJID")',
-                 "pk_out <- pk_1",
-                 sep = "\n"))
-  create_file("script/pk/load-spec.R", 
-           'pk_spec <- yspec::load_spec(here::here("script", "script/examp-yaml.yaml"))')
-  create_file("script/examp-txt.txt", "This is the first version of the txt file")
-  create_file("script/examp-yaml.yaml", "This is the first version of the yaml file")
+  writeLines(
+    c(
+      'pk_spec <- yspec::load_spec(here::here("script", "script/examp-yaml.yaml"))'
+    ),
+    "script/pk/load-spec.R"
+  )
+  
+  writeLines(c('This is the first version of the txt file'),
+             "script/examp-txt.txt")
+  
+  writeLines(c("This is the first version of the yaml file"),
+             "script/examp-yaml.yaml")
   
   # Create QC log
   logCreate()
   
   # Check everything into SVN
-  add_commit("first")
+  system("svn add * -q -q")
   
   # Assign and accept scripts in QC log
   logAssign("script/data-assembly.R")
   logAssign("script/pk/load-spec.R")
   logAssign("script/combine-da.R")
   logAssign("script/examp-txt.txt")
+  
+  system(glue::glue("svn commit -m 'logAssign commit' -q -q"))
+  
   logAccept("script/data-assembly.R")
   logAccept("script/pk/load-spec.R")
   logAccept("script/combine-da.R")
   
   # Check in updates to QC log
-  add_commit("second")
-  
+  system(glue::glue("svn commit -m 'second commit' -q -q"))
+
   # Make edits to QCed file
-  create_file("script/pk/load-spec.R", 
-              'pk_spec <- yspec::load_spec(here::here("script", "examp-yaml.yaml"))')
-  add_commit("third")
+  writeLines(
+    c('pk_spec <- yspec::load_spec(here::here("script", "examp-yaml.yaml"))'),
+    "script/pk/load-spec.R"
+  )
   
-  create_file("script/data-assembly.R",
-              paste("library(tidyverse)",
-                    'source(here::here("script", "data-assembly", "da-functions.R"))',
-                    'src_abc <- mrgda::read_src_dir(here::here("data", "source", "STUDY-ABC"))',
-                    "derived <- list(sl = list(),tv = list())",
-                    'dm_0 <- src_abc$dm %>% filter(ACTARM != "Screen Failure")',
-                    "derived$sl$dm <- dm_0",
-                    'pk_0 <- src_abc$pc %>% filter(PCTEST == "TEST OF INTEREST")',
-                    "derived$tv$pc <- pk_0",
-                    'ex_1 <- src_abc$ex %>% filter(EXTRT == "DRUG OF INTEREST")',
-                    "derived$tv$dosing <- ex_1",
-                    sep = "\n"))
-  add_commit("fourth")
+  system(glue::glue("svn commit -m 'third commit' -q -q"))
   
-  create_file("README.md",
-              paste("The following tasks are suggested to gain familiarity with the review package:",
-                    '- run `diffQCed()` on "script/pk/load-spec.R" and "script/data-assembly.R"',
-                    '- run `renderQCSummary()` on the "script" directory',
-                    '- use `logAssign()` to add "script/examp-txt.txt" to the QC log',
-                    '- run `logPending()` to see what scripts are in need of QC',
-                    '- use `logAccept()` to sign off on any scripts with pending QC',
-                    sep = "\n"))
+  writeLines(
+    c(
+      "library(tidyverse)",
+      'source(here::here("script", "data-assembly", "da-functions.R"))',
+      'src_abc <- mrgda::read_src_dir(here::here("data", "source", "STUDY-ABC"))',
+      "derived <- list(sl = list(),tv = list())",
+      'dm_0 <- src_abc$dm %>% filter(ACTARM != "Screen Failure")',
+      "derived$sl$dm <- dm_0",
+      'pk_0 <- src_abc$pc %>% filter(PCTEST == "TEST OF INTEREST")',
+      "derived$tv$pc <- pk_0",
+      'ex_1 <- src_abc$ex %>% filter(EXTRT == "DRUG OF INTEREST")',
+      "derived$tv$dosing <- ex_1"
+    ),
+    "script/data-assembly.R"
+  )
+  system(glue::glue("svn commit -m 'fourth commit' -q -q"))
   
-  return(glue::glue("{repodir}/demo"))
+  writeLines(
+    c("The following tasks are suggested to gain familiarity with the review package:",
+      '- run `diffQCed()` on "script/pk/load-spec.R" and "script/data-assembly.R"',
+      '- run `renderQCSummary()` on the "script" directory',
+      '- use `logAssign()` to add "script/examp-txt.txt" to the QC log',
+      '- run `logPending()` to see what scripts are in need of QC',
+      '- use `logAccept()` to sign off on any scripts with pending QC'),
+    "README.md"
+  )
+  
+  repoDir
 }
 
