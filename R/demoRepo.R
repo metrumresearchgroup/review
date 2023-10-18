@@ -82,6 +82,7 @@ demoRepo <- function(.project_name) {
   
   # Check everything into SVN
   system("svn add * -q -q")
+  system(glue::glue("svn commit -m 'initial commit' -q -q"))
   
   # Assign and accept scripts in QC log
   logAssign("script/data-assembly.R")
@@ -89,14 +90,14 @@ demoRepo <- function(.project_name) {
   logAssign("script/combine-da.R")
   logAssign("script/examp-txt.txt")
   
-  system(glue::glue("svn commit -m 'logAssign commit' -q -q"))
+  system(glue::glue("svn commit -m 'logAssign scripts ready for QC' -q -q"))
   
   logAccept("script/data-assembly.R")
   logAccept("script/pk/load-spec.R")
   logAccept("script/combine-da.R")
   
   # Check in updates to QC log
-  system(glue::glue("svn commit -m 'second commit' -q -q"))
+  system(glue::glue("svn commit -m 'logAccept scripts after QC' -q -q"))
 
   # Make edits to QCed file
   writeLines(
@@ -104,7 +105,7 @@ demoRepo <- function(.project_name) {
     "script/pk/load-spec.R"
   )
   
-  system(glue::glue("svn commit -m 'third commit' -q -q"))
+  system(glue::glue("svn commit -m 'modify load-spec script' -q -q"))
   
   writeLines(
     c(
@@ -121,7 +122,7 @@ demoRepo <- function(.project_name) {
     ),
     "script/data-assembly.R"
   )
-  system(glue::glue("svn commit -m 'fourth commit' -q -q"))
+  system(glue::glue("svn commit -m 'modify data-assembly' -q -q"))
   
   writeLines(
     c("The following tasks are suggested to gain familiarity with the review package:",

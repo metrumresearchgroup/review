@@ -22,3 +22,9 @@ test_that("demoRepo creates QC log and completes partial QC", {
     nrow(qclog %>% 
       dplyr::filter(file == "script/data-assembly.R")) == 2)
 })
+
+setwd(repo)
+
+test_that("demoRepo sets up files for logPending to have example output", {
+  expect_true(nrow(logPending()) == 3)
+})
