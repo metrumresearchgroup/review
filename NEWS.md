@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `demoRepo` creates a temporary svn repo with files with QC history for demonstrations. (#46)
+
 # review 3.6.0
 
 ## New features and changes

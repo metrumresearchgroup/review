@@ -34,8 +34,6 @@ demoRepo <- function(.project_name) {
     fs::dir_delete(repoDir)
   }
   
-  fs::dir_create(repoDir)
-  
   system(glue::glue("svn co file://{repoInitPath} {repoDir} -q"))
   
   setwd(repoDir)
