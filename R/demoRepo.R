@@ -56,10 +56,13 @@ demoRepo <- function(.project_name) {
   add_commit("first")
   
   # Assign and accept scripts in QC log
+  logAssign("script/data-assembly.R")
+  logAssign("script/pk/load-spec.R")
+  logAssign("script/combine-da.R")
+  logAssign("script/examp-txt.txt")
   logAccept("script/data-assembly.R")
   logAccept("script/pk/load-spec.R")
   logAccept("script/combine-da.R")
-  logAssign("script/examp-txt.txt")
   
   # Check in updates to QC log
   add_commit("second")
@@ -92,6 +95,6 @@ demoRepo <- function(.project_name) {
                     '- use `logAccept()` to sign off on any scripts with pending QC',
                     sep = "\n"))
   
-  return(glue::glue('Demo SVN repo at "{repodir}/demo"'))
+  return(glue::glue("{repodir}/demo"))
 }
 
