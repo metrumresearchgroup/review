@@ -1,25 +1,14 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
+repo <- demoRepo("abc-123")
 
-add_file("file.txt", "something")
+file1 <- "script/data-assembly.R"
+file2 <- "script/combine-da.R"
+file3 <- "script/examp-yaml.yaml"
 
-logCreate()
-
-add_commit("first")
-
-logAssign(file = "file.txt")
-logAccept(file = "file.txt")
+setwd(repo)
 
 test_that("getQcedRevision finds the latest accepted revision number", {
-  expect_true(getQcedRevision("file.txt") == 1)
+  expect_true(getQcedRevision(file1) == 1)
+  expect_true(getQcedRevision(file2) == 1)
+  expect_true(is.na(getQcedRevision(file3)))
 })
 
-system("echo 'something else' > file.txt")
-add_commit("second")
-
-logAssign(file = "file.txt")
-logAccept(file = "file.txt")
-
-test_that("getQcedRevision finds the latest accepted revision number", {
-  expect_true(getQcedRevision("file.txt") == 2)
-})
