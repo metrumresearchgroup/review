@@ -129,8 +129,8 @@ logPending()
 ```
 
 Looking at `script/data-assembly.R`, `revf = 1` indicates a QC was
-completed on the file at revision 1. However, `headf = 4` indicates edits were
-made to the file at revision 4, indicating another round of QC is needed.
+completed on the file at revision 1. However, `headf = 5` indicates edits were
+made to the file at revision 5, indicating another round of QC is needed.
 
 Looking at `script/examp-txt.txt`, `revf = 0` indicates a QC has never been 
 completed on the file. `headf = 1` indicates edits were made to the file at 
