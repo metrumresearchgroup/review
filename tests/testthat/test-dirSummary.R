@@ -34,3 +34,13 @@ test_that("dirSummary captures the expected QC status of all scripts", {
   expect_equal(dirSummaryRes$data$Author[1], Sys.info()[["user"]])
   
 })
+
+# Test renderQCSummary helpers
+
+test_that("formatDirSummary generates formatted dataframes using the dirSummary output", {
+  helper_output <- formatDirSummary(dirSummaryRes$data)
+  expect_equal(length(helper_output), 2)
+  expect_true(is.factor(helper_output$dirSummary$Status))
+  expect_true(nrow(helper_output$dirSummary) == 4)
+  expect_true(is.factor(helper_output$qcStatus$Status))
+})

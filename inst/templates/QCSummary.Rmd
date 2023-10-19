@@ -18,23 +18,10 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r, include=FALSE}
-dir_summary_data <- params$dirSummaryRes$data
+dir_summary_list <- formatDirSummary(params$dirSummaryRes$data)
 
-dir_summary_data <-
-  dir_summary_data %>%
-  dplyr::arrange(Author) %>%
-  dplyr::filter(Status != "Not in SVN") %>%
-  dplyr::mutate(Status = factor(
-    Status,
-    levels = c("In QC log, needs QC", "QC up to date", "Not in QC log")
-  ))
-
-qc_status <-
-  dir_summary_data %>%
-  dplyr::arrange(Author, File) %>% 
-  dplyr::add_count(Author, Status) %>% 
-  dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
-  dplyr::select(Author, File, Status)
+dir_summary_data <- dir_summary_list$dirSummary
+qc_status <- dir_summary_list$qcStatus
 
 ```
 
