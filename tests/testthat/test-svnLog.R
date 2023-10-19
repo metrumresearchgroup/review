@@ -1,25 +1,16 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
+repo <- demoRepo("abc-123")
 
-add_file("file.txt", "something")
-add_commit("first")
+file1 <- file.path(repo, "script/data-assembly.R")
+file2 <- file.path(repo, "script/pk/load-spec.R")
 
-add_file("file.txt", "something2")
-add_commit("second")
-
-add_file("file.txt", "something3")
-add_commit("third")
-
-add_file("file.txt", "something4")
-add_commit("fourth")
-
-add_file("file.txt", "something5")
-add_commit("fifth")
-
-metadf <- svnLog("file.txt")
+logFile1 <- svnLog(file1)
+logFile2 <- svnLog(file2)
 
 test_that("svnLog includes all commits in dataframe format", {
-  expect_true(all(c("author", "datetime", "rev", "msg") %in% names(metadf)))
-  expect_equal(nrow(metadf), 5)
-  expect_equal(length(unique(metadf$rev)), 5)
+  expect_true(all(c("author", "datetime", "rev", "msg") %in% names(logFile1)))
+  expect_equal(nrow(logFile1), 2)
+  expect_equal(nrow(logFile2), 2)
+  
+  expect_equal(as.numeric(logFile1$rev[1]), 5)
+  expect_equal(as.numeric(logFile2$rev[1]), 4)
 })
