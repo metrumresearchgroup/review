@@ -1,9 +1,3 @@
-# review development
-
-## New features and changes
-
-- `svnInfo` added to package to return the svn info in dataframe format. (#49)
-
 # review 3.6.0
 
 ## New features and changes

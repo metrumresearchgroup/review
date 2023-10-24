@@ -12,3 +12,4 @@ svnInfo(.file)
 \description{
 Returns the \verb{svn info} in dataframe format.
 }
+\keyword{internal}
