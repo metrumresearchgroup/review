@@ -47,7 +47,7 @@ dirSummary <- function(.dir) {
   # Gather files to scan ----------------------------------------------------
   all_files <- list.files(.dir, full.names = TRUE, recursive = TRUE)
   
-  relevant_file_types <- c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp", "mod", "stan")
+  relevant_file_types <- c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp", "mod", "stan", "jl", "qmd")
   
   extensions <- tools::file_ext(all_files)
   
@@ -76,7 +76,7 @@ dirSummary <- function(.dir) {
     cli::cli_progress_update()
     
     log.i <- tryCatch(
-      review::svnLog(relevant_files_df$file[i]),
+      svnInfo(relevant_files_df$file[i]),
       error = identity
     )
     
