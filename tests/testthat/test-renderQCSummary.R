@@ -29,7 +29,7 @@ if (Sys.getenv("METWORX_VERSION") != "") {
   test_that("renderQCSummary works with valid directory", {
     
     expect_silent({
-      renderQCSummary(.dir = logRoot(), .output_dir = logRoot())
+      renderQCSummary(.output_dir = logRoot())
     })
     
     # Check that the output file was created
@@ -42,7 +42,7 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     temp_dir <- tempdir()
     
     expect_silent({
-      renderQCSummary(.dir = logRoot())
+      renderQCSummary()
     })
     
     # Check that the output file was created

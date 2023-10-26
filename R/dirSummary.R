@@ -1,10 +1,6 @@
 #' QC Summary of Files within a Directory
 #'
-#' This function provides a QC summary of relevant files in a specified directory.
-#' It checks if the file has been checked into SVN, its latest modification date, 
-#' author, revision and QC status.
-#'
-#' @param .dir Character string. Path to the directory to perform the QC summary on.
+#' This function provides a QC summary of relevant files in a project.
 #'
 #' @return A list containing:
 #'   * `project`: the name of the project repository.
@@ -15,37 +11,29 @@
 #'     - `Latest rev`: the last revision number.
 #'     - `Status`: indicating whether the file is in SVN, in QC log, and if it needs QC.
 #'     - `QCer`: the reviewer name if the file is in QC log.
-#'   * `directory`: the provided directory.
 #'
 #' @seealso 
-#' \code{\link[review]{logSummary}}, \code{\link[review]{svnLog}}
-#'
-#' @examples 
-#' \dontrun{
-#' # Assuming appropriate setup and the presence of required 
-#' # helper functions like logSummary and svnLog.
-#' # dirSummary("/path/to/directory")
-#' }
+#' \code{\link[review]{logSummary}}, \code{\link[review]{svnInfo}}
 #'
 #' @export
-dirSummary <- function(.dir) {
+dirSummary <- function() {
   
-  if (!dir.exists(.dir)) {
-    stop(".dir not found")
-  }
+  log_root <- tryCatch(logRoot(), error = identity)
   
-  project_name <- tryCatch(basename(logRoot()), error = identity)
-  
-  if (inherits(project_name, "error")) {
+  if (inherits(log_root, "error")) {
     stop("No QC log found")
   }
+  
+  project_name <- basename(log_root)
   
   returnList <- list(
     project = project_name
   )
   
   # Gather files to scan ----------------------------------------------------
-  all_files <- list.files(.dir, full.names = TRUE, recursive = TRUE)
+  all_files <- list.files(log_root, full.names = TRUE, recursive = TRUE)
+  
+  all_files <- all_files[!grepl(file.path(log_root, "renv"), all_files, fixed = TRUE)]
   
   relevant_file_types <- c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp", "mod", "stan", "jl", "qmd")
   
@@ -63,7 +51,7 @@ dirSummary <- function(.dir) {
   
   
   # Determine current log state ---------------------------------------------
-  log_summary <- review::logSummary()
+  log_summary <- logSummary()
   
   # Build data --------------------------------------------------------------
   relevant_files_df <- relevant_files_df %>% dplyr::left_join(log_summary, by = "file")
@@ -100,10 +88,11 @@ dirSummary <- function(.dir) {
   cli::cli_progress_done()
   
   # Final cleanup -----------------------------------------------------------
-  relevant_files_df <-
+  summary_df <-
     relevant_files_df %>%
     dplyr::transmute(
       File = file,
+      Directory = unlist(lapply(strsplit(dirname(File), "/", fixed = TRUE), function(.x){.x[[1]]})),
       Author = lastauthor,
       `Latest edit` = as.POSIXct(lastedit, origin = "1970-01-01", tz = "UTC"),
       `Latest rev` = lastrev,
@@ -114,10 +103,22 @@ dirSummary <- function(.dir) {
         TRUE ~ "QC up to date"
       ),
       QCer = reviewer
-    )
+    ) %>% 
+    dplyr::filter(Status !=  "Not in SVN") %>% 
+    dplyr::mutate(Status = factor(
+      Status,
+      levels = c("In QC log, needs QC", "QC up to date", "Not in QC log")
+    )) %>% 
+    dplyr::arrange(Author, File)
   
-  returnList[["data"]] <- relevant_files_df
-  returnList[["directory"]] <- .dir
+  summary_status <- 
+    summary_df %>% 
+    dplyr::add_count(Author, Status) %>% 
+    dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
+    dplyr::select(Author, File, Status)
+  
+  returnList[["data"]] <- summary_df
+  returnList[["status"]] <- summary_status
   
   return(returnList)
 }

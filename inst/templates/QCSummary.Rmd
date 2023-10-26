@@ -2,11 +2,12 @@
 params: 
   dirSummaryRes: "`r list()`"
 title: "QC Summary"
-subtitle: "`r paste0(params$dirSummaryRes$project, ' (/', params$dirSummaryRes$directory, ')')`"
+subtitle: "`r params$dirSummaryRes$project`"
 date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
 output:
   pdf_document:
     toc: true
+    toc_depth: 3
 header-includes:
     - \usepackage{caption}
 ---
@@ -20,21 +21,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r, include=FALSE}
 dir_summary_data <- params$dirSummaryRes$data
 
-dir_summary_data <-
-  dir_summary_data %>%
-  dplyr::arrange(Author) %>%
-  dplyr::filter(Status != "Not in SVN") %>%
-  dplyr::mutate(Status = factor(
-    Status,
-    levels = c("In QC log, needs QC", "QC up to date", "Not in QC log")
-  ))
-
-qc_status <-
-  dir_summary_data %>%
-  dplyr::arrange(Author, File) %>% 
-  dplyr::add_count(Author, Status) %>% 
-  dplyr::mutate(Author = paste0(Author, " (N=", n, ")")) %>% 
-  dplyr::select(Author, File, Status)
+qc_status <- params$dirSummaryRes$status
 
 ```
 
@@ -94,21 +81,13 @@ qc_up_to_date %>%
 
 # Contributors
 
-```{r, results='asis'}
-writeLines(
-  paste0("QC status of all files in '",
-         params$dirSummaryRes$directory,
-         "' by author")
-)
-
-```
-
 
 \newpage
 
 ```{r, results='asis'}
 authors <- 
   dir_summary_data %>%
+  dplyr::filter(Directory != ".") %>%
   dplyr::distinct(Author) %>%
   dplyr::pull(Author)
 
@@ -116,21 +95,39 @@ for (author.i in authors) {
   
   writeLines(paste0("## ", author.i))
   
-  tab.i <-
-    dir_summary_data %>%
-    dplyr::filter(Author == author.i) %>%
-    dplyr::select(File, `Latest edit`, QCer, Status) %>%
-    dplyr::arrange(Status) %>%
-    pmtables::st_new() %>%
-    pmtables::st_panel("Status") %>%
-    pmtables::stable_long()
+  directories.i <-
+    dir_summary_data %>% 
+    dplyr::filter(Directory != ".") %>%
+    dplyr::filter(Author == author.i) %>% 
+    dplyr::distinct(Directory) %>%
+    dplyr::pull(Directory)
   
-  pmtables::st_wrap(tab.i)
+  if (length(directories.i) == 0) {
+    next
+  }
   
-  rm(tab.i)
+  for (directory.i in directories.i) {
+    
+    writeLines(paste0("### ", directory.i))
+    
+    tab.i <-
+      dir_summary_data %>%
+      dplyr::filter(Author == author.i) %>%
+      dplyr::filter(Directory == directory.i) %>%
+      dplyr::select(File, `Latest edit`, QCer, Status) %>%
+      dplyr::arrange(Status) %>%
+      pmtables::st_new() %>%
+      pmtables::st_panel("Status") %>%
+      pmtables::stable_long()
+    
+    pmtables::st_wrap(tab.i)
+    
+    rm(tab.i)
+    
+    writeLines("\n")
+    writeLines("\\newpage")
+  }
   
-  writeLines("\n")
-  writeLines("\\newpage")
 }
 
 ```

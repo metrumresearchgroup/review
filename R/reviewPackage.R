@@ -11,6 +11,10 @@ globalVariables(
     "lastauthor",
     "lastedit",
     "lastrev",
-    "reviewer"
+    "reviewer",
+    "File",
+    "Author",
+    "Status",
+    "n"
   )
 )
