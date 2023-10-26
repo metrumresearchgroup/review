@@ -25,11 +25,10 @@ logAccept(file = "file3.R")
 add_file("file.R", "something-new")
 add_commit("second")
 
-dirSummaryRes <- dirSummary(test_dir)
+dirSummaryRes <- dirSummary()
 
 # Check that QC summary contains expected information
 test_that("dirSummary returns the same directory and project provided to it", {
-  expect_equal(test_dir, dirSummaryRes$directory)
   expect_equal(basename(logRoot()), dirSummaryRes$project)
 })
 

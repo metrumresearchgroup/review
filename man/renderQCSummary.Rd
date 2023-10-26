@@ -4,11 +4,9 @@
 \alias{renderQCSummary}
 \title{Render a QC Summary Document}
 \usage{
-renderQCSummary(.dir, .output_dir = NULL)
+renderQCSummary(.output_dir = NULL)
 }
 \arguments{
-\item{.dir}{Character string. Path to the directory to perform the QC summary on.}
-
 \item{.output_dir}{Character string (optional). Path to the directory where the output PDF
 should be saved. If not provided, the document will not be saved locally.}
 }
@@ -18,7 +16,7 @@ to the specified output directory (if available). If the R session is interactiv
 open the PDF in the default browser.
 }
 \description{
-This function generates a QC summary based on scripts within a given directory
+This function generates a QC summary based on scripts within a given project
 and renders it into a PDF report.
 }
 \details{

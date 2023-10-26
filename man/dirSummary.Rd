@@ -4,10 +4,7 @@
 \alias{dirSummary}
 \title{QC Summary of Files within a Directory}
 \usage{
-dirSummary(.dir)
-}
-\arguments{
-\item{.dir}{Character string. Path to the directory to perform the QC summary on.}
+dirSummary()
 }
 \value{
 A list containing:
@@ -22,22 +19,11 @@ A list containing:
 \item \code{Status}: indicating whether the file is in SVN, in QC log, and if it needs QC.
 \item \code{QCer}: the reviewer name if the file is in QC log.
 }
-\item \code{directory}: the provided directory.
 }
 }
 \description{
-This function provides a QC summary of relevant files in a specified directory.
-It checks if the file has been checked into SVN, its latest modification date,
-author, revision and QC status.
-}
-\examples{
-\dontrun{
-# Assuming appropriate setup and the presence of required 
-# helper functions like logSummary and svnLog.
-# dirSummary("/path/to/directory")
-}
-
+This function provides a QC summary of relevant files in a project.
 }
 \seealso{
-\code{\link[review]{logSummary}}, \code{\link[review]{svnLog}}
+\code{\link[review]{logSummary}}, \code{\link[review]{svnInfo}}
 }
