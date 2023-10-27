@@ -6,6 +6,7 @@ Descriptions:
 Packages:
   - devtools
   - pkgdown
+  - roxygen2
   - mpn.scorecard
 
 Repos:

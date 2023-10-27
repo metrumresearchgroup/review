@@ -4,6 +4,6 @@
 .Ruserdata
 docs
 docs/
-renv/
-.Rprofile
+renv/lib*/
+renv/local*/
 inst/doc
