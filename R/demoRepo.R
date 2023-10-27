@@ -127,7 +127,7 @@ demoRepo <- function(.project_name) {
   writeLines(
     c("The following tasks are suggested to gain familiarity with the review package:",
       '- run `diffQCed()` on "script/pk/load-spec.R" and "script/data-assembly.R"',
-      '- run `renderQCSummary()` on the "script" directory',
+      '- run `renderQCSummary()`',
       '- use `logAssign()` to add "script/examp-txt.txt" to the QC log',
       '- run `logPending()` to see what scripts are in need of QC',
       '- use `logAccept()` to sign off on any scripts with pending QC'),
