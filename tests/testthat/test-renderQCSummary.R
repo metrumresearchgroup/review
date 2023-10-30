@@ -1,48 +1,24 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
-
-add_file("file.R", "something")
-add_file("file2.R", "something")
-add_file("file3.R", "something")
-add_file("file4.R", "something")
-add_file("file5.R", "something")
-
-logCreate()
-add_commit("first")
-# Assign all scripts to QC log
-logAssign(file = "file.R")
-logAssign(file = "file2.R")
-logAssign(file = "file3.R")
-logAssign(file = "file4.R")
-logAssign(file = "file5.R")
-
-# Accept a few scripts
-logAccept(file = "file.R")
-logAccept(file = "file2.R")
-logAccept(file = "file3.R")
-
-# Make edit to one file
-add_file("file.R", "something-new")
-add_commit("second")
+repo <- demoRepo("abc-123")
+setwd(repo)
 
 if (Sys.getenv("METWORX_VERSION") != "") {
   test_that("renderQCSummary works with valid directory", {
     
     expect_silent({
-      renderQCSummary(.output_dir = logRoot())
+      renderQCSummary(.dir = logRoot(), .output_dir = logRoot())
     })
     
     # Check that the output file was created
     expect_true(file.exists(file.path(logRoot(), paste0("qc-summary-", Sys.Date(), ".pdf"))))
     
   })
-    
+  
   test_that("renderQCSummary doesn't save file if directory not given", {
     
     temp_dir <- tempdir()
     
     expect_silent({
-      renderQCSummary()
+      renderQCSummary(.dir = logRoot())
     })
     
     # Check that the output file was created
