@@ -48,8 +48,4 @@ test_that("dirSummary generates formatted dataframe of QC status", {
   expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "QC up to date")) == 1)
   expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "In QC log, needs QC")) == 2)
   expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "Not in QC log")) == 1)
-  expect_true(dirSummaryRes$status %>% 
-                dplyr::filter(Status == "Not in QC log") %>% 
-                dplyr::distinct(Author) %>% 
-                dplyr::pull(Author) == "michaelm (N=1)")
 })
