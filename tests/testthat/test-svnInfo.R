@@ -1,20 +1,22 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
+repo <- demoRepo("abc-123")
 
-add_file("file.txt", "something")
-add_commit("first")
+file1 <- file.path(repo, "script/data-assembly.R")
+file2 <- file.path(repo, "script/pk/load-spec.R")
+file3 <- file.path(repo, "script/combine-da.R")
+file4 <- file.path(repo, "script/examp-yaml.yaml")
 
-add_file("file.txt", "something2")
-add_commit("second")
+logFile1 <- svnInfo(file1)
+logFile2 <- svnInfo(file2)
+logFile3 <- svnInfo(file3)
+logFile4 <- svnInfo(file4)
 
-svn_info <- svnInfo("file.txt")
-svn_log <- svnLog("file.txt")
-
-test_that("svnInfo the last commit in dataframe firnat", {
-  expect_true(all(c("author", "datetime", "rev") %in% names(svn_info)))
-  expect_equal(nrow(svn_info), 1)
-})
-
-test_that("svnInfo matches the first row of svnLog for the columns they have in common", {
-  expect_true(identical(svn_info, svn_log[1, c("author", "datetime", "rev")]))
+test_that("svnLog includes all commits in dataframe format", {
+  expect_true(all(c("author", "datetime", "rev") %in% names(logFile1)))
+  expect_equal(nrow(logFile1), 1)
+  expect_equal(nrow(logFile2), 1)
+  
+  expect_equal(as.numeric(logFile1$rev), 5)
+  expect_equal(as.numeric(logFile2$rev), 4)
+  expect_equal(as.numeric(logFile3$rev), 1)
+  expect_equal(as.numeric(logFile4$rev), 1)
 })

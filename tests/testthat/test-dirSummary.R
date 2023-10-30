@@ -1,12 +1,18 @@
 repo <- demoRepo("abc-123")
 setwd(repo)
-test_dir <- "script"
-dirSummaryRes <- dirSummary(test_dir)
+dirSummaryRes <- dirSummary()
 
 # Check that QC summary contains expected information
-test_that("dirSummary returns the same directory and project provided to it", {
-  expect_equal(test_dir, dirSummaryRes$directory)
+test_that("dirSummary returns the correct project name", {
   expect_equal(basename(logRoot()), dirSummaryRes$project)
+})
+
+test_that("dirSummary returns all expected output", {
+  expect_equal(c("project", "data", "status"), names(dirSummaryRes))
+  expect_true(length(dirSummaryRes) == 3)
+  expect_true(is.character(dirSummaryRes$project))
+  expect_true(is.data.frame(dirSummaryRes$data))
+  expect_true(is.data.frame(dirSummaryRes$status))
 })
 
 test_that("dirSummary captures the expected QC status of all scripts", {
@@ -35,12 +41,15 @@ test_that("dirSummary captures the expected QC status of all scripts", {
   
 })
 
-# Test renderQCSummary helpers
+# QC Status data.frame
 
-test_that("formatDirSummary generates formatted dataframes using the dirSummary output", {
-  helper_output <- formatDirSummary(dirSummaryRes$data)
-  expect_equal(length(helper_output), 2)
-  expect_true(is.factor(helper_output$dirSummary$Status))
-  expect_true(nrow(helper_output$dirSummary) == 4)
-  expect_true(is.factor(helper_output$qcStatus$Status))
+test_that("dirSummary generates formatted dataframe of QC status", {
+  expect_true(is.factor(dirSummaryRes$status$Status))
+  expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "QC up to date")) == 1)
+  expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "In QC log, needs QC")) == 2)
+  expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "Not in QC log")) == 1)
+  expect_true(dirSummaryRes$status %>% 
+                dplyr::filter(Status == "Not in QC log") %>% 
+                dplyr::distinct(Author) %>% 
+                dplyr::pull(Author) == "michaelm (N=1)")
 })

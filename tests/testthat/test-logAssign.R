@@ -1,18 +1,13 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
+repo <- demoRepo("abc-123")
+setwd(repo)
 
-add_file("file.txt", "something")
-
-logCreate()
-
-add_commit("first")
-
-logAssign(file = "file.txt")
-tempdf <- readr::read_csv("QClog.csv") %>% suppressMessages()
+orig_qc <- readr::read_csv("QClog.csv") %>% suppressMessages()
+file1 <- "script/examp-yaml.yaml"
 
 test_that("logAssign creates a row in the QClog for the specified file", {
-  expect_true(tempdf$file[1] == "file.txt")
+  logAssign(file1)
+  new_qc <- readr::read_csv("QClog.csv") %>% suppressMessages()
+  expect_equal(nrow(new_qc), nrow(orig_qc) + 1)
+  expect_true(new_qc %>% dplyr::filter(file == file1) %>% dplyr::pull(revf) == 0)
 })
-
-
 
