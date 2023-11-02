@@ -1,5 +1,5 @@
 ---
-title: "svn-helpers"
+title: "SVN Helpers"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{svn-helpers}
@@ -10,9 +10,9 @@ vignette: >
 This is a vignette to help you become familiar with using `svnLog()` and 
 `svnExport()`.
 
-`svnLog()` provides the history of all edits made to a file, including the
-author, revision and date/time of the commit. `svnExport()` makes it easy to
-restore a file to a previous revision.
+- `svnLog()` provides the history of all edits made to a file, including the
+author, revision and date/time of the commit. 
+- `svnExport()` makes it easy to restore a file to a previous revision.
 
 Below we will go through examples of both, including cases where the information
 from `svnLog()` can be used to more efficiently use `svnExport()`. 
@@ -30,30 +30,17 @@ knitr::opts_chunk$set(
 library(review)
 ```
 
-```{r, include=FALSE}
-library(dplyr)
-ex_svnlog <- dplyr::tibble(
-  author = rep("michaelm", 4),
-  datetime = c("2023-09-29 13:54:00", "2023-09-29 08:53:00", 
-               "2023-09-28 13:00:30", "2023-09-21 09:10:30"),
-  rev = c(4, 3, 2, 1),
-  msg = c("fourth commit", "third commit", "second commit", "first commit")
-)
-```
-
 # svnLog
 
-For the purposes of this vignette, an example SVN repository and file 
-(`test-file.txt`) were created. Multiple commits were made modifying the file. 
+For the purposes of this vignette, a demo SVN repository and files were created
+using the `demoRepo()` function. We will look at the history of 
+`script/data-assembly.R`.
 
-To figure out when the modifications were made, we can use `svnLog()`.
+To figure out when modifications were made to this file, we can use `svnLog()`.
 
-```{r, eval=FALSE}
-svnLog("test-file.txt")
-```
-
-```{r, echo=FALSE}
-ex_svnlog
+```{r}
+repo <- demoRepo("examp-123")
+svnLog(file.path(repo, "script/data-assembly.R"))
 ```
 
 Notice how the output data.frame is sorted such that the most recent commit is
@@ -64,44 +51,45 @@ file was modified and checked into SVN.
 
 Now that we know the revision numbers, we can use `svnExport()` to view any of
 the previous revisions. First we can look at what the current version of 
-`test-file.txt` looks like:
+`script/data-assembly.R` looks like:
 
-```{r, eval=FALSE}
-readLines("test-file.txt")
-```
-
-```{r, echo=FALSE}
-print("Modified text")
+```{r}
+readLines(file.path(repo, "script/data-assembly.R"))
 ```
 
 Then, we can use `svnExport()` to view the first revision of the file.
 
 ```{r, eval=FALSE}
-svnExport(.file = "test-file.txt", .revision = 1)
+svnExport(.file = file.path(repo, "script/data-assembly.R"), .revision = 1)
 ```
 
-Notice how this creates a new file, `test-file-1.txt` in your working directory.
-
-```{r, eval=FALSE}
-file.exists("test-file-1.txt")
+```{r, include=FALSE}
+curdir <- getwd()
+on.exit(setwd(curdir))
+setwd(repo)
+svnExport(.file = "script/data-assembly.R", .revision = 1)
 ```
 
-```{r, echo=FALSE}
-print(TRUE)
+Notice how this creates a new file, `test-file-1.txt` in the SVN directory.
+
+```{r}
+file.exists(file.path(repo, "data-assembly-1.R"))
 ```
 
 Now we can take a look at the first revision of the file.
 
 ```{r, eval=FALSE}
-readLines("test-file-1.txt")
+readLines(file.path(repo, "data-assembly-1.R"))
 ```
 
 ```{r, echo=FALSE}
-print("Initial text")
+curdir <- getwd()
+on.exit(setwd(curdir))
+setwd(repo)
+readLines("data-assembly-1.R")
 ```
 
 This process can be done for any file that has been checked into your SVN
 repository. `svnLog()` can easily identify the revision numbers of past edits
 and `svnExport()` can restore the file with a file name following this syntax
 [{original file name}-{revision number}].
-
