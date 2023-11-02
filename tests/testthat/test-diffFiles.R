@@ -1,13 +1,14 @@
-test_dir <- createRepo()
-withr::local_dir(test_dir)
+repo <- demoRepo("abc-123")
 
-add_file("file.txt", "something")
-add_file("file2.txt", "something with some additions")
+file1 <- file.path(repo, "script/data-assembly.R")
+file2 <- file.path(repo, "script/combine-da.R")
 
-diff_data <- diffFiles(.file_1 = "file2.txt", .file_2 = "file.txt")
+diff_data <- diffFiles(.file_1 = file1, .file_2 = file2)
 
 test_that("diffFiles outputs diff between two different files", {
-  expect_true(diff_data@target != diff_data@current)
-  expect_equal(diff_data@target, "something with some additions")
-  expect_equal(diff_data@current, "something")
+  expect_true(length(diff_data@target) == 10)
+  expect_true(length(diff_data@current) == 6)
+  expect_equal(diff_data@target[1], diff_data@current[1])
+  expect_equal(diff_data@target[4], "derived <- list(sl = list(),tv = list())")
+  expect_equal(diff_data@target[6], "derived$sl$dm <- dm_0")
 })
