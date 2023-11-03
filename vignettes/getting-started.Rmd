@@ -1,0 +1,178 @@
+---
+title: "Getting Started with review"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+This vignette takes the user through the basic functionality of the `review`
+package. The user will gain experience with:
+
+- creating and updating a QC log
+- generating simple visual diffs to use during QC
+- generating QC summary documents
+
+# Setup
+
+## Load libraries
+
+```{r, message=FALSE}
+library(review)
+library(dplyr)
+```
+
+## Create demo repo
+
+`demoRepo()` creates a temporary SVN repo containing files with version history.
+This repo already contains a QC log and partially completed QC for demonstration
+purposes. The function returns the path to the repo.
+
+```{r}
+repo <- demoRepo("abc-123")
+print(repo)
+```
+
+# Using the QC log
+
+If a repo does not contain a QC log, the first step would be to run `logCreate()`,
+which will generate an empty one. As mentioned above, the demo repo already 
+contains a QC log. The contents are shown below.
+
+```{r, echo=FALSE, message=FALSE}
+qclog <- readr::read_csv(file.path(repo, "QClog.csv"))
+qclog
+```
+
+A few helpful definitions:
+
+- `file`: Relative file path from the location of the QC log.
+- `origin`: Relative file path of the origin file.
+- `revf`: the revision number of the file that was reviewed.
+- `revo`: the revision number of the origin file at time indicated.
+- `reviewer`: the reviewer of the file, given as the equivalent in R to `Sys.info()[["user"]]`.
+- `time`: the time of the assignment or acceptance.
+
+## logAssign
+
+When a file is ready for QC, it should be assigned in the QC log. This
+can be done using the `logAssign()` function, which will add a record to the QC
+log.
+
+Looking at the demo QC log, the first row is an example of a record that
+`logAssign()` will generate.
+
+```{r, echo=FALSE}
+qclog %>% slice(1)
+```
+
+Notice that `revf` is 0 for all entries. Additionally, the reviewer is set to
+"anyone". This assignment is done to signify the file is ready for QC, but 
+`revf = 0` indicates no QC has been completed yet. 
+
+If we want to assign another file, such as `script/examp-yaml.yaml`, we can do 
+the following:
+
+```{r, eval=FALSE}
+logAssign("script/examp-yaml.yaml")
+```
+
+## logAccept
+
+After the reviewer completes their QC of a file, `logAccept()` should be used to
+create a record of this. The revision number at the time of QC is captured along
+with the username of the reviewer. 
+
+We can look at the QC history of `script/data-assembly.R` to demonstrate the
+differences between `logAssign()` and `logAccept()`.
+
+```{r, echo=FALSE}
+qclog %>% filter(file == "script/data-assembly.R")
+```
+
+Notice that the row created by `logAccept()` updated the `revf` value to 1, which
+is the revision number where the QC was completed. The reviewer was updated from
+"anyone" to the actual user who did the QC.
+
+## QC log and SVN
+
+It is important to note that after any operation where the QC log is updated, 
+the updates should be checked into SVN. Multiple users are often completing QC of
+different files in parallel, which makes checking in updates to the QC log itself
+important to ensure all records are captured. 
+
+# logPending
+
+`logPending()` is a helpful function for identifying files in need of QC. 
+It will return all files that meet the following criteria:
+
+- assigned with `logAssign()` but no completed QC
+- modifications made since the last QC was done
+
+Running `logPending()` on the demo repo will result with the following output:
+
+```{r, echo=FALSE}
+curdir <- getwd()
+on.exit(setwd(curdir))
+setwd(repo)
+logPending()
+```
+
+Looking at `script/data-assembly.R`, `revf = 1` indicates a QC was
+completed on the file at revision 1. However, `headf = 5` indicates edits were
+made to the file at revision 5, indicating another round of QC is needed.
+
+Looking at `script/examp-txt.txt`, `revf = 0` indicates a QC has never been 
+completed on the file. `headf = 1` indicates edits were made to the file at 
+revision 1.
+
+# Helpful tools for QCing
+
+When `logPending()` indicates a file is in need of QC but has previously had a 
+QC completed at an earlier revision, it is helpful to know what changed. This 
+can save QC efforts where only a minor change was made. 
+
+`diffQced()` helps with this as it generates a visual diff in the Viewer pane 
+in R studio. All deleted, added and modified lines of code are shown in the diff. 
+
+When `diffQced()` is supplied a file name, it uses the QC log to identify the
+revision number when the last QC was completed. The difference is then generated 
+using the version of the file at that revision number versus the current file.
+
+To see the usefulness of this tool, run the following locally:
+
+```{r, eval=FALSE}
+diffQced("script/data-assembly.R")
+```
+
+If you are interested in generating a visual diff with two different files, 
+`diffFiles()` can be used. 
+
+If you are interested in generating a visual diff of a file at specific 
+revision numbers, `diffPreviousRevisions()` can be used.
+
+# QC Summary
+
+`renderQCSummary()` generates a PDF summary of the QC status of all files
+checked into the SVN repo.
+
+Some summaries include tables indicating files that are in need of QC (similar
+to the output of `logPending()`) and files up to date with QC. Each of these
+are stratified by the author of the files. 
+
+Another helpful summary provided are tables showing all the files checked into
+SVN, stratified by their QC status. Each contributor to the repo has their own table.
+The QC status of a given file could be one of the following:
+
+- `Not in QC log`: file is checked into SVN, but has not been added to the QC log.
+- `In QC log, needs QC`: file is in need of QC.
+- `QC up to date`: file has no QC needs currently. 
+
+To see an example of a QC summary document, run the following locally:
+
+```{r, eval=FALSE}
+renderQCSummary()
+```
