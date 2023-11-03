@@ -181,5 +181,5 @@ The QC status of a given file could be one of the following:
 To see an example of a QC summary document, run the following locally:
 
 ```{r, eval=FALSE}
-renderQCSummary("script")
+renderQCSummary()
 ```
