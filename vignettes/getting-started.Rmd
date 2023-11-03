@@ -7,13 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
 # Introduction
 
 This vignette takes the user through the basic functionality of the `review`
@@ -27,9 +20,9 @@ package. The user will gain experience with:
 
 ## Load libraries
 
-```{r setup}
+```{r, message=FALSE}
 library(review)
-suppressMessages(library(dplyr))
+library(dplyr)
 ```
 
 ## Create demo repo
@@ -45,27 +38,27 @@ print(repo)
 
 # Using the QC log
 
-If a repo does not contain a QC log, the first step would be to run `logCreate()`
+If a repo does not contain a QC log, the first step would be to run `logCreate()`,
 which will generate an empty one. As mentioned above, the demo repo already 
-contains a QC log. Its contents are shown below.
+contains a QC log. The contents are shown below.
 
-```{r, echo=FALSE}
-qclog <- readr::read_csv(file.path(repo, "QClog.csv")) %>% suppressMessages()
+```{r, echo=FALSE, message=FALSE}
+qclog <- readr::read_csv(file.path(repo, "QClog.csv"))
 qclog
 ```
 
 A few helpful definitions:
 
-- file: Relative file path from the location of the QC log.
-- origin: Relative file path of the origin file.
-- revf: the revision number of the file that was reviewed.
-- revo: the revision number of the origin file at time indicated.
-- reviewer: the reviewer of the file, given as the equivalent in R to `Sys.info()[["user"]]`.
-- time: the time of the assignment or acceptance.
+- `file`: Relative file path from the location of the QC log.
+- `origin`: Relative file path of the origin file.
+- `revf`: the revision number of the file that was reviewed.
+- `revo`: the revision number of the origin file at time indicated.
+- `reviewer`: the reviewer of the file, given as the equivalent in R to `Sys.info()[["user"]]`.
+- `time`: the time of the assignment or acceptance.
 
 ## logAssign
 
-When a file is ready for its first QC, it should be assigned in the QC log. This
+When a file is ready for QC, it should be assigned in the QC log. This
 can be done using the `logAssign()` function, which will add a record to the QC
 log.
 
@@ -107,7 +100,7 @@ is the revision number where the QC was completed. The reviewer was updated from
 ## QC log and SVN
 
 It is important to note that after any operation where the QC log is updated, 
-the updates should be checked in SVN. Multiple users are often completing QC of
+the updates should be checked into SVN. Multiple users are often completing QC of
 different files in parallel, which makes checking in updates to the QC log itself
 important to ensure all records are captured. 
 
@@ -171,12 +164,12 @@ to the output of `logPending()`) and files up to date with QC. Each of these
 are stratified by the author of the files. 
 
 Another helpful summary provided are tables showing all the files checked into
-SVN, stratified by their QC status. Each contributor to repo has their own table.
+SVN, stratified by their QC status. Each contributor to the repo has their own table.
 The QC status of a given file could be one of the following:
 
-- Not in QC log: file is checked into SVN, but has not been added to the QC log.
-- In QC log, needs QC: file is in need of QC.
-- QC up to date: file has no QC needs currently. 
+- `Not in QC log`: file is checked into SVN, but has not been added to the QC log.
+- `In QC log, needs QC`: file is in need of QC.
+- `QC up to date`: file has no QC needs currently. 
 
 To see an example of a QC summary document, run the following locally:
 
