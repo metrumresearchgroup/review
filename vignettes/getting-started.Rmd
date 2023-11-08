@@ -23,7 +23,6 @@ package. The user will gain experience with:
 ```{r, message=FALSE}
 library(review)
 library(dplyr)
-library(pmtables)
 ```
 
 ## Create demo repo
@@ -147,7 +146,7 @@ using the version of the file at that revision number versus the current file.
 diffQced("script/data-assembly.R")
 ```
 
-```{r, results='asis'}
+```{r echo=FALSE, message=FALSE, results='asis'}
 curdir <- getwd()
 on.exit(setwd(curdir))
 setwd(repo)
