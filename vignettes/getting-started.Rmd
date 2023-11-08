@@ -142,11 +142,30 @@ When `diffQced()` is supplied a file name, it uses the QC log to identify the
 revision number when the last QC was completed. The difference is then generated 
 using the version of the file at that revision number versus the current file.
 
-To see the usefulness of this tool, run the following locally:
-
-```{r, eval=FALSE}
+```{r eval=FALSE}
 diffQced("script/data-assembly.R")
 ```
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+curdir <- getwd()
+on.exit(setwd(curdir))
+setwd(repo)
+svnExport("script/data-assembly.R", 1)
+
+diffobj::diffFile(
+        "data-assembly-1.R",
+        "script/data-assembly.R",
+        color.mode = "rgb",
+        ignore.white.space = FALSE,
+        mode = "sidebyside",
+        tar.banner="Revision 1",
+        cur.banner="Local",
+        format = "html",
+        style = list(html.output = "diff.w.style"),
+        interactive = F
+      )
+```
+
 
 If you are interested in generating a visual diff with two different files, 
 `diffFiles()` can be used. 
@@ -176,3 +195,4 @@ To see an example of a QC summary document, run the following locally:
 ```{r, eval=FALSE}
 renderQCSummary()
 ```
+
