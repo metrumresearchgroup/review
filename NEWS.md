@@ -1,6 +1,6 @@
 # review 3.7.0
 
-## New features and changes
+## New features and changes 
 
 - Added vignettes for the SVN helper functions and general QC helpers. (#54, #55)
 
