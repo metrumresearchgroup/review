@@ -1,3 +1,13 @@
+# review 3.7.0
+
+## New features and changes 
+
+- Added vignettes for the SVN helper functions and general QC helpers. (#54, #55)
+
+- Added `demoRepo` function to create an example SVN repository with existing files/QC. (#51)
+
+- Improved run time of `renderQCSummary` with new internal `svnInfo` function. (#49, #50)
+
 # review 3.6.0
 
 ## New features and changes
