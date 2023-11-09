@@ -4,6 +4,9 @@
     <loc>https://metrumresearchgroup.github.io/review/404.html</loc>
   </url>
   <url>
+    <loc>https://metrumresearchgroup.github.io/review/articles/getting-started.html</loc>
+  </url>
+  <url>
     <loc>https://metrumresearchgroup.github.io/review/articles/index.html</loc>
   </url>
   <url>
@@ -17,6 +20,9 @@
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://metrumresearchgroup.github.io/review/reference/demoRepo.html</loc>
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/diffFiles.html</loc>
@@ -62,6 +68,9 @@
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/svnExport.html</loc>
+  </url>
+  <url>
+    <loc>https://metrumresearchgroup.github.io/review/reference/svnInfo.html</loc>
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/svnLog.html</loc>
