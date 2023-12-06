@@ -35,12 +35,12 @@ test_that("dirSummary captures the expected QC status of all scripts", {
   
   # Date
   expect_true(
-    as.numeric(
+    abs(as.numeric(
       difftime(
         format(Sys.time(), tz = "UTC"),
         format(dirSummaryRes$data$`Latest edit`[1], tz = "UTC"),
         units = "secs")
-      ) < 120
+      )) < 120
   )
   
   # Author
