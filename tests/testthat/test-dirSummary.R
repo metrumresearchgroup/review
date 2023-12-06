@@ -34,7 +34,14 @@ test_that("dirSummary captures the expected QC status of all scripts", {
   expect_true(dirSummaryRes$data %>% dplyr::filter(File == "script/pk/load-spec.R") %>% dplyr::pull(Status) == "In QC log, needs QC")
   
   # Date
-  expect_equal(as.Date(dirSummaryRes$data$`Latest edit`[1]), Sys.Date())
+  expect_true(
+    abs(as.numeric(
+      difftime(
+        format(Sys.time(), tz = "UTC"),
+        format(dirSummaryRes$data$`Latest edit`[1], tz = "UTC"),
+        units = "secs")
+      )) < 120
+  )
   
   # Author
   expect_equal(dirSummaryRes$data$Author[1], Sys.info()[["user"]])
