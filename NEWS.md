@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- Added warning message to `diffQCed` when user has modified file since last QC.
+- Added warning message to `diffQCed` when user has modified file since last QC. (#61)
 
 # review 3.7.0
 
