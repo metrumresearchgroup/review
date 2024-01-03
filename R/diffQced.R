@@ -35,8 +35,8 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
     cli::cli_abort(glue::glue("'{.file}' has no record in the QC log"))
   }
   
-  file_info <- svnInfo(.file)
-  file_log <- svnInfo(.file)
+  file_log <- svnLog(.file)
+  file_info <- file_log %>% dplyr::slice(1)
   
   authors_last_qc <-
     file_log %>% 
