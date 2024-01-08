@@ -47,8 +47,10 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
   cli::cli_inform(glue::glue("Last QCed Revision: ", qced_revision))
   cli::cli_inform(glue::glue("Last Author: ", file_info$author))
   
-  if (Sys.info()[["user"]] %in% authors_last_qc) {
-    cli::cli_alert_warning("User has modified file since last QC")
+  this_user <- Sys.info()[["user"]]
+  
+  if (this_user %in% authors_last_qc) {
+    cli::cli_alert_warning(glue::glue("'{this_user}' has modified '{basename(.file)}' since last QC"))
   }
   
   diffPreviousRevisions(

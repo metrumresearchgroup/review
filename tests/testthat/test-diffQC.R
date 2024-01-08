@@ -30,6 +30,5 @@ test_that("diffQced identifies difference between local and QCed file version", 
   expect_equal(diffqc@target[1], diffqc@current[1])
 })
 
-test_that("diffQced provides warning if user has modified file since last QC", {
-  expect_message(diffQced(file1), "User has modified file since last QC")
-})
+this_test_user <- Sys.info()[["user"]]
+expect_message(diffQced(file1), glue::glue("'{this_test_user}' has modified '{basename(file1)}' since last QC"))
