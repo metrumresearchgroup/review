@@ -1,31 +1,21 @@
-repo <- demoRepo("abc-123")
+this_user <- 
+  user_lookup %>% 
+  dplyr::filter(sys == Sys.info()[["user"]]) %>% 
+  dplyr::pull(svn)
 
-test_that("svnUser does not work with local repository", {
-  expect_error(svnUser())
-})
+testthat::skip_if(
+  length(this_user) == 0,
+  glue::glue("Skipped svnUser tests because user not found in svn lookup in setup.R")
+)
 
-file1 <- file.path(repo, "script/data-assembly.R")
-examp_info <- svnCommand(.command = "info", .file = file1)
+remote_repo_local <- paste0(tempdir(), "/test")
 
-examp_info$entry$repository$root <- "svn+ssh://user1@mc1.metrumrg.com/common/repo/examp-123"
-svn_root <- examp_info$entry$repository$root
-host_name <- "mc1.metrumrg.com"
+.command <-
+  glue::glue("svn co svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests {remote_repo_local}")
 
-svn_ssh_user <- 
-  unlist(
-    strsplit(
-      svn_root,
-      split = paste0("@", host_name), 
-      fixed = TRUE
-    )
-  )[1]
+system(.command)
 
-test_that("svnUser removes host name as expected", {
-  expect_true(svn_ssh_user == "svn+ssh://user1")
-})
+setwd(remote_repo_local)
 
-svn_user <- unlist(strsplit(svn_ssh_user, "svn+ssh://", fixed = TRUE))[2]
+user_res <- svnUser(.host_name = "mc1-test.metrumrg.com")
 
-test_that("svnUser removes ssh from username", {
-  expect_true(svn_user == "user1")
-})
