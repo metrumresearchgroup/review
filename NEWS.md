@@ -4,6 +4,8 @@
 
 - Added warning message to `diffQCed` when user has modified file since last QC. (#61)
 
+- Added `svnUser` function to determine svn username. (#65)
+
 # review 3.7.0
 
 ## New features and changes 
