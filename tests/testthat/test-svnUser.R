@@ -11,7 +11,7 @@ testthat::skip_if(
 remote_repo_local <- paste0(tempdir(), "/test")
 
 .command <-
-  glue::glue("svn co svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests {remote_repo_local}")
+  glue::glue("svn co svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests {remote_repo_local} -q -q")
 
 system(.command)
 
@@ -19,3 +19,11 @@ setwd(remote_repo_local)
 
 user_res <- svnUser(.host_name = "mc1-test.metrumrg.com")
 
+
+test_that("svnUser retrieves correct system user", {
+  expect_true(user_res$sys == Sys.info()[["user"]])
+})
+
+test_that("svnUser retrieves correct svn user", {
+  expect_true(user_res$svn == this_user)
+})
