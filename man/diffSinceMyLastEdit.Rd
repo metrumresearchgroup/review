@@ -21,9 +21,9 @@ diffSinceMyLastEdit(
 \item{.ignore_white_space}{Logical. Should white space be ignored?}
 }
 \description{
-Compares the local version of a script with the most recent QCed version.
-The output will appear in the viewer and only rows where there have been
-additions, deletions or modifications in the script will be shown.
+Compares the local version of a script with the most recent version the user
+committed. This is a helpful tool when reviewing the changes made after QC
+comments have been addressed.
 }
 \examples{
 \dontrun{

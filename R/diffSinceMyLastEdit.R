@@ -1,9 +1,9 @@
 #' Visual diff of changes to a file since user's last modifications.  
 #' 
 #' @description 
-#' Compares the local version of a script with the most recent QCed version.
-#' The output will appear in the viewer and only rows where there have been
-#' additions, deletions or modifications in the script will be shown.
+#' Compares the local version of a script with the most recent version the user
+#' committed. This is a helpful tool when reviewing the changes made after QC
+#' comments have been addressed.
 #'
 #' @param .file file path from working directory
 #' @param .host_name Host name where repository is hosted
