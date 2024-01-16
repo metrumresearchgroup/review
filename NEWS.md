@@ -6,6 +6,8 @@
 
 - Added `svnUser` function to determine svn username. (#65)
 
+- Added `diffSinceMyLastEdit` function to help identify changes since a user's last edit. (#68)
+
 # review 3.7.0
 
 ## New features and changes 
