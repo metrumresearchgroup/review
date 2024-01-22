@@ -31,7 +31,10 @@ if (user_res$svn %in% svnLog1$author) {
     dplyr::slice(1)
   
   testthat::test_that("getMyLastEditRev finds the correct revision the user last made an edit", {
-    expect_equal(as.numeric(last_rev1$rev), getMyLastEditRev(file1, .host_name = "mc1-test.metrumrg.com"))
+    expect_equal(as.numeric(last_rev1$rev), getMyLastEditRev(file1, .host_name = "mc1-test.metrumrg.com")[["revision"]])
+    
+    expect_equal(user_res$svn, getMyLastEditRev(file1, .host_name = "mc1-test.metrumrg.com")[["usernameSVN"]])
+    expect_equal(last_rev1$datetime, getMyLastEditRev(file1, .host_name = "mc1-test.metrumrg.com")[["datetime"]])
   })
 }
 
@@ -47,7 +50,9 @@ if (user_res$svn %in% svnLog2$author) {
     dplyr::slice(1)
   
   testthat::test_that("getMyLastEditRev finds the correct revision the user last made an edit", {
-    expect_equal(as.numeric(last_rev2$rev), getMyLastEditRev(file2, .host_name = "mc1-test.metrumrg.com"))
+    expect_equal(as.numeric(last_rev2$rev), getMyLastEditRev(file2, .host_name = "mc1-test.metrumrg.com")[["revision"]])
+    
+    expect_equal(last_rev2$datetime, getMyLastEditRev(file2, .host_name = "mc1-test.metrumrg.com")[["datetime"]])
   })
 }
 
@@ -62,6 +67,8 @@ if (user_res$svn %in% svnLog2$author) {
     dplyr::slice(1)
   
   testthat::test_that("getMyLastEditRev finds the correct revision the user last made an edit", {
-    expect_equal(as.numeric(last_rev3$rev), getMyLastEditRev(file3, .host_name = "mc1-test.metrumrg.com"))
+    expect_equal(as.numeric(last_rev3$rev), getMyLastEditRev(file3, .host_name = "mc1-test.metrumrg.com")[["revision"]])
+    
+    expect_equal(last_rev3$datetime, getMyLastEditRev(file3, .host_name = "mc1-test.metrumrg.com")[["datetime"]])
   })
 }

@@ -16,6 +16,8 @@
 #' @keywords internal
 getMyLastEditRev <- function(.file, .host_name = "mc1.metrumrg.com") {
   
+  output_list <- list()
+  
   # Search SVN log 
   logFile <- svnLog(.file)
   userSVN <- svnUser(.host_name = .host_name)[["svn"]]
@@ -29,5 +31,10 @@ getMyLastEditRev <- function(.file, .host_name = "mc1.metrumrg.com") {
     cli::cli_abort(glue::glue("User has never modified '{.file}'"))
   }
   
-  return(as.numeric(authorRevs$rev))
+  output_list[["file"]] <- .file
+  output_list[["usernameSVN"]] <- userSVN
+  output_list[["revision"]] <- as.numeric(authorRevs$rev)
+  output_list[["datetime"]] <- authorRevs$datetime
+  
+  return(output_list)
 }
