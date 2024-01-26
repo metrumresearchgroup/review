@@ -17,13 +17,8 @@ system(.command)
 
 setwd(remote_repo_local)
 
-user_res <- svnUser(.host_name = "mc1-test.metrumrg.com")
-
-
-test_that("svnUser retrieves correct system user", {
-  expect_true(user_res$sys == Sys.info()[["user"]])
-})
+proj_res <- svnProjInfo(.host_name = "mc1-test.metrumrg.com")
 
 test_that("svnUser retrieves correct svn user", {
-  expect_true(user_res$svn == this_user)
+  expect_true(proj_res$this_svn_user == this_user)
 })
