@@ -1,7 +1,7 @@
 #' Get local and svn username
 #' 
 #' @description 
-#' Returns the user's SVN username, along with the repository root, hostname
+#' Returns the user's SVN username, along with the repository URL, hostname
 #' and local username.
 #' 
 #' @param .host_name Host name where repository is hosted
@@ -20,12 +20,12 @@ svnUser <- function(.host_name = "mc1.metrumrg.com"){
   
   sys_user <- Sys.info()[["user"]]
   
-  svn_root <- info_list$entry$repository$root
+  svn_url <- info_list$entry$url
   
   svn_ssh_user <- 
     unlist(
       strsplit(
-        svn_root,
+        svn_url,
         split = paste0("@", .host_name), 
         fixed = TRUE
       )
@@ -34,12 +34,12 @@ svnUser <- function(.host_name = "mc1.metrumrg.com"){
   svn_user <- unlist(strsplit(svn_ssh_user, "svn+ssh://", fixed = TRUE))[2]
   
   if (is.na(svn_user)) {
-    stop("svn user could not be detected from repository root '", svn_root, "'")
+    stop("svn user could not be detected from repository URL '", svn_url, "'")
   }
   
   list(
     host = .host_name,
-    root = svn_root,
+    url = svn_url,
     sys = sys_user,
     svn = svn_user
   )
