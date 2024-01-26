@@ -1,13 +1,12 @@
-#' Get local and svn username
+#' Get svn project info
 #' 
 #' @description 
-#' Returns the user's SVN username, along with the repository URL, hostname
-#' and local username.
+#' Returns info about the svn project
 #' 
 #' @param .host_name Host name where repository is hosted
 #' 
 #' @keywords internal
-svnUser <- function(.host_name = "mc1.metrumrg.com"){
+svnProjInfo <- function(.host_name = "mc1.metrumrg.com"){
   
   info_list <- tryCatch(
     svnCommand(.command = "info"),
@@ -18,9 +17,8 @@ svnUser <- function(.host_name = "mc1.metrumrg.com"){
     stop("svn info failed")
   }
   
-  sys_user <- Sys.info()[["user"]]
-  
   svn_url <- info_list$entry$url
+  svn_rev <- as.numeric(info_list$entry$commit$.attrs)
   
   svn_ssh_user <- 
     unlist(
@@ -38,10 +36,12 @@ svnUser <- function(.host_name = "mc1.metrumrg.com"){
   }
   
   list(
+    this_svn_user = svn_user,
     host = .host_name,
     url = svn_url,
-    sys = sys_user,
-    svn = svn_user
+    rev = svn_rev,
+    rev_author = info_list$entry$commit$author,
+    rev_datetime = info_list$entry$commit$date
   )
   
 }
