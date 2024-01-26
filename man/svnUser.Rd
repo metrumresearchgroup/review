@@ -10,7 +10,7 @@ svnUser(.host_name = "mc1.metrumrg.com")
 \item{.host_name}{Host name where repository is hosted}
 }
 \description{
-Returns the user's SVN username, along with the repository root, hostname
+Returns the user's SVN username, along with the repository URL, hostname
 and local username.
 }
 \keyword{internal}
