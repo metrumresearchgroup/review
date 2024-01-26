@@ -4,7 +4,7 @@
 
 - Added warning message to `diffQCed` when user has modified file since last QC. (#61)
 
-- Added `svnProjInfo` function to determine svn project info. (#65)
+- Added `svnProjInfo` function to determine svn project info. (#72)
 
 # review 3.7.0
 
