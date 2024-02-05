@@ -16,6 +16,7 @@
 #' @export
 diffPDF <- function(.file, .fps = 1) {
   
+  # Remove 20-23 and make the outputs of this the inputs for the function
   get_current_prev <-
     getPreviousCurrent(.file,
                        .previous_revision = svnProjInfo()[["rev"]],
@@ -30,16 +31,12 @@ diffPDF <- function(.file, .fps = 1) {
     stop("must have same num pages")
   }
   
-  img_list[["previous"]] <- magick::image_annotate(img_list[["previous"]], text = "OLD", gravity = "south", color = "red")
-  img_list[["current"]]<- magick::image_annotate(img_list[["current"]], text = "NEW", gravity = "south", color = "blue")
-  
-  
   for(i in 1:length(img_list[["previous"]])){
     
     this_page.i <-
       magick::image_join(
-        img_list[["previous"]][i],
-        img_list[["current"]][i]
+        magick::image_annotate(img_list[["previous"]][i], text = paste0("Page ", i, " (original)"), gravity = "south", color = "red"),
+        magick::image_annotate(img_list[["current"]][i], text = paste0("Page ", i, " (modified)"), gravity = "south", color = "red")
       )
     
     img_list_all_pg <-
