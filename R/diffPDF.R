@@ -5,25 +5,28 @@
 #' SVN. A GIF will be created to help the user compare the original file to the 
 #' modified one.
 #'
-#' @param .file file path from working directory
+#' @param .file1 file path from working directory
+#' @param .file2 file path from working directory
 #' @param .fps frames per second, increase for quicker switching between images
 #' 
 #' @examples 
 #' \dontrun{
-#' diffPDF(.file = "example-1.pdf", .fps = 1)
+#' diffPDF(.file1 = "example-1.pdf", .file2 = "example-2.pdf", .fps = 1)
 #' }
 #' 
 #' @export
-diffPDF <- function(.file, .fps = 1) {
+diffPDF <- function(.file1, .file2, .fps = 1) {
   
-  # Remove 20-23 and make the outputs of this the inputs for the function
-  get_current_prev <-
-    getPreviousCurrent(.file,
-                       .previous_revision = svnProjInfo()[["rev"]],
-                       .current_revision = NULL)
+  if (!file.exists(.file1)) {
+    paste0(.file1, " does not exist")
+  }
   
-  paths <- list(previous = get_current_prev$.previous_revision_temp_file,
-                current = get_current_prev$.current_revision_temp_file)
+  if (!file.exists(.file2)) {
+    paste0(.file2, " does not exist")
+  }
+
+  paths <- list(previous = .file1,
+                current = .file2)
   
   img_list <- lapply(paths, magick::image_read)
   

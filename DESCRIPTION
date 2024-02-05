@@ -27,7 +27,8 @@ Imports:
     cli,
     pmtables,
     rmarkdown,
-    magick
+    magick,
+    grDevices
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

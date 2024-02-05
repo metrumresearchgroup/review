@@ -4,21 +4,23 @@
 \alias{diffPDF}
 \title{Create a GIF of original vs modified PDF}
 \usage{
-diffPDF(.file, .fps = 1)
+diffPDF(.file1, .file2, .fps = 1)
 }
 \arguments{
-\item{.file}{file path from working directory}
+\item{.file1}{file path from working directory}
+
+\item{.file2}{file path from working directory}
 
 \item{.fps}{frames per second, increase for quicker switching between images}
 }
 \description{
-Compares the local version of a script with the most recent QCed version.
-The output will appear in the viewer and only rows where there have been
-additions, deletions or modifications in the script will be shown.
+Compares the local version of a PDF with the most recent version checked into
+SVN. A GIF will be created to help the user compare the original file to the
+modified one.
 }
 \examples{
 \dontrun{
-diffPDF(.file = "example-1.pdf", .fps = 1)
+diffPDF(.file1 = "example-1.pdf", .file2 = "example-2.pdf", .fps = 1)
 }
 
 }
