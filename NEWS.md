@@ -6,6 +6,8 @@
 
 - Added `svnProjInfo` function to determine svn project info. (#72)
 
+- Added `diffPDF` to view differences between versions of PDFs. 
+
 # review 3.7.0
 
 ## New features and changes 

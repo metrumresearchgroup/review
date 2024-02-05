@@ -26,7 +26,8 @@ Imports:
     fs,
     cli,
     pmtables,
-    rmarkdown
+    rmarkdown,
+    magick
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
