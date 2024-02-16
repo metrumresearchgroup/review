@@ -2,8 +2,8 @@
 
 export("%>%")
 export(demoRepo)
+export(diffFigure)
 export(diffFiles)
-export(diffPDF)
 export(diffPreviousRevisions)
 export(diffQced)
 export(dirSummary)
