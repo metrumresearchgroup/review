@@ -4,7 +4,7 @@
 \alias{diffFigure}
 \title{Create a GIF of original vs modified figure}
 \usage{
-diffFigure(.file1, .file2, .fps = 1, .page_num1 = NULL, .page_num2 = NULL)
+diffFigure(.file1, .file2, .fps = 2)
 }
 \arguments{
 \item{.file1}{file path from working directory}
@@ -12,10 +12,6 @@ diffFigure(.file1, .file2, .fps = 1, .page_num1 = NULL, .page_num2 = NULL)
 \item{.file2}{file path from working directory}
 
 \item{.fps}{frames per second, increase for quicker switching between images}
-
-\item{.page_num1}{specify page number of .file1 to do comparison of (if applicable)}
-
-\item{.page_num2}{specify page number of .file2 to do comparison of (if applicable)}
 }
 \description{
 Compares the local version of a figure with the most recent version checked into
@@ -25,9 +21,9 @@ modified one.
 \examples{
 \dontrun{
 diffFigure(
-  .file1 = "example-1.pdf", 
-  .file2 = "example-2.pdf", 
-  .fps = 1)
+  .file1 = "example-1.pdf",
+  .file2 = "example-2.pdf"
+  )
 }
 
 }

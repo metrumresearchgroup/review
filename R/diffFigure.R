@@ -1,71 +1,73 @@
 #' Create a GIF of original vs modified figure
-#' 
-#' @description 
+#'
+#' @description
 #' Compares the local version of a figure with the most recent version checked into
-#' SVN. A GIF will be created to help the user compare the original file to the 
+#' SVN. A GIF will be created to help the user compare the original file to the
 #' modified one.
 #'
 #' @param .file1 file path from working directory
 #' @param .file2 file path from working directory
 #' @param .fps frames per second, increase for quicker switching between images
-#' @param .page_num1 specify page number of .file1 to do comparison of (if applicable)
-#' @param .page_num2 specify page number of .file2 to do comparison of (if applicable)
-#' 
-#' @examples 
+#'
+#' @examples
 #' \dontrun{
 #' diffFigure(
-#'   .file1 = "example-1.pdf", 
-#'   .file2 = "example-2.pdf", 
-#'   .fps = 1)
+#'   .file1 = "example-1.pdf",
+#'   .file2 = "example-2.pdf"
+#'   )
 #' }
-#' 
+#'
 #' @export
-diffFigure <- function(.file1, .file2, .fps = 1, .page_num1 = NULL, .page_num2 = NULL) {
+diffFigure <- function(.file1, .file2, .fps = 2) {
   
   if (!file.exists(.file1)) {
     paste0(.file1, " does not exist")
   }
   
+  if(is.null(.file2))
+  
   if (!file.exists(.file2)) {
     paste0(.file2, " does not exist")
   }
-
-  paths <- list(previous = .file1,
-                current = .file2)
+  
+  paths <- list(previous = .file1, current = .file2)
   
   img_list <- lapply(paths, magick::image_read)
   
-  if (!is.null(.page_num1)) {
-    img_list$previous <- img_list$previous[.page_num1]
+  len_prev <- length(img_list[["previous"]])
+  len_cur <- length(img_list[["current"]])
+  
+  if (len_prev != len_cur) {
+    stop(".file1 and .file2 must have same number of pages", call. = FALSE)
   }
   
-  if (!is.null(.page_num2)) {
-    img_list$current <- img_list$current[.page_num2]
-  }
-  
-  
-  if(length(img_list[["previous"]]) != length(img_list[["current"]])){
-    stop("must have same num pages")
-  }
-  
-  for(i in 1:length(img_list[["previous"]])){
+  for (i in 1:len_prev) {
     
     this_page.i <-
       magick::image_join(
-        magick::image_annotate(img_list[["previous"]][i], text = paste0("Page ", i, " (original)"), gravity = "south", color = "red"),
-        magick::image_annotate(img_list[["current"]][i], text = paste0("Page ", i, " (modified)"), gravity = "south", color = "red")
+        magick::image_annotate(
+          img_list[["previous"]][i],
+          text = paste0("Page ", i, " (original)"),
+          #gravity = "southeast",
+          #location = "+50+20", 
+          color = "red"
+        ),
+        magick::image_annotate(
+          img_list[["current"]][i],
+          text = paste0("Page ", i, " (modified)"),
+          #gravity = "southeast",
+          #location = "+50+20", 
+          color = "blue"
+        )
       )
     
     img_list_all_pg <-
-      if(i == 1){
+      if (i == 1) {
         this_page.i
       } else {
         magick::image_join(img_list_all_pg, this_page.i)
       }
   }
   
-  img_animated <- magick::image_animate(image = img_list_all_pg, fps = .fps)
-  
-  
-  img_animated
+  magick::image_animate(image = img_list_all_pg, fps = .fps)
 }
