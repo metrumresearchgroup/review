@@ -18,13 +18,22 @@
 #' }
 #'
 #' @export
-diffFigure <- function(.file1, .file2, .fps = 2) {
+diffFigure <- function(.file1, .file2 = NULL, .fps = 2) {
   
   if (!file.exists(.file1)) {
     paste0(.file1, " does not exist")
   }
   
-  if(is.null(.file2))
+  if(is.null(.file2)) {
+    # Compare local (modified) to last checked in version
+    
+    get_current_prev <-
+      getPreviousCurrent(.file1,
+                         .previous_revision = svnProjInfo()[["rev"]],
+                         .current_revision = NULL)
+    
+    .file2 <- get_current_prev$.previous_revision_temp_file
+  }
   
   if (!file.exists(.file2)) {
     paste0(.file2, " does not exist")
