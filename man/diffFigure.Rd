@@ -4,7 +4,7 @@
 \alias{diffFigure}
 \title{Create a GIF of original vs modified figure}
 \usage{
-diffFigure(.file1, .file2, .fps = 2)
+diffFigure(.file1, .file2 = NULL, .fps = 2)
 }
 \arguments{
 \item{.file1}{file path from working directory}
