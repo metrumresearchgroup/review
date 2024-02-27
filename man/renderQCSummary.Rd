@@ -23,3 +23,9 @@ and renders it into a PDF report.
 The QC status of all scripts checked into SVN by each author will be displayed,
 along with a high level summary of all scripts that need to be QCed.
 }
+\examples{
+with_demoRepo({
+  renderQCSummary()
+})
+
+}

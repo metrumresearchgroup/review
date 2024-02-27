@@ -19,8 +19,8 @@ The output will appear in the viewer and only rows where there have been
 additions, deletions or modifications in the script will be shown.
 }
 \examples{
-\dontrun{
-diffQced(.file = "script/data-assembly.Rmd")
-}
+with_demoRepo({
+  diffQced("script/data-assembly.R")
+})
 
 }

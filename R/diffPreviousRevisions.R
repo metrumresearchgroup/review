@@ -12,9 +12,10 @@
 #' @param .ignore_white_space Logical. Should white space be ignored?
 #' 
 #' @examples 
-#' \dontrun{
-#' diffPreviousRevisions(.file = "script/data-assembly.Rmd", .previous_revision = 5)
-#' }
+#' with_demoRepo({
+#'  diffPreviousRevisions(.file = "script/data-assembly.R", 
+#'                        .previous_revision = 2)
+#' })
 #' 
 #' @export
 diffPreviousRevisions <- function(.file,

@@ -13,6 +13,11 @@
 #' The log is read, then sorted on file, revision, time.  The last record 
 #' for each file is retained.
 #' 
+#' @examples 
+#' with_demoRepo({
+#'   logSummary()
+#' })
+#' 
 #' @usage 
 #' logSummary(directory = getwd())
 #' 

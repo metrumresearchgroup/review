@@ -23,6 +23,11 @@
 #' force=FALSE,
 #' ...)
 #' 
+#' @examples 
+#' with_demoRepo({
+#'   logAccept("script/data-assembly.R")
+#' })
+#' 
 #' @author Tim Bergsma
 #' 
 #' @export

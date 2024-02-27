@@ -7,7 +7,7 @@
 \usage{
 demoRepo(.project_name)
 
-with_demoRepo(code, clean = TRUE)
+with_demoRepo(code, .project_name = "abc-123")
 }
 \arguments{
 \item{.project_name}{Character. Project name used to create the SVN repo}

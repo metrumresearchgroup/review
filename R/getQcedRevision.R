@@ -6,9 +6,9 @@
 #'
 #' @param .file file path from working directory
 #' @examples  
-#' \dontrun{
-#' getQcedRevision(.file = "script/data-assembly.Rmd")
-#' }
+#' with_demoRepo({
+#'   getQcedRevision(.file = "script/data-assembly.R")
+#' })
 #' 
 #' @export
 getQcedRevision <- function(.file){

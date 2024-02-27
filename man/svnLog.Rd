@@ -12,3 +12,9 @@ svnLog(.file)
 \description{
 Returns the \verb{svn log} in dataframe format.
 }
+\examples{
+with_demoRepo({
+  svnLog("script/data-assembly.R")
+})
+
+}

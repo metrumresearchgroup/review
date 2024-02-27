@@ -15,10 +15,10 @@
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
 #' @examples 
-#' \dontrun{
-#' diffFiles(.file_1 = "script/data-assembly-v2.Rmd", 
-#'           .file_2 = "script/data-assembly-v1.Rmd")
-#' }
+#' with_demoRepo({
+#'  diffFiles(.file_1 = "script/data-assembly.R", 
+#'            .file_2 = "script/combine-da.R")
+#' })
 #' 
 #' @export
 diffFiles <- function(.file_1, 

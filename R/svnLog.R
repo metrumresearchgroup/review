@@ -5,6 +5,11 @@
 #' 
 #' @param .file File path of the file of interest
 #' 
+#' @examples 
+#' with_demoRepo({
+#'   svnLog("script/data-assembly.R")
+#' })
+#' 
 #' @export
 svnLog <- function(.file) {
   

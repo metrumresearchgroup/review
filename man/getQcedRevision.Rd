@@ -15,8 +15,8 @@ accepted in the QClog.
 }
 \examples{
  
-\dontrun{
-getQcedRevision(.file = "script/data-assembly.Rmd")
-}
+with_demoRepo({
+  getQcedRevision(.file = "script/data-assembly.R")
+})
 
 }

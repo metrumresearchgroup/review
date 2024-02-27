@@ -34,6 +34,12 @@ logPending() identifies files needing (further) review.  A file's origin
 is itself, by default. Currently, logAssign() calls logAppend(), which allows
 NA for origin (defaults to precedent or to file itself).
 }
+\examples{
+ with_demoRepo({
+   logAssign(file = "script/examp-yaml.yaml")
+ })
+
+}
 \author{
 Tim Bergsma
 }

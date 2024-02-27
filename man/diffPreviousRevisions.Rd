@@ -29,8 +29,9 @@ The output will appear in the viewer and only rows where there have been
 additions, deletions or modifications in the script will be shown.
 }
 \examples{
-\dontrun{
-diffPreviousRevisions(.file = "script/data-assembly.Rmd", .previous_revision = 5)
-}
+with_demoRepo({
+ diffPreviousRevisions(.file = "script/data-assembly.R", 
+                       .previous_revision = 2)
+})
 
 }

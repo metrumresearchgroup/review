@@ -2,6 +2,11 @@
 #'
 #' This function provides a QC summary of relevant files in a project.
 #'
+#' @examples 
+#' with_demoRepo({
+#'   dirSummary()
+#' })
+#'
 #' @return A list containing:
 #'   * `project`: the name of the project repository.
 #'   * `data`: a data.frame containing information about the relevant files including:
@@ -13,7 +18,7 @@
 #'     - `QCer`: the reviewer name if the file is in QC log.
 #'
 #' @seealso 
-#' \code{\link[review]{logSummary}}, \code{\link[review]{svnInfo}}
+#' \code{\link[review]{logSummary}}
 #'
 #' @export
 dirSummary <- function() {

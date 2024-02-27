@@ -10,9 +10,9 @@
 #' @param .ignore_white_space Logical. Should white space be ignored?
 #' 
 #' @examples 
-#' \dontrun{
-#' diffQced(.file = "script/data-assembly.Rmd")
-#' }
+#' with_demoRepo({
+#'   diffQced("script/data-assembly.R")
+#' })
 #' 
 #' @export
 diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
