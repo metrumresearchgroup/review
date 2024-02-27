@@ -14,9 +14,11 @@
 #'   open the PDF in the default browser.
 #'   
 #' @examples 
-#' with_demoRepo({
-#'   renderQCSummary()
-#' })
+#' \dontrun{
+#'   with_demoRepo({
+#'     renderQCSummary()
+#'   })
+#' }
 #'
 #' @export
 renderQCSummary <- function(.output_dir = NULL) {

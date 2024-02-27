@@ -25,12 +25,12 @@ Imports:
     stringr,
     fs,
     cli,
-    pmtables,
     rmarkdown
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
     readr,
+    pmtables,
     withr (>= 2.5.0)
 Config/testthat/edition: 3
 VignetteBuilder: 
