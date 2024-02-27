@@ -141,7 +141,7 @@ demoRepo <- function(.project_name) {
 #' 
 #' @param code Executable code to run 
 #' @export
-with_demoRepo <- function(code, clean = TRUE) {
-  repo <- demoRepo(clean)
+with_demoRepo <- function(code, .project_name = "abc-123") {
+  repo <- demoRepo(.project_name)
   withr::with_dir(repo, code)
 }

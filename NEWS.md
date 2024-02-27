@@ -2,6 +2,8 @@
 
 ## New features and changes
 
+- Added `with_demoRepo` function to allow the user easier access to running examples in the demo Repo. (#77)
+
 - Added warning message to `diffQCed` when user has modified file since last QC. (#61)
 
 - Added `svnProjInfo` function to determine svn project info. (#72)
