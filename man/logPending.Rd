@@ -23,6 +23,12 @@ its origin, or both have been revised.  If a file has changed but not its origin
 an explanation is needed.  If a file is the same after a change to its origin, confirmation
 is needed.  It is not unusual for both a file and its origin to change.
 }
+\examples{
+with_demoRepo({
+  logPending()
+})
+
+}
 \author{
 Tim Bergsma
 }

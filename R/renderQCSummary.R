@@ -12,6 +12,13 @@
 #' @return Invisible. The function will save a PDF report named "qc-summary-(current date).pdf"
 #'   to the specified output directory (if available). If the R session is interactive, it will also 
 #'   open the PDF in the default browser.
+#'   
+#' @examples 
+#' \dontrun{
+#'   with_demoRepo({
+#'     renderQCSummary()
+#'   })
+#' }
 #'
 #' @export
 renderQCSummary <- function(.output_dir = NULL) {

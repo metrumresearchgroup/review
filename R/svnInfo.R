@@ -5,7 +5,7 @@
 #' 
 #' @param .file File path of the file of interest
 #' 
-#' @keywords internal
+#' @noRd
 svnInfo <- function(.file){
   
   info_list <- tryCatch(

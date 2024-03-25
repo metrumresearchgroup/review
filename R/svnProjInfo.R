@@ -5,7 +5,7 @@
 #' 
 #' @param .host_name Host name where repository is hosted
 #' 
-#' @keywords internal
+#' @noRd
 svnProjInfo <- function(.host_name = "mc1.metrumrg.com"){
   
   info_list <- tryCatch(

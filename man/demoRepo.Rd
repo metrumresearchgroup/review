@@ -2,12 +2,17 @@
 % Please edit documentation in R/demoRepo.R
 \name{demoRepo}
 \alias{demoRepo}
+\alias{with_demoRepo}
 \title{Create demo repo}
 \usage{
 demoRepo(.project_name)
+
+with_demoRepo(code, .project_name = "abc-123")
 }
 \arguments{
 \item{.project_name}{Character. Project name used to create the SVN repo}
+
+\item{code}{Executable code to run}
 }
 \description{
 Create a SVN repo with files checked in and a QC log. The purpose of this

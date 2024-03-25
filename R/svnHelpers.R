@@ -1,4 +1,4 @@
-#' @keywords internal
+#' @noRd
 svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xml = TRUE) {
   
   command_run <- paste("svn",

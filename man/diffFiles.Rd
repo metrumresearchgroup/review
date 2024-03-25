@@ -35,9 +35,9 @@ This should be used when a new script has been created based off
 an existing script.
 }
 \examples{
-\dontrun{
-diffFiles(.file_1 = "script/data-assembly-v2.Rmd", 
-          .file_2 = "script/data-assembly-v1.Rmd")
-}
+with_demoRepo({
+ diffFiles(.file_1 = "script/data-assembly.R", 
+           .file_2 = "script/combine-da.R")
+})
 
 }

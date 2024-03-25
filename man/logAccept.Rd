@@ -32,6 +32,12 @@ Indicate acceptance of a file by logging an entry with nonzero version.
 Can be undone with logRevert(). Calls logAppend(), which gives an error if
 the origin is NA (default) and no precedent exists.
 }
+\examples{
+with_demoRepo({
+  logAccept("script/data-assembly.R")
+})
+
+}
 \author{
 Tim Bergsma
 }
