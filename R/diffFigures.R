@@ -98,4 +98,6 @@ diffFigures <- function(figure1, figure2 = NULL) {
   if (interactive()) {
     utils::browseURL(temp_out)
   }
+  
+  return(invisible(dfpaths))
 }
