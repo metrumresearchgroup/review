@@ -40,6 +40,7 @@ demoRepo <- function(.project_name) {
   
   # Add scripts to the repo
   fs::dir_create("script/pk", recurse = TRUE)
+  fs::dir_create("deliv/figure")
   
   writeLines(
     c(
@@ -134,22 +135,42 @@ demoRepo <- function(.project_name) {
     "README.md"
   )
   
-  grDevices::pdf("example-pdf1.pdf")
+  grDevices::pdf("deliv/figure/example-pdf1.pdf")
   plot(1:10)
   grDevices::dev.off()
   
-  grDevices::pdf("example-pdf2.pdf")
+  grDevices::pdf("deliv/figure/example-pdf2.pdf")
   plot(5:10)
+  plot(1:1000)
   grDevices::dev.off()
   
-  system("svn add 'example-pdf1.pdf' -q -q")
-  system("svn add 'example-pdf2.pdf' -q -q")
+  grDevices::pdf("deliv/figure/example-pdf3.pdf")
+  plot(1:10)
+  grDevices::dev.off()
+  
+  system("svn add 'deliv/figure/example-pdf1.pdf' -q -q")
+  system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
+  system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
   system(glue::glue("svn commit -m 'add pdf' -q -q"))
   
-  Sys.sleep(5)
+  Sys.sleep(1)
   
-  grDevices::pdf("example-pdf1.pdf")
+  grDevices::pdf("deliv/figure/example-pdf1.pdf")
   plot(5:1000)
+  grDevices::dev.off()
+  
+  Sys.sleep(1)
+  
+  grDevices::pdf("deliv/figure/example-pdf2.pdf")
+  plot(1:2)
+  plot(1:4)
+  grDevices::dev.off()
+  
+  Sys.sleep(1)
+  
+  grDevices::pdf("deliv/figure/example-pdf3.pdf")
+  plot(1:100)
+  plot(1:3)
   grDevices::dev.off()
   
   repoDir
