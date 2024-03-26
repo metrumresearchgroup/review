@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- Added `diffFigures` function to show comparisons between different figures or versions of figures. 
+- Added `diffFigures` function to show comparisons between different figures or versions of figures. (#78)
 
 - Added `with_demoRepo` function to allow the user easier access to running examples in the demo Repo. (#77)
 
