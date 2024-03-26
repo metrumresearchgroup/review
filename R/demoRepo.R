@@ -139,6 +139,10 @@ demoRepo <- function(.project_name) {
   plot(1:10)
   grDevices::dev.off()
   
+  grDevices::png("deliv/figure/example-png1.png")
+  plot(1:10)
+  grDevices::dev.off()
+  
   grDevices::pdf("deliv/figure/example-pdf2.pdf")
   plot(5:10)
   plot(1:1000)
@@ -149,6 +153,7 @@ demoRepo <- function(.project_name) {
   grDevices::dev.off()
   
   system("svn add 'deliv/figure/example-pdf1.pdf' -q -q")
+  system("svn add 'deliv/figure/example-png1.png' -q -q")
   system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
   system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
   system(glue::glue("svn commit -m 'add pdf' -q -q"))
@@ -156,6 +161,10 @@ demoRepo <- function(.project_name) {
   Sys.sleep(1)
   
   grDevices::pdf("deliv/figure/example-pdf1.pdf")
+  plot(5:1000)
+  grDevices::dev.off()
+  
+  grDevices::png("deliv/figure/example-png1.png")
   plot(5:1000)
   grDevices::dev.off()
   

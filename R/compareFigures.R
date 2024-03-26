@@ -37,7 +37,7 @@ compareFigures <- function(.path) {
       "```{r out.height = 360, echo=FALSE, fig.cap=''}",
       .dfpaths$graphics[row.i],
       "```",
-      paste0("*Left last modified: ",
+      paste0("\n*Left last modified: ",
              .dfpaths$mtime2[row.i], 
              "*<br>*Right last modified: ",
              .dfpaths$mtime1[row.i], "*\n"),
