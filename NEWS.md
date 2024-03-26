@@ -2,6 +2,8 @@
 
 ## New features and changes
 
+- Added `diffFigures` function to show comparisons between different figures or versions of figures. 
+
 - Added `with_demoRepo` function to allow the user easier access to running examples in the demo Repo. (#77)
 
 - Added warning message to `diffQCed` when user has modified file since last QC. (#61)
