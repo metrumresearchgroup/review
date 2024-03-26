@@ -134,6 +134,24 @@ demoRepo <- function(.project_name) {
     "README.md"
   )
   
+  grDevices::pdf("example-pdf1.pdf")
+  plot(1:10)
+  grDevices::dev.off()
+  
+  grDevices::pdf("example-pdf2.pdf")
+  plot(5:10)
+  grDevices::dev.off()
+  
+  system("svn add 'example-pdf1.pdf' -q -q")
+  system("svn add 'example-pdf2.pdf' -q -q")
+  system(glue::glue("svn commit -m 'add pdf' -q -q"))
+  
+  Sys.sleep(5)
+  
+  grDevices::pdf("example-pdf1.pdf")
+  plot(5:1000)
+  grDevices::dev.off()
+  
   repoDir
 }
 
