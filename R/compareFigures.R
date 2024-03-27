@@ -9,9 +9,9 @@
 #' @param .path file path to a figure (pdf or png) or a directory of figures
 #' 
 #' @export
-compareFigures <- function(.path) {
+compareFigures <- function(.path, .svnmodify = FALSE) {
   
-  .dfpaths <- generateFigureComparison(.path)
+  .dfpaths <- generateFigureComparison(.path, .svnmodify)
   
   rmd_content <- 
     paste(

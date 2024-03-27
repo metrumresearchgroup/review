@@ -1,5 +1,5 @@
 #' @keywords internal
-generateFigureComparison <- function(.path) {
+generateFigureComparison <- function(.path, .svnmodify = FALSE) {
   
   .abs_path <- fs::path_abs(.path)
   
@@ -23,9 +23,46 @@ generateFigureComparison <- function(.path) {
     stop("No figures (PDF or PNG) found in ", .path)
   }
   
+  svnstatus <- svnCommand("status")
+  
+  svnentries <- svnstatus$target
+  
+  svndata <- data.frame()
+  
+  for (i in 1:length(svnentries)) {
+    
+    svnfile <- svnentries[[i]]
+    
+    if (!"path" %in% names(svnfile)) {
+      
+      svnfile.i = as.character(svnfile$.attrs)
+      svnstatus.i = svnfile$`wc-status`$.attrs[["item"]]
+      
+      svndata <-
+        rbind(
+          svndata,
+          data.frame(file = svnfile.i, status = svnstatus.i)
+        )
+    }
+  }
+  
+  svndata2 <- svndata[svndata$status != "unversioned",]
+  svndata2$file <- fs::path_abs(svndata2$file)
+  
+  files_of_interest <- .files[.files %in% svndata2$file]
+  
+  if (length(files_of_interest) == 0) {
+    stop("No files from ", .path, " versioned in SVN")
+  }
+  
+  if (.svnmodify) {
+    svn_modified_files <- svndata2[svndata2$status == "modified",]
+    files_of_interest <- files_of_interest[files_of_interest %in% svn_modified_files$file]
+  }
+  
   figures_meta <- data.frame()
   
-  for (file.i in .files) {
+  for (file.i in files_of_interest) {
     
     # Local version of the file
     info.i <- list(path1 = file.i, mtime1 = file.info(file.i)$mtime)

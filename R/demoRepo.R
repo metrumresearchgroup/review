@@ -182,6 +182,10 @@ demoRepo <- function(.project_name) {
   plot(1:3)
   grDevices::dev.off()
   
+  grDevices::pdf("deliv/figure/example-pdf4.pdf")
+  plot(1:300)
+  grDevices::dev.off()
+  
   repoDir
 }
 
