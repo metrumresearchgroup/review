@@ -16,7 +16,7 @@ compareFigures <- function(.path, .svnmodify = FALSE) {
   rmd_content <- 
     paste(
       "---",
-      paste0("title: \"Figure comparison: ", .path, '\"'),
+      paste0("title: \"Figure comparison: ", fs::path_rel(.path), '\"'),
       "date: '`r Sys.time()`'",
       "output:",
       "  html_document:",
@@ -34,7 +34,7 @@ compareFigures <- function(.path, .svnmodify = FALSE) {
       "\n",
       rmd_content,
       paste0("# ", .dfpaths$compname[row.i]),
-      "```{r out.height = 360, echo=FALSE, fig.cap=''}",
+      "```{r out.height = 360, echo=FALSE}",
       .dfpaths$graphics[row.i],
       "```",
       paste0("\n*Left last modified: ",
