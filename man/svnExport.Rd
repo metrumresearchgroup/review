@@ -6,7 +6,7 @@
 \usage{
 svnExport(
   .file,
-  .revision,
+  .revision = NULL,
   .output_dir = getwd(),
   .return_file = FALSE,
   .quiet = FALSE
@@ -15,7 +15,7 @@ svnExport(
 \arguments{
 \item{.file}{A character string specifying the path to the SVN file to be exported.}
 
-\item{.revision}{A character or numeric value specifying the SVN revision number of the file to be exported.}
+\item{.revision}{A character or numeric value specifying the SVN revision number of the file to be exported. (If NULL, the most recent version in the repository will be exported.)}
 
 \item{.output_dir}{A character string specifying the directory where the exported file should be saved.
 Defaults to the current working directory.}

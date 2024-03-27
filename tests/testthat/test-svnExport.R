@@ -13,5 +13,11 @@ with_demoRepo({
     expect_equal(readLines("load-spec-3.R"), 
                  "pk_spec <- yspec::load_spec(here::here(\"script\", \"script/examp-yaml.yaml\"))")
   })
+  
+  svnExport("script/data-assembly.R")
+  
+  test_that("svnExport works with no previous revision given", {
+    expect_true(file.exists("data-assembly-5.R"))
+  })
 })
 
