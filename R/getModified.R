@@ -1,10 +1,12 @@
 #' @keywords internal
-generateFigureComparison <- function(.path) {
+getModified <- function(.path, .exts = NULL) {
   
   .abs_path <- fs::path_abs(.path)
   
   files_of_interest <-
-    try(system(paste0("svn status ", .abs_path, " | grep '^M' | awk '{print $2}'"), intern = TRUE))
+    try(
+      system(paste0("svn status ", .abs_path, " | grep '^M' | awk '{print $2}'"), intern = TRUE)
+    )
   
   if(inherits(files_of_interest, "try-error")){
     stop("Unidentifiable path")
@@ -14,7 +16,11 @@ generateFigureComparison <- function(.path) {
     stop("No files from ", .path, " versioned in SVN")
   }
   
-  files_of_interest <- files_of_interest[grepl("\\.pdf$|\\.png$", files_of_interest)]
+  if(!is.null(.exts)){
+    
+    files_of_interest <- files_of_interest[grepl(paste("\\.", .exts, "$", collapse = "|", sep = ""), files_of_interest)]
+    
+  }
   
   if (length(files_of_interest) == 0) {
     stop("No png or pdf files from ", .path, " versioned in SVN")
