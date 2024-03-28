@@ -9,11 +9,11 @@
 #' @param .path file path to a figure (pdf or png) or a directory of figures
 #' 
 #' @export
-compareFigures <- function(.path, .svnmodify = FALSE) {
+compareFigures <- function(.path) {
   
-  .dfpaths <- generateFigureComparison(.path, .svnmodify)
+  .dfpaths <- generateFigureComparison(.path)
   
-  rmd_content <- 
+  rmd_header <- 
     paste(
       "---",
       paste0("title: \"Figure comparison: ", fs::path_rel(.path), '\"'),
@@ -26,40 +26,53 @@ compareFigures <- function(.path, .svnmodify = FALSE) {
       "---",
       sep = "\n")
   
-  .dfpaths$graphics <- paste0("knitr::include_graphics(c('", .dfpaths$path2, "', '", .dfpaths$path1, "'))")
+  rmd_body <- c()
   
-  for (row.i in 1:nrow(.dfpaths)) {
+  for (i in 1:nrow(.dfpaths)) {
     
-    rmd_content <- paste(
-      "\n",
-      rmd_content,
-      paste0("# ", .dfpaths$compname[row.i]),
-      "```{r out.height = 360, echo=FALSE}",
-      .dfpaths$graphics[row.i],
-      "```",
-      paste0("\n*Left last modified: ",
-             .dfpaths$mtime2[row.i], 
-             "*<br>*Right last modified: ",
-             .dfpaths$mtime1[row.i], "*\n"),
-      sep = "\n")
+    title.i <- paste0("# ", .dfpaths$compname[i])
+    
+    graphics.i <- paste0("knitr::include_graphics(c('", .dfpaths$path2[i], "', '", .dfpaths$path1[i], "'))")
+    
+    caption.i <- paste0('\n<div style="display: flex;"><div style="width: 50%; text-align: left;"><i style="color:blue">Repo (left) last modified: 2024-03-28 15:23:17</i></div><div style="width: 50%; text-align: right;"><i>Local (right) last modified: 2024-03-28 15:23:18</i></div></div>\n')
+    
+    # caption.i <- paste0("\n<i style = 'color:blue'>Repo (left) last modified: ",
+    #                     .dfpaths$mtime2[i],
+    #                     "</i><br><i>Local (right) last modified: ",
+    #                     .dfpaths$mtime1[i], "</i>\n")
+    
+    rmd_body <-
+      paste(
+        "\n",
+        rmd_body,
+        
+        title.i,
+        "```{r out.height = 360, echo=FALSE}",
+        graphics.i,
+        "```",
+        caption.i,
+        sep = "\n"
+      )
   }
   
-  outputFileName = tempfile("compare-figures", fileext = ".Rmd")
+  rmd_content <- paste(rmd_header, rmd_body, sep = "\n")
   
-  writeLines(rmd_content, con = outputFileName)
+  rmd_file = tempfile("compare-figures", fileext = ".Rmd")
   
-  temp_out <- tempfile(fileext = ".html")
+  writeLines(rmd_content, con = rmd_file)
+  
+  html_file <- tempfile(fileext = ".html")
   
   rmarkdown::render(
-    outputFileName,
-    output_file = temp_out,
+    rmd_file,
+    output_file = html_file,
     envir = new.env(),
     quiet = TRUE
   )
   
   if (interactive()) {
-    utils::browseURL(temp_out)
+    utils::browseURL(html_file)
   }
   
-  return(invisible(temp_out))
+  return(invisible(html_file))
 }

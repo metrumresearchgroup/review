@@ -135,7 +135,7 @@ demoRepo <- function(.project_name) {
     "README.md"
   )
   
-  grDevices::pdf("deliv/figure/example-pdf1.pdf")
+  grDevices::pdf("deliv/figure/example-pdf1.pdf", width = 8, height = 11)
   plot(1:10)
   grDevices::dev.off()
   
@@ -143,7 +143,7 @@ demoRepo <- function(.project_name) {
   plot(1:10)
   grDevices::dev.off()
   
-  grDevices::pdf("deliv/figure/example-pdf2.pdf")
+  grDevices::pdf("deliv/figure/example-pdf2.pdf", width = 11, height = 8)
   plot(5:10)
   plot(1:1000)
   grDevices::dev.off()
@@ -160,7 +160,7 @@ demoRepo <- function(.project_name) {
   
   Sys.sleep(1)
   
-  grDevices::pdf("deliv/figure/example-pdf1.pdf")
+  grDevices::pdf("deliv/figure/example-pdf1.pdf", width = 8, height = 11)
   plot(5:1000)
   grDevices::dev.off()
   
@@ -170,7 +170,7 @@ demoRepo <- function(.project_name) {
   
   Sys.sleep(1)
   
-  grDevices::pdf("deliv/figure/example-pdf2.pdf")
+  grDevices::pdf("deliv/figure/example-pdf2.pdf", width = 11, height = 8)
   plot(1:2)
   plot(1:4)
   grDevices::dev.off()

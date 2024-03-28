@@ -1,63 +1,23 @@
 #' @keywords internal
-generateFigureComparison <- function(.path, .svnmodify = FALSE) {
+generateFigureComparison <- function(.path) {
   
   .abs_path <- fs::path_abs(.path)
   
-  .files <- 
-    if (fs::is_dir(.abs_path)) {
-      
-      list.files(.abs_path, 
-                 pattern = "\\.pdf$|\\.png$",
-                 full.names = TRUE)
-      
-    } else {
-      
-      if (!file.exists(.abs_path)) {
-        stop(.path, " does not exist")
-      }
-      
-      .abs_path
-    }
+  files_of_interest <-
+    try(system(paste0("svn status ", .abs_path, " | grep '^M' | awk '{print $2}'"), intern = TRUE))
   
-  if (length(.files) == 0) {
-    stop("No figures (PDF or PNG) found in ", .path)
+  if(inherits(files_of_interest, "try-error")){
+    stop("Unidentifiable path")
   }
-  
-  svnstatus <- svnCommand("status")
-  
-  svnentries <- svnstatus$target
-  
-  svndata <- data.frame()
-  
-  for (i in 1:length(svnentries)) {
-    
-    svnfile <- svnentries[[i]]
-    
-    if (!"path" %in% names(svnfile)) {
-      
-      svnfile.i = as.character(svnfile$.attrs)
-      svnstatus.i = svnfile$`wc-status`$.attrs[["item"]]
-      
-      svndata <-
-        rbind(
-          svndata,
-          data.frame(file = svnfile.i, status = svnstatus.i)
-        )
-    }
-  }
-  
-  svndata2 <- svndata[svndata$status != "unversioned",]
-  svndata2$file <- fs::path_abs(svndata2$file)
-  
-  files_of_interest <- .files[.files %in% svndata2$file]
   
   if (length(files_of_interest) == 0) {
     stop("No files from ", .path, " versioned in SVN")
   }
   
-  if (.svnmodify) {
-    svn_modified_files <- svndata2[svndata2$status == "modified",]
-    files_of_interest <- files_of_interest[files_of_interest %in% svn_modified_files$file]
+  files_of_interest <- files_of_interest[grepl("\\.pdf$|\\.png$", files_of_interest)]
+  
+  if (length(files_of_interest) == 0) {
+    stop("No png or pdf files from ", .path, " versioned in SVN")
   }
   
   figures_meta <- data.frame()
@@ -86,6 +46,8 @@ generateFigureComparison <- function(.path, .svnmodify = FALSE) {
     
     figures_meta <- rbind(figures_meta,
                           cbind(as.data.frame(info.i), as.data.frame(compareInfo.i)))
+    
+    cli::cli_alert(paste0("Comparing: ", cli::col_blue(fs::path_rel(file.i))))
     
   }
   figures_meta
