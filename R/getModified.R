@@ -13,7 +13,7 @@ getModified <- function(.path, .exts = NULL) {
   }
   
   if (length(files_of_interest) == 0) {
-    stop("No files from ", .path, " versioned in SVN")
+    stop("No modified files found at '", .path, "' versioned in svn")
   }
   
   if(!is.null(.exts)){
@@ -23,7 +23,7 @@ getModified <- function(.path, .exts = NULL) {
   }
   
   if (length(files_of_interest) == 0) {
-    stop("No png or pdf files from ", .path, " versioned in SVN")
+    stop("No modified files found at '", .path, "' versioned in svn with extension(s) '", paste(.exts, collapse = " "), "'")
   }
   
   figures_meta <- data.frame()

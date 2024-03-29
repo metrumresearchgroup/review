@@ -41,6 +41,7 @@ demoRepo <- function(.project_name) {
   # Add scripts to the repo
   fs::dir_create("script/pk", recurse = TRUE)
   fs::dir_create("deliv/figure")
+  fs::dir_create("deliv/table")
   
   writeLines(
     c(
@@ -152,10 +153,19 @@ demoRepo <- function(.project_name) {
   plot(1:10)
   grDevices::dev.off()
   
+  pmdata <- pmtables::stdata()
+  
+  pmtables::stable_save(
+    x = pmtables::stable(pmdata),
+    file = "example-table-1.tex", 
+    dir = "deliv/table"
+  )
+  
   system("svn add 'deliv/figure/example-pdf1.pdf' -q -q")
   system("svn add 'deliv/figure/example-png1.png' -q -q")
   system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
   system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
+  system("svn add 'deliv/table/example-table-1.tex' -q -q")
   system(glue::glue("svn commit -m 'add pdf' -q -q"))
   
   Sys.sleep(1)
@@ -185,6 +195,15 @@ demoRepo <- function(.project_name) {
   grDevices::pdf("deliv/figure/example-pdf4.pdf")
   plot(1:300)
   grDevices::dev.off()
+  
+  # Make an edit to the table
+  pmdata$N[1] <- "81"
+  
+  pmtables::stable_save(
+    x = pmtables::stable(pmdata),
+    file = "example-table-1.tex", 
+    dir = "deliv/table"
+  )
   
   repoDir
 }
