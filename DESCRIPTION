@@ -25,7 +25,8 @@ Imports:
     stringr,
     fs,
     cli,
-    rmarkdown
+    rmarkdown,
+    tinytex
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
