@@ -1,6 +1,8 @@
 #' QC Summary of Files within a Directory
 #'
 #' This function provides a QC summary of relevant files in a project.
+#' 
+#' @param .dirs_exclude Character string (optional). Vector of directories to exclude in the summary (relative to log root).
 #'
 #' @examples 
 #' with_demoRepo({
@@ -21,7 +23,7 @@
 #' \code{\link[review]{logSummary}}
 #'
 #' @export
-dirSummary <- function() {
+dirSummary <- function(.dirs_exclude = NULL) {
   
   log_root <- tryCatch(logRoot(), error = identity)
   
@@ -45,6 +47,16 @@ dirSummary <- function() {
   extensions <- tools::file_ext(all_files)
   
   relevant_files <- all_files[extensions %in% relevant_file_types] %>% pathFromLogRoot()
+  
+  if (!is.null(.dirs_exclude)) {
+    for (dir.i in .dirs_exclude) {
+      relevant_files <- relevant_files[!(grepl(paste0("^", dir.i), relevant_files))]
+    }
+  }
+  
+  if (length(relevant_files) == 0) {
+    stop("No relevant files found at ", log_root)
+  }
   
   relevant_files_df <- dplyr::tibble(
     file = relevant_files,

@@ -1,5 +1,6 @@
 with_demoRepo({
   dirSummaryRes <- dirSummary()
+  dirSummaryResExcl <- dirSummary(.dirs_exclude = "script/pk")
   
   # Check that QC summary contains expected information
   test_that("dirSummary returns the correct project name", {
@@ -11,7 +12,12 @@ with_demoRepo({
     expect_true(length(dirSummaryRes) == 3)
     expect_true(is.character(dirSummaryRes$project))
     expect_true(is.data.frame(dirSummaryRes$data))
+    expect_equal(nrow(dirSummaryRes$data), 4)
     expect_true(is.data.frame(dirSummaryRes$status))
+    expect_equal(nrow(dirSummaryRes$status), 4)
+    expect_true(length(dirSummaryResExcl) == 3)
+    expect_equal(nrow(dirSummaryResExcl$data), 3)
+    expect_equal(nrow(dirSummaryResExcl$status), 3)
   })
   
   test_that("dirSummary captures the expected QC status of all scripts", {

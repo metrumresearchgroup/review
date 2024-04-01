@@ -5,6 +5,8 @@
 #' 
 #' The QC status of all scripts checked into SVN by each author will be displayed, 
 #' along with a high level summary of all scripts that need to be QCed.
+#' 
+#' @param .dirs_exclude Character string (optional). Vector of directories to exclude in the summary (relative to log root).
 #'
 #' @param .output_dir Character string (optional). Path to the directory where the output PDF 
 #'   should be saved. If not provided, the document will not be saved locally.
@@ -21,9 +23,9 @@
 #' }
 #'
 #' @export
-renderQCSummary <- function(.output_dir = NULL) {
+renderQCSummary <- function(.dirs_exclude = NULL, .output_dir = NULL) {
   
-  dirSummaryRes <- dirSummary()
+  dirSummaryRes <- dirSummary(.dirs_exclude = .dirs_exclude)
   
   if (is.null(.output_dir)) {
     .output_dir <- tempdir()
