@@ -2,6 +2,10 @@
 
 ## New features and changes
 
+- Added `compareModified` function to show comparisons between different versions of figures or tables. (#78)
+
+- Update `svnExport` to automatically use the last checked in version of a file if previous revision isn't provided. (#78)
+
 - Added `with_demoRepo` function to allow the user easier access to running examples in the demo Repo. (#77)
 
 - Added warning message to `diffQCed` when user has modified file since last QC. (#61)

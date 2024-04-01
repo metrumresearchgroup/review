@@ -5,7 +5,7 @@
 #' If the `.output_dir` is not specified, the current working directory will be used.
 #'
 #' @param .file A character string specifying the path to the SVN file to be exported.
-#' @param .revision A character or numeric value specifying the SVN revision number of the file to be exported.
+#' @param .revision A character or numeric value specifying the SVN revision number of the file to be exported. (If NULL, the most recent version in the repository will be exported.)
 #' @param .output_dir A character string specifying the directory where the exported file should be saved.
 #'   Defaults to the current working directory.
 #' @param .return_file Boolean. Should the newly created file name be returned as a string?
@@ -17,10 +17,14 @@
 #' }
 #' 
 #' @export
-svnExport <- function(.file, .revision, .output_dir = getwd(), .return_file = FALSE, .quiet = FALSE) {
+svnExport <- function(.file, .revision = NULL, .output_dir = getwd(), .return_file = FALSE, .quiet = FALSE) {
   
   if (!file.exists(.file)) {
     stop(".file not found")
+  }
+  
+  if (is.null(.revision)) {
+    .revision <- as.numeric(svnInfo(.file = .file)[["rev"]])
   }
   
   .file_rev_path <- 
