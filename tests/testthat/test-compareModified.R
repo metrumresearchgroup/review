@@ -3,11 +3,15 @@ with_demoRepo({
     test_that("compareModifiedFigures doesn't return anything", {
       
       expect_message({
-        compareModifiedFigures(fs::path_abs("deliv/figure/example-pdf1.pdf"))
+        compareModified(fs::path_abs("deliv/figure/example-pdf1.pdf"))
       })
       
       expect_message({
-        compareModifiedFigures("deliv/figure")
+        compareModified("deliv/figure")
+      })
+      
+      expect_message({
+        compareModified("deliv/table")
       })
     })
   }

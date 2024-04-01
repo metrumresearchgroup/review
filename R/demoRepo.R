@@ -156,8 +156,26 @@ demoRepo <- function(.project_name) {
   pmdata <- pmtables::stdata()
   
   pmtables::stable_save(
-    x = pmtables::stable(pmdata),
-    file = "example-table-1.tex", 
+    x = pmtables::stable(pmdata, panel = "STUDY"),
+    file = "example-table-1.tex",
+    dir = "deliv/table"
+  )
+  
+  pmtables::stable_save(
+    x = pmtables::stable_long(
+      dplyr::bind_rows(
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata
+      )
+    ),
+    file = "example-table-long-1.tex",
     dir = "deliv/table"
   )
   
@@ -166,6 +184,7 @@ demoRepo <- function(.project_name) {
   system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
   system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
   system("svn add 'deliv/table/example-table-1.tex' -q -q")
+  system("svn add 'deliv/table/example-table-long-1.tex' -q -q")
   system(glue::glue("svn commit -m 'add pdf' -q -q"))
   
   Sys.sleep(1)
@@ -202,6 +221,24 @@ demoRepo <- function(.project_name) {
   pmtables::stable_save(
     x = pmtables::stable(pmdata),
     file = "example-table-1.tex", 
+    dir = "deliv/table"
+  )
+  
+  pmtables::stable_save(
+    x = pmtables::stable_long(
+      dplyr::bind_rows(
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata,
+        pmdata
+      )
+    ),
+    file = "example-table-long-1.tex",
     dir = "deliv/table"
   )
   

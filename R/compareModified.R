@@ -1,25 +1,42 @@
-#' Generate comparison between local (modified) and checked in figures
+#' Generate comparison between local (modified) and checked in file(s)
 #' 
-#' @description 
-#' Allows the user to compare their local version of a figure to the checked
-#' in version in SVN. The user can input either a directory of figures or a 
-#' singular figure and a HTML page will be generated showing the last version 
-#' of the figure checked into SVN next to the local version.
-#' 
-#' @param .path file path to a directory of figures or a singular figure (pdf or png)
+#' @param .path file or directory path to tables/figures of interest (pdf, png, or tex)
 #' 
 #' @export
-compareModifiedFigures <- function(.path) {
+compareModified <- function(.path) {
   
   .dfpaths <- getModified(.path, c("png", "pdf", "tex"))
+  
+  tex_to_pdf <- function(.tex_path){
+    
+    temp_tex.i <- tempfile(fileext = ".tex")
+    tex_content.i <- readLines(.tex_path)
+    
+    complete_tex_document.i <- c(
+      "\\documentclass{article}",
+      "\\usepackage{threeparttable}",
+      "\\usepackage{longtable}",
+      "\\usepackage{array}",
+      "\\begin{document}",
+      tex_content.i,
+      "\\end{document}"
+    )
+    
+    writeLines(complete_tex_document.i, temp_tex.i)
+    temp_pdf.i <- tinytex::pdflatex(temp_tex.i)
+    temp_pdf.i
+  }
   
   .width <- 400
   .height <- round((.width * (7/6)) / 10) *  10
   
+  .dfpaths$width <- .width
+  .dfpaths$height <- .height
+  
   rmd_header <- 
     paste(
       "---",
-      paste0("title: \"Output from: ", fs::path_rel(.path), '\"'),
+      paste0("title: \"Path: ", fs::path_rel(.path), '\"'),
       "output:",
       "  html_document:",
       "    toc: true",
@@ -37,31 +54,23 @@ compareModifiedFigures <- function(.path) {
     
     file_ext.i <- tools::file_ext(.dfpaths$path1[i])
     
+    if (file_ext.i == "tex") {
+      
+      .dfpaths$path1[i] <- tex_to_pdf(.dfpaths$path1[i])
+      .dfpaths$path2[i] <- tex_to_pdf(.dfpaths$path2[i])
+      
+      # .dfpaths$height[i] <- 650
+      
+    }
+    
     graphics.i <- 
       
-      if(file_ext.i %in% c("png", "pdf")){
-        
-        paste(
-          paste0("```{r out.height = ", .height, ", out.width = ", .width, ", echo=FALSE}"),
-          paste0("knitr::include_graphics(c('", .dfpaths$path2[i], "', '", .dfpaths$path1[i], "'))"),
-          "```",
-          sep = "\n"
-        )
-        
-        
-      } else if(file_ext.i %in% c("tex")){
-        
-        path2_html <- knitr::pandoc(input = .dfpaths$path2[i], format = "html")
-        path1_html <- knitr::pandoc(input = .dfpaths$path1[i], format = "html")
-        
-        paste0(
-          '\n',
-          paste0('<div style="width: ', .width, 'px; display: inline-block">', paste0(readLines(path2_html), collapse = ""), '</div>'),
-          paste0('<div style="width: ', .width, 'px; display: inline-block">', paste0(readLines(path1_html), collapse = ""), '</div>'),
-          '\n'
-        )
-        
-      }
+      paste(
+        paste0("```{r out.height = ", .dfpaths$height[i], ", out.width = ", .width, ", echo=FALSE}"),
+        paste0("knitr::include_graphics(c('", .dfpaths$path2[i], "', '", .dfpaths$path1[i], "'))"),
+        "```",
+        sep = "\n"
+      )
     
     left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>Repo</b> (', .dfpaths$mtime2[i], ')</i></div>')
     right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>Local</b> (', .dfpaths$mtime1[i], ')</i></div>')
