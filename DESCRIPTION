@@ -26,12 +26,12 @@ Imports:
     fs,
     cli,
     rmarkdown,
-    tinytex
+    tinytex,
+    pmtables
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
     readr,
-    pmtables,
     withr (>= 2.5.0)
 Config/testthat/edition: 3
 VignetteBuilder: 
