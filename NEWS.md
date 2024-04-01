@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- Added `compareFigures` function to show comparisons between different figures or versions of figures. (#78)
+- Added `compareModified` function to show comparisons between different versions of figures or tables. (#78)
 
 - Update `svnExport` to automatically use the last checked in version of a file if previous revision isn't provided. (#78)
 

@@ -30,9 +30,6 @@ compareModified <- function(.path) {
   .width <- 400
   .height <- round((.width * (7/6)) / 10) *  10
   
-  .dfpaths$width <- .width
-  .dfpaths$height <- .height
-  
   rmd_header <- 
     paste(
       "---",
@@ -59,14 +56,12 @@ compareModified <- function(.path) {
       .dfpaths$path1[i] <- tex_to_pdf(.dfpaths$path1[i])
       .dfpaths$path2[i] <- tex_to_pdf(.dfpaths$path2[i])
       
-      # .dfpaths$height[i] <- 650
-      
     }
     
     graphics.i <- 
       
       paste(
-        paste0("```{r out.height = ", .dfpaths$height[i], ", out.width = ", .width, ", echo=FALSE}"),
+        paste0("```{r out.height = ", .height, ", out.width = ", .width, ", echo=FALSE}"),
         paste0("knitr::include_graphics(c('", .dfpaths$path2[i], "', '", .dfpaths$path1[i], "'))"),
         "```",
         sep = "\n"
@@ -90,7 +85,7 @@ compareModified <- function(.path) {
   
   rmd_content <- paste(rmd_header, "# Locally modified files", rmd_body, sep = "\n")
   
-  rmd_file = tempfile("compare-figures", fileext = ".Rmd")
+  rmd_file <- tempfile("compare-figures", fileext = ".Rmd")
   
   writeLines(rmd_content, con = rmd_file)
   
