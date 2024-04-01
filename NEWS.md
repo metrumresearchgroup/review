@@ -2,6 +2,8 @@
 
 ## New features and changes
 
+- `dirSummary` and `renderQCSummary` now provide a `.dirs_exclude` option. (#80)
+
 - Added `compareModified` function to show comparisons between different versions of figures or tables. (#78)
 
 - Update `svnExport` to automatically use the last checked in version of a file if previous revision isn't provided. (#78)
