@@ -2,7 +2,7 @@ with_demoRepo({
   if (Sys.getenv("METWORX_VERSION") != "") {
     test_that("renderQCSummary works with valid directory", {
       
-      expect_silent({
+      expect_message({
         renderQCSummary(.output_dir = logRoot())
       })
       
@@ -15,7 +15,7 @@ with_demoRepo({
       
       temp_dir <- tempdir()
       
-      expect_silent({
+      expect_message({
         renderQCSummary()
       })
       
