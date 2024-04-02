@@ -4,7 +4,10 @@
 \alias{dirSummary}
 \title{QC Summary of Files within a Directory}
 \usage{
-dirSummary()
+dirSummary(.dirs_exclude = NULL)
+}
+\arguments{
+\item{.dirs_exclude}{Character string (optional). Vector of directories to exclude in the summary (relative to log root).}
 }
 \value{
 A list containing:
