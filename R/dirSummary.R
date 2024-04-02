@@ -31,6 +31,10 @@ dirSummary <- function(.dirs_exclude = NULL) {
     stop("No QC log found")
   }
   
+  cur_dir <- getwd()
+  on.exit(setwd(cur_dir))
+  setwd(log_root)
+  
   project_name <- basename(log_root)
   
   returnList <- list(

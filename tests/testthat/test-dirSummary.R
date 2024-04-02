@@ -61,5 +61,12 @@ with_demoRepo({
     expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "In QC log, needs QC")) == 2)
     expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "Not in QC log")) == 1)
   })
+  
+  setwd("script")
+  dirSummaryResDir <- dirSummary()
+  
+  test_that("dirSummary works in a directory other than log root", {
+    expect_identical(dirSummaryRes, dirSummaryResDir)
+  })
 })
 
