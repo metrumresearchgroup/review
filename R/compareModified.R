@@ -33,7 +33,7 @@ compareModified <- function(.path) {
   rmd_header <- 
     paste(
       "---",
-      paste0("title: \"Path: ", fs::path_rel(.path), '\"'),
+      paste0("title: ", fs::path_rel(.path)),
       "output:",
       "  html_document:",
       "    toc: true",
@@ -47,7 +47,7 @@ compareModified <- function(.path) {
   
   for (i in 1:nrow(.dfpaths)) {
     
-    title.i <- paste0("## ", .dfpaths$compname[i])
+    title.i <- paste0("### ", .dfpaths$compname[i])
     
     file_ext.i <- tools::file_ext(.dfpaths$path1[i])
     
@@ -79,11 +79,12 @@ compareModified <- function(.path) {
         title.i,
         caption.i,
         graphics.i,
+        "<hr>",
         sep = "\n"
       )
   }
   
-  rmd_content <- paste(rmd_header, "# Locally modified files", rmd_body, sep = "\n")
+  rmd_content <- paste(rmd_header, rmd_body, sep = "\n")
   
   rmd_file <- tempfile("compare-figures", fileext = ".Rmd")
   

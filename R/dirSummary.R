@@ -58,6 +58,14 @@ dirSummary <- function(.dirs_exclude = NULL) {
     stop("No relevant files found at ", log_root)
   }
   
+  unique_dirs <- unique(fs::path_dir(relevant_files))
+  
+  cli::cli_h3("Directories (N Files)")
+  
+  for(dir.i in unique_dirs){
+    print(glue::glue("{cli::col_blue(dir.i)} ({cli::col_red(length(fs::dir_ls(dir.i)))})"))
+  }
+  
   relevant_files_df <- dplyr::tibble(
     file = relevant_files,
     lastauthor = NA_character_,
