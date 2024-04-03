@@ -2,8 +2,10 @@
 #' 
 #' @param .path file or directory path to tables/figures of interest (pdf, png, or tex)
 #' 
+#' @param .side_by_side Logical. Should outputs be displayed side by side?
+#' 
 #' @export
-compareModified <- function(.path) {
+compareModified <- function(.path, .side_by_side = FALSE) {
   
   .dfpaths <- getModified(.path, c("png", "pdf", "tex"))
   
@@ -58,33 +60,72 @@ compareModified <- function(.path) {
       
     }
     
+    repo_path.i <- .dfpaths$path2[i]
+    local_path.i <- .dfpaths$path1[i]
+    
+    # Unique IDs for HTML elements
+    repo_id.i <- paste0("repoContainer", i)
+    local_id.i <- paste0("localContainer", i)
+    radio_repo_id.i <- paste0("repo", i)
+    radio_local_id.i <- paste0("local", i)
+    
     graphics.i <- 
-      
-      paste(
-        paste0("```{r out.height = ", .height, ", out.width = ", .width, ", echo=FALSE}"),
-        paste0("knitr::include_graphics(c('", .dfpaths$path2[i], "', '", .dfpaths$path1[i], "'))"),
-        "```",
-        sep = "\n"
-      )
-    
-    left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>Repo</b> (', .dfpaths$mtime2[i], ')</i></div>')
-    right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>Local</b> (', .dfpaths$mtime1[i], ')</i></div>')
-    
-    caption.i <- paste0('\n', left_caption.i, right_caption.i, '\n')
+      if (!.side_by_side) {
+        paste0("
+<div>
+  <input type='radio' id='", radio_repo_id.i, "' name='toggle", i, "' checked onclick='toggleDisplay(\"", repo_id.i, "\", \"", local_id.i, "\")'>
+  <label for='", radio_repo_id.i, "'>Repository Version</label>
+
+  <input type='radio' id='", radio_local_id.i, "' name='toggle", i, "' onclick='toggleDisplay(\"", local_id.i, "\", \"", repo_id.i, "\")'>
+  <label for='", radio_local_id.i, "'>Local Version</label>
+</div>
+
+<div id='", repo_id.i, "' style='display:block;'><embed src='", repo_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
+<div id='", local_id.i, "' style='display:none;'><embed src='", local_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
+<hr>
+")
+      } else {
+        
+        left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>Repo</b> (', .dfpaths$mtime2[i], ')</i></div>')
+        right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>Local</b> (', .dfpaths$mtime1[i], ')</i></div>')
+        
+        caption.i <- paste0('\n', left_caption.i, right_caption.i, '\n')
+        
+        paste(
+          caption.i,
+          paste(
+            paste0("```{r out.height = ", .height, ", out.width = ", .width, ", echo=FALSE}"),
+            paste0("knitr::include_graphics(c('", repo_path.i, "', '", local_path.i, "'))"),
+            "```",
+            sep = "\n"
+          ),
+          sep = "\n"
+        )
+      }
     
     rmd_body <-
       paste(
         "\n",
         rmd_body,
         title.i,
-        caption.i,
         graphics.i,
         "<hr>",
         sep = "\n"
       )
   }
   
-  rmd_content <- paste(rmd_header, rmd_body, sep = "\n")
+  rmd_content <- paste(
+    rmd_header, 
+    rmd_body, 
+    ("
+<script>
+function toggleDisplay(showId, hideId) {
+  document.getElementById(showId).style.display = 'block';
+  document.getElementById(hideId).style.display = 'none';
+}
+</script>
+"),
+sep = "\n")
   
   rmd_file <- tempfile("compare-figures", fileext = ".Rmd")
   
