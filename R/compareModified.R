@@ -5,7 +5,7 @@
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
 #' @export
-compareModified <- function(.path, .side_by_side = FALSE) {
+compareModified <- function(.path, .side_by_side = TRUE) {
   
   .dfpaths <- getModified(.path, c("png", "pdf", "tex"))
   
@@ -74,10 +74,10 @@ compareModified <- function(.path, .side_by_side = FALSE) {
         paste0("
 <div>
   <input type='radio' id='", radio_repo_id.i, "' name='toggle", i, "' checked onclick='toggleDisplay(\"", repo_id.i, "\", \"", local_id.i, "\")'>
-  <label for='", radio_repo_id.i, "'>Repository Version</label>
+  <label for='", radio_repo_id.i, "'><i><b>Repo", " (", .dfpaths$mtime2[i], ")</b></i></label>
 
   <input type='radio' id='", radio_local_id.i, "' name='toggle", i, "' onclick='toggleDisplay(\"", local_id.i, "\", \"", repo_id.i, "\")'>
-  <label for='", radio_local_id.i, "'>Local Version</label>
+  <label for='", radio_local_id.i, "'><i><b style='color:blue'>Local", " (", .dfpaths$mtime1[i], ")</b></i></label>
 </div>
 
 <div id='", repo_id.i, "' style='display:block;'><embed src='", repo_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>

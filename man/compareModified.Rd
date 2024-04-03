@@ -4,7 +4,7 @@
 \alias{compareModified}
 \title{Generate comparison between local (modified) and checked in file(s)}
 \usage{
-compareModified(.path, .side_by_side = FALSE)
+compareModified(.path, .side_by_side = TRUE)
 }
 \arguments{
 \item{.path}{file or directory path to tables/figures of interest (pdf, png, or tex)}
