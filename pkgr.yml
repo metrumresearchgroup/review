@@ -7,6 +7,7 @@ Packages:
   - devtools
   - pkgdown
   - mpn.scorecard
+  - styler
 
 Repos:
   - CRAN: https://cran.rstudio.com
