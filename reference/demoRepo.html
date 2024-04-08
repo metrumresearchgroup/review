@@ -23,7 +23,7 @@ generated whenever the user restarts R."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.8.0</span>
       </span>
     </div>
 
@@ -78,13 +78,19 @@ generated whenever the user restarts R.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">demoRepo</span><span class="op">(</span><span class="va">.project_name</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">demoRepo</span><span class="op">(</span><span class="va">.project_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">with_demoRepo</span><span class="op">(</span><span class="va">code</span>, .project_name <span class="op">=</span> <span class="st">"abc-123"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.project_name</dt>
 <dd><p>Character. Project name used to create the SVN repo</p></dd>
+
+
+<dt>code</dt>
+<dd><p>Executable code to run</p></dd>
 
 </dl></div>
 

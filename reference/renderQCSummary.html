@@ -18,7 +18,7 @@ and renders it into a PDF report."><!-- mathjax --><script src="https://cdnjs.cl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.8.0</span>
       </span>
     </div>
 
@@ -68,12 +68,16 @@ and renders it into a PDF report.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">renderQCSummary</span><span class="op">(</span>.output_dir <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">renderQCSummary</span><span class="op">(</span>.dirs_exclude <span class="op">=</span> <span class="cn">NULL</span>, .output_dir <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>.output_dir</dt>
+    <dl><dt>.dirs_exclude</dt>
+<dd><p>Character string (optional). Vector of directories to exclude in the summary (relative to log root).</p></dd>
+
+
+<dt>.output_dir</dt>
 <dd><p>Character string (optional). Path to the directory where the output PDF
 should be saved. If not provided, the document will not be saved locally.</p></dd>
 
@@ -92,6 +96,16 @@ open the PDF in the default browser.</p>
 along with a high level summary of all scripts that need to be QCed.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="demoRepo.html">with_demoRepo</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">renderQCSummary</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

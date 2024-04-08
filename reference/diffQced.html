@@ -19,7 +19,7 @@ additions, deletions or modifications in the script will be shown."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.8.0</span>
       </span>
     </div>
 
@@ -90,9 +90,33 @@ additions, deletions or modifications in the script will be shown.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">diffQced</span><span class="op">(</span>.file <span class="op">=</span> <span class="st">"script/data-assembly.Rmd"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="demoRepo.html">with_demoRepo</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">diffQced</span><span class="op">(</span><span class="st">"script/data-assembly.R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">QC diff for: script/data-assembly.R</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Last QCed Revision: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Last Author: michaelm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> 'michaelm' has modified 'data-assembly.R' since last QC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">data-assembly.R: Revision 1</span>            <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">data-assembly.R: Local</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">@@ 1,5 @@                              </span>  <span style="color: #00BBBB;">@@ 1,10 @@                             </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   library(tidyverse)                       library(tidyverse)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">source(here::here("script",</span> <span style="color: #00BB00;">"data-ass</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">embly",</span> <span style="color: #00BB00;">"da-functions.R"))</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   src_abc &lt;- mrgda::read_src_dir(here::    src_abc &lt;- mrgda::read_src_dir(here::</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   here("data", "source", "STUDY-ABC"))     here("data", "source", "STUDY-ABC")) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   derived &lt;- list(sl = list(),tv = list    derived &lt;- list(sl = list(),tv = list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ())                                      ())                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   dm_0 &lt;- src_abc$dm %&gt;% filter(ACTARM     dm_0 &lt;- src_abc$dm %&gt;% filter(ACTARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   != "Screen Failure")                     != "Screen Failure")                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   derived$sl$dm &lt;- dm_0                    derived$sl$dm &lt;- dm_0                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_0</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">src_abc$pc</span> <span style="color: #00BB00;">%&gt;%</span> <span style="color: #00BB00;">filter(PCTEST</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">==</span> <span style="color: #00BB00;">"TEST OF INTEREST")</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">derived$tv$pc</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">pk_0</span>                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">ex_1</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">src_abc$ex</span> <span style="color: #00BB00;">%&gt;%</span> <span style="color: #00BB00;">filter(EXTRT</span> <span style="color: #00BB00;">=</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">=</span> <span style="color: #00BB00;">"DRUG OF INTEREST")</span>                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">derived$tv$dosing</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">ex_1</span>            </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

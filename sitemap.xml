@@ -22,6 +22,9 @@
     <loc>https://metrumresearchgroup.github.io/review/news/index.html</loc>
   </url>
   <url>
+    <loc>https://metrumresearchgroup.github.io/review/reference/compareModified.html</loc>
+  </url>
+  <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/demoRepo.html</loc>
   </url>
   <url>
@@ -68,9 +71,6 @@
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/svnExport.html</loc>
-  </url>
-  <url>
-    <loc>https://metrumresearchgroup.github.io/review/reference/svnInfo.html</loc>
   </url>
   <url>
     <loc>https://metrumresearchgroup.github.io/review/reference/svnLog.html</loc>

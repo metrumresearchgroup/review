@@ -19,7 +19,7 @@ If the .output_dir is not specified, the current working directory will be used.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.8.0</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@ If the <code>.output_dir</code> is not specified, the current working directory 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">svnExport</span><span class="op">(</span></span>
 <span>  <span class="va">.file</span>,</span>
-<span>  <span class="va">.revision</span>,</span>
+<span>  .revision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  .return_file <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -86,7 +86,7 @@ If the <code>.output_dir</code> is not specified, the current working directory 
 
 
 <dt>.revision</dt>
-<dd><p>A character or numeric value specifying the SVN revision number of the file to be exported.</p></dd>
+<dd><p>A character or numeric value specifying the SVN revision number of the file to be exported. (If NULL, the most recent version in the repository will be exported.)</p></dd>
 
 
 <dt>.output_dir</dt>
