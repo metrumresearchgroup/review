@@ -28,9 +28,10 @@ reference:
     - diffFiles
     - dirSummary
     - renderQCSummary
-    - demoRepo
+    - compareModified
   - title: SVN Tools
     desc: Easily access information about SVN repos
     contents:
     - svnLog
     - svnExport
+    - demoRepo
