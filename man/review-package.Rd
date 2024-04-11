@@ -4,7 +4,7 @@
 \name{review-package}
 \alias{review}
 \alias{review-package}
-\title{review: Manage Review Logs}
+\title{review: QC Management and Helpers}
 \description{
 Functions for managing logs of reviews of subversioned files (http://subversion.apache.org/).
 }
