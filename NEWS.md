@@ -1,3 +1,9 @@
+# review development
+
+## Bug fixes
+
+- Fixed directory counts displayed by `dirSummary`. 
+
 # review 3.8.0
 
 ## New features and changes

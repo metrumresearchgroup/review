@@ -44,7 +44,11 @@ dirSummary <- function(.dirs_exclude = NULL) {
   # Gather files to scan ----------------------------------------------------
   all_files <- list.files(log_root, full.names = TRUE, recursive = TRUE)
   
+  # Drop renv folder
   all_files <- all_files[!grepl(file.path(log_root, "renv"), all_files, fixed = TRUE)]
+  
+  # Drop pkgr.yml
+  all_files <- all_files[!grepl(file.path(log_root, "pkgr.yml"), all_files, fixed = TRUE)]
   
   relevant_file_types <- c("R", "Rmd", "yaml", "yml", "ctl", "cpp", "cp", "mod", "stan", "jl", "qmd")
   
@@ -62,12 +66,12 @@ dirSummary <- function(.dirs_exclude = NULL) {
     stop("No relevant files found at ", log_root)
   }
   
-  unique_dirs <- unique(fs::path_dir(relevant_files))
+  counts <- fs::path_dir(relevant_files) %>% table()
   
   cli::cli_h3("Directories (N Files)")
   
-  for(dir.i in unique_dirs){
-    print(glue::glue("{cli::col_blue(dir.i)} ({cli::col_red(length(fs::dir_ls(dir.i)))})"))
+  for(dir.i in names(counts)){
+    print(glue::glue("{cli::col_blue(dir.i)} ({cli::col_red(counts[[dir.i]])})"))
   }
   
   relevant_files_df <- dplyr::tibble(
