@@ -1,5 +1,5 @@
 Package: review
-Title: Manage Review Logs
+Title: QC Management and Helpers
 Version: 3.8.1
 Authors@R: 
     c(
