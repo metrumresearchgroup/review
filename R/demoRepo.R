@@ -79,6 +79,9 @@ demoRepo <- function(.project_name) {
   writeLines(c("This is the first version of the yaml file"),
              "script/examp-yaml.yaml")
   
+  writeLines(c("This is the first version of the yml file"),
+             "pkgr.yml")
+  
   # Create QC log
   logCreate()
   
