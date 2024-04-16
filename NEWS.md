@@ -1,3 +1,9 @@
+# review development
+
+## Bug fixes
+
+- Allow spaces in files when using `compareModified`. (#88)
+
 # review 3.8.1
 
 ## Bug fixes
