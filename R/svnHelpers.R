@@ -5,7 +5,7 @@ svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xm
                        .command,
                        .flags,
                        ifelse(.xml, "--xml", ""),
-                       .file,
+                       paste0("'", .file, "'"),
                        ifelse(.quiet, "2>/dev/null", ""),
                        sep = " ")
   

@@ -39,7 +39,9 @@ svnExport <- function(.file, .revision = NULL, .output_dir = getwd(), .return_fi
       )
     )
   
-  .file_command <- paste(.file, .file_rev_path, collapse = " ")
+  # Add the single quotes in between the files
+  # svnCommand will add the outer quotes
+  .file_command <- paste0(.file, "' '", .file_rev_path)
   
   export_try <- tryCatch(
     svnCommand(
