@@ -4,8 +4,10 @@ getModified <- function(.path, .exts = NULL) {
   .abs_path <- fs::path_abs(.path)
   
   files_of_interest <-
-    try(
-      system(paste0("svn status ", .abs_path, " | grep '^M'"), intern = TRUE)
+    suppressWarnings(
+      try(
+        system(paste0("svn status ", .abs_path, " | grep '^M'"), intern = TRUE)
+      )
     )
   
   if(inherits(files_of_interest, "try-error")){
