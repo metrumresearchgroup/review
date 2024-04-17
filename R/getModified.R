@@ -4,8 +4,10 @@ getModified <- function(.path, .exts = NULL) {
   .abs_path <- fs::path_abs(.path)
   
   files_of_interest <-
-    try(
-      system(paste0("svn status ", .abs_path, " | grep '^M' | awk '{print $2}'"), intern = TRUE)
+    suppressWarnings(
+      try(
+        system(paste0("svn status ", .abs_path, " | grep '^M'"), intern = TRUE)
+      )
     )
   
   if(inherits(files_of_interest, "try-error")){
@@ -15,6 +17,9 @@ getModified <- function(.path, .exts = NULL) {
   if (length(files_of_interest) == 0) {
     stop("No modified files found at '", .path, "' versioned in svn")
   }
+  
+  # Remove "M" and leading white space
+  files_of_interest <- gsub("^M\\s+", "", files_of_interest)
   
   if(!is.null(.exts)){
     

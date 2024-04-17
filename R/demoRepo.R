@@ -143,7 +143,7 @@ demoRepo <- function(.project_name) {
   plot(1:10)
   grDevices::dev.off()
   
-  grDevices::png("deliv/figure/example-png1.png")
+  grDevices::png("deliv/figure/example png1.png")
   plot(1:10)
   grDevices::dev.off()
   
@@ -183,7 +183,7 @@ demoRepo <- function(.project_name) {
   )
   
   system("svn add 'deliv/figure/example-pdf1.pdf' -q -q")
-  system("svn add 'deliv/figure/example-png1.png' -q -q")
+  system("svn add 'deliv/figure/example png1.png' -q -q")
   system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
   system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
   system("svn add 'deliv/table/example-table-1.tex' -q -q")
@@ -196,7 +196,7 @@ demoRepo <- function(.project_name) {
   plot(5:1000)
   grDevices::dev.off()
   
-  grDevices::png("deliv/figure/example-png1.png")
+  grDevices::png("deliv/figure/example png1.png")
   plot(5:1000)
   grDevices::dev.off()
   
