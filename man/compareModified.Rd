@@ -4,10 +4,17 @@
 \alias{compareModified}
 \title{Generate comparison between local (modified) and checked in file(s)}
 \usage{
-compareModified(.path, .side_by_side = TRUE, .display_all = FALSE)
+compareModified(
+  .path,
+  .path_compare = NULL,
+  .side_by_side = TRUE,
+  .display_all = FALSE
+)
 }
 \arguments{
 \item{.path}{file or directory path to tables/figures of interest (pdf, png, or tex)}
+
+\item{.path_compare}{file or directory path to compare .path to (leave as NULL to compare from svn)}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 

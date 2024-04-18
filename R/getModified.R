@@ -23,7 +23,7 @@ getModified <- function(.path, .exts = NULL) {
   
   if(!is.null(.exts)){
     
-    files_of_interest <- files_of_interest[grepl(paste("\\.", .exts, "$", collapse = "|", sep = ""), files_of_interest)]
+    files_of_interest <- files_of_interest[tools::file_ext(files_of_interest) %in% .exts]
     
   }
   
