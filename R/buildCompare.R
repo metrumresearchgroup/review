@@ -95,10 +95,10 @@ buildCompare <- function(.dfpaths, .side_by_side, .headings) {
         paste0("
 <div>
   <input type='radio' id='", radio_base_id.i, "' name='toggle", i, "' checked onclick='toggleDisplay(\"", base_id.i, "\", \"", compare_id.i, "\")'>
-  <label for='", radio_base_id.i, "'><i><b>", .headings[1], "</b></i></label>
+  <label for='", radio_base_id.i, "'><b>", .headings[1], "</b></label>
 
   <input type='radio' id='", radio_compare_id.i, "' name='toggle", i, "' onclick='toggleDisplay(\"", compare_id.i, "\", \"", base_id.i, "\")'>
-  <label for='", radio_compare_id.i, "'><i><b style='color:blue'>", .headings[2], "</b></i></label>
+  <label for='", radio_compare_id.i, "'><b style='color:blue'>", .headings[2], "</b></label>
 </div>
 
 <div id='", base_id.i, "' style='display:block;'><embed src='", base_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
@@ -107,8 +107,8 @@ buildCompare <- function(.dfpaths, .side_by_side, .headings) {
 ")
       } else {
         
-        left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>', .headings[1], '</b></i></div>')
-        right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>', .headings[2], '</b></i></div>')
+        left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><b>', .headings[1], '</b></div>')
+        right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><b style="color:blue">', .headings[2], '</b></div>')
         
         caption.i <- paste0('\n', left_caption.i, right_caption.i, '\n')
         
