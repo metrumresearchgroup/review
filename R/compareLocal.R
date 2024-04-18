@@ -21,7 +21,7 @@ compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE) {
       
     } else {
       
-      intersect(basename(.path_base), basename(.path_compare))
+      c(basename(.path_base), basename(.path_compare))
       
     }
   
