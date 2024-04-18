@@ -9,6 +9,8 @@
 #' indicating the name of the comparison set and file paths to compare.
 #' @param .side_by_side Logical; if TRUE, display documents side-by-side,
 #' otherwise allow toggling between documents with radio buttons.
+#' 
+#' @param .headings Character. Figure headings.
 #'
 #' @return The file path of the generated HTML document. This path is returned
 #' invisibly and will be automatically opened in a browser if the function
@@ -25,7 +27,7 @@
 #' buttons. Additional JavaScript is embedded for toggling visibility of elements.
 #'
 #' @keywords internal
-buildCompare <- function(.dfpaths, .side_by_side) {
+buildCompare <- function(.dfpaths, .side_by_side, .headings) {
   
   tex_to_pdf <- function(.tex_path){
     
@@ -78,35 +80,35 @@ buildCompare <- function(.dfpaths, .side_by_side) {
       
     }
     
-    repo_path.i <- .dfpaths$path2[i]
-    local_path.i <- .dfpaths$path1[i]
+    base_path.i <- .dfpaths$path2[i]
+    compare_path.i <- .dfpaths$path1[i]
     
     
     # Unique IDs for HTML elements
-    repo_id.i <- paste0("repoContainer", i)
-    local_id.i <- paste0("localContainer", i)
-    radio_repo_id.i <- paste0("repo", i)
-    radio_local_id.i <- paste0("local", i)
+    base_id.i <- paste0("baseContainer", i)
+    compare_id.i <- paste0("compareContainer", i)
+    radio_base_id.i <- paste0("base", i)
+    radio_compare_id.i <- paste0("compare", i)
     
     graphics.i <- 
       if (!.side_by_side) {
         paste0("
 <div>
-  <input type='radio' id='", radio_repo_id.i, "' name='toggle", i, "' checked onclick='toggleDisplay(\"", repo_id.i, "\", \"", local_id.i, "\")'>
-  <label for='", radio_repo_id.i, "'><i><b>Repo</b></i></label>
+  <input type='radio' id='", radio_base_id.i, "' name='toggle", i, "' checked onclick='toggleDisplay(\"", base_id.i, "\", \"", compare_id.i, "\")'>
+  <label for='", radio_base_id.i, "'><i><b>", .headings[1], "</b></i></label>
 
-  <input type='radio' id='", radio_local_id.i, "' name='toggle", i, "' onclick='toggleDisplay(\"", local_id.i, "\", \"", repo_id.i, "\")'>
-  <label for='", radio_local_id.i, "'><i><b style='color:blue'>Local</b></i></label>
+  <input type='radio' id='", radio_compare_id.i, "' name='toggle", i, "' onclick='toggleDisplay(\"", compare_id.i, "\", \"", base_id.i, "\")'>
+  <label for='", radio_compare_id.i, "'><i><b style='color:blue'>", .headings[2], "</b></i></label>
 </div>
 
-<div id='", repo_id.i, "' style='display:block;'><embed src='", repo_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
-<div id='", local_id.i, "' style='display:none;'><embed src='", local_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
+<div id='", base_id.i, "' style='display:block;'><embed src='", base_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
+<div id='", compare_id.i, "' style='display:none;'><embed src='", compare_path.i, "' type='application/pdf' width='100%' height='850px' style='border:1px solid #000;'/></div>
 <hr>
 ")
       } else {
         
-        left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>Repo</b></i></div>')
-        right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>Local</b></i></div>')
+        left_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:black"><b>', .headings[1], '</b></i></div>')
+        right_caption.i <- paste0('<div style="width: ', .width, 'px; display: inline-block"><i style="color:blue"><b>', .headings[2], '</b></i></div>')
         
         caption.i <- paste0('\n', left_caption.i, right_caption.i, '\n')
         
@@ -114,7 +116,7 @@ buildCompare <- function(.dfpaths, .side_by_side) {
           caption.i,
           paste(
             paste0("```{r out.height = ", .height, ", out.width = ", .width, ", echo=FALSE}"),
-            paste0("knitr::include_graphics(c('", repo_path.i, "', '", local_path.i, "'))"),
+            paste0("knitr::include_graphics(c('", base_path.i, "', '", compare_path.i, "'))"),
             "```",
             sep = "\n"
           ),

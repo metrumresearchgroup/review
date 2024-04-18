@@ -11,5 +11,9 @@ compareModified <- function(.path, .side_by_side = TRUE) {
   
   .dfpaths <- getModified(.path = .path, .exts = .exts)
   
-  buildCompare(.dfpaths = .dfpaths, .side_by_side = .side_by_side)
+  buildCompare(
+    .dfpaths = .dfpaths,
+    .side_by_side = .side_by_side,
+    .headings = c("Repo", "Local")
+  )
 }

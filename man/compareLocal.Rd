@@ -4,12 +4,12 @@
 \alias{compareLocal}
 \title{Generate comparison between sets of local file(s)}
 \usage{
-compareLocal(.path, .path_compare, .side_by_side = TRUE)
+compareLocal(.path_base, .path_compare, .side_by_side = TRUE)
 }
 \arguments{
-\item{.path}{file or directory path to tables/figures of interest (pdf, png, or tex)}
+\item{.path_base}{file or directory path to tables/figures of interest (pdf, png, or tex)}
 
-\item{.path_compare}{file or directory path to compare .path to}
+\item{.path_compare}{file or directory path to compare .path_base to}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 }

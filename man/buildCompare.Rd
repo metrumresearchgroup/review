@@ -4,7 +4,7 @@
 \alias{buildCompare}
 \title{Builds a comparative HTML document from specified file paths}
 \usage{
-buildCompare(.dfpaths, .side_by_side)
+buildCompare(.dfpaths, .side_by_side, .headings)
 }
 \arguments{
 \item{.dfpaths}{A dataframe with columns \code{compname}, \code{path1}, and \code{path2}
@@ -12,6 +12,8 @@ indicating the name of the comparison set and file paths to compare.}
 
 \item{.side_by_side}{Logical; if TRUE, display documents side-by-side,
 otherwise allow toggling between documents with radio buttons.}
+
+\item{.headings}{Character. Figure headings.}
 }
 \value{
 The file path of the generated HTML document. This path is returned
