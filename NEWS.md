@@ -1,5 +1,9 @@
 # review development
 
+## New features and changes
+
+- `compareLocal` allows comparison between local versions of figures or tables. (#88)
+
 ## Bug fixes
 
 - Allow spaces in files when using `compareModified`. (#88)
