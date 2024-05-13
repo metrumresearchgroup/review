@@ -9,6 +9,12 @@
 #' @export
 compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
   
+  .allowed_exts <- c("png", "pdf", "tex")
+  
+  if (!all(.file_exts %in% .allowed_exts)) {
+    stop("Only file extensions ", paste(.allowed_exts, collapse = ", "), " are allowed")
+  }
+  
   .dfpaths <- getModified(.path = .path, .exts = .file_exts)
   
   buildCompare(

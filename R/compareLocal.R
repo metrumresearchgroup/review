@@ -10,7 +10,13 @@
 #' 
 #' @export
 compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
+   
+  .allowed_exts <- c("png", "pdf", "tex")
   
+  if (!all(.file_exts %in% .allowed_exts)) {
+    stop("Only file extensions ", paste(.allowed_exts, collapse = ", "), " are allowed")
+  }
+
   .is_dir <- fs::is_dir(.path_base)
   
   common_files <- 

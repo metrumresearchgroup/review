@@ -19,6 +19,10 @@ with_demoRepo({
         compareLocal("deliv/table", "deliv/figure")
       })
       
+      expect_error({
+        compareLocal("deliv/figure", "deliv/figure", .file_exts = "doc")
+      })
+      
     })
   }
 })
