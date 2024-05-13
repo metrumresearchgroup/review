@@ -4,12 +4,12 @@
 #' 
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
+#' @param .file_exts file extensions to include in comparison
+#' 
 #' @export
-compareModified <- function(.path, .side_by_side = TRUE) {
+compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
   
-  .exts <- c("png", "pdf", "tex")
-  
-  .dfpaths <- getModified(.path = .path, .exts = .exts)
+  .dfpaths <- getModified(.path = .path, .exts = .file_exts)
   
   buildCompare(
     .dfpaths = .dfpaths,

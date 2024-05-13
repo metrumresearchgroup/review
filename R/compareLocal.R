@@ -6,10 +6,10 @@
 #' 
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
+#' @param .file_exts file extensions to include in comparison
+#' 
 #' @export
-compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE) {
-  
-  .exts <- c("png", "pdf", "tex")
+compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
   
   .is_dir <- fs::is_dir(.path_base)
   
@@ -25,10 +25,10 @@ compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE) {
       
     }
   
-  common_files <- common_files[tools::file_ext(common_files) %in% .exts]
+  common_files <- common_files[tools::file_ext(common_files) %in% .file_exts]
   
   if (length(common_files) == 0) {
-    stop("No common files in .path_base and .path_compare of type(s) ", paste(.exts, collapse = ", "))
+    stop("No common files in .path_base and .path_compare of type(s) ", paste(.file_exts, collapse = ", "))
   }
   
   if (.is_dir) {
