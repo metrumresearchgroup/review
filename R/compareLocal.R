@@ -1,6 +1,6 @@
 #' Generate comparison between sets of local file(s)
 #' 
-#' @param .path_base file or directory path to tables/figures of interest (pdf, png, or tex)
+#' @param .path_base file or directory path to tables/figures of interest
 #' 
 #' @param .path_compare file or directory path to compare .path_base to
 #' 

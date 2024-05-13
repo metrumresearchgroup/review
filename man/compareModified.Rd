@@ -11,7 +11,7 @@ compareModified(
 )
 }
 \arguments{
-\item{.path}{file or directory path to tables/figures of interest (pdf, png, or tex)}
+\item{.path}{file or directory path to tables/figures of interest}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 

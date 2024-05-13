@@ -1,6 +1,6 @@
 #' Generate comparison between local (modified) and checked in file(s)
 #' 
-#' @param .path file or directory path to tables/figures of interest (pdf, png, or tex)
+#' @param .path file or directory path to tables/figures of interest
 #' 
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 

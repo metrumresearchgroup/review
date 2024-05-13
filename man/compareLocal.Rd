@@ -12,7 +12,7 @@ compareLocal(
 )
 }
 \arguments{
-\item{.path_base}{file or directory path to tables/figures of interest (pdf, png, or tex)}
+\item{.path_base}{file or directory path to tables/figures of interest}
 
 \item{.path_compare}{file or directory path to compare .path_base to}
 
