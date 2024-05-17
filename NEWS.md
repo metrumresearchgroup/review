@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `compareModified` and `compareLocal` now have a file extension argument. (#92)
+
 # review 3.8.2
 
 ## New features and changes

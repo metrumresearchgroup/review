@@ -1,16 +1,22 @@
 #' Generate comparison between sets of local file(s)
 #' 
-#' @param .path_base file or directory path to tables/figures of interest (pdf, png, or tex)
+#' @param .path_base file or directory path to tables/figures of interest
 #' 
 #' @param .path_compare file or directory path to compare .path_base to
 #' 
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
+#' @param .file_exts file extensions to include in comparison
+#' 
 #' @export
-compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE) {
+compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
+   
+  .allowed_exts <- c("png", "pdf", "tex")
   
-  .exts <- c("png", "pdf", "tex")
-  
+  if (!all(.file_exts %in% .allowed_exts)) {
+    stop("Only file extensions ", paste(.allowed_exts, collapse = ", "), " are allowed")
+  }
+
   .is_dir <- fs::is_dir(.path_base)
   
   common_files <- 
@@ -25,10 +31,10 @@ compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE) {
       
     }
   
-  common_files <- common_files[tools::file_ext(common_files) %in% .exts]
+  common_files <- common_files[tools::file_ext(common_files) %in% .file_exts]
   
   if (length(common_files) == 0) {
-    stop("No common files in .path_base and .path_compare of type(s) ", paste(.exts, collapse = ", "))
+    stop("No common files in .path_base and .path_compare of type(s) ", paste(.file_exts, collapse = ", "))
   }
   
   if (.is_dir) {

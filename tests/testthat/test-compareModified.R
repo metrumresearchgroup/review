@@ -13,6 +13,11 @@ with_demoRepo({
       expect_message({
         compareModified("deliv/table")
       })
+      
+      
+      expect_error({
+        compareModified("deliv/table", .file_exts = c("png", "jpeg"))
+      })
     })
   }
 })

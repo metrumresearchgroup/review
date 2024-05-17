@@ -4,12 +4,18 @@
 \alias{compareModified}
 \title{Generate comparison between local (modified) and checked in file(s)}
 \usage{
-compareModified(.path, .side_by_side = TRUE)
+compareModified(
+  .path,
+  .side_by_side = TRUE,
+  .file_exts = c("png", "pdf", "tex")
+)
 }
 \arguments{
-\item{.path}{file or directory path to tables/figures of interest (pdf, png, or tex)}
+\item{.path}{file or directory path to tables/figures of interest}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
+
+\item{.file_exts}{file extensions to include in comparison}
 }
 \description{
 Generate comparison between local (modified) and checked in file(s)
