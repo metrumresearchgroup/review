@@ -1,32 +1,46 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
+
+[![Build
+Status](https://github.com/metrumresearchgroup/review/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/review/actions/workflows/main.yaml)
+<!-- badges: end -->
+
 ## Overview
 
-review provides helpful tools for organizing and performing quality control (QC)
-tasks.
+review provides helpful tools for organizing and performing quality
+control (QC) tasks.
 
-With review, you are able to create and manage a QC log to track the QC history
-of all relevant files in your repository. While performing QC, `diffQced()` will
-show all the changes to the file since it had last been QCed.
+With review, you are able to create and manage a QC log to track the QC
+history of all relevant files in your repository. While performing QC,
+`diffQced()` will show all the changes to the file since it had last
+been QCed.
 
 ## Setup
 
-To start using review, run `logCreate()`. This will create the QC log in the form
-of `QClog.csv`. 
+To start using review, run `logCreate()`. This will create the QC log in
+the form of `QClog.csv`.
 
-You can use `logAssign()` to add scripts needing to be QCed to the QC log. After
-completing QC, run `logAccept()`. This will add a row to the `QClog.csv` recording
-the current revision number to indicate when the file was QCed.
+You can use `logAssign()` to add scripts needing to be QCed to the QC
+log. After completing QC, run `logAccept()`. This will add a row to the
+`QClog.csv` recording the current revision number to indicate when the
+file was QCed.
 
-To identify which files need to be QCed, you can run `logPending()`. You can also
-run `logSummary()` to see the revision number for the most recent QC of each script.
+To identify which files need to be QCed, you can run `logPending()`. You
+can also run `logSummary()` to see the revision number for the most
+recent QC of each script.
 
 ## Documentation
-Public documentation of all functions is hosted at [https://metrumresearchgroup.github.io/review/](https://metrumresearchgroup.github.io/review/)
+
+Public documentation of all functions is hosted at
+<https://metrumresearchgroup.github.io/review/>
 
 ## Development
 
-`review` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to manage
-development dependencies and [renv](https://rstudio.github.io/renv/) to
-provide isolation. To replicate this environment,
+`review` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to
+manage development dependencies and
+[renv](https://rstudio.github.io/renv/) to provide isolation. To
+replicate this environment,
 
 1.  clone the repo
 
@@ -46,4 +60,5 @@ in RStudio). renv will activate and find the project library.
 
 ## Getting help
 
-If you encounter a clear bug, please file an issue with a minimal reproducible example on [review](https://github.com/review/issues). 
+If you encounter a clear bug, please file an issue with a minimal
+reproducible example on [review](https://github.com/review/issues).

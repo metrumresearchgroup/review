@@ -3,5 +3,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown.yml$
-^.drone.yml$
+^\.github$
 pkgr.yml
+^README\.Rmd$
