@@ -7,7 +7,7 @@
 #' versus last checked in version.
 #' 
 #' @param .path_current file or directory path to figures of interest
-#' @param .path_previous file or directory path to compare .path_base to
+#' @param .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .file_types file extensions to include in comparison (only pdf and png allowed)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 

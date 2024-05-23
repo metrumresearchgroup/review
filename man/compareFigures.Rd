@@ -14,7 +14,7 @@ compareFigures(
 \arguments{
 \item{.path_current}{file or directory path to figures of interest}
 
-\item{.path_previous}{file or directory path to compare .path_base to}
+\item{.path_previous}{file or directory path to compare .path_base to (leave as NULL to compare to repo version)}
 
 \item{.file_types}{file extensions to include in comparison (only pdf and png allowed)}
 

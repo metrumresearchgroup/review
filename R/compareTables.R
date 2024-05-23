@@ -7,7 +7,7 @@
 #' versus last checked in version.
 #' 
 #' @param .path_current file or directory path to tables of interest
-#' @param .path_previous file or directory path to compare .path_base to
+#' @param .path_previous .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
 #' @export

@@ -9,7 +9,7 @@ compareTables(.path_current, .path_previous = NULL, .side_by_side = TRUE)
 \arguments{
 \item{.path_current}{file or directory path to tables of interest}
 
-\item{.path_previous}{file or directory path to compare .path_base to}
+\item{.path_previous}{.path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 }
