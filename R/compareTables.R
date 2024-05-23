@@ -11,7 +11,7 @@
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
 #' @export
-compareFigures <- function(.path_current, 
+compareTables <- function(.path_current, 
                            .path_previous = NULL, 
                            .side_by_side = TRUE) {
   

@@ -8,7 +8,7 @@
 #' 
 #' @param .file_exts file extensions to include in comparison
 #' 
-#' @export
+#' @noRd
 compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex")) {
    
   .allowed_exts <- c("png", "pdf", "tex")
