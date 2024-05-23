@@ -1,8 +1,8 @@
-# review development
+# review 3.9.0
 
 ## New features and changes
 
-- `compareFigures` and `compareTables` added as a comaprison tool for figures and tables. (#94)
+- `compareFigures` and `compareTables` added as a comparison tool for figures and tables. (#94)
 
 - `compareModified` and `compareLocal` switched to internal functions. (#94)
 
