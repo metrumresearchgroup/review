@@ -7,14 +7,14 @@
 #' versus last checked in version.
 #' 
 #' @param .path_current file or directory path to figures of interest
-#' @param .file_types file extensions to include in comparison (only pdf and png allowed)
 #' @param .path_previous file or directory path to compare .path_base to
+#' @param .file_types file extensions to include in comparison (only pdf and png allowed)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
 #' 
 #' @export
 compareFigures <- function(.path_current, 
-                           .file_types,
                            .path_previous = NULL,
+                           .file_types = "pdf",
                            .side_by_side = TRUE) {
   
   .allowed_exts <- c("png", "pdf")
@@ -22,6 +22,8 @@ compareFigures <- function(.path_current,
   if (!all(.file_types %in% .allowed_exts)) {
     stop("Only file extensions ", paste(.allowed_exts, collapse = ", "), " are allowed")
   }
+  
+  cli::cli_inform(paste0("Checking ", .path_current, " for all files of type(s): ", paste(.file_types, collapse = ",")))
   
   if (is.null(.path_previous)) {
     compareModified(

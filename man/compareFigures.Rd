@@ -6,17 +6,17 @@
 \usage{
 compareFigures(
   .path_current,
-  .file_types,
   .path_previous = NULL,
+  .file_types = "pdf",
   .side_by_side = TRUE
 )
 }
 \arguments{
 \item{.path_current}{file or directory path to figures of interest}
 
-\item{.file_types}{file extensions to include in comparison (only pdf and png allowed)}
-
 \item{.path_previous}{file or directory path to compare .path_base to}
+
+\item{.file_types}{file extensions to include in comparison (only pdf and png allowed)}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 }
