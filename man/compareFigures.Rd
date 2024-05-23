@@ -4,10 +4,17 @@
 \alias{compareFigures}
 \title{Generate comparison between sets of figures}
 \usage{
-compareFigures(.path_current, .path_previous = NULL, .side_by_side = TRUE)
+compareFigures(
+  .path_current,
+  .file_types,
+  .path_previous = NULL,
+  .side_by_side = TRUE
+)
 }
 \arguments{
 \item{.path_current}{file or directory path to figures of interest}
+
+\item{.file_types}{file extensions to include in comparison (only pdf and png allowed)}
 
 \item{.path_previous}{file or directory path to compare .path_base to}
 
