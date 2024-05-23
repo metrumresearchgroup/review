@@ -75,6 +75,6 @@ compareLocal <- function(.path_base, .path_compare, .side_by_side = TRUE, .file_
   buildCompare(
     .dfpaths = .dfpaths, 
     .side_by_side = .side_by_side,
-    .headings = c("Base", "Compare")
+    .headings = c(.path_base, .path_compare)
   )
 }

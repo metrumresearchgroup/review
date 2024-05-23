@@ -3,6 +3,7 @@ with_demoRepo({
     test_that("compareFigures works with standard case", {
       
       x <- compareFigures(.path_current = "deliv/figure")
+      xx <- compareFigures(.path_current = "deliv/figure", .file_exts = "png")
       y <- compareFigures(.path_current = "deliv/figure/example-pdf1.pdf")
       z <- compareFigures(.path_current = "deliv/figure/example-pdf2.pdf", .path_previous = "deliv/figure/example-pdf4.pdf")
       
@@ -10,6 +11,11 @@ with_demoRepo({
         any(grepl("example-pdf1.pdf", readLines(x))) &
           any(grepl("example-pdf2.pdf", readLines(x))) &
           any(grepl("example-pdf3.pdf", readLines(x)))
+      )
+      
+      expect_true(
+        any(grepl("example png1.png", readLines(xx))) &
+          !any(grepl("example-pdf2.pdf", readLines(xx)))
       )
       
       expect_true(
