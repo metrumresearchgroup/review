@@ -15,6 +15,8 @@ compareTables <- function(.path_current,
                            .path_previous = NULL, 
                            .side_by_side = TRUE) {
   
+  cli::cli_alert(paste0("Checking '", cli::col_blue(.path_current), "' for all files of type(s): ", cli::col_green("tex"), "\n"))
+  
   if (is.null(.path_previous)) {
     compareModified(
       .path = .path_current, 

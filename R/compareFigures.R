@@ -23,7 +23,7 @@ compareFigures <- function(.path_current,
     stop("Only file extensions ", paste(.allowed_exts, collapse = ", "), " are allowed")
   }
   
-  cli::cli_inform(paste0("Checking '", .path_current, "' for all files of type(s): ", paste(.file_types, collapse = ",")))
+  cli::cli_alert(paste0("Checking '", cli::col_blue(.path_current), "' for all files of type(s): ", cli::col_green(paste(.file_types, collapse = ", ")), "\n"))
   
   if (is.null(.path_previous)) {
     compareModified(
