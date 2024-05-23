@@ -2,10 +2,12 @@ with_demoRepo({
   if (Sys.getenv("METWORX_VERSION") != "") {
     test_that("compareFigures works with standard case", {
       
-      x <- compareFigures(.path_current = "deliv/figure")
-      xx <- compareFigures(.path_current = "deliv/figure", .file_exts = "png")
-      y <- compareFigures(.path_current = "deliv/figure/example-pdf1.pdf")
-      z <- compareFigures(.path_current = "deliv/figure/example-pdf2.pdf", .path_previous = "deliv/figure/example-pdf4.pdf")
+      x <- compareFigures(.path_current = "deliv/figure", .file_types = c("png", "pdf"))
+      xx <- compareFigures(.path_current = "deliv/figure", .file_types = "png")
+      y <- compareFigures(.path_current = "deliv/figure/example-pdf1.pdf", .file_types = c("png", "pdf"))
+      z <- compareFigures(.path_current = "deliv/figure/example-pdf2.pdf",
+                          .file_types = c("png", "pdf"),
+                          .path_previous = "deliv/figure/example-pdf4.pdf")
       
       expect_true(
         any(grepl("example-pdf1.pdf", readLines(x))) &
