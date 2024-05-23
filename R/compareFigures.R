@@ -33,8 +33,8 @@ compareFigures <- function(.path_current,
     )
   } else {
     compareLocal(
-      .path_base = .path_current, 
-      .path_compare = .path_previous, 
+      .path_base = .path_previous, 
+      .path_compare = .path_current, 
       .side_by_side = .side_by_side,
       .file_exts = .file_types
     )
