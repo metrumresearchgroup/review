@@ -2,6 +2,10 @@
 
 ## New features and changes
 
+- `compareFigures` and `compareTables` added as a comaprison tool for figures and tables. (#94)
+
+- `compareModified` and `compareLocal` switched to internal functions. (#94)
+
 - `compareModified` and `compareLocal` now have a file extension argument. (#92)
 
 # review 3.8.2

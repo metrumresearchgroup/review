@@ -28,8 +28,8 @@ reference:
     - diffFiles
     - dirSummary
     - renderQCSummary
-    - compareModified
-    - compareLocal
+    - compareFigures
+    - compareTables
   - title: SVN Tools
     desc: Easily access information about SVN repos
     contents:
