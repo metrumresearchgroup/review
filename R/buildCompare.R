@@ -55,7 +55,7 @@ buildCompare <- function(.dfpaths, .side_by_side, .headings) {
   rmd_header <- 
     paste(
       "---",
-      paste0("title: '", fs::path_abs(.dfpaths[["path1"]][1]), "'"),
+      paste0("title: Output Comparison"),
       "output:",
       "  html_document:",
       "    toc: true",
