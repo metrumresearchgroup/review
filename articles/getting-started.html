@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Getting Started with review • review</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9.0</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@ to the repo.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demoRepo.html">demoRepo</a></span><span class="op">(</span><span class="st">"abc-123"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">repo</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpruyZsx/svn-proj/abc-123"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/RtmpHf3Yc4/svn-proj/abc-123"</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -135,13 +135,13 @@ below.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 7 × 6</span></span></span>
 <span><span class="co">##   file                   origin                  revf  revo reviewer time       </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> script/pk/load-spec.R  script/pk/load-spec.R      0     0 anyone   2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> script/combine-da.R    script/combine-da.R        0     0 anyone   2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> script/examp-txt.txt   script/examp-txt.txt       0     0 anyone   2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> script/data-assembly.R script/data-assembly.R     1     1 michaelm 2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> script/pk/load-spec.R  script/pk/load-spec.R      1     1 michaelm 2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> script/combine-da.R    script/combine-da.R        1     1 michaelm 2024-04-19…</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> script/pk/load-spec.R  script/pk/load-spec.R      0     0 anyone   2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> script/combine-da.R    script/combine-da.R        0     0 anyone   2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> script/examp-txt.txt   script/examp-txt.txt       0     0 anyone   2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> script/data-assembly.R script/data-assembly.R     1     1 michaelm 2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> script/pk/load-spec.R  script/pk/load-spec.R      1     1 michaelm 2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> script/combine-da.R    script/combine-da.R        1     1 michaelm 2024-05-24…</span></span></code></pre>
 <p>A few helpful definitions:</p>
 <ul>
 <li>
@@ -172,7 +172,7 @@ that <code><a href="../reference/logAssign.html">logAssign()</a></code> will gen
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
 <span><span class="co">##   file                   origin                  revf  revo reviewer time       </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-04-19…</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-05-24…</span></span></code></pre>
 <p>Notice that <code>revf</code> is 0 for all entries. Additionally, the
 reviewer is set to “anyone”. This assignment is done to signify the file
 is ready for QC, but <code>revf = 0</code> indicates no QC has been
@@ -195,8 +195,8 @@ to demonstrate the differences between <code><a href="../reference/logAssign.htm
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">##   file                   origin                  revf  revo reviewer time       </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-04-19…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> script/data-assembly.R script/data-assembly.R     1     1 michaelm 2024-04-19…</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> script/data-assembly.R script/data-assembly.R     0     0 anyone   2024-05-24…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> script/data-assembly.R script/data-assembly.R     1     1 michaelm 2024-05-24…</span></span></code></pre>
 <p>Notice that the row created by <code><a href="../reference/logAccept.html">logAccept()</a></code> updated the
 <code>revf</code> value to 1, which is the revision number where the QC
 was completed. The reviewer was updated from “anyone” to the actual user
@@ -229,9 +229,9 @@ the following output:</p>
 <span><span class="co">## 4   script/examp-txt.txt   script/examp-txt.txt    0     1    0     1   anyone</span></span>
 <span><span class="co">## 6  script/pk/load-spec.R  script/pk/load-spec.R    1     4    1     4 michaelm</span></span>
 <span><span class="co">##                      time</span></span>
-<span><span class="co">## 5 2024-04-19 15:01:30 GMT</span></span>
-<span><span class="co">## 4 2024-04-19 15:01:29 GMT</span></span>
-<span><span class="co">## 6 2024-04-19 15:01:30 GMT</span></span></code></pre>
+<span><span class="co">## 5 2024-05-24 01:20:15 GMT</span></span>
+<span><span class="co">## 4 2024-05-24 01:20:15 GMT</span></span>
+<span><span class="co">## 6 2024-05-24 01:20:15 GMT</span></span></code></pre>
 <p>Looking at <code>script/data-assembly.R</code>, <code>revf = 1</code>
 indicates a QC was completed on the file at revision 1. However,
 <code>headf = 5</code> indicates edits were made to the file at revision
@@ -681,7 +681,7 @@ locally:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
