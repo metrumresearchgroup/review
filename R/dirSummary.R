@@ -86,6 +86,10 @@ dirSummary <- function(.dirs_exclude = NULL) {
   # Determine current log state ---------------------------------------------
   log_summary <- logSummary()
   
+  if (nrow(log_summary) == 0) {
+    stop("QC log is empty")
+  }
+  
   # Build data --------------------------------------------------------------
   relevant_files_df <- relevant_files_df %>% dplyr::left_join(log_summary, by = "file")
   
