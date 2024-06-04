@@ -4,11 +4,6 @@
 #' 
 #' @param .dirs_exclude Character string (optional). Vector of directories to exclude in the summary (relative to log root).
 #'
-#' @examples 
-#' with_demoRepo({
-#'   dirSummary()
-#' })
-#'
 #' @return A list containing:
 #'   * `project`: the name of the project repository.
 #'   * `data`: a data.frame containing information about the relevant files including:

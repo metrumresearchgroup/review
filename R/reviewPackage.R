@@ -15,6 +15,9 @@ globalVariables(
     "File",
     "Author",
     "Status",
-    "n"
+    "n",
+    "commit",
+    "name",
+    "value"
   )
 )

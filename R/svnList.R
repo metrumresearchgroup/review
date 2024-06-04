@@ -7,7 +7,7 @@
 svnList <- function(){
   
   svn_list <- tryCatch(
-    review:::svnCommand("list", .flags = "--depth infinity"),
+    svnCommand("list", .flags = "--depth infinity"),
     error = identity
   )
   
