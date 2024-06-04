@@ -18,7 +18,7 @@ compareTables(
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 
-\item{#'}{@param .show_on_load Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)}
+\item{.show_on_load}{Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)}
 }
 \description{
 Generate a html document showing two versions of a figure (tex).
