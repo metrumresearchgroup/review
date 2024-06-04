@@ -1,15 +1,15 @@
-create_test_svn <- function() {
-  
-  # Developer sys and svn info
-  user_lookup <- dplyr::tribble(
-    ~sys, ~svn,
-    "michaelm", "michaelm",
-    "anderson", "andersone",
-    "graceo", "graceo"
-  )
+# Developer sys and svn info
+user_lookup <- dplyr::tribble(
+  ~sys, ~svn,
+  "michaelm", "michaelm",
+  "anderson", "andersone",
+  "graceo", "graceo"
+)
+
+create_test_svn <- function(.user_lookup = user_lookup) {
   
   this_user <- 
-    user_lookup %>% 
+    .user_lookup %>% 
     dplyr::filter(sys == Sys.info()[["user"]]) %>% 
     dplyr::pull(svn)
   
