@@ -9,7 +9,7 @@ compareFigures(
   .path_previous = NULL,
   .file_types = "pdf",
   .side_by_side = TRUE,
-  .open_all = TRUE
+  .show_on_load = TRUE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ compareFigures(
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 
-\item{.open_all}{Logical. Should all figures be open when the page loads?}
+\item{.show_on_load}{Logical. Should all figures be open when the page loads?}
 }
 \description{
 Generate a html document showing two versions of a figure (pdf or png).

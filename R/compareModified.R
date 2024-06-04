@@ -6,10 +6,10 @@
 #' 
 #' @param .file_exts file extensions to include in comparison
 #' 
-#' @param .open_all Logical. Should all figures be open when the page loads?
+#' @param .show_on_load Logical. Should all figures be open when the page loads?
 #' 
 #' @noRd
-compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex"), .open_all = TRUE) {
+compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "pdf", "tex"), .show_on_load = TRUE) {
   
   .allowed_exts <- c("png", "pdf", "tex")
   
@@ -23,6 +23,6 @@ compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "
     .dfpaths = .dfpaths,
     .side_by_side = .side_by_side,
     .headings = c("Repo", "Local"),
-    .open_all = .open_all
+    .show_on_load = .show_on_load
   )
 }

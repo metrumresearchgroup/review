@@ -10,7 +10,7 @@
 #' @param .side_by_side Logical; if TRUE, display documents side-by-side,
 #' otherwise allow toggling between documents with radio buttons.
 #' @param .headings Character. Figure headings.
-#' @param .open_all Logical. Should all figures be open when the page loads?
+#' @param .show_on_load Logical. Should all figures be open when the page loads?
 #'
 #' @return The file path of the generated HTML document. This path is returned
 #' invisibly and will be automatically opened in a browser if the function
@@ -27,7 +27,7 @@
 #' buttons. Additional JavaScript is embedded for toggling visibility of elements.
 #'
 #' @keywords internal
-buildCompare <- function(.dfpaths, .side_by_side, .headings, .open_all = TRUE) {
+buildCompare <- function(.dfpaths, .side_by_side, .headings, .show_on_load = TRUE) {
   
   tex_to_pdf <- function(.tex_path){
     
@@ -130,7 +130,7 @@ buildCompare <- function(.dfpaths, .side_by_side, .headings, .open_all = TRUE) {
         rmd_body,
         title.i,
         paste0("<button onclick=\"toggleCollapse('collapsibleContent", i, "')\">Show/Hide</button>"),
-        paste0("<div id=\"collapsibleContent", i, "\" style=\"border: 1px solid #ccc; padding: 10px; display: ", ifelse(.open_all, "block", "none"), ";\">"),
+        paste0("<div id=\"collapsibleContent", i, "\" style=\"border: 1px solid #ccc; padding: 10px; display: ", ifelse(.show_on_load, "block", "none"), ";\">"),
         graphics.i,
         "</div>",
         "<hr>",

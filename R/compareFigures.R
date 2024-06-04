@@ -10,14 +10,14 @@
 #' @param .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .file_types file extensions to include in comparison (only pdf and png allowed)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
-#' @param .open_all Logical. Should all figures be open when the page loads?
+#' @param .show_on_load Logical. Should all figures be open when the page loads?
 #' 
 #' @export
 compareFigures <- function(.path_current, 
                            .path_previous = NULL,
                            .file_types = "pdf",
                            .side_by_side = TRUE,
-                           .open_all = TRUE) {
+                           .show_on_load = TRUE) {
   
   .allowed_exts <- c("png", "pdf")
   
@@ -32,7 +32,7 @@ compareFigures <- function(.path_current,
       .path = .path_current, 
       .side_by_side = .side_by_side, 
       .file_exts = .file_types,
-      .open_all = .open_all
+      .show_on_load = .show_on_load
     )
   } else {
     compareLocal(
@@ -40,7 +40,7 @@ compareFigures <- function(.path_current,
       .path_compare = .path_current, 
       .side_by_side = .side_by_side,
       .file_exts = .file_types,
-      .open_all = .open_all
+      .show_on_load = .show_on_load
     )
   }
   

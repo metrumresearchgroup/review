@@ -4,7 +4,7 @@
 \alias{buildCompare}
 \title{Builds a comparative HTML document from specified file paths}
 \usage{
-buildCompare(.dfpaths, .side_by_side, .headings, .open_all = TRUE)
+buildCompare(.dfpaths, .side_by_side, .headings, .show_on_load = TRUE)
 }
 \arguments{
 \item{.dfpaths}{A dataframe with columns \code{compname}, \code{path1}, and \code{path2}
@@ -15,7 +15,7 @@ otherwise allow toggling between documents with radio buttons.}
 
 \item{.headings}{Character. Figure headings.}
 
-\item{.open_all}{Logical. Should all figures be open when the page loads?}
+\item{.show_on_load}{Logical. Should all figures be open when the page loads?}
 }
 \value{
 The file path of the generated HTML document. This path is returned
