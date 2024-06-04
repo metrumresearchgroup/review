@@ -27,12 +27,6 @@ A list containing:
 \description{
 This function provides a QC summary of relevant files in a project.
 }
-\examples{
-with_demoRepo({
-  dirSummary()
-})
-
-}
 \seealso{
 \code{\link[review]{logSummary}}
 }

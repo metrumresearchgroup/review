@@ -4,11 +4,6 @@
 #' 
 #' @param .dirs_exclude Character string (optional). Vector of directories to exclude in the summary (relative to log root).
 #'
-#' @examples 
-#' with_demoRepo({
-#'   dirSummary()
-#' })
-#'
 #' @return A list containing:
 #'   * `project`: the name of the project repository.
 #'   * `data`: a data.frame containing information about the relevant files including:
@@ -86,29 +81,30 @@ dirSummary <- function(.dirs_exclude = NULL) {
   # Determine current log state ---------------------------------------------
   log_summary <- logSummary()
   
+  if (nrow(log_summary) == 0) {
+    stop("QC log is empty")
+  }
+  
   # Build data --------------------------------------------------------------
   relevant_files_df <- relevant_files_df %>% dplyr::left_join(log_summary, by = "file")
   
   n_iter <- nrow(relevant_files_df)
+  svn_list <- svnList()
+  
   cli::cli_progress_bar("Checking files", total = n_iter)
   
   for (i in 1:n_iter) {
     
     cli::cli_progress_update()
     
-    log.i <- tryCatch(
-      svnInfo(relevant_files_df$file[i]),
-      error = identity
-    )
+    log.i <- svn_list %>% dplyr::filter(file == relevant_files_df$file[i])
     
-    if (inherits(log.i, "error")) {
+    if (nrow(log.i) == 0) {
       
       relevant_files_df$insvn[i] <- "No"
       
       next
     }
-    
-    log.i <- log.i %>% dplyr::filter(datetime == max(datetime))
     
     relevant_files_df$lastauthor[i] <- log.i$author
     relevant_files_df$lastedit[i] <- log.i$datetime
