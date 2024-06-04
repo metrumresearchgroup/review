@@ -10,7 +10,7 @@
 #' @param .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .file_types file extensions to include in comparison (only pdf and png allowed)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
-#' @param .show_on_load Logical. Should all figures be open when the page loads?
+#' @param .show_on_load Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many figures.)
 #' 
 #' @export
 compareFigures <- function(.path_current, 

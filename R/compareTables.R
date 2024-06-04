@@ -9,7 +9,7 @@
 #' @param .path_current file or directory path to tables of interest
 #' @param .path_previous .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
-#' @param .show_on_load Logical. Should all figures be open when the page loads?
+#' @param #' @param .show_on_load Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)
 #' 
 #' @export
 compareTables <- function(.path_current, 

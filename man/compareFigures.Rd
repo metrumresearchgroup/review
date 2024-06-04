@@ -21,7 +21,7 @@ compareFigures(
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
 
-\item{.show_on_load}{Logical. Should all figures be open when the page loads?}
+\item{.show_on_load}{Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many figures.)}
 }
 \description{
 Generate a html document showing two versions of a figure (pdf or png).
