@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `compareFigures` and `compareTables` now have hide on open option (#97)
+
 # review 3.9.0
 
 ## New features and changes

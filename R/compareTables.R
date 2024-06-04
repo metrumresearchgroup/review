@@ -9,11 +9,13 @@
 #' @param .path_current file or directory path to tables of interest
 #' @param .path_previous .path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)
 #' @param .side_by_side Logical. Should outputs be displayed side by side?
+#' @param .show_on_load Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)
 #' 
 #' @export
 compareTables <- function(.path_current, 
                            .path_previous = NULL, 
-                           .side_by_side = TRUE) {
+                           .side_by_side = TRUE,
+                          .show_on_load = TRUE) {
   
   cli::cli_alert(paste0("Checking '", cli::col_blue(.path_current), "' for files of type(s): ", cli::col_green("tex"), "\n"))
   
@@ -21,14 +23,16 @@ compareTables <- function(.path_current,
     compareModified(
       .path = .path_current, 
       .side_by_side = .side_by_side, 
-      .file_exts = c("tex")
+      .file_exts = c("tex"),
+      .show_on_load = .show_on_load
     )
   } else {
     compareLocal(
       .path_base = .path_previous, 
       .path_compare = .path_current, 
       .side_by_side = .side_by_side,
-      .file_exts = c("tex")
+      .file_exts = c("tex"),
+      .show_on_load = .show_on_load
     )
   }
   

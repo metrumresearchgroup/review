@@ -4,7 +4,12 @@
 \alias{compareTables}
 \title{Generate comparison between sets of tables}
 \usage{
-compareTables(.path_current, .path_previous = NULL, .side_by_side = TRUE)
+compareTables(
+  .path_current,
+  .path_previous = NULL,
+  .side_by_side = TRUE,
+  .show_on_load = TRUE
+)
 }
 \arguments{
 \item{.path_current}{file or directory path to tables of interest}
@@ -12,6 +17,8 @@ compareTables(.path_current, .path_previous = NULL, .side_by_side = TRUE)
 \item{.path_previous}{.path_previous file or directory path to compare .path_base to (leave as NULL to compare to repo version)}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
+
+\item{.show_on_load}{Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)}
 }
 \description{
 Generate a html document showing two versions of a figure (tex).

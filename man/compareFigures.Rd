@@ -8,7 +8,8 @@ compareFigures(
   .path_current,
   .path_previous = NULL,
   .file_types = "pdf",
-  .side_by_side = TRUE
+  .side_by_side = TRUE,
+  .show_on_load = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ compareFigures(
 \item{.file_types}{file extensions to include in comparison (only pdf and png allowed)}
 
 \item{.side_by_side}{Logical. Should outputs be displayed side by side?}
+
+\item{.show_on_load}{Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many figures.)}
 }
 \description{
 Generate a html document showing two versions of a figure (pdf or png).
