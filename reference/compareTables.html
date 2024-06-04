@@ -20,7 +20,7 @@ versus last checked in version."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9.1</span>
       </span>
     </div>
 
@@ -72,7 +72,12 @@ versus last checked in version.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compareTables</span><span class="op">(</span><span class="va">.path_current</span>, .path_previous <span class="op">=</span> <span class="cn">NULL</span>, .side_by_side <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compareTables</span><span class="op">(</span></span>
+<span>  <span class="va">.path_current</span>,</span>
+<span>  .path_previous <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .side_by_side <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .show_on_load <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,6 +92,10 @@ versus last checked in version.</p>
 
 <dt>.side_by_side</dt>
 <dd><p>Logical. Should outputs be displayed side by side?</p></dd>
+
+
+<dt>.show_on_load</dt>
+<dd><p>Logical. Should all figures be open when the page loads? (Set to FALSE for slow loading pages with many tables.)</p></dd>
 
 </dl></div>
 

@@ -20,7 +20,7 @@ by converting them into PDFs and embedding them into the report."><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9.1</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@ by converting them into PDFs and embedding them into the report.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildCompare</span><span class="op">(</span><span class="va">.dfpaths</span>, <span class="va">.side_by_side</span>, <span class="va">.headings</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildCompare</span><span class="op">(</span><span class="va">.dfpaths</span>, <span class="va">.side_by_side</span>, <span class="va">.headings</span>, .show_on_load <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,6 +89,10 @@ otherwise allow toggling between documents with radio buttons.</p></dd>
 
 <dt>.headings</dt>
 <dd><p>Character. Figure headings.</p></dd>
+
+
+<dt>.show_on_load</dt>
+<dd><p>Logical. Should all figures be open when the page loads?</p></dd>
 
 </dl></div>
     <div id="value">
