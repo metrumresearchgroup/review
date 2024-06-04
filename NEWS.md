@@ -1,8 +1,12 @@
-# review development
+# review 3.9.1
 
 ## New features and changes
 
-- `compareFigures` and `compareTables` now have hide on open option (#97)
+- `compareFigures` and `compareTables` now have hide on open option. (#97)
+
+## Bug fixes
+
+- Improved run time of `dirSummary` when used on larger repositories. (#98)
 
 # review 3.9.0
 
