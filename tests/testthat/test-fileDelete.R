@@ -5,6 +5,8 @@ with_demoRepo({
   testthat::test_that("fileDelete deletes locally and in SVN history", {
     expect_true(!file.exists("script/data-assembly.R"))
     
+    x <- svnCommand("status")
+    
     status <- 
       dplyr::bind_rows(x$target) %>% 
       dplyr::filter(.attrs == "script/data-assembly.R") %>% 
