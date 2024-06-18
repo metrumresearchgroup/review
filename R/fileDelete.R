@@ -15,16 +15,11 @@ fileDelete <- function(.filepath) {
     stop(paste0(.filepath, " does not exist"))
   }
   
-  system(glue::glue("svn delete {.filepath}"))
+  system(glue::glue("svn delete {.filepath} -q -q"))
+  cli::cli_alert_info(glue::glue("Deleted '{.filepath}'"))
   
   qclog <- logRead()
   qclog <- qclog[qclog$file != .filepath, ]
   
   logWrite(qclog, file = "QClog.csv")
-  
-  system(
-    glue::glue(
-      "svn commit -m 'delete {.filepath}' QClog.csv {.filepath}"
-    )
-  )
 }

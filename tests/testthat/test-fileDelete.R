@@ -4,7 +4,13 @@ with_demoRepo({
   
   testthat::test_that("fileDelete deletes locally and in SVN history", {
     expect_true(!file.exists("script/data-assembly.R"))
-    expect_error(svnLog("script/data-assembly.R"))
+    
+    status <- 
+      dplyr::bind_rows(x$target) %>% 
+      dplyr::filter(.attrs == "script/data-assembly.R") %>% 
+      unlist()
+    
+    expect_true(status[["wc-status..attrs.item"]] == "deleted")
   }) 
   
   testthat::test_that("fileDelete removes the file from the QClog", {
