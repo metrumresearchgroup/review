@@ -12,12 +12,12 @@ test_that("dirSummary returns the correct project name", {
 })
   
 test_that("dirSummary returns all expected output", {
-  expect_equal(c("project", "data", "status"), names(dirSummaryRes))
-  expect_true(length(dirSummaryRes) == 3)
+  expect_equal(c("project", "data", "status", "wd"), names(dirSummaryRes))
+  expect_true(length(dirSummaryRes) == 4)
   expect_true(is.character(dirSummaryRes$project))
   expect_true(is.data.frame(dirSummaryRes$data))
   expect_true(is.data.frame(dirSummaryRes$status))
-  expect_true(length(dirSummaryResExcl) == 3)
+  expect_true(length(dirSummaryResExcl) == 4)
 })
   
 test_that("dirSummary captures the expected QC status of all scripts", {

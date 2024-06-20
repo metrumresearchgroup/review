@@ -18,10 +18,20 @@ header-includes:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r, include=FALSE}
+```{r warning=FALSE, include=FALSE}
+
+setwd(params$dirSummaryRes$wd)
+
 dir_summary_data <- params$dirSummaryRes$data
 
 qc_status <- params$dirSummaryRes$status
+
+logSum <- 
+  review::logSummary() %>% 
+  dplyr::transmute(
+    File = file,
+    `Last...QCed...rev` = revf
+  )
 
 ```
 
@@ -33,12 +43,16 @@ qc_status <- params$dirSummaryRes$status
 
 ## QC Pending
 
-```{r, results='asis'}
+```{r message=FALSE, results='asis'}
 
 needs_qc <-
-  qc_status %>% 
+  dirSummaryRes$data %>% 
   dplyr::filter(Status == "In QC log, needs QC") %>% 
-  dplyr::select(-Status)
+  dplyr::left_join(logSum) %>% 
+  dplyr::arrange(Author) %>% 
+  dplyr::rename(`Last...rev` = `Latest rev`) %>% 
+  dplyr::select(Author, File, QCer, `Last...rev`, `Last...QCed...rev`) %>% 
+  suppressMessages()
 
 if (nrow(needs_qc) == 0) {
   needs_qc <- dplyr::tibble(Author = "None", File = "None")
@@ -48,6 +62,7 @@ needs_qc %>%
   pmtables::st_new() %>% 
   pmtables::st_clear_reps("Author") %>%
   pmtables::st_bold(cols = "Author") %>% 
+  pmtables::st_sizes(col = 3) %>% 
   pmtables::stable_long() %>%
   pmtables::st_asis()
 
@@ -55,23 +70,29 @@ needs_qc %>%
 
 \newpage
 
-## QC Up to Date
+## Latest modified scripts not in QC log
 
-```{r, results='asis'}
+```{r message=FALSE, results='asis'}
 
-qc_up_to_date <-
-  qc_status %>% 
-  dplyr::filter(Status == "QC up to date") %>% 
-  dplyr::select(-Status)
+not_in_log <-
+  dirSummaryRes$data %>%
+  dplyr::filter(grepl("script/", File, fixed = TRUE)) %>% 
+  dplyr::filter(Status == "Not in QC log") %>% 
+  dplyr::arrange(`Latest edit`) %>% 
+  dplyr::mutate(NUM = 1:dplyr::n()) %>% 
+  dplyr::arrange(-NUM) %>% 
+  dplyr::rename(`Latest...rev` = `Latest rev`) %>% 
+  dplyr::mutate(`Latest edit` = as.Date(`Latest edit`)) %>% 
+  dplyr::select(File, Author, `Latest edit`, `Latest...rev`) %>% 
+  dplyr::slice(1:30)
 
-if (nrow(qc_up_to_date) == 0) {
-  qc_up_to_date <- dplyr::tibble(Author = "None", File = "None")
+if (nrow(not_in_log) == 0) {
+  not_in_log <- dplyr::tibble(Author = "None", File = "None")
 }
 
-qc_up_to_date %>%   
+not_in_log %>%   
   pmtables::st_new() %>% 
-  pmtables::st_clear_reps("Author") %>%
-  pmtables::st_bold(cols = "Author") %>% 
+  pmtables::st_sizes(col = 3) %>% 
   pmtables::stable_long() %>%
   pmtables::st_asis()
 
@@ -80,7 +101,6 @@ qc_up_to_date %>%
 \newpage
 
 # Contributors
-
 
 \newpage
 
