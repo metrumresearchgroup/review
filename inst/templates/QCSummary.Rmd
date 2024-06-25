@@ -46,7 +46,7 @@ logSum <-
 ```{r message=FALSE, results='asis'}
 
 needs_qc <-
-  dirSummaryRes$data %>% 
+  dir_summary_data %>% 
   dplyr::filter(Status == "In QC log, needs QC") %>% 
   dplyr::left_join(logSum) %>% 
   dplyr::arrange(Author) %>% 
@@ -62,7 +62,7 @@ needs_qc %>%
   pmtables::st_new() %>% 
   pmtables::st_clear_reps("Author") %>%
   pmtables::st_bold(cols = "Author") %>% 
-  pmtables::st_sizes(col = 3) %>% 
+  pmtables::st_center(File = pmtables::col_ragged(8)) %>% 
   pmtables::stable_long() %>%
   pmtables::st_asis()
 
@@ -75,15 +75,15 @@ needs_qc %>%
 ```{r message=FALSE, results='asis'}
 
 not_in_log <-
-  dirSummaryRes$data %>%
+  dir_summary_data %>%
   dplyr::filter(grepl("script/", File, fixed = TRUE)) %>% 
   dplyr::filter(Status == "Not in QC log") %>% 
-  dplyr::arrange(`Latest edit`) %>% 
-  dplyr::mutate(NUM = 1:dplyr::n()) %>% 
-  dplyr::arrange(-NUM) %>% 
   dplyr::rename(`Latest...rev` = `Latest rev`) %>% 
-  dplyr::mutate(`Latest edit` = as.Date(`Latest edit`)) %>% 
-  dplyr::select(File, Author, `Latest edit`, `Latest...rev`) %>% 
+  dplyr::mutate(
+    `Latest edit` = as.Date(`Latest edit`),
+    `Days since...last edit` = as.numeric(Sys.Date() - `Latest edit`)) %>% 
+  dplyr::select(File, Author, `Days since...last edit`, `Latest...rev`) %>% 
+  dplyr::arrange(`Days since...last edit`) %>% 
   dplyr::slice(1:30)
 
 if (nrow(not_in_log) == 0) {
@@ -92,7 +92,7 @@ if (nrow(not_in_log) == 0) {
 
 not_in_log %>%   
   pmtables::st_new() %>% 
-  pmtables::st_sizes(col = 3) %>% 
+  pmtables::st_center(File = pmtables::col_ragged(8)) %>% 
   pmtables::stable_long() %>%
   pmtables::st_asis()
 
@@ -134,10 +134,13 @@ for (author.i in authors) {
       dir_summary_data %>%
       dplyr::filter(Author == author.i) %>%
       dplyr::filter(Directory == directory.i) %>%
-      dplyr::select(File, `Latest edit`, QCer, Status) %>%
+      dplyr::mutate(`Latest edit` = as.Date(`Latest edit`)) %>% 
+      dplyr::rename(`Latest...rev` = `Latest rev`, `Latest...edit` = `Latest edit`) %>% 
+      dplyr::select(File, `Latest...edit`, Status, `Latest...rev`, QCer) %>%
       dplyr::arrange(Status) %>%
       pmtables::st_new() %>%
       pmtables::st_panel("Status") %>%
+      pmtables::st_center(File = pmtables::col_ragged(8)) %>% 
       pmtables::stable_long()
     
     pmtables::st_wrap(tab.i)
