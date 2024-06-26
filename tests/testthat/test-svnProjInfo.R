@@ -1,3 +1,7 @@
+test_that("svnList does not work outside of SVN", {
+  expect_error(svnProjInfo())
+})
+
 create_test_svn()
 
 proj_res <- svnProjInfo(.host_name = "mc1-test.metrumrg.com")

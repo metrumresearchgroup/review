@@ -4,7 +4,9 @@ with_demoRepo({
       
       x <- compareFigures(.path_current = "deliv/figure", .file_types = c("png", "pdf"))
       xx <- compareFigures(.path_current = "deliv/figure", .file_types = "png")
-      y <- compareFigures(.path_current = "deliv/figure/example-pdf1.pdf", .file_types = c("png", "pdf"))
+      y <- compareFigures(.path_current = "deliv/figure/example-pdf1.pdf", 
+                          .file_types = c("png", "pdf"),
+                          .side_by_side = FALSE)
       z <- compareFigures(.path_current = "deliv/figure/example-pdf2.pdf",
                           .file_types = c("png", "pdf"),
                           .path_previous = "deliv/figure/example-pdf4.pdf")
@@ -35,6 +37,10 @@ with_demoRepo({
       
       expect_error({
         compareLocal("deliv/figure", "deliv/figure", .file_exts = "doc")
+      })
+      
+      expect_error({
+        compareFigures("deliv/figure", "deliv/figure", .file_exts = "R")
       })
       
     })
