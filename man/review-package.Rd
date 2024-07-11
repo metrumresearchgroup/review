@@ -12,6 +12,7 @@ Functions for managing logs of reviews of subversioned files (http://subversion.
 Useful links:
 \itemize{
   \item \url{https://github.com/metrumresearchgroup/review}
+  \item \url{https://metrumresearchgroup.github.io/review/}
   \item Report bugs at \url{https://github.com/metrumresearchgroup/review/issues}
 }
 
