@@ -17,9 +17,7 @@
 #'   
 #' @examples 
 #' \dontrun{
-#'   with_demoRepo({
-#'     renderQCSummary()
-#'   })
+#' renderQCSummary()
 #' }
 #'
 #' @export
