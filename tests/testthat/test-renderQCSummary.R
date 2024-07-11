@@ -2,6 +2,9 @@ if (Sys.getenv("METWORX_VERSION") != "") {
   
   create_test_svn()
   
+  logAssign("script/model-management.R")
+  logAccept("script/box-sample-code.R")
+  
   test_that("renderQCSummary works with valid directory", {
     
     expect_message({
