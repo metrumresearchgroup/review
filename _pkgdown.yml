@@ -28,6 +28,7 @@ reference:
     - diffFiles
     - dirSummary
     - renderQCSummary
+    - renderQCReport
     - compareFigures
     - compareTables
   - title: SVN Tools
