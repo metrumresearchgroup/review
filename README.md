@@ -35,6 +35,10 @@ recent QC of each script.
 Public documentation of all functions is hosted at
 <https://metrumresearchgroup.github.io/review/>
 
+### Cheat Sheet
+
+<a href="https://metrumresearchgroup.github.io/cheatsheets/review_cheat_sheet.pdf"><img src="https://metrumresearchgroup.github.io/cheatsheets/thumbnails/review_cheat_sheet_thumbnail.png" width="700" height="395"/></a>
+
 ## Development
 
 `review` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to
@@ -48,8 +52,8 @@ replicate this environment,
 
 3.  open package in an R session and run `renv::init(bare = TRUE)`
 
-    -   install `renv` \> 0.8.3-4 into default `.libPaths()` if not
-        already installed
+    - install `renv` \> 0.8.3-4 into default `.libPaths()` if not
+      already installed
 
 4.  run `pkgr install` in terminal within package directory
 
