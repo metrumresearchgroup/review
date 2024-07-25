@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `fileDelete` added to package to assist with deleting files from SVN and QC log.
+
 # review 3.9.1
 
 ## New features and changes
