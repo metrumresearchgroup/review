@@ -148,6 +148,7 @@ dirSummary <- function(.dirs_exclude = NULL) {
   
   returnList[["data"]] <- summary_df
   returnList[["status"]] <- summary_status
+  returnList[["wd"]] <- log_root
   
   return(returnList)
 }

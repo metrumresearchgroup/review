@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `renderQCSummary` summary tables updated. 
+
 # review 3.9.1
 
 ## New features and changes
