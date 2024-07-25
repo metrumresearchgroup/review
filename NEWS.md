@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `fileRename` added to the package to assist with renaming files in SVN and QClog. (#104)
+
 # review 3.9.1
 
 ## New features and changes
