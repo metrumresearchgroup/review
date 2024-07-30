@@ -1,6 +1,6 @@
 Package: review
 Title: QC Management and Helpers
-Version: 3.9.1
+Version: 3.9.1.9000
 Authors@R: 
     c(
     person(given = "Eric", family = "Anderson", email = "andersone@metrumrg.com", role = c("aut")),
@@ -9,12 +9,12 @@ Authors@R:
     )
 Description: Functions for managing logs of reviews of subversioned
         files (http://subversion.apache.org/).
-URL: https://github.com/metrumresearchgroup/review
+URL: https://github.com/metrumresearchgroup/review, https://metrumresearchgroup.github.io/review/
 BugReports: https://github.com/metrumresearchgroup/review/issues
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: 
     dplyr,
     magrittr (>= 2.0.3),
