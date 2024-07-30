@@ -1,7 +1,8 @@
 #' Get the SVN history of a file
 #' 
 #' @description 
-#' Returns the `svn log` in dataframe format.
+#' Returns the `svn log` in data.frame format. If no file is 
+#' provided the full history of commits in the repo is returned. 
 #' 
 #' @param .file File path of the file of interest
 #' 
@@ -11,22 +12,17 @@
 #' })
 #' 
 #' @export
-svnLog <- function(.file) {
+svnLog <- function(.file = NULL) {
   
-  log_df <- tryCatch(
-    svnCommand(.file = .file, .command = "log"),
-    error = identity
-  )
+  log_df <- getCommitHistory()
   
-  if (inherits(log_df, "error")) {
-    stop("svn log failed")
+  if (!is.null(.file)) {
+    log_df <- log_df %>% dplyr::filter(file == .file)
   }
   
   log_return <- 
     dplyr::bind_rows(log_df) %>% 
-    dplyr::rename(rev = .attrs) %>% 
-    dplyr::mutate(datetime = as.POSIXct(date, format="%Y-%m-%dT%H:%M:%OS", tz="UTC")) %>% 
-    dplyr::select(author, datetime, rev, msg)
+    dplyr::select(author, date, rev, msg)
   
   log_return
 }
