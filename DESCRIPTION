@@ -9,7 +9,7 @@ Authors@R:
     )
 Description: Functions for managing logs of reviews of subversioned
         files (http://subversion.apache.org/).
-URL: https://github.com/metrumresearchgroup/review
+URL: https://github.com/metrumresearchgroup/review, https://metrumresearchgroup.github.io/review/
 BugReports: https://github.com/metrumresearchgroup/review/issues
 License: GPL (>= 3)
 Encoding: UTF-8
