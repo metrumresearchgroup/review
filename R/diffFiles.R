@@ -14,6 +14,7 @@
 #' @param .banner_2 Header for second file in viewer
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
+#' @param .display_entire_file Logical. Should the entire file be displayed?
 #' @examples 
 #' with_demoRepo({
 #'  diffFiles(.file_1 = "script/data-assembly.R", 
@@ -26,7 +27,8 @@ diffFiles <- function(.file_1,
                       .banner_1 = NULL,
                       .banner_2 = NULL,
                       .side_by_side = TRUE,
-                      .ignore_white_space = FALSE) {
+                      .ignore_white_space = FALSE,
+                      .display_entire_file = FALSE) {
   
   if (is.null(.banner_1)) {
     .banner_1 = basename(.file_1)
@@ -43,7 +45,8 @@ diffFiles <- function(.file_1,
     mode = ifelse(.side_by_side, "sidebyside", "unified"),
     tar.banner = .banner_1,
     cur.banner = .banner_2,
-    ignore.white.space = .ignore_white_space
+    ignore.white.space = .ignore_white_space,
+    context = ifelse(.display_entire_file, -1, 2)
   )
   
 }

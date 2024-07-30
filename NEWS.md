@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- `diffFiles` can now display the entire file that is being diffed. ()
+
 # review 3.9.1
 
 ## New features and changes

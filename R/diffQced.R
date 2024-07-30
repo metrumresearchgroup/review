@@ -8,6 +8,7 @@
 #' @param .file file path from working directory
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
+#' @param .display_entire_file Logical. Should the entire file be displayed?
 #' 
 #' @examples 
 #' with_demoRepo({
@@ -15,7 +16,10 @@
 #' })
 #' 
 #' @export
-diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
+diffQced <- function(.file,
+                     .side_by_side = TRUE,
+                     .ignore_white_space = FALSE,
+                     .display_entire_file = FALSE){
   
   up_to_date <-
     tryCatch(
@@ -57,7 +61,8 @@ diffQced <- function(.file, .side_by_side = TRUE, .ignore_white_space = FALSE){
     .file = .file, 
     .previous_revision = qced_revision,
     .side_by_side = .side_by_side, 
-    .ignore_white_space = .ignore_white_space
+    .ignore_white_space = .ignore_white_space,
+    .display_entire_file = .display_entire_file
   )
   
 }
