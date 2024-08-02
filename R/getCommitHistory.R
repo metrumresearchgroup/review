@@ -19,8 +19,8 @@ getCommitHistory <- function() {
   
   dplyr::bind_rows(svn_all) %>% 
     tidyr::unnest(paths) %>% 
+    dplyr::filter(names(paths) == "text") %>% 
     tidyr::unnest(paths) %>% 
-    dplyr::filter(grepl("/", paths, fixed = TRUE)) %>% 
     dplyr::rename(
       rev = .attrs,
       file = paths
