@@ -1,4 +1,4 @@
-#' Get Full Commit History
+#' Get Repository History
 #'
 #' @description
 #' Returns a data.frame containing every commit made to the repo. 
@@ -6,18 +6,18 @@
 #' commit message.
 #'
 #' @export
-getCommitHistory <- function() {
+repoHistory <- function() {
   
-  svn_all <- tryCatch(
+  svn_log_v <- tryCatch(
     svnCommand("log", .flags = "-v"),
     error = identity
   )
   
-  if (inherits(svn_all, "error")) {
+  if (inherits(svn_log_v, "error")) {
     stop("svn log failed")
   }
   
-  dplyr::bind_rows(svn_all) %>% 
+  dplyr::bind_rows(svn_log_v) %>% 
     tidyr::unnest(paths) %>% 
     dplyr::filter(names(paths) == "text") %>% 
     tidyr::unnest(paths) %>% 
@@ -26,7 +26,8 @@ getCommitHistory <- function() {
       file = paths
     ) %>% 
     dplyr::mutate(
-      date = as.Date(substr(date, 1, 10)),
-      file = sub('.', '', file))
+      date = as.Date(date),
+      file = sub('.', '', file) # Remove first character
+    )
   
 }

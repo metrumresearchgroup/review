@@ -18,6 +18,7 @@ globalVariables(
     "n",
     "commit",
     "name",
-    "value"
+    "value",
+    "paths"
   )
 )
