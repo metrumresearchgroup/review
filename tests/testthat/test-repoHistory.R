@@ -1,8 +1,8 @@
 create_test_svn()
 
-df_history <- getCommitHistory()
+df_history <- repoHistory()
 
-test_that("getCommitHistory works as expected", {
+test_that("repoHistory works as expected", {
   
   expect_equal(nrow(df_history %>% dplyr::distinct(rev)), 8)
   
