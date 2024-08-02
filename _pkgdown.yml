@@ -36,3 +36,4 @@ reference:
     - svnLog
     - svnExport
     - demoRepo
+    - repoHistory
