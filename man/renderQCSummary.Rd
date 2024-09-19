@@ -27,9 +27,7 @@ along with a high level summary of all scripts that need to be QCed.
 }
 \examples{
 \dontrun{
-  with_demoRepo({
-    renderQCSummary()
-  })
+renderQCSummary()
 }
 
 }
