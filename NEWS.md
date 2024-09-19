@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- `diffFiles` can now display the entire file that is being diffed. (#115)
+- `diffFiles` can now display the entire file that is being diffed. (#115) 
 
 - Added `repoHistory` function to return history of all commits in the repository. (#116)
 
