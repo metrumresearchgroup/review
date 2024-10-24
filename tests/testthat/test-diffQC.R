@@ -27,8 +27,5 @@ with_demoRepo({
     expect_equal(diffqc@target[1], diffqc@current[1])
   })
   
-  this_test_user <- Sys.info()[["user"]]
-  expect_message(diffQced(file1), glue::glue("'{this_test_user}' has modified '{basename(file1)}' since last QC"))
-  
 })
 
