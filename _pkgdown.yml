@@ -37,3 +37,9 @@ reference:
     - svnExport
     - demoRepo
     - repoHistory
+  - title: QC Annotation Tools
+    desc: Tools to annotate and check QC comments
+    contents:
+    - qcComment
+    - qcOutstanding
+    
