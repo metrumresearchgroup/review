@@ -2,6 +2,10 @@
 
 ## New features and changes
 
+- Added `qcOutstanding` function to find and display all review comments in scripts. (#130)
+
+- Added `qcComment` function to leave standardized review comments in code. (#130)
+
 - `diffFiles` can now display the entire file that is being diffed. (#115)
 
 - Added `repoHistory` function to return history of all commits in the repository. (#116)
