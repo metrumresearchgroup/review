@@ -1,4 +1,4 @@
-#' Delete file from QClog
+#' Remove file from QClog
 #' 
 #' @description 
 #' This function facilitates deleting a file from the QClog.csv file. 
