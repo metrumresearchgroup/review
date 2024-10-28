@@ -80,8 +80,8 @@ buildCompare <- function(.dfpaths, .side_by_side, .headings, .show_on_load = TRU
       
     }
     
-    base_path.i <- .dfpaths$path2[i]
-    compare_path.i <- .dfpaths$path1[i]
+    base_path.i <- .dfpaths$path1[i]
+    compare_path.i <- .dfpaths$path2[i]
     
     
     # Unique IDs for HTML elements

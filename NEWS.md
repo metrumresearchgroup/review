@@ -4,6 +4,10 @@
 
 - `fileRename` added to the package to assist with renaming files in SVN and QClog. (#104)
 
+- `diffFiles` can now display the entire file that is being diffed. (#115)
+
+- Added `repoHistory` function to return history of all commits in the repository. (#116)
+
 # review 3.9.1
 
 ## New features and changes

@@ -10,7 +10,8 @@ diffFiles(
   .banner_1 = NULL,
   .banner_2 = NULL,
   .side_by_side = TRUE,
-  .ignore_white_space = FALSE
+  .ignore_white_space = FALSE,
+  .display_entire_file = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ diffFiles(
 \item{.side_by_side}{Logical. Should diffs be displayed side by side?}
 
 \item{.ignore_white_space}{Logical. Should white space be ignored?}
+
+\item{.display_entire_file}{Logical. Should the entire file be displayed?}
 }
 \description{
 Compares the current version of two scripts against one another.

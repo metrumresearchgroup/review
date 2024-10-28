@@ -37,3 +37,4 @@ reference:
     - svnExport
     - demoRepo
     - fileRename
+    - repoHistory
