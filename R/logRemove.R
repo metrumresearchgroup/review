@@ -8,7 +8,7 @@
 #' @param .filepath current file path of file to be removed
 #' 
 #' @export
-logDelete <- function(.filepath) {
+logRemove <- function(.filepath) {
   
   qclog <- logRead()
   qclog2 <- qclog[qclog$file != .filepath, ]
