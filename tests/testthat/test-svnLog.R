@@ -1,3 +1,7 @@
+test_that("svnLog does not work outside of SVN", {
+  expect_error(svnLog("script/data-assembly.R"))
+})
+
 with_demoRepo({
   file1 <- "script/data-assembly.R"
   file2 <- "script/pk/load-spec.R"

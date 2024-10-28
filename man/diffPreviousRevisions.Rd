@@ -9,7 +9,8 @@ diffPreviousRevisions(
   .previous_revision,
   .current_revision = NULL,
   .side_by_side = TRUE,
-  .ignore_white_space = FALSE
+  .ignore_white_space = FALSE,
+  .display_entire_file = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ diffPreviousRevisions(
 \item{.side_by_side}{Logical. Should diffs be displayed side by side?}
 
 \item{.ignore_white_space}{Logical. Should white space be ignored?}
+
+\item{.display_entire_file}{Logical. Should the entire file be displayed?}
 }
 \description{
 Compares the current version of a script with a previous revision.
