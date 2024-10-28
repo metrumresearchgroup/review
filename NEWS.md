@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- `fileDelete` added to package to assist with deleting files from SVN and QC log.
+- `logRemove` added to package to assist with removing files from the QC log.
 
 # review 3.9.1
 
