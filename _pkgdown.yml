@@ -36,5 +36,5 @@ reference:
     - svnLog
     - svnExport
     - demoRepo
-    - fileDelete
+    - logRemove
     - repoHistory
