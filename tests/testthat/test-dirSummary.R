@@ -51,4 +51,3 @@ dirSummaryResDir <- dirSummary()
 test_that("dirSummary works in a directory other than log root", {
   expect_identical(dirSummaryRes, dirSummaryResDir)
 })
-
