@@ -18,7 +18,6 @@ with_demoRepo({
   }) 
   
   testthat::test_that("fileRename can move files to different directories", {
-    expect_true(nrow(svnLog("script/pk/combine-da.R")) > 1)
     
     expect_true(!all(list.files("script") == "combine-da.R"))
     

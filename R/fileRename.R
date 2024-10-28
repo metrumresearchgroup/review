@@ -33,9 +33,4 @@ fileRename <- function(.filepath, .new_filepath) {
   
   logWrite(qclog, file = "QClog.csv")
   
-  system(
-    glue::glue(
-      "svn commit -m 'rename {.filepath}' {.filepath} {.new_filepath} QClog.csv"
-    )
-  )
 }
