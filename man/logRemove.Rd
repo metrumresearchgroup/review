@@ -2,7 +2,7 @@
 % Please edit documentation in R/logRemove.R
 \name{logRemove}
 \alias{logRemove}
-\title{Delete file from QClog}
+\title{Remove file from QClog}
 \usage{
 logRemove(.filepath)
 }
