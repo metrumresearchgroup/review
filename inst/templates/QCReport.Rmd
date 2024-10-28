@@ -34,7 +34,7 @@ log_summary_data %>%
     `Last modified...revision` = headf,
   ) %>% 
   pmtables::st_new() %>% 
-  pmtables::st_center(File = pmtables::col_ragged(6)) %>% 
-  pmtables::stable_long() %>% 
+  pmtables::st_left(File = pmtables::col_ragged(5)) %>% 
+  pmtables::stable_long() %>%
   pmtables::st_asis()
 ```
