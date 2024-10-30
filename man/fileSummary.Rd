@@ -2,16 +2,42 @@
 % Please edit documentation in R/fileSummary.R
 \name{fileSummary}
 \alias{fileSummary}
-\title{Return summary of revision and QC history for files}
+\title{Summarize revision and QC history for a file}
 \usage{
 fileSummary(.file)
 }
 \arguments{
-\item{.file}{Character vectors of file paths}
+\item{.file}{File path.}
 }
 \description{
-Returns a summary of the revision and QC history of a file.
-Users can provide a single file (or multiple) and will be
-provided with file information such as: QC status, if the
-file is in the QC log, past authors and past QCers.
+Generates a comprehensive summary of the revision and quality control (QC) history
+for a file. The function reports:
+\itemize{
+\item QC status (up to date, needs QC, or not assigned)
+\item Presence in the QC log
+\item Historical information about previous authors
+\item Historical information about previous QC reviewers
+}
+}
+\details{
+The function prints a formatted summary to the console and invisibly returns
+the data for programmatic use. Non-existent files generate warnings and are
+skipped. Files not found in the repository history are also skipped.
+
+QC status can be:
+\itemize{
+\item "QC up to date" - Latest revision has been QC'd
+\item "Needs QC" - New changes need review
+\item "Not assigned" - File not in QC system
+}
+}
+\examples{
+\dontrun{
+# Analyze a single script file
+fileSummary("script/data-assembly/study-101.R")
+
+# Process all files in a directory
+purrr::walk(list.files("script/data-assembly"), ~ fileSummary(.x))
+}
+
 }

@@ -1,59 +1,32 @@
 create_test_svn()
-
 logAccept("script/data-assembly/da-functions.R")
 logAssign("script/model-summary.Rmd")
 
-da_files <- list.files("script/data-assembly", full.names = TRUE)
-
-list_mulitple <- fileSummary(da_files)
-list_singular <- "script/data-assembly/da-functions.R"
-
-test_that("User can provide multiple files", {
-  
-  expect_equal(length(list_mulitple), 4)
-  expect_equal(length(list_singular), 1)
-  
-  list.i <- list_mulitple[["script/data-assembly/da-study-abc.Rmd"]]
-  list.i2 <- list_mulitple[["script/data-assembly/da-functions.R"]]
-  
-  expect_equal(length(list.i), 4)
-  expect_equal(length(list.i2), 4)
-  
-  expect_true("qclog" %in% names(list.i))
-  expect_true("qcstatus" %in% names(list.i))
-  expect_true("prevQC" %in% names(list.i))
-  expect_true("authors" %in% names(list.i))
-  
-  expect_true(grepl("No", as.character(list.i$qclog)))
-  expect_true(grepl("Yes", as.character(list.i2$qclog)))
-  
-  expect_equal(length(list.i$authors), 2)
-  expect_equal(length(list.i$prevQC), 1)
-  
+test_that("Function requires single file input", {
+  da_files <- list.files("script/data-assembly", full.names = TRUE)
+  expect_error(fileSummary(da_files), "must be a single file path")
 })
 
-test_that("Output shows file has had QC history", {
+test_that("Works correctly for a single file QC filed", {
+  da_functions <- fileSummary("script/data-assembly/da-functions.R")
   
-  out1 <- fileSummary("script/data-assembly/da-functions.R")
-  out2 <- fileSummary("script/model-summary.Rmd")
+  expect_true(grepl("Yes", as.character(da_functions$qclog)))
+  expect_true(grepl("0 days ago", as.character(da_functions$prevQC)))
+  expect_true(grepl("QC up to date", as.character(da_functions$qcstatus)))
+})
+
+test_that("Output structure is correct for non QCed file", {
+  da_study_abc <- fileSummary("script/data-assembly/da-study-abc.Rmd")
   
-  expect_equal(length(out1), 1)
-  
-  expect_true(grepl("QC up to date", 
-                    out1$`script/data-assembly/da-functions.R`$qcstatus))
-  
-  expect_true(grepl("Yes", 
-                    out1$`script/data-assembly/da-functions.R`$qclog))
-  
-  expect_true(length(out1$`script/data-assembly/da-functions.R`$prevQC) == 1)
-  
-  expect_true(grepl("Needs QC", 
-                    out2$`script/model-summary.Rmd`$qcstatus))
-  
-  expect_true(grepl("Yes", 
-                    out2$`script/model-summary.Rmd`$qclog))
-  
-  expect_true(grepl("No previous QC", 
-                    out2$`script/model-summary.Rmd`$prevQC))
-  
+  expect_true(grepl("No", as.character(da_study_abc$qclog)))
+  expect_true(grepl("No previous QC", as.character(da_study_abc$prevQC)))
+  expect_true(grepl("Needs QC", as.character(da_study_abc$qcstatus)))
+})
+
+test_that("Function handles non-existent files appropriately", {
+  expect_warning(
+    non_nonexistent <- fileSummary("nonexistent-file.R"),
+    "does not exist"
+  )
+  expect_null(non_nonexistent)
 })
