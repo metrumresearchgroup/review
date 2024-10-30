@@ -1,3 +1,7 @@
+test_that("svnExport does not work outside of SVN", {
+  expect_error(svnExport("script/data-assembly.R"))
+})
+
 with_demoRepo({
   svnExport("script/data-assembly.R", 1)
   svnExport("script/combine-da.R", 1)
@@ -18,6 +22,10 @@ with_demoRepo({
   
   test_that("svnExport works with no previous revision given", {
     expect_true(file.exists("data-assembly-5.R"))
+  })
+  
+  test_that("svnExport doesn't work with incorrect file path", {
+    expect_error(svnExport("data-assembly-23.Rmd"))
   })
 })
 

@@ -1,3 +1,7 @@
+test_that("svnList does not work outside of SVN", {
+  expect_error(svnList())
+})
+
 create_test_svn()
 
 svn_list <- svnList()
