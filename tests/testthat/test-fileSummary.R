@@ -20,7 +20,7 @@ test_that("Output structure is correct for non QCed file", {
   
   expect_true(grepl("No", as.character(da_study_abc$qclog)))
   expect_true(grepl("No previous QC", as.character(da_study_abc$prevQC)))
-  expect_true(grepl("Needs QC", as.character(da_study_abc$qcstatus)))
+  expect_true(grepl("Not assigned", as.character(da_study_abc$qcstatus)))
 })
 
 test_that("Function handles non-existent files appropriately", {

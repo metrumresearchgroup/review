@@ -37,7 +37,7 @@ QC status can be:
 fileSummary("script/data-assembly/study-101.R")
 
 # Process all files in a directory
-purrr::walk(list.files("script/data-assembly"), ~ fileSummary(.x))
+purrr::walk(list.files("script/data-assembly", full.names = TRUE), ~ fileSummary(.file = .x))
 }
 
 }
