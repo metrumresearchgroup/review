@@ -26,7 +26,7 @@
 #' fileSummary("script/data-assembly/study-101.R")
 #'
 #' # Process all files in a directory
-#' purrr::walk(list.files("script/data-assembly"), ~ fileSummary(.x))
+#' purrr::walk(list.files("script/data-assembly", full.names = TRUE), ~ fileSummary(.file = .x))
 #' }
 #'
 #' @export
@@ -42,6 +42,9 @@ fileSummary <- function(.file) {
   
   # Initialize output list
   out <- list()
+  out$qclog <- cli::col_red("No")
+  out$qcstatus <- cli::col_magenta("Not assigned")
+  out$prevQC <- "No previous QC"
   
   # Get repo history and QC log
   file_history <- repoHistory()
@@ -63,48 +66,49 @@ fileSummary <- function(.file) {
   
   # Check if file is in QC log
   if (nrow(qc_file) > 0) {
+    
     out$qclog <- cli::col_green("Yes")
-  } else {
-    out$qclog <- cli::col_red("No")
-    out$qcstatus <- cli::col_magenta("Not assigned")
-  }
-  
-  # Process QC history
-  qc_file_filtered <- qc_file %>% dplyr::filter(revf != 0)
-  
-  if (nrow(qc_file_filtered) > 0) {
     
-    qc_rev <- 
-      qc_file_filtered %>%
-      dplyr::arrange(-as.numeric(revf)) %>%
-      dplyr::slice(1) %>%
-      dplyr::pull(revf) %>%
-      as.numeric()
+    # Process QC history
+    qc_file_filtered <- qc_file %>% dplyr::filter(revf != 0)
     
-    out$prevQC <- 
-      qc_file_filtered %>%
-      dplyr::arrange(-as.numeric(revf)) %>%
-      dplyr::group_by(reviewer) %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup() %>%
-      dplyr::transmute(VALUE = paste0(
-        reviewer, ", ",
-        as.numeric(difftime(Sys.Date(), as.Date(time), units = "days")),
-        " days ago"
-      )) %>%
-      dplyr::pull()
+    # For cases where no QC has been previously completed
+    if (nrow(qc_file_filtered) == 0) {
+      
+      out$qcstatus <- cli::col_red("Needs QC")
+
+    } else {
+      
+      qc_rev <- 
+        qc_file_filtered %>%
+        dplyr::arrange(-as.numeric(revf)) %>%
+        dplyr::slice(1) %>%
+        dplyr::pull(revf) %>%
+        as.numeric()
+      
+      out$prevQC <- 
+        qc_file_filtered %>%
+        dplyr::arrange(-as.numeric(revf)) %>%
+        dplyr::group_by(reviewer) %>%
+        dplyr::slice(1) %>%
+        dplyr::ungroup() %>%
+        dplyr::transmute(VALUE = paste0(
+          reviewer, ", ",
+          as.numeric(difftime(Sys.Date(), as.Date(time), units = "days")),
+          " days ago"
+        )) %>%
+        dplyr::pull()
+      
+      out$qcstatus <- 
+        ifelse(
+          last_rev > qc_rev,
+          cli::col_red("Needs QC"), 
+          cli::col_green("QC up to date")
+        )
+      
+    }
     
-    out$qcstatus <- 
-      ifelse(
-        last_rev > qc_rev,
-        cli::col_red("Needs QC"), 
-        cli::col_green("QC up to date")
-      )
-    
-  } else {
-    out$qcstatus <- cli::col_red("Needs QC")
-    out$prevQC <- "No previous QC"
-  }
+  } 
   
   # Process author history
   out$authors <- 
@@ -126,14 +130,14 @@ fileSummary <- function(.file) {
   cli::cli_inform(glue::glue("QC status: ", out$qcstatus))
   
   cli::cli_verbatim("") # line break
-  cli::cli_inform("Previous author(s): ")
-  names(out$authors) <- rep(">", length(out$authors))
-  cli::cli_bullets(out$authors)
-  
-  cli::cli_verbatim("") # line break
   cli::cli_inform("Previous QCer(s): ")
   names(out$prevQC) <- rep(">", length(out$prevQC))
   cli::cli_bullets(out$prevQC)
+  
+  cli::cli_verbatim("") # line break
+  cli::cli_inform("Previous author(s): ")
+  names(out$authors) <- rep(">", length(out$authors))
+  cli::cli_bullets(out$authors)
   
   return(invisible(out))
 }
