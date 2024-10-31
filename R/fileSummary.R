@@ -47,11 +47,12 @@ fileSummary <- function(.file) {
   out$prevQC <- "No previous QC"
   
   # Get repo history and QC log
-  file_history <- repoHistory()
-  qc_log <- logRead()
   
   # Get repo commit history for the file
-  script_history <- file_history[file_history$file == .file, ]
+  script_history <- svnLog(.file)
+  script_history$date <- as.Date(script_history$datetime)
+  
+  qc_log <- logRead()
   
   if (nrow(script_history) == 0) {
     warning(paste0(.file, " has no svn history"))
