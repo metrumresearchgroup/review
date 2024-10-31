@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- `logRemove` added to package to assist with removing files from the QC log.
+- `logRemove` added to package to assist with removing files from the QC log. (#105)
 
 - `diffFiles` can now display the entire file that is being diffed. (#115)
 
