@@ -2,6 +2,8 @@
 
 ## New features and changes
 
+- `renderQCReport` Render a QC Report Document. (#135)
+
 - `logRemove` added to package to assist with removing files from the QC log. (#105)
 
 - `diffFiles` can now display the entire file that is being diffed. (#115)

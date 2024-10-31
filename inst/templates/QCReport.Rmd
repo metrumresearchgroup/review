@@ -1,0 +1,40 @@
+---
+params: 
+  reportRes: "`r list()`"
+title: "QC Report"
+subtitle: "`r params$reportRes$project`"
+date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
+output: pdf_document
+header-includes:
+    - \usepackage{caption}
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r message=FALSE, warning=FALSE}
+
+log_summary_data <- params$reportRes$logSum
+
+log_summary_data %>% 
+  dplyr::select(file, revf, headf, time) %>% 
+  dplyr::mutate(
+    Status = dplyr::case_when(
+      revf == headf ~ "QCed",
+      TRUE ~ "Needs QC"
+    ),
+    `QC date` = dplyr::if_else(revf == headf, time, NA_character_),
+    `QC date` = as.Date(`QC date`)
+  ) %>% 
+  dplyr::select(-time) %>% 
+  dplyr::rename(
+    File = file,
+    `QCed...revision` = revf,
+    `Last modified...revision` = headf,
+  ) %>% 
+  pmtables::st_new() %>% 
+  pmtables::st_left(File = pmtables::col_ragged(5)) %>% 
+  pmtables::stable_long() %>%
+  pmtables::st_asis()
+```
