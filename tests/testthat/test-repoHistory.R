@@ -11,7 +11,7 @@ test_that("repoHistory works as expected", {
   expect_true(inherits(df_history$msg, "character"))
   expect_true(inherits(df_history$author, "character"))
   expect_true(inherits(df_history$file, "character"))
-  expect_true(inherits(df_history$rev, "character"))
+  expect_true(inherits(df_history$rev, "integer"))
   expect_true(inherits(df_history$date, "Date"))
   expect_true(grepl("script", df_history$file[1]))
   

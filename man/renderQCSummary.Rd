@@ -4,11 +4,9 @@
 \alias{renderQCSummary}
 \title{Render a QC Summary Document}
 \usage{
-renderQCSummary(.dirs_exclude = NULL, .output_dir = NULL)
+renderQCSummary(.output_dir = NULL)
 }
 \arguments{
-\item{.dirs_exclude}{Character string (optional). Vector of directories to exclude in the summary (relative to log root).}
-
 \item{.output_dir}{Character string (optional). Path to the directory where the output PDF
 should be saved. If not provided, the document will not be saved locally.}
 }

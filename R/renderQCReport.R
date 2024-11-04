@@ -20,12 +20,6 @@
 #' @export
 renderQCReport <- function(.output_dir = NULL) {
   
-  reportRes <- list()
-  
-  reportRes$project <- basename(logRoot())
-  
-  reportRes$logSum <- logSummary()
-  
   if (is.null(.output_dir)) {
     .output_dir <- tempdir()
   } else {
@@ -37,10 +31,15 @@ renderQCReport <- function(.output_dir = NULL) {
   output_file <- paste0("qc-report-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
+  params_in <- list(
+    project = basename(logRoot()),
+    logSum = logSummary()
+  )
+  
   rmarkdown::render(
     input = system.file("templates", "QCReport.Rmd", package = "review"),
     output_file = output_path,
-    params = list(reportRes = reportRes),
+    params = params_in,
     envir = new.env(),
     quiet = TRUE
   )
