@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- `renderQCReport` Render a QC Report Document. (#135)
+- `renderQCReport` render a QC report document. (#135)
 
 - `logRemove` added to package to assist with removing files from the QC log. (#105)
 

@@ -27,7 +27,8 @@ repoHistory <- function() {
     ) %>% 
     dplyr::mutate(
       date = as.Date(date),
-      file = sub('.', '', file) # Remove first character
+      file = sub('.', '', file),
+      rev = as.integer(rev)
     )
   
 }

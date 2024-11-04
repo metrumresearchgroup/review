@@ -3,14 +3,14 @@ findAuthorsQcers <- function(.repoHistory, .qcLog) {
   
   qclog <- 
     .qcLog %>% 
-    dplyr::transmute(file, rev = as.character(revf), reviewer) %>% 
+    dplyr::transmute(file, rev = as.integer(revf), reviewer) %>% 
     dplyr::filter(rev != "0") %>% 
     dplyr::distinct()
   
   rH_qclog <-
     .repoHistory %>%
     dplyr::left_join(qclog, by = c("file", "rev")) %>%
-    dplyr::arrange(file, -as.numeric(rev)) %>% 
+    dplyr::arrange(file, -rev) %>% 
     dplyr::group_by(file) %>% 
     tidyr::fill(reviewer, .direction = "down") %>%
     dplyr::ungroup()

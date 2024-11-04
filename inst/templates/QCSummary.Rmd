@@ -1,15 +1,18 @@
 ---
-params: 
-  dirSummaryRes: "`r list()`"
 title: "QC Summary"
-subtitle: "`r params$dirSummaryRes$project`"
+subtitle: "`r params$project`"
 date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
+params:
+  project: ""
+  repoHistory: NULL
+  qcLog: NULL
+  logPending: NULL
 output:
   pdf_document:
-    toc: true
-    toc_depth: 3
+  toc: true
+toc_depth: 3
 header-includes:
-    - \usepackage{caption}
+  - \usepackage{caption}
 ---
 
 \captionsetup[table]{labelformat=empty}
@@ -18,36 +21,44 @@ header-includes:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r, include=FALSE}
-dir_summary_data <- params$dirSummaryRes$data
-
-qc_status <- params$dirSummaryRes$status
-
-```
-
-\newpage
-
-# Summaries
-
-\newpage
-
-## QC Pending
+# QC Pending
 
 ```{r, results='asis'}
 
-needs_qc <-
-  qc_status %>% 
-  dplyr::filter(Status == "In QC log, needs QC") %>% 
-  dplyr::select(-Status)
+latest_authors <-
+  params$repoHistory %>% 
+  dplyr::group_by(file) %>%
+  dplyr::filter(rev == max(rev)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::select(file, author)
 
-if (nrow(needs_qc) == 0) {
-  needs_qc <- dplyr::tibble(Author = "None", File = "None")
-}
+needs_qc <- params$qcLog %>% dplyr::filter(file %in% params$logPending$file)
+
+needs_qc <- 
+  if (nrow(needs_qc) == 0) {
+    dplyr::tibble(File = "No outstanding QC")
+  } else {
+    needs_qc %>% 
+      dplyr::group_by(file) %>%
+      dplyr::summarize(
+        `Previous QCers` = paste(unique(reviewer), collapse = ", ")
+      ) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::mutate(
+        `Previous QCers` = gsub("anyone, ", "", `Previous QCers`, fixed = TRUE),
+        `Previous QCers` = ifelse(`Previous QCers` == "anyone", "none", `Previous QCers`)
+      ) %>% 
+      dplyr::left_join(latest_authors, by = "file") %>% 
+      dplyr::select(
+        File = file,
+        `Last author` = author,
+        `Previous QCers`
+      )
+  }
 
 needs_qc %>%   
   pmtables::st_new() %>% 
-  pmtables::st_clear_reps("Author") %>%
-  pmtables::st_bold(cols = "Author") %>% 
+  pmtables::st_left(File = pmtables::col_ragged(10)) %>%
   pmtables::stable_long() %>%
   pmtables::st_asis()
 
@@ -55,79 +66,72 @@ needs_qc %>%
 
 \newpage
 
-## QC Up to Date
+# Files Not in QC Log
 
 ```{r, results='asis'}
 
-qc_up_to_date <-
-  qc_status %>% 
-  dplyr::filter(Status == "QC up to date") %>% 
-  dplyr::select(-Status)
+at_risk_days <- 20
 
-if (nrow(qc_up_to_date) == 0) {
-  qc_up_to_date <- dplyr::tibble(Author = "None", File = "None")
+relevant_dirs <-
+  c(
+    "script"
+  )
+
+relevant_file_types <-
+  c(
+    "R",
+    "Rmd",
+    "yaml",
+    "yml",
+    "ctl",
+    "cpp",
+    "cp",
+    "mod",
+    "stan",
+    "jl",
+    "qmd"
+  )
+
+not_in_log <-
+  params$repoHistory %>% 
+  dplyr::group_by(file) %>% 
+  dplyr::filter(rev == max(rev)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    top_dir = sapply(fs::path_split(file), function(x) x[1]),
+    `Last edit` = date,
+    `Days since...last edit` = as.numeric(Sys.Date() - `Last edit`)
+  ) %>% 
+  dplyr::filter(
+    tools::file_ext(file) %in% relevant_file_types,
+    top_dir %in% relevant_dirs,
+    !(file %in% params$qcLog$file),
+    `Days since...last edit` <= at_risk_days
+  ) %>% 
+  dplyr::select(File = file, `Last Author` = author, `Days Since...Last Edit`) %>%
+  dplyr::arrange(`Days since...last edit`) %>% 
+  dplyr::distinct()
+
+if (nrow(not_in_log) == 0) {
+  not_in_log <- 
+    dplyr::tibble(
+      File = paste0(
+        "No files that are not in the QC log were modified within the last ",
+        at_risk_days, 
+        " days"
+      ),
+      `Previous QCers` = "None"
+    )
 }
 
-qc_up_to_date %>%   
+
+not_in_log %>%   
   pmtables::st_new() %>% 
-  pmtables::st_clear_reps("Author") %>%
-  pmtables::st_bold(cols = "Author") %>% 
-  pmtables::stable_long() %>%
+  pmtables::st_left(File = pmtables::col_ragged(10)) %>%
+  pmtables::st_left(`Previous QCers` = pmtables::col_ragged(4)) %>%
+  pmtables::stable_long(
+    lt_cap_text = "*Files in this table have been edited within the last (20) days"
+  ) %>%
   pmtables::st_asis()
-
-```
-
-\newpage
-
-# Contributors
-
-
-\newpage
-
-```{r, results='asis'}
-authors <- 
-  dir_summary_data %>%
-  dplyr::filter(Directory != ".") %>%
-  dplyr::distinct(Author) %>%
-  dplyr::pull(Author)
-
-for (author.i in authors) {
-  
-  writeLines(paste0("## ", author.i))
-  
-  directories.i <-
-    dir_summary_data %>% 
-    dplyr::filter(Directory != ".") %>%
-    dplyr::filter(Author == author.i) %>% 
-    dplyr::distinct(Directory) %>%
-    dplyr::pull(Directory)
-  
-  if (length(directories.i) == 0) {
-    next
-  }
-  
-  for (directory.i in directories.i) {
-    
-    writeLines(paste0("### ", directory.i))
-    
-    tab.i <-
-      dir_summary_data %>%
-      dplyr::filter(Author == author.i) %>%
-      dplyr::filter(Directory == directory.i) %>%
-      dplyr::select(File, `Latest edit`, QCer, Status) %>%
-      dplyr::arrange(Status) %>%
-      pmtables::st_new() %>%
-      pmtables::st_panel("Status") %>%
-      pmtables::stable_long()
-    
-    pmtables::st_wrap(tab.i)
-    
-    rm(tab.i)
-    
-    writeLines("\n")
-    writeLines("\\newpage")
-  }
-  
-}
 
 ```
