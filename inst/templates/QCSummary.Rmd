@@ -58,6 +58,7 @@ needs_qc <-
 
 needs_qc %>%   
   pmtables::st_new() %>% 
+  pmtables::st_left(`Previous QCers` = pmtables::col_ragged(4)) %>%
   pmtables::st_left(File = pmtables::col_ragged(10)) %>%
   pmtables::stable_long() %>%
   pmtables::st_asis()
@@ -123,8 +124,7 @@ if (nrow(not_in_log) == 0) {
         "No files that are not in the QC log were modified within the last ",
         at_risk_days, 
         " days"
-      ),
-      `Previous QCers` = "None"
+      )
     )
 }
 
@@ -132,7 +132,6 @@ if (nrow(not_in_log) == 0) {
 not_in_log %>%   
   pmtables::st_new() %>% 
   pmtables::st_left(File = pmtables::col_ragged(10)) %>%
-  pmtables::st_left(`Previous QCers` = pmtables::col_ragged(4)) %>%
   pmtables::stable_long(
     lt_cap_text = "*Files in this table have been edited within the last (20) days"
   ) %>%
