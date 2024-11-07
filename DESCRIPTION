@@ -28,7 +28,8 @@ Imports:
     rmarkdown,
     tinytex,
     pmtables,
-    tidyr
+    tidyr,
+    stats
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
