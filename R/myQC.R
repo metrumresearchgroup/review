@@ -2,12 +2,13 @@
 #'
 #' @description
 #' This function checks the QC status of files last authored by the given user in a repository.
-#' The information provide includes if a file is awaiting QC or not present in the QC log.
-#' Users can also filter the results by days since their last edit, to only look at files editted
+#' The information provided includes if a file is awaiting QC or not present in the QC log.
+#' Users can also filter the results by days since their last edit, to only look at files edited
 #' within a specified period of time.
 #'
 #' @param .user A character string indicating the user whose commit history is being examined. Default is the current system user, determined by `Sys.info()[["user"]]`.
-#' @param .max_days A numeric value indicating the maximum number of days since the last edit. Files edited beyond this threshold will be excluded from the results. Default is `Inf`, meaning no files are excluded based on the number of days.
+#' @param .within_days A numeric value indicating how many days back to look for edits.
+#'   Default is `Inf`, meaning no time limit is applied.
 #'
 #' @return A list of data frames, each representing a set of files with the same QC status. The data frames include the following columns:
 #'   - `File`: The name of the file.
@@ -15,8 +16,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Call myQC for the current user and set a max of 30 days since last edit
-#' result <- myQC(.user = Sys.info()[["user"]], .max_days = 30)
+#' # Call myQC for the current user and look at files edited within the last 14 days
+#' result <- myQC(.within_days = 14)
 #'
 #' # Print the QC status for files that are awaiting QC
 #' print(result$`Awaiting QC`)
@@ -24,22 +25,26 @@
 #'
 #' @export
 myQC <- function(.user = Sys.info()[["user"]],
-                 .max_days = Inf) {
+                 .within_days = Inf) {
   rH <- repoHistory()
   qclog <- logRead()
   
+  qcRev <- 
   if (nrow(qclog) == 0) {
-    message("QC log is empty")
     
-    qcRev <- dplyr::tibble(file = NA_character_, QCREV = NA_real_)
+    message("QC log is empty")
+    dplyr::tibble(file = NA_character_, QCREV = NA_real_)
+    
   } else {
-    qcRev <-
+    
       qclog %>%
       dplyr::mutate(rev = as.numeric(revf)) %>%
       dplyr::group_by(file) %>%
       dplyr::filter(rev == max(rev)) %>%
       dplyr::ungroup() %>%
-      dplyr::transmute(file, QCREV = rev)
+      dplyr::transmute(file, QCREV = rev) %>% 
+      dplyr::distinct()
+    
   }
   
   relevant_file_types <-
@@ -70,7 +75,7 @@ myQC <- function(.user = Sys.info()[["user"]],
     dplyr::mutate(INLOG = dplyr::if_else(file %in% qclog$file, 1, 0)) %>%
     dplyr::left_join(qcRev, by = "file") %>%
     dplyr::mutate(QCREV = tidyr::replace_na(QCREV, 0)) %>%
-    dplyr::filter(!(rev == QCREV))
+    dplyr::filter(rev != QCREV)
   
   rH4 <-
     rH3 %>%
@@ -83,7 +88,7 @@ myQC <- function(.user = Sys.info()[["user"]],
       )
     ) %>%
     dplyr::arrange(QCSTATUS, `Day(s) since last edit`) %>%
-    dplyr::filter(`Day(s) since last edit` < .max_days)
+    dplyr::filter(`Day(s) since last edit` <= .within_days)
   
   rH5 <-
     rH4 %>%

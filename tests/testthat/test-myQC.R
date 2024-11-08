@@ -4,9 +4,9 @@ logAssign("script/e-appendix/ea-desc.yaml")
 logAssign("script/e-appendix/ea-spec.yaml")
 logAccept("script/data-assembly/da-combine-studies.Rmd")
 
-res1 <- myQC(.user = "michaelm", .max_days = Inf)
+res1 <- myQC(.user = "michaelm", .within_days = Inf)
 
-res2 <- myQC(.user = "graceo", .max_days = Inf)
+res2 <- myQC(.user = "graceo", .within_days = Inf)
 
 test_that("myQC works as expected", {
   

@@ -4,12 +4,13 @@
 \alias{myQC}
 \title{Outstanding QC check by user}
 \usage{
-myQC(.user = Sys.info()[["user"]], .max_days = Inf)
+myQC(.user = Sys.info()[["user"]], .within_days = Inf)
 }
 \arguments{
 \item{.user}{A character string indicating the user whose commit history is being examined. Default is the current system user, determined by \code{Sys.info()[["user"]]}.}
 
-\item{.max_days}{A numeric value indicating the maximum number of days since the last edit. Files edited beyond this threshold will be excluded from the results. Default is \code{Inf}, meaning no files are excluded based on the number of days.}
+\item{.within_days}{A numeric value indicating how many days back to look for edits.
+Default is \code{Inf}, meaning no time limit is applied.}
 }
 \value{
 A list of data frames, each representing a set of files with the same QC status. The data frames include the following columns:
@@ -20,14 +21,14 @@ A list of data frames, each representing a set of files with the same QC status.
 }
 \description{
 This function checks the QC status of files last authored by the given user in a repository.
-The information provide includes if a file is awaiting QC or not present in the QC log.
-Users can also filter the results by days since their last edit, to only look at files editted
+The information provided includes if a file is awaiting QC or not present in the QC log.
+Users can also filter the results by days since their last edit, to only look at files edited
 within a specified period of time.
 }
 \examples{
 \dontrun{
-# Call myQC for the current user and set a max of 30 days since last edit
-result <- myQC(.user = Sys.info()[["user"]], .max_days = 30)
+# Call myQC for the current user and look at files edited within the last 14 days
+result <- myQC(.within_days = 14)
 
 # Print the QC status for files that are awaiting QC
 print(result$`Awaiting QC`)
