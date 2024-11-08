@@ -42,7 +42,7 @@ test_that("dirSummary generates formatted dataframe of QC status", {
   expect_true(is.factor(dirSummaryRes$status$Status))
   expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "QC up to date")) == 1)
   expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "In QC log, needs QC")) == 1)
-  expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "Not in QC log")) == 15)
+  expect_true(nrow(dirSummaryRes$status %>% dplyr::filter(Status == "Not in QC log")) == 16)
 })
 
 setwd("script")

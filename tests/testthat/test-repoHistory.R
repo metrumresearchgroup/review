@@ -4,7 +4,7 @@ df_history <- repoHistory()
 
 test_that("repoHistory works as expected", {
   
-  expect_equal(nrow(df_history %>% dplyr::distinct(rev)), 8)
+  expect_equal(nrow(df_history %>% dplyr::distinct(rev)), 9)
   
   expect_true(nrow(df_history %>% dplyr::distinct(author)) > 1)
   
