@@ -35,7 +35,7 @@ renderQCSummary <- function(.output_dir = NULL) {
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
-    project = basename(logRoot()),
+    project = paste0(basename(logRoot()), " as of revision ", svnProjInfo()[["rev"]]),
     repoHistory = repoHistory(),
     qcLog = logRead(),
     logPending = logPending()
