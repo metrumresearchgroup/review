@@ -20,6 +20,9 @@ globalVariables(
     "name",
     "value",
     "paths",
-    "time"
+    "time",
+    "QCREV",
+    "QCSTATUS",
+    "Day(s) since last edit"
   )
 )
