@@ -2,8 +2,6 @@
 
 ## New features and changes
 
-- `myQC` outstanding QC check by user. (#138)
-
 - `renderQCReport` render a QC report document. (#135)
 
 - `logRemove` added to package to assist with removing files from the QC log. (#105)

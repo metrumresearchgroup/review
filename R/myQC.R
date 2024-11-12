@@ -6,7 +6,6 @@
 #' Users can also filter the results by days since their last edit, to only look at files edited
 #' within a specified period of time.
 #'
-#' @param .user A character string indicating the user whose commit history is being examined. Default is the current system user, determined by `Sys.info()[["user"]]`.
 #' @param .within_days A numeric value indicating how many days back to look for edits.
 #'   Default is `Inf`, meaning no time limit is applied.
 #'
@@ -23,9 +22,11 @@
 #' print(result$`Awaiting QC`)
 #' }
 #'
-#' @export
-myQC <- function(.user = Sys.info()[["user"]],
-                 .within_days = Inf) {
+#' @keywords internal experimental
+myQC <- function(.within_days = Inf) {
+  
+  .user <- svnProjInfo()$this_svn_user
+  
   rH <- repoHistory()
   qclog <- logRead()
   

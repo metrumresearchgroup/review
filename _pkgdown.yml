@@ -32,7 +32,6 @@ reference:
     - compareFigures
     - compareTables
     - fileSummary
-    - myQC
   - title: SVN Tools
     desc: Easily access information about SVN repos
     contents:
