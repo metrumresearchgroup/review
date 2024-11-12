@@ -4,11 +4,9 @@
 \alias{myQC}
 \title{Outstanding QC check by user}
 \usage{
-myQC(.user = Sys.info()[["user"]], .within_days = Inf)
+myQC(.within_days = Inf)
 }
 \arguments{
-\item{.user}{A character string indicating the user whose commit history is being examined. Default is the current system user, determined by \code{Sys.info()[["user"]]}.}
-
 \item{.within_days}{A numeric value indicating how many days back to look for edits.
 Default is \code{Inf}, meaning no time limit is applied.}
 }
@@ -35,3 +33,5 @@ print(result$`Awaiting QC`)
 }
 
 }
+\keyword{experimental}
+\keyword{internal}
