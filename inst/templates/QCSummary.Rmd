@@ -7,6 +7,7 @@ params:
   repoHistory: NULL
   qcLog: NULL
   logPending: NULL
+  projInfo: NULL
 output:
   pdf_document:
   toc: true
@@ -20,6 +21,13 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+```{r, results='asis'}
+writeLines("\\begin{center}")
+writeLines(paste0("As of revision ", params$projInfo$rev))
+writeLines("\\end{center}")
+```
+
 
 # QC Pending
 
