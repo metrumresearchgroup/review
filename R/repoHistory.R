@@ -32,16 +32,18 @@ repoHistory <- function() {
       rev = as.integer(rev)
     )
   
+  # Adjust file paths for cases of nested projects
+  
   # Find the common prefix among paths
   common_prefix <- fs::path_common(svn_log_df$file)
   
   # Remove the common prefix from paths
   normalized_paths <- fs::path_rel(svn_log_df$file, start = common_prefix)
   
-  # Convert to absolute paths relative to .logRoot
+  # Convert to absolute paths relative to logRoot
   abs_paths <- fs::path_abs(normalized_paths, start = logRoot())
   
-  # Compute relative paths with respect to .logRoot
+  # Compute relative paths with respect to logRoot
   svn_log_df$file <- as.character(fs::path_rel(abs_paths, start = logRoot()))
   
   svn_log_df
