@@ -109,20 +109,20 @@ not_in_log <-
   dplyr::mutate(
     top_dir = sapply(fs::path_split(file), function(x) x[1]),
     `Last edit` = date,
-    `Days Since...Last Edit` = as.numeric(Sys.Date() - `Last edit`)
+    `Days since...last edit` = as.numeric(Sys.Date() - `Last edit`)
   ) %>% 
   dplyr::filter(
     tools::file_ext(file) %in% relevant_file_types,
     top_dir %in% relevant_dirs,
     !(file %in% params$qcLog$file)
   ) %>%
-  dplyr::filter(`Days Since...Last Edit` <= at_risk_days) %>%
+  dplyr::filter(`Days since...last edit` <= at_risk_days) %>%
   dplyr::select(
     File = file, 
-    `Last Author` = author, 
-    `Days Since...Last Edit`
+    `Last author` = author, 
+    `Days since...last edit`
   ) %>%
-  dplyr::arrange(`Days Since...Last Edit`) %>% 
+  dplyr::arrange(`Days since...last edit`) %>% 
   dplyr::distinct()
 
 if (nrow(not_in_log) == 0) {
