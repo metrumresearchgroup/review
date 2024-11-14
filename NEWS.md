@@ -1,14 +1,18 @@
-# review development
+# review 3.10.0
 
 ## New features and changes
 
-- `renderQCReport` render a QC report document. (#135)
+- `renderQCReport` added to generate a QC report document. (#135)
+
+- Updated `renderQCSummary` summary tables. (#137, #140, #144, #147)
+
+- Added `fileSummary` function to detail QC and SVN history. (#131)
 
 - `logRemove` added to package to assist with removing files from the QC log. (#105)
 
 - `diffFiles` can now display the entire file that is being diffed. (#115)
 
-- Added `repoHistory` function to return history of all commits in the repository. (#116)
+- Added `repoHistory` function to return history of all commits in the repository. (#116, #146)
 
 # review 3.9.1
 
