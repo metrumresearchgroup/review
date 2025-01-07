@@ -115,10 +115,10 @@ An example output of `logSummary()` might look like this:
 
 | file                   | origin                    | revf | headf | revo | heado | reviewer       | time                |
 |------------------------|---------------------------|------|-------|------|-------|----------------|---------------------|
-| script/analysis.R      |                           | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
-| script/data-prep.R     |                           | 15   | 15    | 15   | 15    | John Smith     | 2025-01-06 11:30:00 |
-| script/model-fitting.R |                           | 26   | 26    | 25   | 25    | Alice Johnson  | 2025-01-06 14:00:00 |
-| script/visualize.R     |                           | 20   | 20    | 20   | 20    | Bob Miller     | 2025-01-06 13:00:00 |
+| script/analysis.R      | script/analysis.R         | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
+| script/data-prep.R     | script/data-prep.R        | 15   | 15    | 15   | 15    | John Smith     | 2025-01-06 11:30:00 |
+| script/model-fitting.R | script/model-fitting.R    | 26   | 26    | 25   | 25    | Alice Johnson  | 2025-01-06 14:00:00 |
+| script/visualize.R     | script/visualize.R        | 20   | 20    | 20   | 20    | Bob Miller     | 2025-01-06 13:00:00 |
 
 > **Note**: Columns such as `origin`, `revo`, and `heado` may be blank depending on whether the file has an origin and if revisions are redundant. The actual output depends on the current log and repository state.
 
