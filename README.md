@@ -95,15 +95,21 @@ This logs the acceptance in **QClog.csv**, potentially with an updated revision 
 
 An example output of `logPending()` might look like this:
 
-| file               | origin            | revf | headf | revo | heado |
-|--------------------|-------------------|------|-------|------|-------|
-| script/analysis.R  | script/analysis.R | 12   | 26    | 12   | 26    |
+| file               | origin            | revf | headf | revo | heado | reviewer       | time                |
+|--------------------|-------------------|------|-------|------|-------|----------------|---------------------|
+| script/analysis.R  | script/analysis.R | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
 
 This indicates `script/analysis.R` was modified (or never finalized) and still needs to be accepted because both the file and its origin have newer revisions.
+
+> **Note**: The actual output will depend on the current state of your repository and **QClog.csv** file.
 
 ## logSummary()
 
 If we want to see the QC status of all files in the log, we can use `logSummary()` to do so. It aggregates the log entries and shows the latest revision information for each file.
+
+```r
+logSummary()
+```
 
 An example output of `logSummary()` might look like this:
 
@@ -113,6 +119,8 @@ An example output of `logSummary()` might look like this:
 | script/data-prep.R     |                           | 15   | 15    | 15   | 15    | John Smith     | 2025-01-06 11:30:00 |
 | script/model-fitting.R |                           | 26   | 26    | 25   | 25    | Alice Johnson  | 2025-01-06 14:00:00 |
 | script/visualize.R     |                           | 20   | 20    | 20   | 20    | Bob Miller     | 2025-01-06 13:00:00 |
+
+> **Note**: Columns such as `origin`, `revo`, and `heado` may be blank depending on whether the file has an origin and if revisions are redundant. The actual output depends on the current log and repository state.
 
 ---
 
@@ -150,10 +158,10 @@ An example output of `logSummary()` might look like this:
 
 ---
 
-
 **review** helps ensure all critical files are reviewed in SVN-based projects, giving your team clarity on the QC state of every file and making sure nothing slips through the cracks.
 
 ### Cheat Sheet
 
-<a href="https://metrumresearchgroup.github.io/cheatsheets/review_cheat_sheet.pdf"><img src="https://metrumresearchgroup.github.io/cheatsheets/thumbnails/review_cheat_sheet_thumbnail.png" width="200" height="200"/></a>
+<a href="https://metrumresearchgroup.github.io/cheatsheets/review_cheat_sheet.pdf"><img src="https://metrumresearchgroup.github.io/cheatsheets/thumbnails/review_cheat_sheet_thumbnail.png" width="225" height="175"/></a>
 
+---
