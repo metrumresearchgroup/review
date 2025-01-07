@@ -63,7 +63,7 @@ logAssign(
 | script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 |
 | script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 |
 | script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 |
-| **script/model-fitting.R** | **script/model-fitting.R** | **26** | **25** | **Alice Johnson** | **2025-01-06 14:00:00** |
+| **script/model-fitting.R** | **script/model-fitting.R** | **25** | **25** | **Alice Johnson** | **2025-01-06 14:00:00** |
 
 > **Note**: The columns **revf** and **revo** are set to the revision at assignment time. These help track whether further revisions occur after initial assignment.
 
@@ -82,7 +82,7 @@ This logs the acceptance in **QClog.csv**, potentially with an updated revision 
 | script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 |
 | script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 |
 | script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 |
-| script/model-fitting.R    | script/model-fitting.R    | **26** | **25** | Alice Johnson  | 2025-01-06 14:00:00 |
+| script/model-fitting.R    | script/model-fitting.R    | **26** | **26** | Alice Johnson  | 2025-01-06 14:00:00 |
 
 > **Note**: Here, `revf=26` indicates that the file might have been modified and committed again before final acceptance.
 
