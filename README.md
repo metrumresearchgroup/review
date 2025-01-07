@@ -1,6 +1,6 @@
 # Getting Started with review
 
-**review** is a toolkit for ensuring critical files are reviewed on a project. It manages the quality control (QC) process by tracking the assignment and acceptance of files in a centralized log file, **QClog.csv**.
+**review** is a toolkit for ensuring critical files are reviewed on a project. It manages the quality control (QC) process by tracking the assignment and acceptance of files in a centralized log file, **QClog.csv**. **review** is tailored to Subversion (SVN)-based workflows and contains a slightly different log structure.
 
 By integrating with SVN, **review** uses file revisions to detect when a file has been modified and flags it for re-evaluation. It provides functions to assign reviewers, check outstanding QC needs, and summarize the QC status of all files.
 
@@ -63,7 +63,7 @@ logAssign(
 | script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 |
 | script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 |
 | script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 |
-| **script/model-fitting.R** | **script/model-fitting.R** | **25** | **25** | **Alice Johnson** | **2025-01-06 14:00:00** |
+| **script/model-fitting.R** | **script/model-fitting.R** | **26** | **25** | **Alice Johnson** | **2025-01-06 14:00:00** |
 
 > **Note**: The columns **revf** and **revo** are set to the revision at assignment time. These help track whether further revisions occur after initial assignment.
 
@@ -82,8 +82,7 @@ This logs the acceptance in **QClog.csv**, potentially with an updated revision 
 | script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 |
 | script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 |
 | script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 |
-| script/model-fitting.R    | script/model-fitting.R    | 25   | 25   | Alice Johnson  | 2025-01-06 14:00:00 |
-| **script/model-fitting.R** | **script/model-fitting.R** | **26** | **26** | **Alice Johnson** | **2025-01-06 15:00:00** |
+| script/model-fitting.R    | script/model-fitting.R    | **26** | **25** | Alice Johnson  | 2025-01-06 14:00:00 |
 
 > **Note**: Here, `revf=26` indicates that the file might have been modified and committed again before final acceptance.
 
@@ -96,22 +95,24 @@ This logs the acceptance in **QClog.csv**, potentially with an updated revision 
 
 An example output of `logPending()` might look like this:
 
-| file               | last_author  | reviewer   | revf | revo | time                |
-|--------------------|-------------|-----------|------|------|---------------------|
-| script/analysis.R  | Bob Miller  | Jane Doe  | 12   | 12   | 2025-01-06 10:00:00 |
+| file               | origin            | revf | headf | revo | heado |
+|--------------------|-------------------|------|-------|------|-------|
+| script/analysis.R  | script/analysis.R | 12   | 26    | 12   | 26    |
 
-This indicates `script/analysis.R` was modified (or never finalized) and still needs to be accepted.
+This indicates `script/analysis.R` was modified (or never finalized) and still needs to be accepted because both the file and its origin have newer revisions.
 
 ## logSummary()
 
-If we want to see the QC status of all files in the log, we can use `logSummary()` to do so. It aggregates the log entries and indicates whether each file is fully QCed or needs further action.
+If we want to see the QC status of all files in the log, we can use `logSummary()` to do so. It aggregates the log entries and shows the latest revision information for each file.
 
-| file                   | status               |
-|------------------------|----------------------|
-| script/analysis.R      | Modified - needs QC  |
-| script/data-prep.R     | Fully QCed           |
-| script/model-fitting.R | Fully QCed           |
-| script/visualize.R     | Fully QCed           |
+An example output of `logSummary()` might look like this:
+
+| file                   | origin                    | revf | headf | revo | heado | reviewer       | time                |
+|------------------------|---------------------------|------|-------|------|-------|----------------|---------------------|
+| script/analysis.R      |                           | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
+| script/data-prep.R     |                           | 15   | 15    | 15   | 15    | John Smith     | 2025-01-06 11:30:00 |
+| script/model-fitting.R |                           | 26   | 26    | 25   | 25    | Alice Johnson  | 2025-01-06 14:00:00 |
+| script/visualize.R     |                           | 20   | 20    | 20   | 20    | Bob Miller     | 2025-01-06 13:00:00 |
 
 ---
 
@@ -149,12 +150,10 @@ If we want to see the QC status of all files in the log, we can use `logSummary(
 
 ---
 
-# Getting Help
 
-If you encounter a clear bug, please file an issue with a minimal reproducible example on [the `review/issues` page](https://github.com/metrumresearchgroup/review/issues).
-
+**review** helps ensure all critical files are reviewed in SVN-based projects, giving your team clarity on the QC state of every file and making sure nothing slips through the cracks.
 
 ### Cheat Sheet
 
-<a href="https://metrumresearchgroup.github.io/cheatsheets/review_cheat_sheet.pdf"><img src="https://metrumresearchgroup.github.io/cheatsheets/thumbnails/review_cheat_sheet_thumbnail.png" width="700" height="395"/></a>
+<a href="https://metrumresearchgroup.github.io/cheatsheets/review_cheat_sheet.pdf"><img src="https://metrumresearchgroup.github.io/cheatsheets/thumbnails/review_cheat_sheet_thumbnail.png" width="200" height="200"/></a>
 
