@@ -22,14 +22,12 @@ The `svnLog()` function provides the history of all edits made to a file, includ
 
 ### Usage
 
-For this vignette, we will use a demo SVN repository created with the `demoRepo()` function. Let's examine the history of `script/data-assembly.R`.
+Let's examine the history of `script/data-assembly.R`.
 
-#### Example: Retrieve File History
+#### Retrieve File History
 
 ```r
-repo <- demoRepo("examp-123")
-log_data <- svnLog(file.path(repo, "script/data-assembly.R"))
-log_data
+svnLog("script/data-assembly.R")
 ```
 
 **Output:**
@@ -50,34 +48,19 @@ The `svnExport()` function restores a file to a specified revision, saving it wi
 
 ### Usage
 
-#### Step 1: View Current File Contents
-
-First, let's inspect the current version of `script/data-assembly.R`:
-
-```r
-cat(readLines(file.path(repo, "script/data-assembly.R")), sep = "\n")
-```
-
-#### Step 2: Restore a Previous Revision
+#### Restore a Previous Revision
 
 Using the revision numbers from `svnLog()`, we can restore the first revision of the file:
 
 ```r
-svnExport(.file = file.path(repo, "script/data-assembly.R"), .revision = 1)
+svnExport(.file = "script/data-assembly.R", .revision = 2)
 ```
 
-This creates a new file, `data-assembly-1.R`, in the repository directory. You can confirm its existence:
+This creates a new file, `data-assembly-2.R`, in the repository directory. You can confirm its existence:
 
 ```r
-file.exists(file.path(repo, "data-assembly-1.R"))
-```
-
-#### Step 3: View Restored File Contents
-
-Finally, inspect the restored file to see its contents:
-
-```r
-cat(readLines(file.path(repo, "data-assembly-1.R")), sep = "\n")
+file.exists("script/data-assembly-2.R")
+TRUE
 ```
 
 ---
