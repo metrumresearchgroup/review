@@ -127,16 +127,12 @@ revisions.</p>
 <div class="section level3">
 <h3 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h3>
-<p>For this vignette, we will use a demo SVN repository created with the
-<code><a href="../reference/demoRepo.html">demoRepo()</a></code> function. Let’s examine the history of
-<code>script/data-assembly.R</code>.</p>
+<p>Let’s examine the history of <code>script/data-assembly.R</code>.</p>
 <div class="section level4">
-<h4 id="example-retrieve-file-history">Example: Retrieve File History<a class="anchor" aria-label="anchor" href="#example-retrieve-file-history"></a>
+<h4 id="retrieve-file-history">Retrieve File History<a class="anchor" aria-label="anchor" href="#retrieve-file-history"></a>
 </h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demoRepo.html">demoRepo</a></span><span class="op">(</span><span class="st">"examp-123"</span><span class="op">)</span></span>
-<span><span class="va">log_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svnLog.html">svnLog</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">repo</span>, <span class="st">"script/data-assembly.R"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">log_data</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/svnLog.html">svnLog</a></span><span class="op">(</span><span class="st">"script/data-assembly.R"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Output:</strong></p>
 <table class="table">
 <thead><tr class="header">
@@ -186,31 +182,17 @@ version. This is particularly useful when paired with
 <h3 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a>
 </h3>
 <div class="section level4">
-<h4 id="step-1-view-current-file-contents">Step 1: View Current File Contents<a class="anchor" aria-label="anchor" href="#step-1-view-current-file-contents"></a>
-</h4>
-<p>First, let’s inspect the current version of
-<code>script/data-assembly.R</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">repo</span>, <span class="st">"script/data-assembly.R"</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="step-2-restore-a-previous-revision">Step 2: Restore a Previous Revision<a class="anchor" aria-label="anchor" href="#step-2-restore-a-previous-revision"></a>
+<h4 id="restore-a-previous-revision">Restore a Previous Revision<a class="anchor" aria-label="anchor" href="#restore-a-previous-revision"></a>
 </h4>
 <p>Using the revision numbers from <code><a href="../reference/svnLog.html">svnLog()</a></code>, we can restore
 the first revision of the file:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/svnExport.html">svnExport</a></span><span class="op">(</span>.file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">repo</span>, <span class="st">"script/data-assembly.R"</span><span class="op">)</span>, .revision <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p>This creates a new file, <code>data-assembly-1.R</code>, in the
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/svnExport.html">svnExport</a></span><span class="op">(</span>.file <span class="op">=</span> <span class="st">"script/data-assembly.R"</span>, .revision <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>This creates a new file, <code>data-assembly-2.R</code>, in the
 repository directory. You can confirm its existence:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">repo</span>, <span class="st">"data-assembly-1.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="step-3-view-restored-file-contents">Step 3: View Restored File Contents<a class="anchor" aria-label="anchor" href="#step-3-view-restored-file-contents"></a>
-</h4>
-<p>Finally, inspect the restored file to see its contents:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">repo</span>, <span class="st">"data-assembly-1.R"</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"script/data-assembly-2.R"</span><span class="op">)</span></span>
+<span><span class="cn">TRUE</span></span></code></pre></div>
 <hr>
 </div>
 </div>
