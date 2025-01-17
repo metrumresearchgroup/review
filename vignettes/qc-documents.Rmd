@@ -1,0 +1,98 @@
+---
+title: "A Guide to Generating QC Documents in review"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{QC Documents}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette provides detailed documentation and usage examples for generating QC summary documents with the **review** package. The functions, `renderQCSummary()` and `renderQCReport()`, generate documents containing QC summary tables. These are intended to aid in quality control and prioritizing QC resourcing.
+
+## Table of Contents
+
+- **`renderQCSummary()`**: Generates a document with summary tables of outstanding QC information
+- **`renderQCReport()`**: Generates a document that provides the QC status of files in a project
+
+---
+
+## `renderQCSummary()`
+
+The `renderQCSummary()` function generates a QC summary based on scripts within a given project and renders it into a PDF report. This PDF contains multiple summaries, including:
+
+- Files with outstanding QC that have been added to the `QClog.csv` file.
+- Recently modified files that have not been added to the `QClog.csv` file.
+
+### Usage
+
+To generate a QC Summary report, use the following command:
+
+```r
+renderQCSummary()
+```
+
+#### Outstanding QC Summary
+
+When files require QC, the following type of table will appear in the report:
+
+**Output (Example):**
+
+| File                   | Last Author     | Previous QCers           |
+|------------------------|-----------------|--------------------------|
+| script/data-assembly.R | Jane Doe        | none                     |
+| script/examp-txt.txt   | John Smith      | Alice Johnson            |
+| script/pk/load-spec.R  | John Smith      | Jane Doe, Alice Johnson  |
+
+Each file that appears in this table requires QC. The column **Previous QCers** lists reviewers who previously QC'd the file.
+
+#### Recently Modified Files Summary
+
+Another section of the report identifies recently modified files not in the QC log:
+
+**Output (Example):**
+
+| File                     | Last Author   | Days Since Last Edit     |
+|--------------------------|---------------|--------------------------|
+| script/eda-tables.R      | Jane Doe      | 1                        |
+| script/eda-figures.R     | Alice Johnson | 8                        |
+| script/pk/check-sum.yaml | Alice Johnson | 20                       |
+
+This summary helps prioritize adding files to the QC log.
+
+---
+
+## `renderQCReport()`
+
+The `renderQCReport()` function generates a comprehensive QC status summary of all files in the QC log and renders it into a PDF report. This report provides an overview of files that are up-to-date or still require QC.
+
+### Usage
+
+To generate a QC Report, use the following command:
+
+```r
+renderQCReport()
+```
+
+#### Output (Example):
+
+**Table:**
+
+| File                     | QCed Revision | Last Revision | Status     | QC Date       |
+|--------------------------|---------------|---------------|------------|---------------|
+| script/data-assembly.R   | 3             | 3             | QCed       | 2025-01-15    |
+| script/examp-txt.txt     | 2             | 3             | Needs QC   |               |
+| script/pk/load-spec.R    | 4             | 5             | Needs QC   |               |
+
+The table highlights:
+
+- Files that are **up-to-date with QC**.
+- Files that **need QC**.
+
+---
+
+# Additional Notes
+
+- **Saving documents**: Users can specify a directory for saving reports using the `.output_dir` parameter.
+- **Customization**: Adjustments to project parameters or templates (`QCSummary.Rmd`, `QCReport.Rmd`) allow tailored outputs for specific needs.
+
+---
