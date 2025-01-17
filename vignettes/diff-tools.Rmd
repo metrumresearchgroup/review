@@ -1,155 +1,85 @@
 ---
-title: "Diff Tools"
+title: "A Guide to Using Diff Functions in review"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{diff-tools}
+  %\VignetteIndexEntry{Diff Tools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette demonstrates using a variety of `diff-` functions to assist with
-QC efforts. All functions provide a visual difference of modifications to scripts.
-The functions covered below include:
+This vignette provides detailed documentation and usage examples for the three main diff-related functions in the **review** package: `svnLog()`, `diffPreviousRevisions()`, and `diffQced()`. These functions facilitate the visual comparison of different versions of files within your SVN-managed project, aiding in quality control and code review processes.
 
-- `diffQced()` shows modifications to a script since it was last QCed.
-- `diffPreviousRevisions()` shows modifications between versions of the same script.
-- `diffFiles()` shows modifications between two scripts.
+## Table of Contents
 
-# Load libraries
+- **svnLog()**: Retrieves revision history for a file  
+- **diffPreviousRevisions()**: Compares two revisions of a file  
+- **diffQced()**: Compares the latest version with the most recent QCed version  
 
-```{r, message=FALSE}
-library(review)
+---
+
+## svnLog()
+
+The `svnLog()` function returns the SVN revision history (revisions, authors, timestamps, and messages) for a specified file. This history is useful for comparing different versions of a file.
+
+### Usage
+
+#### Retrieve Full Revision History
+
+```r
+svnLog("script/data-assembly.R")
 ```
 
-# Setup
+**Output (Example):**
 
-For the purposes of this vignette, a demo SVN repository and files were created
-using the `demoRepo()` function. The files in this repository are versioned 
-and have past QC history.
+| rev | author         | datetime              | msg                 |
+|-----|----------------|-----------------------|---------------------|
+| 3   | Bob            | 2025-01-15 10:00:00   | Added new feature   |
+| 2   | Alice Johnson  | 2025-01-10 09:00:00   | Modified data load  |
+| 1   | John Smith     | 2025-01-05 08:30:00   | Initial commit      |
 
-```{r}
-repo <- demoRepo("examp-123")
-```
+---
 
-# diffQced
+## diffPreviousRevisions()
 
-`diffQced()` generates a visual diff in the Viewer pane in R studio. 
-All deleted, added and modified lines of code are shown in the diff. 
+The `diffPreviousRevisions()` function visually identifies changes between two revisions of a file, highlighting additions, deletions, and modifications.
 
-`diffQced()` uses the QC log to identify the revision number when the last QC 
-was completed. The difference is then generated using the version of the file at 
-that revision number versus the current file.
+### Usage
 
-For this example, we will look at the modifications made to `script/data-assembly.R`
-since its last QC.
+#### Compare with a Specific Previous Revision
 
-```{r eval=FALSE}
-diffQced("script/data-assembly.R")
-```
-
-```{r echo=FALSE, message=FALSE, results='asis'}
-curdir <- getwd()
-on.exit(setwd(curdir))
-setwd(repo)
-svnExport("script/data-assembly.R", 1)
-
-diffobj::diffFile(
-        "data-assembly-1.R",
-        "script/data-assembly.R",
-        color.mode = "rgb",
-        ignore.white.space = FALSE,
-        mode = "sidebyside",
-        tar.banner="Revision 1",
-        cur.banner="Local",
-        format = "html",
-        style = list(html.output = "diff.w.style"),
-        interactive = F
-      )
-```
-
-# diffPreviousRevisions
-
-`diffPreviousRevisions()` generates a similar visual, except the versions 
-of the scripts being compared can be explicitly defined. 
-
-For any script, a previous and current revision number can be set to decide
-the versions being used. If a current revision number is not provided, the 
-default will be set to the most recent version of the script.
-
-For this example, we can use the `script/pk/load-spec.R` script. We can view
-the history of this file with `svnLog()`.
-
-```{r eval=FALSE}
-svnLog("script/pk/load-spec.R")
-```
-
-```{r echo=FALSE}
-curdir <- getwd()
-on.exit(setwd(curdir))
-setwd(repo)
-svnLog("script/pk/load-spec.R")
-```
-
-Now using `diffPreviousRevisions()`, we can look at the differences between 
-the file at revisions 1 and 4.
-
-```{r eval=FALSE}
+```r
 diffPreviousRevisions(
-    .file = "script/pk/load-spec.R",
-    .current_revision = 4,
-    .previous_revision = 1)
-```
-
-```{r echo=FALSE, message=FALSE, results='asis'}
-curdir <- getwd()
-on.exit(setwd(curdir))
-setwd(repo)
-svnExport("script/pk/load-spec.R", 1)
-
-diffobj::diffFile(
-        "load-spec-1.R",
-        "script/pk/load-spec.R",
-        color.mode = "rgb",
-        ignore.white.space = FALSE,
-        mode = "sidebyside",
-        tar.banner="Revision 1",
-        cur.banner="Local",
-        format = "html",
-        style = list(html.output = "diff.w.style"),
-        interactive = F
-      )
-```
-
-# diffFiles
-
-`diffFiles()` generates a visual diff between two files. The first file 
-provided will be treated as the past version when generating the visual diff.
-
-For this example, we can use the `script/combine-da.R` and 
-`script/data-assembly.R` scripts.
-
-```{r eval=FALSE}
-diffFiles(
-  .file_1 = "script/combine-da.R", 
-  .file_2 = "script/data-assembly.R"
+  .file = "script/data-assembly.R",
+  .previous_revision = 2,
+  .side_by_side = FALSE
 )
 ```
 
-```{r echo=FALSE, message=FALSE, results='asis'}
-curdir <- getwd()
-on.exit(setwd(curdir))
-setwd(repo)
+**Output (Illustrative):**
 
-diffobj::diffFile(
-        "script/combine-da.R",
-        "script/data-assembly.R",
-        color.mode = "rgb",
-        ignore.white.space = FALSE,
-        mode = "sidebyside",
-        tar.banner="Revision 1",
-        cur.banner="Local",
-        format = "html",
-        style = list(html.output = "diff.w.style"),
-        interactive = F
-      )
+A rendered diff in your Viewer pane, where lines added, removed, or changed between revision 2 and your local version (or specified .current_revision) are highlighted.
+
+---
+
+## diffQced()
+
+The `diffQced()` function identifies differences between the latest local version of a file and the most recent QCed revision, visually highlighting any changes that may need re-evaluation.
+
+### Usage
+
+#### Compare with the Last QCed Revision
+
+```r
+diffQced("script/data-assembly.R")
 ```
+
+**Output (Illustrative):**
+
+A rendered diff in your Viewer pane, highlighting lines added, removed, or changed since the last QCed revision.
+
+---
+
+# Additional Notes
+
+- **Customization**: You can customize the display of diffs by adjusting parameters such as `.side_by_side`, `.ignore_white_space`, and `.display_entire_file` as needed.
+- **SVN Updates**: Always ensure your working copy is up to date (e.g., `svn up`) before comparing file revisions.
