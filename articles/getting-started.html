@@ -50,7 +50,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/diff-tools.html">Diff Tools</a>
+      <a href="../articles/compare-tools.html">A Guide to Using Compare Functions in review</a>
+    </li>
+    <li>
+      <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting Started with review</a>
@@ -125,7 +128,7 @@ to the repo.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demoRepo.html">demoRepo</a></span><span class="op">(</span><span class="st">"abc-123"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">repo</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpylDfgd/svn-proj/abc-123"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/RtmpOdoDO8/svn-proj/abc-123"</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -232,9 +235,9 @@ the following output:</p>
 <span><span class="co">## 4   script/examp-txt.txt   script/examp-txt.txt    0     1    0     1   anyone</span></span>
 <span><span class="co">## 6  script/pk/load-spec.R  script/pk/load-spec.R    1     4    1     4 anderson</span></span>
 <span><span class="co">##                                    time</span></span>
-<span><span class="co">## 5 2025-01-17 18:20:31.3836438655853 GMT</span></span>
-<span><span class="co">## 4  2025-01-17 18:20:31.045654296875 GMT</span></span>
-<span><span class="co">## 6 2025-01-17 18:20:31.4505326747894 GMT</span></span></code></pre>
+<span><span class="co">## 5 2025-01-17 18:43:36.3609855175018 GMT</span></span>
+<span><span class="co">## 4 2025-01-17 18:43:36.0258419513702 GMT</span></span>
+<span><span class="co">## 6 2025-01-17 18:43:36.4279794692993 GMT</span></span></code></pre>
 <p>Looking at <code>script/data-assembly.R</code>, <code>revf = 1</code>
 indicates a QC was completed on the file at revision 1. However,
 <code>headf = 5</code> indicates edits were made to the file at revision
