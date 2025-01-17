@@ -40,10 +40,10 @@ additions, deletions or modifications in the script will be shown."><!-- mathjax
       <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting Started with review</a>
+      <a href="../articles/qc-documents.html">A Guide to Generating QC Documents in review</a>
     </li>
     <li>
-      <a href="../articles/svn-helpers.html">SVN Helpers</a>
+      <a href="../articles/svn-helpers.html">A Guide to Using SVN Helper Functions in review</a>
     </li>
   </ul></li>
 <li>
@@ -119,7 +119,24 @@ additions, deletions or modifications in the script will be shown.</p>
 <span class="r-in"><span> <span class="fu">diffPreviousRevisions</span><span class="op">(</span>.file <span class="op">=</span> <span class="st">"script/data-assembly.R"</span>, </span></span>
 <span class="r-in"><span>                       .previous_revision <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in with_demoRepo({    diffPreviousRevisions(.file = "script/data-assembly.R", .previous_revision = 2)}):</span> could not find function "with_demoRepo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">data-assembly.R: Revision 2</span>            <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">data-assembly.R: Local</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">@@ 1,5 @@                              </span>  <span style="color: #00BBBB;">@@ 1,10 @@                             </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   library(tidyverse)                       library(tidyverse)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">source(here::here("script",</span> <span style="color: #00BB00;">"data-ass</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">embly",</span> <span style="color: #00BB00;">"da-functions.R"))</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   src_abc &lt;- mrgda::read_src_dir(here::    src_abc &lt;- mrgda::read_src_dir(here::</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   here("data", "source", "STUDY-ABC"))     here("data", "source", "STUDY-ABC")) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   derived &lt;- list(sl = list(),tv = list    derived &lt;- list(sl = list(),tv = list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ())                                      ())                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   dm_0 &lt;- src_abc$dm %&gt;% filter(ACTARM     dm_0 &lt;- src_abc$dm %&gt;% filter(ACTARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   != "Screen Failure")                     != "Screen Failure")                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   derived$sl$dm &lt;- dm_0                    derived$sl$dm &lt;- dm_0                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_0</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">src_abc$pc</span> <span style="color: #00BB00;">%&gt;%</span> <span style="color: #00BB00;">filter(PCTEST</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">==</span> <span style="color: #00BB00;">"TEST OF INTEREST")</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">derived$tv$pc</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">pk_0</span>                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">ex_1</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">src_abc$ex</span> <span style="color: #00BB00;">%&gt;%</span> <span style="color: #00BB00;">filter(EXTRT</span> <span style="color: #00BB00;">=</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">=</span> <span style="color: #00BB00;">"DRUG OF INTEREST")</span>                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">derived$tv$dosing</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">ex_1</span>            </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

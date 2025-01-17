@@ -38,10 +38,10 @@
       <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting Started with review</a>
+      <a href="../articles/qc-documents.html">A Guide to Generating QC Documents in review</a>
     </li>
     <li>
-      <a href="../articles/svn-helpers.html">SVN Helpers</a>
+      <a href="../articles/svn-helpers.html">A Guide to Using SVN Helper Functions in review</a>
     </li>
   </ul></li>
 <li>
@@ -99,7 +99,16 @@ for each file is retained.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="demoRepo.html">with_demoRepo</a></span><span class="op">(</span><span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">logSummary</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in with_demoRepo({    logSummary()}):</span> could not find function "with_demoRepo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     file                 origin revf headf revo heado reviewer</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    script/combine-da.R    script/combine-da.R    1     1    1     1 anderson</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 script/data-assembly.R script/data-assembly.R    1     5    1     5 anderson</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   script/examp-txt.txt   script/examp-txt.txt    0     1    0     1   anyone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  script/pk/load-spec.R  script/pk/load-spec.R    1     4    1     4 anderson</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2025-01-17 19:11:21.4681181907654 GMT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2025-01-17 19:11:21.3297424316406 GMT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2025-01-17 19:11:21.2013692855835 GMT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2025-01-17 19:11:21.3971903324127 GMT</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

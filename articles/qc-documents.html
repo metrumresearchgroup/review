@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Guide to Using Diff Functions in review • review</title>
+<title>A Guide to Generating QC Documents in review • review</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="A Guide to Using Diff Functions in review">
+<script src="../pkgdown.js"></script><meta property="og:title" content="A Guide to Generating QC Documents in review">
 <meta property="og:description" content="review">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -87,130 +87,186 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>A Guide to Using Diff Functions in review</h1>
+      <h1 data-toc-skip>A Guide to Generating QC Documents in
+review</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/vignettes/diff-tools.Rmd" class="external-link"><code>vignettes/diff-tools.Rmd</code></a></small>
-      <div class="hidden name"><code>diff-tools.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/vignettes/qc-documents.Rmd" class="external-link"><code>vignettes/qc-documents.Rmd</code></a></small>
+      <div class="hidden name"><code>qc-documents.Rmd</code></div>
 
     </div>
 
     
     
 <p>This vignette provides detailed documentation and usage examples for
-the three main diff-related functions in the <strong>review</strong>
-package: <code><a href="../reference/svnLog.html">svnLog()</a></code>, <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code>,
-and <code><a href="../reference/diffQced.html">diffQced()</a></code>. These functions facilitate the visual
-comparison of different versions of files within your SVN-managed
-project, aiding in quality control and code review processes.</p>
+generating QC summary documents with the <strong>review</strong>
+package. The functions, <code><a href="../reference/renderQCSummary.html">renderQCSummary()</a></code> and
+<code><a href="../reference/renderQCReport.html">renderQCReport()</a></code>, generate documents containing QC summary
+tables. These are intended to aid in quality control and prioritizing QC
+resourcing.</p>
 <div class="section level3">
 <h3 id="table-of-contents">Table of Contents<a class="anchor" aria-label="anchor" href="#table-of-contents"></a>
 </h3>
 <ul>
 <li>
-<strong>svnLog()</strong>: Retrieves revision history for a
-file<br>
-</li>
+<strong><code><a href="../reference/renderQCSummary.html">renderQCSummary()</a></code></strong>: Generates a
+document with summary tables of outstanding QC information</li>
 <li>
-<strong>diffPreviousRevisions()</strong>: Compares two revisions of
-a file<br>
-</li>
-<li>
-<strong>diffQced()</strong>: Compares the latest version with the
-most recent QCed version</li>
+<strong><code><a href="../reference/renderQCReport.html">renderQCReport()</a></code></strong>: Generates a document
+that provides the QC status of files in a project</li>
 </ul>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="svnlog">svnLog()<a class="anchor" aria-label="anchor" href="#svnlog"></a>
+<h3 id="renderqcsummary">
+<code>renderQCSummary()</code><a class="anchor" aria-label="anchor" href="#renderqcsummary"></a>
 </h3>
-<p>The <code><a href="../reference/svnLog.html">svnLog()</a></code> function returns the SVN revision history
-(revisions, authors, timestamps, and messages) for a specified file.
-This history is useful for comparing different versions of a file.</p>
+<p>The <code><a href="../reference/renderQCSummary.html">renderQCSummary()</a></code> function generates a QC summary
+based on scripts within a given project and renders it into a PDF
+report. This PDF contains multiple summaries, including:</p>
+<ul>
+<li>Files with outstanding QC that have been added to the
+<code>QClog.csv</code> file.</li>
+<li>Recently modified files that have not been added to the
+<code>QClog.csv</code> file.</li>
+</ul>
 <div class="section level4">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h4>
-<div class="section level5">
-<h5 id="retrieve-full-revision-history">Retrieve Full Revision History<a class="anchor" aria-label="anchor" href="#retrieve-full-revision-history"></a>
-</h5>
+<p>To generate a QC Summary report, use the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/svnLog.html">svnLog</a></span><span class="op">(</span><span class="st">"script/data-assembly.R"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/renderQCSummary.html">renderQCSummary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="section level5">
+<h5 id="outstanding-qc-summary">Outstanding QC Summary<a class="anchor" aria-label="anchor" href="#outstanding-qc-summary"></a>
+</h5>
+<p>When files require QC, the following type of table will appear in the
+report:</p>
 <p><strong>Output (Example):</strong></p>
 <table class="table">
 <thead><tr class="header">
-<th>rev</th>
-<th>author</th>
-<th>datetime</th>
-<th>msg</th>
+<th>File</th>
+<th>Last Author</th>
+<th>Previous QCers</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>3</td>
-<td>Bob</td>
-<td>2025-01-15 10:00:00</td>
-<td>Added new feature</td>
+<td>script/data-assembly.R</td>
+<td>Jane Doe</td>
+<td>none</td>
 </tr>
 <tr class="even">
-<td>2</td>
+<td>script/examp-txt.txt</td>
+<td>John Smith</td>
 <td>Alice Johnson</td>
-<td>2025-01-10 09:00:00</td>
-<td>Modified data load</td>
 </tr>
 <tr class="odd">
-<td>1</td>
+<td>script/pk/load-spec.R</td>
 <td>John Smith</td>
-<td>2025-01-05 08:30:00</td>
-<td>Initial commit</td>
+<td>Jane Doe, Alice Johnson</td>
 </tr>
 </tbody>
 </table>
+<p>Each file that appears in this table requires QC. The column
+<strong>Previous QCers</strong> lists reviewers who previously QC’d the
+file.</p>
+</div>
+<div class="section level5">
+<h5 id="recently-modified-files-summary">Recently Modified Files Summary<a class="anchor" aria-label="anchor" href="#recently-modified-files-summary"></a>
+</h5>
+<p>Another section of the report identifies recently modified files not
+in the QC log:</p>
+<p><strong>Output (Example):</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th>File</th>
+<th>Last Author</th>
+<th>Days Since Last Edit</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>script/eda-tables.R</td>
+<td>Jane Doe</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>script/eda-figures.R</td>
+<td>Alice Johnson</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>script/pk/check-sum.yaml</td>
+<td>Alice Johnson</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>This summary helps prioritize adding files to the QC log.</p>
 <hr>
 </div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="diffpreviousrevisions">diffPreviousRevisions()<a class="anchor" aria-label="anchor" href="#diffpreviousrevisions"></a>
+<h3 id="renderqcreport">
+<code>renderQCReport()</code><a class="anchor" aria-label="anchor" href="#renderqcreport"></a>
 </h3>
-<p>The <code><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions()</a></code> function visually identifies
-changes between two revisions of a file, highlighting additions,
-deletions, and modifications.</p>
+<p>The <code><a href="../reference/renderQCReport.html">renderQCReport()</a></code> function generates a comprehensive
+QC status summary of all files in the QC log and renders it into a PDF
+report. This report provides an overview of files that are up-to-date or
+still require QC.</p>
 <div class="section level4">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a>
 </h4>
-<div class="section level5">
-<h5 id="compare-with-a-specific-previous-revision">Compare with a Specific Previous Revision<a class="anchor" aria-label="anchor" href="#compare-with-a-specific-previous-revision"></a>
-</h5>
+<p>To generate a QC Report, use the following command:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/diffPreviousRevisions.html">diffPreviousRevisions</a></span><span class="op">(</span></span>
-<span>  .file <span class="op">=</span> <span class="st">"script/data-assembly.R"</span>,</span>
-<span>  .previous_revision <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  .side_by_side <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><strong>Output (Illustrative):</strong></p>
-<p>A rendered diff in your Viewer pane, where lines added, removed, or
-changed between revision 2 and your local version (or specified
-.current_revision) are highlighted.</p>
-<hr>
-</div>
-</div>
-</div>
-<div class="section level3">
-<h3 id="diffqced">diffQced()<a class="anchor" aria-label="anchor" href="#diffqced"></a>
-</h3>
-<p>The <code><a href="../reference/diffQced.html">diffQced()</a></code> function identifies differences between
-the latest local version of a file and the most recent QCed revision,
-visually highlighting any changes that may need re-evaluation.</p>
-<div class="section level4">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a>
-</h4>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/renderQCReport.html">renderQCReport</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level5">
-<h5 id="compare-with-the-last-qced-revision">Compare with the Last QCed Revision<a class="anchor" aria-label="anchor" href="#compare-with-the-last-qced-revision"></a>
+<h5 id="output-example">Output (Example):<a class="anchor" aria-label="anchor" href="#output-example"></a>
 </h5>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/diffQced.html">diffQced</a></span><span class="op">(</span><span class="st">"script/data-assembly.R"</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Output (Illustrative):</strong></p>
-<p>A rendered diff in your Viewer pane, highlighting lines added,
-removed, or changed since the last QCed revision.</p>
+<p><strong>Table:</strong></p>
+<table class="table">
+<colgroup>
+<col width="31%">
+<col width="18%">
+<col width="18%">
+<col width="14%">
+<col width="18%">
+</colgroup>
+<thead><tr class="header">
+<th>File</th>
+<th>QCed Revision</th>
+<th>Last Revision</th>
+<th>Status</th>
+<th>QC Date</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>script/data-assembly.R</td>
+<td>3</td>
+<td>3</td>
+<td>QCed</td>
+<td>2025-01-15</td>
+</tr>
+<tr class="even">
+<td>script/examp-txt.txt</td>
+<td>2</td>
+<td>3</td>
+<td>Needs QC</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>script/pk/load-spec.R</td>
+<td>4</td>
+<td>5</td>
+<td>Needs QC</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The table highlights:</p>
+<ul>
+<li>Files that are <strong>up-to-date with QC</strong>.</li>
+<li>Files that <strong>need QC</strong>.</li>
+</ul>
 <hr>
 </div>
 </div>
@@ -220,15 +276,14 @@ removed, or changed since the last QCed revision.</p>
 </h2>
 <ul>
 <li>
-<strong>Customization</strong>: You can customize the display of
-diffs by adjusting parameters such as <code>.side_by_side</code>,
-<code>.ignore_white_space</code>, and <code>.display_entire_file</code>
-as needed.</li>
+<strong>Saving documents</strong>: Users can specify a directory for
+saving reports using the <code>.output_dir</code> parameter.</li>
 <li>
-<strong>SVN Updates</strong>: Always ensure your working copy is up
-to date (e.g., <code>svn up</code>) before comparing file
-revisions.</li>
+<strong>Customization</strong>: Adjustments to project parameters or
+templates (<code>QCSummary.Rmd</code>, <code>QCReport.Rmd</code>) allow
+tailored outputs for specific needs.</li>
 </ul>
+<hr>
 </div>
   </div>
 

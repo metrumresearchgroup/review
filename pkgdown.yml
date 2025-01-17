@@ -4,9 +4,9 @@ pkgdown_sha: ~
 articles:
   compare-tools: compare-tools.html
   diff-tools: diff-tools.html
-  getting-started: getting-started.html
+  qc-documents: qc-documents.html
   svn-helpers: svn-helpers.html
-last_built: 2025-01-17T18:43Z
+last_built: 2025-01-17T19:10Z
 urls:
   reference: https://metrumresearchgroup.github.io/review/reference
   article: https://metrumresearchgroup.github.io/review/articles

@@ -42,10 +42,10 @@ an existing script."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting Started with review</a>
+      <a href="../articles/qc-documents.html">A Guide to Generating QC Documents in review</a>
     </li>
     <li>
-      <a href="../articles/svn-helpers.html">SVN Helpers</a>
+      <a href="../articles/svn-helpers.html">A Guide to Using SVN Helper Functions in review</a>
     </li>
   </ul></li>
 <li>
@@ -128,7 +128,26 @@ an existing script.</p>
 <span class="r-in"><span> <span class="fu">diffFiles</span><span class="op">(</span>.file_1 <span class="op">=</span> <span class="st">"script/data-assembly.R"</span>, </span></span>
 <span class="r-in"><span>           .file_2 <span class="op">=</span> <span class="st">"script/combine-da.R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in with_demoRepo({    diffFiles(.file_1 = "script/data-assembly.R", .file_2 = "script/combine-da.R")}):</span> could not find function "with_demoRepo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">data-assembly.R</span>                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">combine-da.R</span>                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">@@ 1,10 @@                             </span>  <span style="color: #00BBBB;">@@ 1,6 @@                              </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   library(tidyverse)                       library(tidyverse)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">source(here::here("script",</span> <span style="color: #BB0000;">"data-ass</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">studies</span> &lt;- <span style="color: #00BB00;">list()</span>                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">embly",</span> <span style="color: #BB0000;">"da-functions.R"))</span>             <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">src_abc</span> &lt;- <span style="color: #BB0000;">mrgda::read_src_dir(here::</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">studies$pk_abc</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">readr::read_rds(her</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">here(</span>"data", <span style="color: #BB0000;">"source"</span>, <span style="color: #BB0000;">"STUDY-ABC"</span>))   <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">e::here(</span>"data", <span style="color: #00BB00;">"derived"</span>, <span style="color: #00BB00;">"studies",</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span>  <span style="color: #00BB00;">"pk-abc.rds"</span>))                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">list(sl</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">list(),tv</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">list</span>  <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">())</span>                                    <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">dm_0</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">src_abc$dm</span> <span style="color: #BB0000;">%&gt;%</span> <span style="color: #BB0000;">filter(ACTARM</span>   <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">!=</span> <span style="color: #BB0000;">"Screen Failure")</span>                   <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$sl$dm</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">dm_0</span>                  <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> pk_0 &lt;- <span style="color: #BB0000;">src_abc$pc</span> %&gt;% <span style="color: #BB0000;">filter(PCTEST</span>   <span style="color: #00BB00;">&gt;</span> pk_0 &lt;- <span style="color: #00BB00;">bind_rows(studies)</span> %&gt;% <span style="color: #00BB00;">arrang</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">==</span> <span style="color: #BB0000;">"TEST OF INTEREST"</span>)                 <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">e(USUBJID,</span> <span style="color: #00BB00;">DATETIME</span>)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$tv$pc</span> &lt;- pk_0                  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_1</span> &lt;- pk_0 %&gt;% <span style="color: #00BB00;">mrgda::assign_id(.,</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">"USUBJID"</span>)                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">ex_1</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">src_abc$ex</span> %&gt;% <span style="color: #BB0000;">filter(EXTRT</span> <span style="color: #BB0000;">=</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_out</span> &lt;- <span style="color: #00BB00;">pk_1</span>                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">"DRUG OF INTEREST"</span>)                  <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$tv$dosing</span> &lt;- <span style="color: #BB0000;">ex_1</span>              <span style="color: #555555;">~</span>                                      </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
