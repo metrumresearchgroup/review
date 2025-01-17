@@ -55,9 +55,7 @@ diffPreviousRevisions(
 )
 ```
 
-**Output (Illustrative):**
-
-A rendered diff in your Viewer pane, where lines added, removed, or changed between revision 2 and your local version (or specified .current_revision) are highlighted.
+![Output of `diffPreviousVersions()`: <span style="background-color: lightgreen;">green text</span> indicates modified code, <span style="background-color: #ffcccc;">red text</span> indicates deleted code.](figures/diff-previous-revisions.png){width=700}
 
 ---
 
