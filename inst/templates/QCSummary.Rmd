@@ -125,6 +125,8 @@ not_in_log <-
   dplyr::arrange(`Days since...last edit`) %>% 
   dplyr::distinct()
 
+not_in_log <- not_in_log[file.exists(not_in_log$File),]
+
 if (nrow(not_in_log) == 0) {
   not_in_log <- 
     dplyr::tibble(
@@ -135,7 +137,6 @@ if (nrow(not_in_log) == 0) {
       )
     )
 }
-
 
 not_in_log %>%   
   pmtables::st_new() %>% 
