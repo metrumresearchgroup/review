@@ -1,3 +1,9 @@
+# review development
+
+## Bug fixes
+
+- Removed deleted files from `renderQCSummary` output. (#156)
+
 # review 3.10.0
 
 ## New features and changes
