@@ -142,7 +142,7 @@ not_in_log %>%
   pmtables::st_new() %>% 
   pmtables::st_left(File = pmtables::col_ragged(10)) %>%
   pmtables::stable_long(
-    lt_cap_text = "*Files in this table have been edited within the last (20) days"
+    lt_cap_text = paste0("*Files in this table have been edited within the last (", at_risk_days, ") days")
   ) %>%
   pmtables::st_asis()
 
