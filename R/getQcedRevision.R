@@ -40,7 +40,6 @@ getQcedRevision <- function(.file){
   qced_revision <-
     qced_revision %>% 
     dplyr::filter(revf == max(revf)) %>% 
-    dplyr::distinct(revf, .keep_all = TRUE) %>% 
     dplyr::pull(revf)
   
   qced_revision
