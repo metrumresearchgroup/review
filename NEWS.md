@@ -4,6 +4,8 @@
 
 - Removed deleted files from `renderQCSummary` output. (#156)
 
+- Fixed multiple log accept case in `getQcedRevision`. (#157)
+
 # review 3.10.0
 
 ## New features and changes
