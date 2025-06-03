@@ -40,6 +40,16 @@ fileSummary <- function(.file) {
     return(invisible(NULL))
   }
   
+  log_df <- tryCatch(
+    svnCommand(.file = .file, .command = "log"),
+    error = identity
+  )
+  
+  if (inherits(log_df, "error")) {
+    warning(paste0(.file, " not checked in"))
+    return(invisible(NULL))
+  }
+  
   # Initialize output list
   out <- list()
   out$qclog <- cli::col_red("No")

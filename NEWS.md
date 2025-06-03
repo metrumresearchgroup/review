@@ -4,6 +4,8 @@
 
 - Removed deleted files from `renderQCSummary` output. (#156)
 
+- Prevent `fileSummary` from throwing error when file is not checked into SVN. (#158)
+
 - Fixed multiple log accept case in `getQcedRevision`. (#157)
 
 # review 3.10.0
