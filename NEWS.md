@@ -8,6 +8,17 @@
 
 - Fixed multiple log accept case in `getQcedRevision`. (#157)
 
+## New features and changes
+
+- `renderQCReport` now requires the .output_dir argument (previously optional).
+  A new optional .project_number argument has been added; if not supplied, the
+  project number is inferred from the SVN project URL. The output PDF filename
+  now uses a project-specific prefix: if .project_number is supplied, the entire
+  lowercased value is used; if inferred, the last element of the SVN project
+  name (after splitting by -) is used (lowercased). The project parameter within
+  the report is always set to the last part of the SVN project URL, regardless
+  of .project_number. Example: one-qc-report-YYYY-MM-DD.pdf. (#999)
+
 # review 3.10.0
 
 ## New features and changes

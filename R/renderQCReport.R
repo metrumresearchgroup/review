@@ -4,35 +4,50 @@
 #' and renders it into a PDF report.
 #' 
 #' The QC status of all files in the QC log will be displayed.
-#' 
-#' @param .output_dir Character string (optional). Path to the directory where the output PDF 
-#'   should be saved. If not provided, the document will not be saved locally.
 #'
-#' @return Invisible. The function will save a PDF report named "qc-report-(current date).pdf"
-#'   to the specified output directory (if available). If the R session is interactive, it will also 
+#' @param .output_dir Character string. Path to the directory where the output PDF
+#'   should be saved. This argument is required.
+#'
+#' @param .project_number Character string (optional). Used for the output PDF filename
+#'   prefix. If NULL (default), inferred from the SVN project URL.
+#'
+#' @return Invisible. The function will save a PDF report named "<project>-qc-report-(current date).pdf"
+#'   to the specified output directory. If the R session is interactive, it will also
 #'   open the PDF in the default browser.
 #'   
 #' @examples 
 #' \dontrun{
-#' renderQCReport()
+#' renderQCReport("deliv/report")
 #' }
 #'
 #' @export
-renderQCReport <- function(.output_dir = NULL) {
+renderQCReport <- function(.output_dir, .project_number = NULL) {
   
-  if (is.null(.output_dir)) {
-    .output_dir <- tempdir()
-  } else {
-    if (!dir.exists(.output_dir)) {
-      stop(.output_dir, " does not exist")
-    }
+  if (missing(.output_dir) || !is.character(.output_dir)) {
+    stop("'.output_dir' is required and must be a character string.")
+  }
+  if (!dir.exists(.output_dir)) {
+    stop(.output_dir, " does not exist")
   }
   
-  output_file <- paste0("qc-report-", Sys.Date(), ".pdf")
+  # Always extract project_id from the last part after the final slash in the SVN URL
+  # ".*/([^/]+)$" = match everything up to the last slash and capture what comes after it
+  # "\\1" = replace with the captured group (the part after the last slash)
+  projInfo <- svnProjInfo()
+  project_id <- sub(".*/([^/]+)$", "\\1", projInfo$url)
+  
+  # report_suffix for filename: .project_number if supplied, else SVN last segment
+  if (is.null(.project_number)) {
+    report_suffix <- tolower(project_id)
+  } else {
+    report_suffix <- tolower(.project_number)
+  }
+  
+  output_file <- paste0(report_suffix, "-qc-report-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
-    project = basename(logRoot()),
+    project = project_id, # Always from SVN
     logSum = logSummary()
   )
   
