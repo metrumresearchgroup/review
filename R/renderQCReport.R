@@ -26,6 +26,9 @@ renderQCReport <- function(.output_dir, .project_number = NULL) {
   if (missing(.output_dir) || !is.character(.output_dir)) {
     stop("'.output_dir' is required and must be a character string.")
   }
+  
+  .output_dir <- as.character(fs::path_abs(.output_dir))
+  
   if (!dir.exists(.output_dir)) {
     stop(.output_dir, " does not exist")
   }
@@ -35,15 +38,13 @@ renderQCReport <- function(.output_dir, .project_number = NULL) {
   # "\\1" = replace with the captured group (the part after the last slash)
   projInfo <- svnProjInfo()
   project_id <- sub(".*/([^/]+)$", "\\1", projInfo$url)
-  
+
   # report_suffix for filename: .project_number if supplied, else SVN last segment
   if (is.null(.project_number)) {
-    report_suffix <- tolower(project_id)
-  } else {
-    report_suffix <- tolower(.project_number)
+    .project_number <- tail(strsplit(project_id, split = "-", fixed = TRUE)[[1]], 1)
   }
   
-  output_file <- paste0(report_suffix, "-qc-report-", Sys.Date(), ".pdf")
+  output_file <- paste0(tolower(.project_number), "-qc-report-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(

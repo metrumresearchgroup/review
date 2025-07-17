@@ -26,6 +26,7 @@ renderQCSummary <- function(.output_dir = NULL) {
   if (is.null(.output_dir)) {
     .output_dir <- tempdir()
   } else {
+    .output_dir <- as.character(fs::path_abs(.output_dir))
     if (!dir.exists(.output_dir)) {
       stop(.output_dir, " does not exist")
     }
