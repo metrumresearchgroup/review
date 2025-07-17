@@ -41,14 +41,14 @@ renderQCReport <- function(.output_dir, .project_number = NULL) {
 
   # report_suffix for filename: .project_number if supplied, else SVN last segment
   if (is.null(.project_number)) {
-    .project_number <- tail(strsplit(project_id, split = "-", fixed = TRUE)[[1]], 1)
+    .project_number <- utils::tail(strsplit(project_id, split = "-", fixed = TRUE)[[1]], 1)
   }
   
   output_file <- paste0(tolower(.project_number), "-qc-report-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
-    project = project_id, # Always from SVN
+    project = project_id,
     logSum = logSummary()
   )
   

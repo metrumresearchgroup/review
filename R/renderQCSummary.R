@@ -32,15 +32,18 @@ renderQCSummary <- function(.output_dir = NULL) {
     }
   }
   
+  projInfo <- svnProjInfo()
+  project_id <- sub(".*/([^/]+)$", "\\1", projInfo$url)
+  
   output_file <- paste0("qc-summary-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
-    project = basename(logRoot()),
+    project = project_id,
     repoHistory = repoHistory(),
     qcLog = logRead(),
     logPending = logPending(),
-    projInfo = svnProjInfo()
+    projInfo = projInfo
   )
   
   rmarkdown::render(
