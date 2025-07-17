@@ -26,20 +26,24 @@ renderQCSummary <- function(.output_dir = NULL) {
   if (is.null(.output_dir)) {
     .output_dir <- tempdir()
   } else {
+    .output_dir <- as.character(fs::path_abs(.output_dir))
     if (!dir.exists(.output_dir)) {
       stop(.output_dir, " does not exist")
     }
   }
   
+  projInfo <- svnProjInfo()
+  project_id <- sub(".*/([^/]+)$", "\\1", projInfo$url)
+  
   output_file <- paste0("qc-summary-", Sys.Date(), ".pdf")
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
-    project = basename(logRoot()),
+    project = project_id,
     repoHistory = repoHistory(),
     qcLog = logRead(),
     logPending = logPending(),
-    projInfo = svnProjInfo()
+    projInfo = projInfo
   )
   
   rmarkdown::render(

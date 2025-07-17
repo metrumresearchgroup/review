@@ -4,15 +4,18 @@
 \alias{renderQCReport}
 \title{Render a QC Report Document}
 \usage{
-renderQCReport(.output_dir = NULL)
+renderQCReport(.output_dir, .project_number = NULL)
 }
 \arguments{
-\item{.output_dir}{Character string (optional). Path to the directory where the output PDF
-should be saved. If not provided, the document will not be saved locally.}
+\item{.output_dir}{Character string. Path to the directory where the output PDF
+should be saved. This argument is required.}
+
+\item{.project_number}{Character string (optional). Used for the output PDF filename
+prefix. If NULL (default), inferred from the SVN project URL.}
 }
 \value{
-Invisible. The function will save a PDF report named "qc-report-(current date).pdf"
-to the specified output directory (if available). If the R session is interactive, it will also
+Invisible. The function will save a PDF report named "\if{html}{\out{<project>}}-qc-report-(current date).pdf"
+to the specified output directory. If the R session is interactive, it will also
 open the PDF in the default browser.
 }
 \description{
@@ -24,7 +27,7 @@ The QC status of all files in the QC log will be displayed.
 }
 \examples{
 \dontrun{
-renderQCReport()
+renderQCReport("deliv/report")
 }
 
 }
