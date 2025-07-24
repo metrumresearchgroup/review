@@ -19,7 +19,7 @@
   the report is always set to the last part of the SVN project URL, regardless
   of .project_number. Example: one-qc-report-YYYY-MM-DD.pdf. (#162)
   
-- `logSummary` now reports date/time to nearest second. 
+- `logSummary` now reports date/time to nearest second. (#163)
 
 # review 3.10.0
 
