@@ -12,5 +12,11 @@ with_demoRepo({
     expect_true(inherits(logSummary(), "data.frame"))
   })
   
+  time_pattern <- "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}( GMT)?$"
+  
+  test_that("logSummary reduces time to nearest second", {
+    expect_true(all(grepl(time_pattern, tempdf_sum$time)))
+  })
+  
 })
 
