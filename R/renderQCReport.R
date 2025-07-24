@@ -23,6 +23,16 @@
 #' @export
 renderQCReport <- function(.output_dir, .project_number = NULL) {
   
+  # Check if QC log is missing
+  if (is.null(logRoot())) {
+    stop("QC log does not exist")
+  }
+  
+  # Check if QC log is empty
+  if (nrow(logRead()) == 0) {
+    stop("QC log is empty")
+  }
+  
   if (missing(.output_dir) || !is.character(.output_dir)) {
     stop("'.output_dir' is required and must be a character string.")
   }
