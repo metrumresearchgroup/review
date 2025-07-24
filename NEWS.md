@@ -8,7 +8,7 @@
 
 - Fixed multiple log accept case in `getQcedRevision`. (#157)
 
-- `renderQCSummary` and `renderQCReport` now error gracefully if missing or empty QC log. ()
+- `renderQCSummary` and `renderQCReport` now error gracefully if missing or empty QC log. (#164)
 
 ## New features and changes
 
