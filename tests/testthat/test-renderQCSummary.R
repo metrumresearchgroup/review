@@ -28,6 +28,14 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     expect_true(file.exists(file.path(temp_dir, paste0("qc-summary-", Sys.Date(), ".pdf"))))
     
   })
+  
+  test_that("renderQCSummary errors gracefully if QC log does not exist", {
+    file.remove("QClog.csv")
+    expect_error(
+      renderQCSummary(),
+      "QC log does not exist"
+    )
+  })
 }
 
 

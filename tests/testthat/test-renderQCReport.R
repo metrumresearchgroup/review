@@ -39,4 +39,20 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     expected_file <- file.path(logRoot(), paste0("single-qc-report-", Sys.Date(), ".pdf"))
     expect_true(file.exists(expected_file))
   })
+  
+  test_that("renderQCReport errors gracefully if QC log does not exist", {
+    file.remove("QClog.csv")
+    expect_error(
+      renderQCReport(.output_dir = tempfile()),
+      "QC log does not exist"
+    )
+  })
+  
+  test_that("renderQCReport errors gracefully if QC log does not exist", {
+    logCreate()
+    expect_error(
+      renderQCReport(.output_dir = tempfile()),
+      "QC log is empty"
+    )
+  })
 }

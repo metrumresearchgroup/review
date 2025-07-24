@@ -8,6 +8,8 @@
 
 - Fixed multiple log accept case in `getQcedRevision`. (#157)
 
+- `renderQCSummary` and `renderQCReport` now error gracefully if missing or empty QC log. ()
+
 ## New features and changes
 
 - `renderQCReport` now requires the .output_dir argument (previously optional).
