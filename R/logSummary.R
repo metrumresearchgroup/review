@@ -37,6 +37,8 @@ logSummary <- function(directory=getwd()){
 	log$heado <- sapply(absOrigin,revision)
 	log <- log[,cols]
 	class(log) <- c('logSummary','data.frame')
+	# Convert time to nearest second
+	log$time <- as.POSIXct(log$time, format = "%Y-%m-%d %H:%M:%OS GMT", tz = "GMT")
 	log
 }
 

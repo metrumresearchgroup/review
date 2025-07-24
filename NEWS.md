@@ -18,6 +18,8 @@
   name (after splitting by -) is used (lowercased). The project parameter within
   the report is always set to the last part of the SVN project URL, regardless
   of .project_number. Example: one-qc-report-YYYY-MM-DD.pdf. (#162)
+  
+- `logSummary` now reports date/time to nearest second. 
 
 # review 3.10.0
 
