@@ -23,6 +23,11 @@
 #' @export
 renderQCSummary <- function(.output_dir = NULL) {
   
+  # Check if QC log is missing
+  if (is.null(logRoot())) {
+    stop("QC log does not exist")
+  }
+  
   if (is.null(.output_dir)) {
     .output_dir <- tempdir()
   } else {
