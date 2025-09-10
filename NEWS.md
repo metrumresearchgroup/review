@@ -1,3 +1,9 @@
+# review development
+
+## Bug fixes
+
+- Fix `compareTables` and `compareFigures` output when comparing between local and repo. (#169)
+
 # review 3.11.0
 
 ## Bug fixes
