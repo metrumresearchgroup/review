@@ -22,7 +22,7 @@ compareModified <- function(.path, .side_by_side = TRUE, .file_exts = c("png", "
   buildCompare(
     .dfpaths = .dfpaths,
     .side_by_side = .side_by_side,
-    .headings = c("Repo", "Local"),
+    .headings = c("Local", "Repo"),
     .show_on_load = .show_on_load
   )
 }
