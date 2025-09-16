@@ -2,7 +2,7 @@
 
 ## New features and changes
 
-- `diffQCed` now offers an argument to open the file after the diff is generated.
+- `diffQCed` now offers an argument to open the file after the diff is generated. (#170)
 
 ## Bug fixes
 
