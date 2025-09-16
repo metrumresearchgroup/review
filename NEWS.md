@@ -1,5 +1,9 @@
 # review development
 
+## New features and changes
+
+- `diffQCed` now offers an argument to open the file after the diff is generated.
+
 ## Bug fixes
 
 - Fix `compareTables` and `compareFigures` output when comparing between local and repo. (#169)

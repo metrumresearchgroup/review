@@ -11,6 +11,7 @@
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
 #' @param .display_entire_file Logical. Should the entire file be displayed?
+#' @param .open_file Logical. Should the file open after generating diff?
 #' 
 #' @examples 
 #' with_demoRepo({
@@ -24,7 +25,8 @@ diffPreviousRevisions <- function(.file,
                                   .current_revision = NULL,
                                   .side_by_side = TRUE,
                                   .ignore_white_space = FALSE,
-                                  .display_entire_file = FALSE){
+                                  .display_entire_file = FALSE,
+                                  .open_file = FALSE){
 
   previousCurrent <-
     getPreviousCurrent(
@@ -36,6 +38,10 @@ diffPreviousRevisions <- function(.file,
   if (tools::md5sum(previousCurrent$.previous_revision_temp_file) == tools::md5sum(previousCurrent$.current_revision_temp_file)) {
     message("Specified files are identical")
     return(invisible(NULL))
+  }
+  
+  if (.open_file) {
+    file.edit(.file)
   }
   
   diffFiles(
