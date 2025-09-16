@@ -41,7 +41,7 @@ diffPreviousRevisions <- function(.file,
   }
   
   if (.open_file) {
-    file.edit(.file)
+    utils::file.edit(.file)
   }
   
   diffFiles(
