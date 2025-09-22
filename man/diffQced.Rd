@@ -8,7 +8,8 @@ diffQced(
   .file,
   .side_by_side = TRUE,
   .ignore_white_space = FALSE,
-  .display_entire_file = FALSE
+  .display_entire_file = FALSE,
+  .open_file = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ diffQced(
 \item{.ignore_white_space}{Logical. Should white space be ignored?}
 
 \item{.display_entire_file}{Logical. Should the entire file be displayed?}
+
+\item{.open_file}{Logical. Should the file open after generating diff?}
 }
 \description{
 Compares the local version of a script with the most recent QCed version.
