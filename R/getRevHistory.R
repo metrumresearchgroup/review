@@ -1,5 +1,10 @@
 #' @noRd
 getRevHistory <- function(.file) {
+  
+  if (!file.exists(.file)) {
+    stop(paste0("'", .file, "' does not exist."))
+  }
+  
   .svn_log <- svnLog(.file)
 
   qclog <- logRead()
@@ -11,7 +16,7 @@ getRevHistory <- function(.file) {
   .svn_log$QCed <- if (nrow(qclog_file) == 0) {
     "No"
   } else {
-    ifelse(as.numeric(.svn_log$rev) <= max(qclog_file$revf), "Yes", "No")
+    ifelse(as.numeric(.svn_log$rev) %in% qclog_file$revf, "Yes", "No")
   }
   
   # Update datetime to relative days
@@ -19,12 +24,13 @@ getRevHistory <- function(.file) {
   .svn_log <- 
     .svn_log %>% 
     dplyr::mutate(
-      datetime = dplyr::case_when(
+      elapsed = dplyr::case_when(
         datetime == 0 ~ "Today",
         datetime == 1 ~ "Yesterday",
         TRUE ~ paste0(datetime, " days ago")
       )
-    )
+    ) %>% 
+    dplyr::select(-datetime)
 
   .svn_log$rev <- as.numeric(.svn_log$rev)
   .svn_log <- .svn_log[order(-.svn_log$rev), ]

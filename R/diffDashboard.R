@@ -2,9 +2,6 @@
 #' @param .file File of interest
 #' @export
 diffDashboard <- function(.file) {
-  if (!file.exists(.file)) {
-    stop(paste0("'", .file, "' does not exist."))
-  }
 
   # --- Data prep ---
   svn_log <- getRevHistory(.file = .file)
@@ -15,7 +12,7 @@ diffDashboard <- function(.file) {
   # --- UI ---
   ui <- bslib::page_sidebar(
     title = paste0("Visual diff: ", fs::path_rel(.file)),
-    theme = bslib::bs_theme(bootswatch = "litera"),
+    theme = bslib::bs_theme(bootswatch = "cosmo"),
     sidebar = bslib::sidebar(
       open = "always",
       width = 360,
@@ -169,8 +166,6 @@ diffDashboard <- function(.file) {
         row <- svn_log[i, ]
         qc <- if (identical(row$QCed, "Yes")) {
           shiny::span(class = "badge y", "QCed")
-        } else {
-          shiny::span(class = "badge n", "Not QCed")
         }
         id <- as.character(row$rev)
         cls <- if (id %in% chosen) "rev sel" else "rev"
@@ -181,7 +176,7 @@ diffDashboard <- function(.file) {
             class = "h",
             shiny::span(class = "id", paste0("r", row$rev)),
             qc,
-            shiny::span(class = "m", paste(row$author, ":", row$datetime))
+            shiny::span(class = "m", paste(row$author, ":", row$elapsed))
           ),
           shiny::div(
             class = "msg",

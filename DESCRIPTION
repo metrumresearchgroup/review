@@ -29,15 +29,15 @@ Imports:
     tinytex,
     pmtables,
     tidyr,
-    stats
+    stats,
+    bslib,
+    htmltools,
+    shiny
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
     readr,
-    withr (>= 2.5.0),
-    bslib,
-    htmltools,
-    shiny
+    withr (>= 2.5.0)
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr

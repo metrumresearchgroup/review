@@ -13,7 +13,7 @@ with_demoRepo({
     expect_equal(nrow(df3), 1)
     
     expect_identical(names(df1), names(df2))
-    expect_true(all(c("author", "datetime", "rev", "msg", "QCed") %in% names(df1)))
+    expect_true(all(c("author", "elapsed", "rev", "msg", "QCed") %in% names(df1)))
   })
   
   test_that("getRevHistory works if file has not been QCed", {
@@ -25,7 +25,7 @@ with_demoRepo({
   })
   
   test_that("getRevHistory alerts the user a file is not checked into SVN", {
-    expect_error(getRevHistory("script/combine-da2.R"), "svn log failed")
+    expect_error(getRevHistory("script/combine-da2.R"), "'script/combine-da2.R' does not exist.")
   })
   
 })
