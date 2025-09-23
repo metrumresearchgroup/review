@@ -1,5 +1,19 @@
-#' Visual Diff
-#' @param .file File of interest
+#' Launch an interactive visual diff dashboard for a file's revision/QC history
+#'
+#' @description
+#' `diffDashboard()` opens a Shiny app that helps you review a file's Subversion
+#' (SVN) revision history and QC status, and interactively compare any two
+#' versions (including your local working copy) with a visual diff.
+#'
+#' @param .file `character(1)`  
+#'   Path to the target file tracked in SVN. Can be absolute or relative.
+#'
+#' @examples
+#' \dontrun{
+#' # Review and diff revisions for a script
+#' diffDashboard("analysis/model.R")
+#' }
+#'
 #' @export
 diffDashboard <- function(.file) {
 
@@ -215,7 +229,8 @@ diffDashboard <- function(.file) {
         .side_by_side = sbs,
         .ignore_white_space = igw,
         .display_entire_file = def
-      )
+      ) %>% 
+        suppressMessages()
 
       if (is.null(diff_obj)) {
         # Case when there are no differences

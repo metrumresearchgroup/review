@@ -2,13 +2,23 @@
 % Please edit documentation in R/diffDashboard.R
 \name{diffDashboard}
 \alias{diffDashboard}
-\title{Visual Diff}
+\title{Launch an interactive visual diff dashboard for a file's revision/QC history}
 \usage{
 diffDashboard(.file)
 }
 \arguments{
-\item{.file}{File of interest}
+\item{.file}{\code{character(1)}
+Path to the target file tracked in SVN. Can be absolute or relative.}
 }
 \description{
-Visual Diff
+\code{diffDashboard()} opens a Shiny app that helps you review a file's Subversion
+(SVN) revision history and QC status, and interactively compare any two
+versions (including your local working copy) with a visual diff.
+}
+\examples{
+\dontrun{
+# Review and diff revisions for a script
+diffDashboard("analysis/model.R")
+}
+
 }
