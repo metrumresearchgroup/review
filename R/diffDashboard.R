@@ -14,7 +14,14 @@ diffDashboard <- function(.file) {
 
   # --- UI ---
   ui <- bslib::page_sidebar(
-    title = paste0("Visual diff: ", fs::path_rel(.file)),
+    title = htmltools::div(
+      style = "display:flex; gap:.35rem; align-items:baseline; font-weight:600;",
+      htmltools::span("Visual diff:"),
+      htmltools::span(
+        style = "opacity:.7; font-weight:400;",
+        fs::path_rel(.file)
+      )
+    ),
     theme = bslib::bs_theme(bootswatch = "litera"),
     sidebar = bslib::sidebar(
       open = "always",
