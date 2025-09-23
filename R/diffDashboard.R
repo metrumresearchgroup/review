@@ -51,7 +51,7 @@ diffDashboard <- function(.file) {
       )),
       shiny::div(
         class = "text-muted mb-2",
-        "Click any two to compare. If one is Local, it's treated as the newer version."
+        "Click any two to compare."
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
@@ -206,19 +206,6 @@ diffDashboard <- function(.file) {
           class = "text-muted",
           "Select two to generate a diff."
         ))
-      }
-      if (is.null(p$newer)) {
-        shiny::div(
-          style = "margin-bottom:8px;",
-          shiny::strong("Comparing "),
-          shiny::span(paste0("r", p$prior), " -> Local")
-        )
-      } else {
-        shiny::div(
-          style = "margin-bottom:8px;",
-          shiny::strong("Comparing "),
-          shiny::span(paste0("r", p$prior), " -> ", paste0("r", p$newer))
-        )
       }
     })
 
