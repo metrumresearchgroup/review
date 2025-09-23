@@ -25,7 +25,7 @@ with_demoRepo({
   })
   
   test_that("getRevHistory alerts the user a file is not checked into SVN", {
-    expect_error(getRevHistory("script/combine-da2.R"), "'script/combine-da2.R' is not checked into SVN.")
+    expect_error(getRevHistory("script/combine-da2.R"), "svn log failed")
   })
   
 })

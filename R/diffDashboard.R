@@ -1,15 +1,17 @@
 #' Visual Diff
 #' @param .file File of interest
 #' @export
-visualDiffApp <- function(.file) {
-  if (!file.exists(.file)) stop(paste0("'", .file, "' does not exist."))
-  
+diffDashboard <- function(.file) {
+  if (!file.exists(.file)) {
+    stop(paste0("'", .file, "' does not exist."))
+  }
+
   # --- Data prep ---
   svn_log <- getRevHistory(.file = .file)
-  
+
   revisions <- svn_log$rev
-  newest    <- max(revisions, na.rm = TRUE)
-  
+  newest <- max(revisions, na.rm = TRUE)
+
   # --- UI ---
   ui <- bslib::page_sidebar(
     title = paste0("Visual diff: ", fs::path_rel(.file)),
@@ -18,7 +20,8 @@ visualDiffApp <- function(.file) {
       open = "always",
       width = 340,
       # minimal styles and a simple click handler
-      shiny::tags$style(htmltools::HTML("
+      shiny::tags$style(htmltools::HTML(
+        "
         .timeline { position: relative; padding-left: 20px; }
         .timeline:before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:#e9ecef; }
         .rev { position:relative; margin:0 0 8px 0; padding:10px 10px 10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; cursor:pointer; }
@@ -35,146 +38,208 @@ visualDiffApp <- function(.file) {
         .badge.n  { background:#f4f4f4; color:#6c757d; }
         .badge.local { background:#eef3ff; color:#0d6efd; border-color:#d8e3ff; }
         .side-scroll { max-height: calc(100vh - 160px); overflow:auto; padding-right:4px; }
-      ")),
-      shiny::tags$script(htmltools::HTML("
+      "
+      )),
+      shiny::tags$script(htmltools::HTML(
+        "
         document.addEventListener('click', function(e){
           var el = e.target.closest('.rev'); if(!el) return;
           var r = el.getAttribute('data-rev'); // could be 'LOCAL' or a number string
           if(window.Shiny && r) Shiny.setInputValue('rev_clicked', r, {priority:'event'});
         }, true);
-      ")),
-      shiny::div(class = "text-muted mb-2", "Click any two to compare. If one is Local, it's treated as the newer version."),
+      "
+      )),
+      shiny::div(
+        class = "text-muted mb-2",
+        "Click any two to compare. If one is Local, it's treated as the newer version."
+      ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
-    
+
     shiny::fluidRow(
       class = "mb-3",
-      shiny::column(4, shiny::checkboxInput("side_by_side", "Side-by-side view", value = TRUE)),
-      shiny::column(4, shiny::checkboxInput("ignore_ws", "Ignore white space", value = FALSE)),
-      shiny::column(4, shiny::checkboxInput("display_entire_file", "Display entire file", value = FALSE))
+      shiny::column(
+        4,
+        shiny::checkboxInput("side_by_side", "Side-by-side view", value = TRUE)
+      ),
+      shiny::column(
+        4,
+        shiny::checkboxInput("ignore_ws", "Ignore white space", value = FALSE)
+      ),
+      shiny::column(
+        4,
+        shiny::checkboxInput(
+          "display_entire_file",
+          "Display entire file",
+          value = FALSE
+        )
+      )
     ),
-    
+
     # Main content
     shiny::uiOutput("diff_header"),
     shiny::uiOutput("diff_html")
   )
-  
+
   # --- SERVER ---
   server <- function(input, output, session) {
     session$onSessionEnded(function() shiny::stopApp())
-    
+
     # Selected IDs (strings): numeric revisions as strings + 'LOCAL'
     # Default to newest vs LOCAL for immediate utility
     default_sel <- c(as.character(newest), "LOCAL")
     sel <- shiny::reactiveVal(default_sel)
-    
-    shiny::observeEvent(input$rev_clicked, {
-      r <- as.character(input$rev_clicked)
-      cur <- sel()
-      if (r %in% cur) {
-        sel(setdiff(cur, r))
-      } else {
-        new <- c(cur, r)
-        new <- new[!duplicated(new)]
-        if (length(new) > 2) new <- utils::tail(new, 2)
-        sel(new)
-      }
-    }, ignoreInit = TRUE)
-    
+
+    shiny::observeEvent(
+      input$rev_clicked,
+      {
+        r <- as.character(input$rev_clicked)
+        cur <- sel()
+        if (r %in% cur) {
+          sel(setdiff(cur, r))
+        } else {
+          new <- c(cur, r)
+          new <- new[!duplicated(new)]
+          if (length(new) > 2) {
+            new <- utils::tail(new, 2)
+          }
+          sel(new)
+        }
+      },
+      ignoreInit = TRUE
+    )
+
     # Pairing logic: if LOCAL is present, force it to be `newer`
     picked <- shiny::reactive({
       x <- sel()
-      if (length(x) < 2) return(NULL)
+      if (length(x) < 2) {
+        return(NULL)
+      }
       if ("LOCAL" %in% x) {
         other <- setdiff(x, "LOCAL")
-        if (!length(other)) return(NULL)
+        if (!length(other)) {
+          return(NULL)
+        }
         # choose the numeric rev as prior (use min in case of oddities)
         other_num <- suppressWarnings(as.numeric(other))
         other_num <- other_num[!is.na(other_num)]
-        if (!length(other_num)) return(NULL)
+        if (!length(other_num)) {
+          return(NULL)
+        }
         list(prior = min(other_num), newer = NULL)
       } else {
         # both numeric
         nums <- suppressWarnings(as.numeric(x))
         nums <- sort(nums)
-        if (length(nums) < 2) return(NULL)
+        if (length(nums) < 2) {
+          return(NULL)
+        }
         list(prior = nums[1], newer = nums[2])
       }
     })
-    
+
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
       chosen <- sel()
-      
+
       local_item <- {
         cls <- if ("LOCAL" %in% chosen) "rev sel" else "rev"
-        shiny::div(class = cls, `data-rev` = "LOCAL",
-                   shiny::div(class = "h",
-                              shiny::span(class = "id", "Local"),
-                              shiny::span(class = "badge local", "Working copy"),
-                              shiny::span(class = "m",
-                                          paste("Last modified : ", format(file.info(.file)$mtime, "%Y-%m-%d %H:%M:%S"))
-                              )
-                   ),
-                   shiny::div(class = "msg",
-                              shiny::tags$em("(uncommitted changes in your working copy)")
-                   )
+        shiny::div(
+          class = cls,
+          `data-rev` = "LOCAL",
+          shiny::div(
+            class = "h",
+            shiny::span(class = "id", "Local"),
+            shiny::span(class = "badge local", "Working copy"),
+            shiny::span(
+              class = "m",
+              paste(
+                "Last modified : ",
+                format(file.info(.file)$mtime, "%Y-%m-%d %H:%M:%S")
+              )
+            )
+          ),
+          shiny::div(
+            class = "msg",
+            shiny::tags$em("(uncommitted changes in your working copy)")
+          )
         )
       }
-      
+
       rev_items <- lapply(seq_len(nrow(svn_log)), function(i) {
         row <- svn_log[i, ]
-        qc <- if (identical(row$QCed, "Yes")) shiny::span(class = "badge y", "QCed")
-        else shiny::span(class = "badge n", "Not QCed")
+        qc <- if (identical(row$QCed, "Yes")) {
+          shiny::span(class = "badge y", "QCed")
+        } else {
+          shiny::span(class = "badge n", "Not QCed")
+        }
         id <- as.character(row$rev)
         cls <- if (id %in% chosen) "rev sel" else "rev"
-        shiny::div(class = cls, `data-rev` = id,
-                   shiny::div(class = "h",
-                              shiny::span(class = "id", paste0("r", row$rev)),
-                              qc,
-                              shiny::span(class = "m", paste(row$author, ":", row$datetime))
-                   ),
-                   shiny::div(class = "msg",
-                              if (!is.null(row$msg) && nzchar(row$msg)) row$msg else shiny::tags$em("(no message)")
-                   )
+        shiny::div(
+          class = cls,
+          `data-rev` = id,
+          shiny::div(
+            class = "h",
+            shiny::span(class = "id", paste0("r", row$rev)),
+            qc,
+            shiny::span(class = "m", paste(row$author, ":", row$datetime))
+          ),
+          shiny::div(
+            class = "msg",
+            if (!is.null(row$msg) && nzchar(row$msg)) {
+              row$msg
+            } else {
+              shiny::tags$em("(no message)")
+            }
+          )
         )
       })
-      
+
       shiny::div(class = "timeline", local_item, rev_items)
     })
-    
+
     # --- Diff header & iframe ---
     output$diff_header <- shiny::renderUI({
       p <- picked()
-      if (is.null(p)) return(shiny::div(class = "text-muted", "Select two to generate a diff."))
+      if (is.null(p)) {
+        return(shiny::div(
+          class = "text-muted",
+          "Select two to generate a diff."
+        ))
+      }
       if (is.null(p$newer)) {
-        shiny::div(style = "margin-bottom:8px;",
-                   shiny::strong("Comparing "), shiny::span(paste0("r", p$prior), " -> Local")
+        shiny::div(
+          style = "margin-bottom:8px;",
+          shiny::strong("Comparing "),
+          shiny::span(paste0("r", p$prior), " -> Local")
         )
       } else {
-        shiny::div(style = "margin-bottom:8px;",
-                   shiny::strong("Comparing "), shiny::span(paste0("r", p$prior), " -> ", paste0("r", p$newer))
+        shiny::div(
+          style = "margin-bottom:8px;",
+          shiny::strong("Comparing "),
+          shiny::span(paste0("r", p$prior), " -> ", paste0("r", p$newer))
         )
       }
     })
-    
+
     output$diff_html <- shiny::renderUI({
-      p <- picked(); shiny::req(p)
-      
+      p <- picked()
+      shiny::req(p)
+
       sbs <- shiny::isTruthy(input$side_by_side)
       igw <- shiny::isTruthy(input$ignore_ws)
       def <- shiny::isTruthy(input$display_entire_file)
-      
+
       # Compute HTML diff
       diff_obj <- diffPreviousRevisions(
         .file = .file,
         .previous_revision = p$prior,
-        .current_revision  = p$newer,
+        .current_revision = p$newer,
         .side_by_side = sbs,
         .ignore_white_space = igw,
         .display_entire_file = def
       )
-      
+
       if (is.null(diff_obj)) {
         # Case when there are no differences
         shiny::tags$div(
@@ -185,14 +250,17 @@ visualDiffApp <- function(.file) {
         # Case when there are differences
         html <- paste(as.character(diff_obj), collapse = "\n")
         shiny::tags$iframe(
-          srcdoc  = html,
-          style   = "width:100%; height: calc(100vh - 180px); border:1px solid #dee2e6;",
+          srcdoc = html,
+          style = "width:100%; height: calc(100vh - 180px); border:1px solid #dee2e6;",
           sandbox = "allow-same-origin allow-forms allow-scripts allow-popups"
         )
       }
-      
     })
   }
-  
-  shiny::shinyApp(ui, server, options = list(launch.browser = TRUE, quiet = TRUE))
+
+  shiny::shinyApp(
+    ui,
+    server,
+    options = list(launch.browser = TRUE, quiet = TRUE)
+  )
 }

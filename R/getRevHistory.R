@@ -1,28 +1,19 @@
 #' @noRd
 getRevHistory <- function(.file) {
-  
-  .svn_log <-
-    tryCatch(
-      svnLog(.file),
-      error = identity
-    )
-  
-  if (inherits(.svn_log, "error")) {
-    stop(paste0("'", .file, "' is not checked into SVN."))
-  }
-  
-  qclog   <- logRead()
-  
-  qclog_file <- qclog[qclog$file == .file,]
+  .svn_log <- svnLog(.file)
+
+  qclog <- logRead()
+
+  qclog_file <- qclog[qclog$file == .file, ]
+  qclog_file <- qclog_file[qclog_file$revf != 0, ]
   .svn_log$datetime <- format(.svn_log$datetime, "%Y-%m-%d %H:%M:%S")
-  
-  if (nrow(qclog_file) == 0) {
-    .svn_log$QCed <- "No"
+
+  .svn_log$QCed <- if (nrow(qclog_file) == 0) {
+    "No"
   } else {
-    maxQCrev <- max(qclog_file$revf)
-    .svn_log$QCed <- ifelse(as.numeric(.svn_log$rev) <= maxQCrev, "Yes", "No")
+    ifelse(as.numeric(.svn_log$rev) <= max(qclog_file$revf), "Yes", "No")
   }
-  
+
   .svn_log$rev <- as.numeric(.svn_log$rev)
   .svn_log <- .svn_log[order(-.svn_log$rev), ]
   .svn_log
