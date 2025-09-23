@@ -18,7 +18,7 @@ diffDashboard <- function(.file) {
     theme = bslib::bs_theme(bootswatch = "litera"),
     sidebar = bslib::sidebar(
       open = "always",
-      width = 340,
+      width = 360,
       # minimal styles and a simple click handler
       shiny::tags$style(htmltools::HTML(
         "
@@ -77,7 +77,6 @@ diffDashboard <- function(.file) {
     ),
 
     # Main content
-    shiny::uiOutput("diff_header"),
     shiny::uiOutput("diff_html")
   )
 
@@ -196,17 +195,6 @@ diffDashboard <- function(.file) {
       })
 
       shiny::div(class = "timeline", local_item, rev_items)
-    })
-
-    # --- Diff header & iframe ---
-    output$diff_header <- shiny::renderUI({
-      p <- picked()
-      if (is.null(p)) {
-        return(shiny::div(
-          class = "text-muted",
-          "Select two to generate a diff."
-        ))
-      }
     })
 
     output$diff_html <- shiny::renderUI({
