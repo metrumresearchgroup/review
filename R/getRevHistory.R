@@ -13,6 +13,18 @@ getRevHistory <- function(.file) {
   } else {
     ifelse(as.numeric(.svn_log$rev) <= max(qclog_file$revf), "Yes", "No")
   }
+  
+  # Update datetime to relative days
+  .svn_log$datetime <- as.numeric(Sys.Date() - as.Date(.svn_log$datetime))
+  .svn_log <- 
+    .svn_log %>% 
+    dplyr::mutate(
+      datetime = dplyr::case_when(
+        datetime == 0 ~ "Today",
+        datetime == 1 ~ "Yesterday",
+        TRUE ~ paste0(datetime, " days ago")
+      )
+    )
 
   .svn_log$rev <- as.numeric(.svn_log$rev)
   .svn_log <- .svn_log[order(-.svn_log$rev), ]

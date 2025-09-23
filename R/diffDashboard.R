@@ -51,7 +51,7 @@ diffDashboard <- function(.file) {
       )),
       shiny::div(
         class = "text-muted mb-2",
-        "Click any two to compare."
+        "Click any two to compare:"
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
@@ -153,14 +153,14 @@ diffDashboard <- function(.file) {
             shiny::span(
               class = "m",
               paste(
-                "Last modified : ",
+                paste0(Sys.info()[["user"]], " :"),
                 format(file.info(.file)$mtime, "%Y-%m-%d %H:%M:%S")
               )
             )
           ),
           shiny::div(
             class = "msg",
-            shiny::tags$em("(uncommitted changes in your working copy)")
+            shiny::tags$em("Working copy")
           )
         )
       }
