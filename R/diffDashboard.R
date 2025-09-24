@@ -16,13 +16,13 @@
 #'
 #' @export
 diffDashboard <- function(.file) {
-
+  
   # --- Data prep ---
   svn_log <- getRevHistory(.file = .file)
-
+  
   revisions <- svn_log$rev
-  newest <- max(revisions, na.rm = TRUE)
-
+  newest <- max(as.numeric(revisions[revisions != "Local"]), na.rm = TRUE)
+  
   # --- UI ---
   ui <- bslib::page_sidebar(
     title = htmltools::div(
@@ -62,7 +62,7 @@ diffDashboard <- function(.file) {
         "
         document.addEventListener('click', function(e){
           var el = e.target.closest('.rev'); if(!el) return;
-          var r = el.getAttribute('data-rev'); // could be 'LOCAL' or a number string
+          var r = el.getAttribute('data-rev'); // could be 'Local' or a number string
           if(window.Shiny && r) Shiny.setInputValue('rev_clicked', r, {priority:'event'});
         }, true);
       "
@@ -73,7 +73,7 @@ diffDashboard <- function(.file) {
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
-
+    
     shiny::fluidRow(
       class = "mb-3",
       shiny::column(
@@ -93,20 +93,20 @@ diffDashboard <- function(.file) {
         )
       )
     ),
-
+    
     # Main content
     shiny::uiOutput("diff_html")
   )
-
+  
   # --- SERVER ---
   server <- function(input, output, session) {
     session$onSessionEnded(function() shiny::stopApp())
-
+    
     # Selected IDs (strings): numeric revisions as strings + 'LOCAL'
     # Default to newest vs LOCAL for immediate utility
-    default_sel <- c(as.character(newest), "LOCAL")
+    default_sel <- c(as.character(newest), "Local")
     sel <- shiny::reactiveVal(default_sel)
-
+    
     shiny::observeEvent(
       input$rev_clicked,
       {
@@ -125,15 +125,15 @@ diffDashboard <- function(.file) {
       },
       ignoreInit = TRUE
     )
-
+    
     # Pairing logic: if LOCAL is present, force it to be `newer`
     picked <- shiny::reactive({
       x <- sel()
       if (length(x) < 2) {
         return(NULL)
       }
-      if ("LOCAL" %in% x) {
-        other <- setdiff(x, "LOCAL")
+      if ("Local" %in% x) {
+        other <- setdiff(x, "Local")
         if (!length(other)) {
           return(NULL)
         }
@@ -154,35 +154,11 @@ diffDashboard <- function(.file) {
         list(prior = nums[1], newer = nums[2])
       }
     })
-
+    
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
       chosen <- sel()
-
-      local_item <- {
-        cls <- if ("LOCAL" %in% chosen) "rev sel" else "rev"
-        shiny::div(
-          class = cls,
-          `data-rev` = "LOCAL",
-          shiny::div(
-            class = "h",
-            shiny::span(class = "id", "Local"),
-            shiny::span(class = "badge local", "Working copy"),
-            shiny::span(
-              class = "m",
-              paste(
-                paste0(Sys.info()[["user"]], " :"),
-                format(file.info(.file)$mtime, "%Y-%m-%d %H:%M:%S")
-              )
-            )
-          ),
-          shiny::div(
-            class = "msg",
-            shiny::tags$em("Working copy")
-          )
-        )
-      }
-
+      
       rev_items <- lapply(seq_len(nrow(svn_log)), function(i) {
         row <- svn_log[i, ]
         qc <- if (identical(row$QCed, "Yes")) {
@@ -195,7 +171,12 @@ diffDashboard <- function(.file) {
           `data-rev` = id,
           shiny::div(
             class = "h",
-            shiny::span(class = "id", paste0("r", row$rev)),
+            if (row$rev == "Local") {
+              shiny::span(class = "id", row$rev)
+            } else {
+              shiny::span(class = "id", paste0("r", row$rev))
+            }
+            ,
             qc,
             shiny::span(class = "m", paste(row$author, ":", row$elapsed))
           ),
@@ -209,18 +190,18 @@ diffDashboard <- function(.file) {
           )
         )
       })
-
-      shiny::div(class = "timeline", local_item, rev_items)
+      
+      shiny::div(class = "timeline", rev_items)
     })
-
+    
     output$diff_html <- shiny::renderUI({
       p <- picked()
       shiny::req(p)
-
+      
       sbs <- shiny::isTruthy(input$side_by_side)
       igw <- shiny::isTruthy(input$ignore_ws)
       def <- shiny::isTruthy(input$display_entire_file)
-
+      
       # Compute HTML diff
       diff_obj <- diffPreviousRevisions(
         .file = .file,
@@ -231,7 +212,7 @@ diffDashboard <- function(.file) {
         .display_entire_file = def
       ) %>% 
         suppressMessages()
-
+      
       if (is.null(diff_obj)) {
         # Case when there are no differences
         shiny::tags$div(
@@ -249,7 +230,7 @@ diffDashboard <- function(.file) {
       }
     })
   }
-
+  
   shiny::shinyApp(
     ui,
     server,

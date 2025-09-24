@@ -34,5 +34,20 @@ getRevHistory <- function(.file) {
 
   .svn_log$rev <- as.numeric(.svn_log$rev)
   .svn_log <- .svn_log[order(-.svn_log$rev), ]
+  
+  .svn_log$rev <- as.character(.svn_log$rev)
+  
+  # Add local to svn_log
+  local_df <- 
+    dplyr::tibble(
+      author = Sys.info()[["user"]],
+      rev = "Local",
+      msg = "Working copy",
+      QCed = "No",
+      elapsed = "Today"
+    )
+  
+  .svn_log <- dplyr::bind_rows(local_df, .svn_log)
+  
   .svn_log
 }
