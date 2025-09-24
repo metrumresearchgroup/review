@@ -171,12 +171,7 @@ diffDashboard <- function(.file) {
           `data-rev` = id,
           shiny::div(
             class = "h",
-            if (row$rev == "Local") {
-              shiny::span(class = "id", row$rev)
-            } else {
-              shiny::span(class = "id", paste0("r", row$rev))
-            }
-            ,
+            shiny::span(class = "id", row$rev_display),
             qc,
             shiny::span(class = "m", paste(row$author, ":", row$elapsed))
           ),

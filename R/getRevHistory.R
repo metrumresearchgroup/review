@@ -36,6 +36,7 @@ getRevHistory <- function(.file) {
   .svn_log <- .svn_log[order(-.svn_log$rev), ]
   
   .svn_log$rev <- as.character(.svn_log$rev)
+  .svn_log$rev_display <- paste0("Revision: ", .svn_log$rev)
   
   # Add local to svn_log
   local_df <- 
@@ -44,7 +45,8 @@ getRevHistory <- function(.file) {
       rev = "Local",
       msg = "Working copy",
       QCed = "No",
-      elapsed = "Today"
+      elapsed = "Today",
+      rev_display = "Local"
     )
   
   .svn_log <- dplyr::bind_rows(local_df, .svn_log)
