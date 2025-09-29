@@ -23,6 +23,7 @@ globalVariables(
     "time",
     "QCREV",
     "QCSTATUS",
-    "Day(s) since last edit"
+    "Day(s) since last edit",
+    "datetime_diff"
   )
 )
