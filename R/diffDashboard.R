@@ -5,7 +5,7 @@
 #' (SVN) revision history and QC status, and interactively compare any two
 #' versions (including your local working copy) with a visual diff.
 #'
-#' @param .file `character(1)`  
+#' @param .file `character(1)`
 #'   Path to the target file tracked in SVN. Can be absolute or relative.
 #'
 #' @examples
@@ -16,13 +16,12 @@
 #'
 #' @export
 diffDashboard <- function(.file) {
-  
   # --- Data prep ---
   svn_log <- getRevHistory(.file = .file)
-  
+
   revisions <- svn_log$rev
   newest <- max(as.numeric(revisions[revisions != "Local"]), na.rm = TRUE)
-  
+
   # --- UI ---
   ui <- bslib::page_sidebar(
     title = htmltools::div(
@@ -76,7 +75,7 @@ diffDashboard <- function(.file) {
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
-    
+
     shiny::fluidRow(
       class = "mb-3",
       shiny::column(
@@ -96,23 +95,23 @@ diffDashboard <- function(.file) {
         )
       )
     ),
-    
+
     # Main content
     shiny::uiOutput("diff_html")
   )
-  
+
   # --- SERVER ---
   server <- function(input, output, session) {
     session$onSessionEnded(function() shiny::stopApp())
-    
+
     # Selected IDs (strings): numeric revisions as strings + 'LOCAL'
     # Default to newest vs LOCAL for immediate utility
     default_sel <- c(as.character(newest), "Local")
     sel <- shiny::reactiveVal(default_sel)
-    
+
     # show hint once the server has started
     show_app_exit_hint("diffDashboard")
-    
+
     shiny::observeEvent(
       input$rev_clicked,
       {
@@ -131,7 +130,7 @@ diffDashboard <- function(.file) {
       },
       ignoreInit = TRUE
     )
-    
+
     # Pairing logic: if LOCAL is present, force it to be `newer`
     picked <- shiny::reactive({
       x <- sel()
@@ -160,11 +159,11 @@ diffDashboard <- function(.file) {
         list(prior = nums[1], newer = nums[2])
       }
     })
-    
+
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
       chosen <- sel()
-      
+
       rev_items <- lapply(seq_len(nrow(svn_log)), function(i) {
         row <- svn_log[i, ]
         qc <- if (identical(row$QCed, "Yes")) {
@@ -178,8 +177,8 @@ diffDashboard <- function(.file) {
           shiny::div(
             class = "h",
             shiny::span(class = "id", row$rev_display),
-            qc,
-            shiny::span(class = "m", paste(row$author, ":", row$elapsed))
+            shiny::span(class = "m", paste(row$author, ":", row$elapsed)),
+            qc
           ),
           shiny::div(
             class = "msg",
@@ -191,18 +190,18 @@ diffDashboard <- function(.file) {
           )
         )
       })
-      
+
       shiny::div(class = "timeline", rev_items)
     })
-    
+
     output$diff_html <- shiny::renderUI({
       p <- picked()
       shiny::req(p)
-      
+
       sbs <- shiny::isTruthy(input$side_by_side)
       igw <- shiny::isTruthy(input$ignore_ws)
       def <- shiny::isTruthy(input$display_entire_file)
-      
+
       # Compute HTML diff
       diff_obj <- diffPreviousRevisions(
         .file = .file,
@@ -211,14 +210,27 @@ diffDashboard <- function(.file) {
         .side_by_side = sbs,
         .ignore_white_space = igw,
         .display_entire_file = def
-      ) %>% 
+      ) %>%
         suppressMessages()
-      
+
       if (is.null(diff_obj)) {
         # Case when there are no differences
+        newer_label <- if (is.null(p$newer)) {
+          "Local"
+        } else {
+          paste0("Revision ", p$newer)
+        }
+        prior_label <- paste0("Revision ", p$prior)
+
         shiny::tags$div(
           style = "padding: 20px; text-align: center; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 6px;",
-          "The two versions are identical."
+          shiny::HTML(
+            sprintf(
+              "The two versions are identical.<br/><span style='font-weight: 600;'>Compared <span style='padding:2px 6px; background:#e2e3e5; border-radius:4px;'>%s</span> to <span style='padding:2px 6px; background:#e2e3e5; border-radius:4px;'>%s</span>.</span>",
+              prior_label,
+              newer_label
+            )
+          )
         )
       } else {
         # Case when there are differences
@@ -231,7 +243,7 @@ diffDashboard <- function(.file) {
       }
     })
   }
-  
+
   shiny::shinyApp(
     ui,
     server,
