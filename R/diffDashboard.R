@@ -69,7 +69,10 @@ diffDashboard <- function(.file) {
       )),
       shiny::div(
         class = "text-muted mb-2",
-        "Click any two to compare:"
+        shiny::tags$i(
+          "Click two to compare. Older is red, newer is green.",
+          style = "font-size: smaller;"
+        )
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
