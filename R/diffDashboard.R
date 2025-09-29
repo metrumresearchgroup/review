@@ -107,6 +107,9 @@ diffDashboard <- function(.file) {
     default_sel <- c(as.character(newest), "Local")
     sel <- shiny::reactiveVal(default_sel)
     
+    # show hint once the server has started
+    show_app_exit_hint("diffDashboard")
+    
     shiny::observeEvent(
       input$rev_clicked,
       {
