@@ -218,9 +218,9 @@ diffDashboard <- function(.file) {
         newer_label <- if (is.null(p$newer)) {
           "Local"
         } else {
-          paste0("Revision ", p$newer)
+          paste0("Rev: ", p$newer)
         }
-        prior_label <- paste0("Revision ", p$prior)
+        prior_label <- paste0("Rev: ", p$prior)
 
         shiny::tags$div(
           style = "padding: 20px; text-align: center; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 6px;",
