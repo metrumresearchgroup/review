@@ -32,6 +32,7 @@ reference:
     - compareFigures
     - compareTables
     - fileSummary
+    - diffDashboard
   - title: SVN Tools
     desc: Easily access information about SVN repos
     contents:
