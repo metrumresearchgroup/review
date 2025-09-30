@@ -35,7 +35,7 @@ getRevHistory <- function(.file) {
   .svn_log <- .svn_log[order(-.svn_log$rev), ]
   
   .svn_log$rev <- as.character(.svn_log$rev)
-  .svn_log$rev_display <- paste0("Revision: ", .svn_log$rev)
+  .svn_log$rev_display <- paste0("Rev: ", .svn_log$rev)
   
   # Add local to svn_log
   local_df <- 
