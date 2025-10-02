@@ -1,12 +1,12 @@
 pandoc: '3.3'
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   compare-tools: compare-tools.html
   diff-tools: diff-tools.html
   qc-documents: qc-documents.html
   svn-helpers: svn-helpers.html
-last_built: 2025-07-30T15:01Z
+last_built: 2025-10-02T19:25Z
 urls:
   reference: https://metrumresearchgroup.github.io/review/reference
   article: https://metrumresearchgroup.github.io/review/articles
