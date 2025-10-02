@@ -26,7 +26,7 @@ diffDashboard <- function(.file) {
   ui <- bslib::page_sidebar(
     title = htmltools::div(
       style = "display:flex; gap:.35rem; align-items:baseline; font-weight:600;",
-      htmltools::span("Visual diff:"),
+      htmltools::span("Revision Comparison:"),
       htmltools::span(
         style = "opacity:.7; font-weight:400;",
         fs::path_rel(.file)
