@@ -104,10 +104,9 @@ diffDashboard <- function(.file) {
   server <- function(input, output, session) {
     session$onSessionEnded(function() shiny::stopApp())
 
-    # Selected IDs (strings): numeric revisions as strings + 'LOCAL'
-    # Default to newest vs LOCAL for immediate utility
+    # Unified selection state using extracted helpers
     default_sel <- c(as.character(newest), "Local")
-    sel <- shiny::reactiveVal(default_sel)
+    selection <- shiny::reactiveVal(compute_selection(default_sel))
 
     # show hint once the server has started
     show_app_exit_hint("diffDashboard")
@@ -115,54 +114,19 @@ diffDashboard <- function(.file) {
     shiny::observeEvent(
       input$rev_clicked,
       {
-        r <- as.character(input$rev_clicked)
-        cur <- sel()
-        if (r %in% cur) {
-          sel(setdiff(cur, r))
-        } else {
-          new <- c(cur, r)
-          new <- new[!duplicated(new)]
-          if (length(new) > 2) {
-            new <- utils::tail(new, 2)
-          }
-          sel(new)
-        }
+        new_ids <- update_selection(
+          selection()$ids,
+          input$rev_clicked,
+          max_sel = 2L
+        )
+        selection(compute_selection(new_ids))
       },
       ignoreInit = TRUE
     )
 
-    # Pairing logic: if LOCAL is present, force it to be `newer`
-    picked <- shiny::reactive({
-      x <- sel()
-      if (length(x) < 2) {
-        return(NULL)
-      }
-      if ("Local" %in% x) {
-        other <- setdiff(x, "Local")
-        if (!length(other)) {
-          return(NULL)
-        }
-        # choose the numeric rev as prior (use min in case of oddities)
-        other_num <- suppressWarnings(as.numeric(other))
-        other_num <- other_num[!is.na(other_num)]
-        if (!length(other_num)) {
-          return(NULL)
-        }
-        list(prior = min(other_num), newer = NULL)
-      } else {
-        # both numeric
-        nums <- suppressWarnings(as.numeric(x))
-        nums <- sort(nums)
-        if (length(nums) < 2) {
-          return(NULL)
-        }
-        list(prior = nums[1], newer = nums[2])
-      }
-    })
-
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
-      chosen <- sel()
+      chosen <- selection()$ids
 
       rev_items <- lapply(seq_len(nrow(svn_log)), function(i) {
         row <- svn_log[i, ]
@@ -195,8 +159,8 @@ diffDashboard <- function(.file) {
     })
 
     output$diff_html <- shiny::renderUI({
-      p <- picked()
-      shiny::req(p)
+      p <- selection()
+      shiny::req(!is.null(p$prior))
 
       sbs <- shiny::isTruthy(input$side_by_side)
       igw <- shiny::isTruthy(input$ignore_ws)
