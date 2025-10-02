@@ -1,8 +1,10 @@
-# review development
+# review 3.12.0
 
 ## New features and changes
 
 - `diffQCed` now offers an argument to open the file after the diff is generated. (#170)
+
+- Added `diffDashboard` to review revision history and generate visual diffs between revisions. (#171, #172)
 
 ## Bug fixes
 
