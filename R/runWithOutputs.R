@@ -17,8 +17,10 @@
 #' }
 #' @export
 runWithOutputs <- function(script) {
+  wd <- here::here()
+
   rel_to_here <- function(p) {
-    as.character(fs::path_rel(p, start = fs::path_abs(here::here())))
+    as.character(fs::path_rel(p, start = fs::path_abs(wd)))
   }
   snapshot <- function(root) {
     paths <- fs::dir_ls(
@@ -37,7 +39,6 @@ runWithOutputs <- function(script) {
     out
   }
 
-  wd <- here::here()
   base_name <- fs::path_ext_remove(fs::path_file(script))
   output_dir <- fs::path(wd, "data", "outputs")
   log_path <- fs::path(output_dir, paste0(base_name, ".log"))
