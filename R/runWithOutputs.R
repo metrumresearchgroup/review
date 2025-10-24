@@ -1,0 +1,132 @@
+#' Run an R script and capture the generated outputs
+#'
+#' @description
+#' Executes an R script in a separate R session using `here::here()` as the
+#' working directory. Console output is written to
+#' `data/outputs/<script-name>.log`, and file creation, deletion, and
+#' modification events are recorded in
+#' `data/outputs/<script-name>-outputs.csv`.
+#'
+#' @param script Path to the R script to execute.
+#'
+#' @return Invisibly returns `NULL`.
+#'
+#' @examples
+#' \dontrun{
+#' runWithOutputs("inst/scripts/report.R")
+#' }
+#' @export
+runWithOutputs <- function(script) {
+  rel_to_here <- function(p) {
+    as.character(fs::path_rel(p, start = fs::path_abs(here::here())))
+  }
+  snapshot <- function(root) {
+    paths <- fs::dir_ls(
+      path = root,
+      recurse = TRUE,
+      type = "file",
+      regexp = "(^|[\\/])renv([\\/])|(^|[\\/])data([\\/])outputs([\\/])",
+      invert = TRUE
+    )
+    info <- fs::file_info(paths)
+    out <- data.frame(
+      path = as.character(fs::path_real(info$path)),
+      mtime = info$modification_time,
+      stringsAsFactors = FALSE
+    )
+    out
+  }
+
+  wd <- here::here()
+  base_name <- fs::path_ext_remove(fs::path_file(script))
+  output_dir <- fs::path(wd, "data", "outputs")
+  log_path <- fs::path(output_dir, paste0(base_name, ".log"))
+  csv_path <- fs::path(output_dir, paste0(base_name, "-outputs.csv"))
+  fs::dir_create(output_dir, recurse = TRUE)
+
+  run_id <- cli::cli_process_start("Running script: {.file {script}}")
+  pre <- snapshot(wd)
+
+  stdout_tmp <- fs::file_temp(
+    pattern = paste0(base_name, "_console_"),
+    ext = ".log"
+  )
+  exit_status <- tryCatch(
+    {
+      callr::rscript(
+        script = script,
+        wd = wd,
+        stdout = stdout_tmp,
+        stderr = stdout_tmp,
+        show = FALSE,
+        fail_on_status = TRUE,
+        env = c(
+          CLI_NUM_COLORS = "0",
+          R_CLI_NUM_COLORS = "0",
+          NO_COLOR = "1",
+          CRAYON_ENABLED = "FALSE",
+          CLICOLOR_FORCE = "0"
+        )
+      )
+      0L
+    },
+    callr_status_error = function(e) {
+      rlang::`%||%`(attr(e, "status"), rlang::`%||%`(e$status, 1L))
+    },
+    error = function(e) 1L
+  )
+
+  if (!fs::file_exists(stdout_tmp)) {
+    fs::file_create(stdout_tmp)
+  }
+  if (fs::file_exists(log_path)) {
+    fs::file_delete(log_path)
+  }
+  fs::file_copy(stdout_tmp, log_path, overwrite = TRUE)
+  if (fs::file_exists(stdout_tmp)) {
+    fs::file_delete(stdout_tmp)
+  }
+
+  if (exit_status == 0L) {
+    cli::cli_process_done(run_id)
+  } else {
+    cli::cli_process_failed(run_id)
+    cli::cli_alert_danger(
+      "Script failed. See log for details: {.file {log_path}}"
+    )
+    stop("Script failed", call. = FALSE)
+  }
+
+  post <- snapshot(wd)
+
+  changes <- dplyr::full_join(
+    pre,
+    post,
+    by = "path",
+    suffix = c("_pre", "_post")
+  )
+
+  with_events <-
+    changes %>%
+    dplyr::mutate(
+      event = dplyr::case_when(
+        is.na(mtime_pre) & !is.na(mtime_post) ~ "created",
+        !is.na(mtime_pre) & is.na(mtime_post) ~ "deleted",
+        !is.na(mtime_pre) & !is.na(mtime_post) & mtime_pre != mtime_post ~
+          "modified",
+        TRUE ~ NA_character_
+      )
+    )
+
+  files_df <- with_events %>%
+    dplyr::filter(!is.na(event)) %>%
+    dplyr::transmute(event, path = rel_to_here(path))
+
+  if (fs::file_exists(csv_path)) {
+    fs::file_delete(csv_path)
+  }
+  readr::write_csv(files_df, csv_path)
+  cli::cli_alert_success("Outputs written: {.file {csv_path}}")
+
+  invisible(NULL)
+}
