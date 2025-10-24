@@ -17,7 +17,8 @@ Executes an R script in a separate R session using \code{here::here()} as the
 working directory. Console output is written to
 \verb{data/outputs/<script-name>.log}, and file creation, deletion, and
 modification events are recorded in
-\verb{data/outputs/<script-name>-outputs.csv}.
+\verb{data/outputs/<script-name>-outputs.csv}. Each CSV row contains the event
+type and the affected output path relative to the project root.
 }
 \examples{
 \dontrun{
