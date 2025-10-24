@@ -34,7 +34,9 @@ Imports:
     stats,
     bslib,
     htmltools,
-    shiny
+    shiny,
+    callr,
+    rlang
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

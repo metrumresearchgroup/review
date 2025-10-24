@@ -171,5 +171,5 @@ readOutputs <- function(dir = fs::path(here::here(), "data", "outputs")) {
     ~ readr::read_csv(.x, show_col_types = FALSE),
     .id = "file"
   ) %>%
-    dplyr::mutate(file = sub("\\.csv$", ".R", file))
+    dplyr::mutate(file = sub("-outputs\\.csv$", ".R", file))
 }
