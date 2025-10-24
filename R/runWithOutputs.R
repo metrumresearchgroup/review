@@ -18,11 +18,10 @@
 #' }
 #' @export
 runWithOutputs <- function(script) {
-  
   if (!fs::file_exists(script)) {
     cli::cli_abort("Script not found: {.file {script}}")
   }
-  
+
   wd <- here::here()
 
   rel_to_here <- function(p) {
