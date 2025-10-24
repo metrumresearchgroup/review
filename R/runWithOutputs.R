@@ -18,6 +18,11 @@
 #' }
 #' @export
 runWithOutputs <- function(script) {
+  
+  if (!fs::file_exists(script)) {
+    cli::cli_abort("Script not found: {.file {script}}")
+  }
+  
   wd <- here::here()
 
   rel_to_here <- function(p) {
@@ -151,7 +156,6 @@ runWithOutputs <- function(script) {
 #' \dontrun{
 #' readOutputs()
 #' }
-#' @importFrom purrr map_dfr
 #' @export
 readOutputs <- function(dir = fs::path(here::here(), "data", "outputs")) {
   if (!fs::dir_exists(dir)) {
