@@ -15,10 +15,11 @@ Invisibly returns \code{NULL}.
 \description{
 Executes an R script in a separate R session using \code{here::here()} as the
 working directory. Console output is written to
-\verb{data/outputs/<script-name>.log}, and file creation, deletion, and
-modification events are recorded in
-\verb{data/outputs/<script-name>-outputs.csv}. Each CSV row contains the event
-type and the affected output path relative to the project root.
+\verb{data/outputs/<script-path>.log}, where \verb{<script-path>} is the script's path
+relative to the project root (without the file extension) with folder levels
+separated by \verb{--}. File creation, deletion, and modification events are
+recorded in \verb{data/outputs/<script-path>-outputs.csv}. Each CSV row contains
+the event type and the affected output path relative to the project root.
 }
 \examples{
 \dontrun{

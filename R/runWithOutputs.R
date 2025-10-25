@@ -45,7 +45,7 @@ runWithOutputs <- function(script) {
       invert = TRUE
     )
     info <- fs::file_info(paths)
-    tibble::tibble(
+    dplyr::tibble(
       path = fs::path_rel(paths, start = root),
       mtime = info$modification_time
     )

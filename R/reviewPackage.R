@@ -24,6 +24,10 @@ globalVariables(
     "QCREV",
     "QCSTATUS",
     "Day(s) since last edit",
-    "datetime_diff"
+    "datetime_diff",
+    "event",
+    "output",
+    "path",
+    "script"
   )
 )
