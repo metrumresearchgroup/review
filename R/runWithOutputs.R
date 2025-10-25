@@ -33,6 +33,7 @@ runWithOutputs <- function(script) {
   log_path <- fs::path(output_dir, paste0(script_tag, ".log"))
   csv_path <- fs::path(output_dir, paste0(script_tag, "-outputs.csv"))
   csv_rel <- fs::path_rel(csv_path, start = wd)
+  log_rel <- fs::path_rel(log_path, start = wd)
   fs::dir_create(output_dir, recurse = TRUE)
 
   snapshot <- function(root) {
@@ -97,7 +98,7 @@ runWithOutputs <- function(script) {
   } else {
     cli::cli_process_failed(run_id)
     cli::cli_alert_danger(
-      "Script failed. See log for details: {.file {log_path}}"
+      "Script failed. See log for details: {.file {log_rel}}"
     )
     stop("Script failed", call. = FALSE)
   }
