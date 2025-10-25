@@ -20,41 +20,35 @@
 #' @export
 runWithOutputs <- function(script) {
   wd <- here::here()
-
-  script_abs <- as.character(fs::path_abs(script, start = wd))
-
+  script_abs <- fs::path_abs(script, start = wd)
   if (!fs::file_exists(script_abs)) {
     cli::cli_abort("Script not found: {.file {script}}")
   }
 
-  rel_to_here <- function(p) {
-    as.character(fs::path_rel(p, start = fs::path_abs(wd)))
-  }
+  script_rel <- fs::path_rel(script_abs, start = wd)
+  script_rel_no_ext <- fs::path_ext_remove(script_rel)
+  script_tag <- paste(fs::path_split(script_rel_no_ext)[[1]], collapse = "--")
+
+  output_dir <- here::here("data", "outputs")
+  log_path <- fs::path(output_dir, paste0(script_tag, ".log"))
+  csv_path <- fs::path(output_dir, paste0(script_tag, "-outputs.csv"))
+  csv_rel <- fs::path_rel(csv_path, start = wd)
+  fs::dir_create(output_dir, recurse = TRUE)
+
   snapshot <- function(root) {
     paths <- fs::dir_ls(
       path = root,
       recurse = TRUE,
       type = "file",
-      regexp = "(^|/)renv/|(^|/)data/outputs/",
+      regexp = "(/renv/|/data/outputs/)",
       invert = TRUE
     )
     info <- fs::file_info(paths)
-    out <- data.frame(
-      path = as.character(fs::path_real(info$path)),
-      mtime = info$modification_time,
-      stringsAsFactors = FALSE
+    tibble::tibble(
+      path = fs::path_rel(paths, start = root),
+      mtime = info$modification_time
     )
-    out
   }
-
-  script_rel <- rel_to_here(script_abs)
-  script_rel_no_ext <- as.character(fs::path_ext_remove(script_rel))
-  script_tag <- gsub("/", "--", script_rel_no_ext)
-  output_dir <- fs::path(wd, "data", "outputs")
-  log_path <- fs::path(output_dir, paste0(script_tag, ".log"))
-  csv_path <- fs::path(output_dir, paste0(script_tag, "-outputs.csv"))
-  csv_rel <- rel_to_here(csv_path)
-  fs::dir_create(output_dir, recurse = TRUE)
 
   run_id <- cli::cli_process_start("Running script: {.file {script_rel}}")
   pre <- snapshot(wd)
@@ -63,6 +57,11 @@ runWithOutputs <- function(script) {
     pattern = paste0(script_tag, "_console_"),
     ext = ".log"
   )
+  on.exit(
+    if (fs::file_exists(stdout_tmp)) fs::file_delete(stdout_tmp),
+    add = TRUE
+  )
+
   exit_status <- tryCatch(
     {
       callr::rscript(
@@ -91,13 +90,7 @@ runWithOutputs <- function(script) {
   if (!fs::file_exists(stdout_tmp)) {
     fs::file_create(stdout_tmp)
   }
-  if (fs::file_exists(log_path)) {
-    fs::file_delete(log_path)
-  }
   fs::file_copy(stdout_tmp, log_path, overwrite = TRUE)
-  if (fs::file_exists(stdout_tmp)) {
-    fs::file_delete(stdout_tmp)
-  }
 
   if (exit_status == 0L) {
     cli::cli_process_done(run_id)
@@ -118,8 +111,7 @@ runWithOutputs <- function(script) {
     suffix = c("_pre", "_post")
   )
 
-  with_events <-
-    changes %>%
+  with_events <- changes %>%
     dplyr::mutate(
       event = dplyr::case_when(
         is.na(mtime_pre) & !is.na(mtime_post) ~ "created",
@@ -132,11 +124,8 @@ runWithOutputs <- function(script) {
 
   files_df <- with_events %>%
     dplyr::filter(!is.na(event)) %>%
-    dplyr::transmute(event, output = rel_to_here(path))
+    dplyr::transmute(event, output = path)
 
-  if (fs::file_exists(csv_path)) {
-    fs::file_delete(csv_path)
-  }
   readr::write_csv(files_df, csv_path)
   cli::cli_alert_success("Outputs written: {.file {csv_rel}}")
 
@@ -162,18 +151,18 @@ runWithOutputs <- function(script) {
 #' readOutputs()
 #' }
 #' @export
-readOutputs <- function(dir = fs::path(here::here(), "data", "outputs")) {
+readOutputs <- function(dir = here::here("data", "outputs")) {
   if (!fs::dir_exists(dir)) {
     return(dplyr::tibble())
   }
 
-  files <- fs::dir_ls(dir, type = "file", glob = "*.csv", recurse = FALSE)
+  files <- fs::dir_ls(dir, type = "file", glob = "*.csv")
   if (length(files) == 0L) {
     return(dplyr::tibble())
   }
 
   files <- sort(as.character(files))
-  names(files) <- basename(files)
+  names(files) <- fs::path_file(files)
 
   purrr::map_dfr(
     files,
