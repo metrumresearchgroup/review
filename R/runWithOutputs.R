@@ -125,7 +125,7 @@ runWithOutputs <- function(script) {
 
   files_df <- with_events %>%
     dplyr::filter(!is.na(event)) %>%
-    dplyr::transmute(event, output = path)
+    dplyr::transmute(script = script_rel, event, output = path)
 
   readr::write_csv(files_df, csv_path)
   cli::cli_alert_success("Outputs written: {.file {csv_rel}}")
@@ -170,5 +170,5 @@ readOutputs <- function(dir = here::here("data", "outputs")) {
     ~ readr::read_csv(.x, show_col_types = FALSE),
     .id = "file"
   ) %>%
-    dplyr::mutate(file = sub("-outputs\\.csv$", ".R", file))
+    dplyr::transmute(file = script, event, output)
 }
