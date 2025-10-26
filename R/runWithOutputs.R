@@ -29,7 +29,7 @@ runWithOutputs <- function(script) {
   script_rel_no_ext <- fs::path_ext_remove(script_rel)
   script_tag <- paste(fs::path_split(script_rel_no_ext)[[1]], collapse = "--")
 
-  output_dir <- here::here("data", "outputs")
+  output_dir <- fs::path(wd, "data", "outputs")
   log_path <- fs::path(output_dir, paste0(script_tag, ".log"))
   csv_path <- fs::path(output_dir, paste0(script_tag, "-outputs.csv"))
   csv_rel <- fs::path_rel(csv_path, start = wd)
