@@ -41,3 +41,8 @@ reference:
     - demoRepo
     - logRemove
     - repoHistory
+  - title: Output Utilities
+    desc: Run scripts and inspect generated outputs
+    contents:
+    - runWithOutputs
+    - readOutputs

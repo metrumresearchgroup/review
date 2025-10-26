@@ -51,7 +51,9 @@ runWithOutputs <- function(script) {
     )
   }
 
-  run_id <- cli::cli_process_start("Running script: {.file {script_rel}}")
+  run_id <- cli::cli_process_start(
+    "Running in a fresh R session: {.file {script_rel}}"
+  )
   pre <- snapshot(wd)
 
   stdout_tmp <- fs::file_temp(
@@ -68,10 +70,13 @@ runWithOutputs <- function(script) {
       callr::rscript(
         script = script_abs,
         wd = wd,
+        user_profile = TRUE,
+        system_profile = FALSE,
+        cmdargs = c("--no-save", "--no-restore"),
         stdout = stdout_tmp,
         stderr = stdout_tmp,
         show = FALSE,
-        fail_on_status = TRUE,
+        spinner = TRUE,
         env = c(
           CLI_NUM_COLORS = "0",
           R_CLI_NUM_COLORS = "0",
@@ -81,9 +86,6 @@ runWithOutputs <- function(script) {
         )
       )
       0L
-    },
-    callr_status_error = function(e) {
-      rlang::`%||%`(attr(e, "status"), rlang::`%||%`(e$status, 1L))
     },
     error = function(e) 1L
   )

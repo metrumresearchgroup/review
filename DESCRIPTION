@@ -36,7 +36,6 @@ Imports:
     htmltools,
     shiny,
     callr,
-    rlang,
     here
 Suggests: 
     knitr,
