@@ -165,12 +165,12 @@ readOutputs <- function() {
   dir <- here::here("data", "outputs")
 
   if (!fs::dir_exists(dir)) {
-    return(tibble::tibble())
+    return(dplyr::tibble())
   }
 
   files <- sort(fs::dir_ls(dir, type = "file", glob = "*.csv"))
   if (!length(files)) {
-    return(tibble::tibble())
+    return(dplyr::tibble())
   }
 
   purrr::map_dfr(files, readr::read_csv, show_col_types = FALSE) %>%
