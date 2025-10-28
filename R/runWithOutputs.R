@@ -22,7 +22,9 @@
 runWithOutputs <- function(script) {
   wd <- here::here()
 
-  # Prefer caller working dir, then project root
+  # Prefer caller working dir, then project root so ad hoc runs (e.g. from an
+  # interactive session outside the repo) still find the script before falling
+  # back to project-relative paths.
   first <- fs::path_abs(script)
   second <- fs::path_abs(script, start = wd)
   if (fs::file_exists(first)) {
@@ -157,10 +159,6 @@ runWithOutputs <- function(script) {
 #' single tibble. Each row records the event type (`created`, `deleted`,
 #' `modified`) and the relative path of an affected output file, grouped by the
 #' script that produced the change.
-#'
-#' @param dir Directory that contains the CSV files written by
-#'   `runWithOutputs()`.
-#'
 #' @return A tibble combining the CSV contents. Returns an empty tibble when no
 #'   CSV files are present.
 #'
@@ -169,7 +167,9 @@ runWithOutputs <- function(script) {
 #' readOutputs()
 #' }
 #' @export
-readOutputs <- function(dir = here::here("data", "outputs")) {
+readOutputs <- function() {
+  dir <- here::here("data", "outputs")
+
   if (!fs::dir_exists(dir)) {
     return(tibble::tibble())
   }
