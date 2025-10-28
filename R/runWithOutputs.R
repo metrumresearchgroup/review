@@ -22,18 +22,12 @@
 runWithOutputs <- function(script) {
   wd <- here::here()
 
-  # Prefer caller working dir, then project root so ad hoc runs (e.g. from an
-  # interactive session outside the repo) still find the script before falling
-  # back to project-relative paths.
-  first <- fs::path_abs(script)
-  second <- fs::path_abs(script, start = wd)
-  if (fs::file_exists(first)) {
-    script_abs <- first
-  } else if (fs::file_exists(second)) {
-    script_abs <- second
-  } else {
+  script_abs <- fs::path_abs(script)
+
+  if (!fs::file_exists(script_abs)) {
     cli::cli_abort("Script not found: {.file {script}}")
   }
+
   script_rel <- fs::path_rel(script_abs, start = wd)
 
   # Flatten relative path to a tag like folder--subfolder--file
