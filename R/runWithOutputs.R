@@ -9,7 +9,8 @@
 #' recorded in `data/outputs/<script-path>-outputs.csv`. Each CSV row contains
 #' the event type and the affected output path relative to the project root.
 #'
-#' @param script Path to the R script to execute.
+#' @param script Path to the R script to execute. Can be relative to the project
+#'   root or the current working directory.
 #'
 #' @return Invisibly returns `NULL`.
 #'
@@ -20,10 +21,19 @@
 #' @export
 runWithOutputs <- function(script) {
   wd <- here::here()
-  script_abs <- fs::path_abs(script, start = wd)
-  if (!fs::file_exists(script_abs)) {
+  # First interpret `script` relative to the caller's current working directory
+  # (supports callers who setwd() into a subfolder), then fall back to treating it
+  # as project-root relative. Deduplicate so we don't double-check the same path.
+  candidates <- unique(c(
+    fs::path_abs(script),
+    fs::path_abs(script, start = wd)
+  ))
+  existing <- candidates[fs::file_exists(candidates)]
+  if (length(existing) == 0L) {
     cli::cli_abort("Script not found: {.file {script}}")
   }
+
+  script_abs <- existing[[1]]
 
   script_rel <- fs::path_rel(script_abs, start = wd)
   script_rel_no_ext <- fs::path_ext_remove(script_rel)
@@ -38,6 +48,12 @@ runWithOutputs <- function(script) {
   csv_rel <- fs::path_rel(csv_path, start = wd)
   log_rel <- fs::path_rel(log_path, start = wd)
   fs::dir_create(output_dir, recurse = TRUE)
+  if (fs::file_exists(log_path)) {
+    fs::file_delete(log_path)
+  }
+  if (fs::file_exists(csv_path)) {
+    fs::file_delete(csv_path)
+  }
 
   snapshot <- function(root) {
     # Skip renv internals and files we already recorded from earlier runs; they

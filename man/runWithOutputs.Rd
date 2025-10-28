@@ -7,7 +7,8 @@
 runWithOutputs(script)
 }
 \arguments{
-\item{script}{Path to the R script to execute.}
+\item{script}{Path to the R script to execute. Can be relative to the project
+root or the current working directory.}
 }
 \value{
 Invisibly returns \code{NULL}.
