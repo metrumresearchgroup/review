@@ -46,3 +46,4 @@ reference:
     contents:
     - runWithOutputs
     - readOutputs
+    - renderOutputs
