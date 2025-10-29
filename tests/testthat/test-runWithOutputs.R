@@ -107,7 +107,7 @@ test_that("runWithOutputs captures console logs and file events", {
   outputs <- readr::read_csv(csv_path, show_col_types = FALSE)
   outputs <- dplyr::arrange(outputs, event, output)
 
-  expected <- tibble::tibble(
+  expected <- dplyr::tibble(
     script = rep(script_chr, 3),
     event = c("created", "deleted", "modified"),
     output = c(
