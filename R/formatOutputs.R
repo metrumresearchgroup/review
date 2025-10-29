@@ -5,11 +5,14 @@
 #' to create a data.frame to be put into a table in
 #' renderOutputs().
 #' 
+#' @param .ro Output of readOutputs()
+#' @param .rh Output of repoHistory()
+#' 
 #' @noRd
-formatOutputs <- function() {
+formatOutputs <- function(.ro = readOutputs(), .rh = repoHistory()) {
   
-  .readOutputs <- readOutputs()
-  .repoHistory <- repoHistory()
+  .readOutputs <- .ro
+  .repoHistory <- .rh
   
   # Update format of the outputs
   df_outputs <-
