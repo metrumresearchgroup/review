@@ -52,11 +52,22 @@ runWithOutputs <- function(script) {
   }
 
   snapshot <- function(root) {
+    # Ignore transient dirs like renv, generated outputs, and R CMD check artifacts
+    ignore_pattern <- paste(
+      c(
+        "/renv/",
+        "/data/outputs/",
+        "^check/",
+        "\\.Rcheck/"
+      ),
+      collapse = "|"
+    )
+
     paths <- fs::dir_ls(
       path = root,
       recurse = TRUE,
       type = "file",
-      regexp = "(/renv/|/data/outputs/)",
+      regexp = ignore_pattern,
       invert = TRUE
     )
     info <- fs::file_info(paths)
