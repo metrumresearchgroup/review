@@ -23,6 +23,7 @@ params$outputsDF %>%
   pmtables::st_left(File = pmtables::col_ragged(6.25)) %>% 
   pmtables::st_left(`Output(s)` = pmtables::col_ragged(5)) %>% 
   pmtables::st_left(`Up to...date?` = pmtables::col_ragged(2)) %>% 
+  pmtables::st_notes_rm() %>% 
   pmtables::st_sizes(col = 4) %>% 
   pmtables::stable_long(lt_cap_text = "Outputs by file") %>% 
   pmtables::st_asis()
