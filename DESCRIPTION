@@ -36,7 +36,8 @@ Imports:
     htmltools,
     shiny,
     callr,
-    here
+    here,
+    pdftools
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
