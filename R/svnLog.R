@@ -25,7 +25,8 @@ svnLog <- function(.file) {
   log_return <- 
     dplyr::bind_rows(log_df) %>% 
     dplyr::rename(rev = .attrs) %>% 
-    dplyr::mutate(datetime = as.POSIXct(date, format="%Y-%m-%dT%H:%M:%OS", tz="UTC")) %>% 
+    dplyr::mutate(datetime = as.POSIXct(date, format="%Y-%m-%dT%H:%M:%OS", tz="UTC"),
+                  msg = trimws(msg)) %>% 
     dplyr::select(author, datetime, rev, msg)
   
   log_return

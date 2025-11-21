@@ -17,5 +17,12 @@ with_demoRepo({
     expect_equal(as.numeric(logFile1$rev[1]), 5)
     expect_equal(as.numeric(logFile2$rev[1]), 4)
   })
+  
+  test_that("svnLog trims whitespace from commit messages", {
+    cat("# whitespace msg\n", file = file1, append = TRUE)
+    system("svn commit -m '  spaced commit message  ' -q -q")
+    
+    trimmed_log <- svnLog(file1)
+    expect_equal(trimmed_log$msg[1], "spaced commit message")
+  })
 })
-
