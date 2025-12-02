@@ -56,7 +56,8 @@ renderQCSummary <- function(.output_dir = NULL) {
     output_file = output_path,
     params = params_in,
     envir = new.env(),
-    quiet = TRUE
+    quiet = TRUE,
+    knit_root_dir = logRoot()
   )
   
   if (interactive()) {
