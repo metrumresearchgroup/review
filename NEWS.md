@@ -1,3 +1,9 @@
+# review 3.12.1
+
+## Bug fixes
+
+- Fix `renderQCSummary` to correctly show files not in the QC log. (#182)
+
 # review 3.12.0
 
 ## New features and changes
