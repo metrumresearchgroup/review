@@ -37,7 +37,7 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     )
   })
   
-  test_that("renderQCSummary uses project root to find local files", {
+  test_that("renderQCSummary finds expected files", {
     
     # --- Mock Setup ---
     mock_svnProjInfo <- function(...) {
