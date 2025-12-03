@@ -37,7 +37,8 @@ Suggests:
     knitr,
     testthat (>= 3.0.0),
     readr,
-    withr (>= 2.5.0)
+    withr (>= 2.5.0),
+    pdftools
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr
