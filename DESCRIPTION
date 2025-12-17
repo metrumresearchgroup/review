@@ -1,6 +1,6 @@
 Package: review
 Title: QC Management and Helpers
-Version: 3.12.1
+Version: 3.12.1.9000
 Authors@R: 
     c(
     person(given = "Eric", family = "Anderson", email = "andersone@metrumrg.com", role = c("aut")),
@@ -32,13 +32,14 @@ Imports:
     stats,
     bslib,
     htmltools,
-    shiny
+    shiny,
+    pdftools,
+    stringi
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
     readr,
-    withr (>= 2.5.0),
-    pdftools
+    withr (>= 2.5.0)
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr
