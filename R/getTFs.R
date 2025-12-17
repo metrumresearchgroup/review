@@ -1,17 +1,26 @@
 #' Extract file path of tables and figures
 #' 
 #' @description
-#' Returns a data.frame with all tables and figures included in the provided
-#' PDF. For each, the file path of both the source code and the file itself is 
-#' recorded.
+#' Parses a PDF and extracts the file paths printed in lines beginning with
+#' \code{Source graphic:} (figures) and \code{Source file:} (tables), along with
+#' the most recently encountered \code{Source code:} path. Page numbers are
+#' retained to help trace where each entry was found.
 #' 
 #' @param .file File path of PDF containing tables and figures
 #' @export
 getTFs <- function(.file) {
   
   # Read PDF into lines
-  pdf.text <- pdftools::pdf_text(.file)
-  pdf.text <- unlist(strsplit(pdf.text, "\n"))
+  pdf.text_orig <- pdftools::pdf_text(.file)
+  
+  # Split into list to preserve page structure temporarily
+  pdf.list <- strsplit(pdf.text_orig, "\n")
+  
+  # Create a map: repeats the page number for every line on that page
+  page_map <- rep(seq_along(pdf.list), lengths(pdf.list))
+  
+  # Now flatten into a single vector of lines
+  pdf.text <- unlist(pdf.list)
   pdf.text <- trimws(pdf.text)
   
   # Identify lines
@@ -27,28 +36,35 @@ getTFs <- function(.file) {
   figs_w_idx <-
     dplyr::tibble(
       idx = fig_idx,
-      path = figs
+      path = figs,
+      page = page_map[fig_idx],
+      type = "figure"
     )
   
   tabs_w_idx <-
     dplyr::tibble(
       idx = tab_idx,
-      path = tabs
+      path = tabs,
+      page = page_map[tab_idx],
+      type = "table"
     )
   
   code_w_idx <-
     dplyr::tibble(
       idx = code_idx,
-      code_path = codes
+      code_path = codes,
+      page = page_map[code_idx],
+      type = "code"
     )
   
   combine1 <-
     dplyr::bind_rows(figs_w_idx, tabs_w_idx, code_w_idx) %>% 
-    dplyr::arrange(idx)
+    dplyr::arrange(idx) %>% 
+    dplyr::select(page, type, dplyr::everything())
   
   combine2 <-
     combine1 %>% 
-    tidyr::fill("code_path", .direction = "down") %>% 
+    tidyr::fill(code_path, .direction = "down") %>% 
     dplyr::filter(!is.na(path))
   
   df <- combine2

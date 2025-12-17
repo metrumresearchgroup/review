@@ -26,6 +26,9 @@ globalVariables(
     "Day(s) since last edit",
     "datetime_diff",
     "idx",
-    "path"
+    "path",
+    "page",
+    "type",
+    "code_path"
   )
 )
