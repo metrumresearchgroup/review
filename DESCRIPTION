@@ -33,7 +33,8 @@ Imports:
     bslib,
     htmltools,
     shiny,
-    pdftools
+    pdftools,
+    stringi
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

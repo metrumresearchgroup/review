@@ -18,6 +18,9 @@ getTFs <- function(.file) {
   # Read PDF into lines
   pdf.text_orig <- pdftools::pdf_text(.file)
   
+  # Normalize Unicode to fix ligatures and other compatibility characters
+  pdf.text_orig <- stringi::stri_trans_nfkc(pdf.text_orig)
+  
   # Split into list to preserve page structure temporarily
   pdf.list <- strsplit(pdf.text_orig, "\n")
   
