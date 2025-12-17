@@ -15,3 +15,8 @@ Parses a PDF and extracts the file paths printed in lines beginning with
 the most recently encountered \code{Source code:} path. Page numbers are
 retained to help trace where each entry was found.
 }
+\examples{
+\dontrun{
+  getTFs(here::here("deliv/report/pk-report.pdf"))
+}
+}

@@ -7,6 +7,11 @@
 #' retained to help trace where each entry was found.
 #' 
 #' @param .file File path of PDF containing tables and figures
+#' 
+#' @examples
+#' \dontrun{
+#'   getTFs(here::here("deliv/report/pk-report.pdf"))
+#' }
 #' @export
 getTFs <- function(.file) {
   

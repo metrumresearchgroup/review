@@ -32,13 +32,13 @@ Imports:
     stats,
     bslib,
     htmltools,
-    shiny
+    shiny,
+    pdftools
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
     readr,
-    withr (>= 2.5.0),
-    pdftools
+    withr (>= 2.5.0)
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr
