@@ -17,6 +17,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     dplyr,
+    callr,
     magrittr (>= 2.0.3),
     XML,
     utils,
@@ -25,6 +26,7 @@ Imports:
     stringr,
     fs,
     cli,
+    here,
     rmarkdown,
     tinytex,
     pmtables,
@@ -34,6 +36,7 @@ Imports:
     htmltools,
     shiny,
     pdftools,
+    processx,
     stringi
 Suggests: 
     knitr,

@@ -1,3 +1,20 @@
+ #' Run a Script and Report Outputs
+ #'
+ #' Runs an R script from the project root in a clean R session and reports any
+ #' files modified during the run as YAML. Uses `fd` to identify files (excluding
+ #' the `renv` directory) and prints the relative paths for downstream tooling.
+ #'
+#' @param script Path to the script to execute.
+#'
+#' @return Invisibly returns `NULL`; prints YAML of files changed since the
+#'   script started.
+#'
+#' @examples
+#' \dontrun{
+#'   runWithOutputs("path/to/script.R")
+#' }
+#'
+#' @export
 runWithOutputs <- function(script) {
   root <- here::here()
 
