@@ -42,3 +42,7 @@ reference:
     - logRemove
     - repoHistory
     - getTFs
+  - title: Execution Tools
+    desc: Run scripts and track side effects
+    contents:
+    - runWithOutputs
