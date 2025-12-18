@@ -36,8 +36,8 @@ Imports:
     htmltools,
     shiny,
     pdftools,
-    processx,
-    stringi
+    stringi,
+    yaml
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

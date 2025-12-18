@@ -4,23 +4,23 @@
 \alias{runWithOutputs}
 \title{Run a Script and Report Outputs}
 \usage{
-runWithOutputs(script)
+runWithOutputs(
+  script,
+  root = here::here(),
+  exclude_dirs = c("renv", ".svn", ".git")
+)
 }
 \arguments{
 \item{script}{Path to the script to execute.}
+
+\item{root}{Path to the project root. Defaults to \code{here::here()}.}
+
+\item{exclude_dirs}{Character vector of directories relative to \code{root} to ignore.}
 }
 \value{
-Invisibly returns \code{NULL}; prints YAML of files changed since the
-script started.
+Invisibly returns a vector of relative paths for changed files.
 }
 \description{
 Runs an R script from the project root in a clean R session and reports any
-files modified during the run as YAML. Uses \code{fd} to identify files (excluding
-the \code{renv} directory) and prints the relative paths for downstream tooling.
-}
-\examples{
-\dontrun{
-  runWithOutputs("path/to/script.R")
-}
-
+files saved (created or updated) during the run.
 }
