@@ -2,7 +2,7 @@
 % Please edit documentation in R/runWithOutputs.R
 \name{runWithOutputs}
 \alias{runWithOutputs}
-\title{Run a Script and Report Outputs}
+\title{Execute Script and Detect File Changes}
 \usage{
 runWithOutputs(
   script,
@@ -11,16 +11,19 @@ runWithOutputs(
 )
 }
 \arguments{
-\item{script}{Path to the script to execute.}
+\item{script}{Character. The path to the R script to execute.}
 
-\item{root}{Path to the project root. Defaults to \code{here::here()}.}
+\item{root}{Character. The project root directory. Defaults to \code{here::here()}.}
 
-\item{exclude_dirs}{Character vector of directories relative to \code{root} to ignore.}
+\item{exclude_dirs}{Character vector. A list of top-level directories relative
+to \code{root} to ignore when scanning for changes (e.g., "renv", ".git").}
 }
 \value{
-Invisibly returns a vector of relative paths for changed files.
+Invisibly returns a character vector of relative paths for all files
+that were created or updated.
 }
 \description{
-Runs an R script from the project root in a clean R session and reports any
-files saved (created or updated) during the run.
+Runs an R script in an isolated session and identifies files that were created
+or modified during execution. It detects changes by comparing the file system
+state (modification time and size) before and after the run.
 }

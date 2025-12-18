@@ -37,7 +37,8 @@ Imports:
     shiny,
     pdftools,
     stringi,
-    yaml
+    yaml,
+    purrr
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

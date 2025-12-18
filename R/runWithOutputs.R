@@ -1,44 +1,50 @@
-#' Run a Script and Report Outputs
+#' Execute Script and Detect File Changes
 #'
-#' Runs an R script from the project root in a clean R session and reports any
-#' files saved (created or updated) during the run.
+#' Runs an R script in an isolated session and identifies files that were created
+#' or modified during execution. It detects changes by comparing the file system
+#' state (modification time and size) before and after the run.
 #'
-#' @param script Path to the script to execute.
-#' @param root Path to the project root. Defaults to `here::here()`.
-#' @param exclude_dirs Character vector of directories relative to `root` to ignore.
+#' @param script Character. The path to the R script to execute.
+#' @param root Character. The project root directory. Defaults to `here::here()`.
+#' @param exclude_dirs Character vector. A list of top-level directories relative
+#'   to `root` to ignore when scanning for changes (e.g., "renv", ".git").
 #'
-#' @return Invisibly returns a vector of relative paths for changed files.
+#' @return Invisibly returns a character vector of relative paths for all files
+#'   that were created or updated.
 #' @export
 runWithOutputs <- function(
   script,
   root = here::here(),
   exclude_dirs = c("renv", ".svn", ".git")
 ) {
-  # Normalize script path to absolute so callr finds it regardless of 'wd' change
+  # Normalize paths and calculate relative path for the UI
   script_abs <- fs::path_abs(script)
+  script_rel <- fs::path_rel(script_abs, start = root)
 
-  # Snapshot before
-  # We track size as well to catch changes that might happen within the same second
-  # on low-resolution file systems if the content length changes.
+  # 1. Capture Initial State
+  # Define file state by path, modification time, and size.
   before <- fs::dir_info(root, recurse = TRUE, type = "file") %>%
     dplyr::select(path, modification_time, size)
 
-  # --- Start Header ---
+  # --- UI Header ---
+  # Shows the relative path in the badge for immediate context.
   div_start <- cli::cli_div(theme = list(rule = list(color = "cyan")))
   cli::cli_rule(
-    left = cli::style_bold(cli::bg_cyan(cli::col_white(" runWithOutputs() "))),
+    left = cli::style_bold(cli::bg_cyan(cli::col_white(paste0(
+      " runWithOutputs('",
+      script_rel,
+      "') "
+    )))),
     right = "START"
   )
-  cli::cli_bullets(c(
-    "*" = paste0(cli::style_bold("Script: "), cli::col_blue("{.path {script}}"))
-  ))
   cli::cli_end(div_start)
 
-  # Execute script
-  # We use callr::rscript to run in a fresh session
+  # 2. Execute Script
+  # Run in a clean, separate R session to ensure isolation.
   callr::rscript(script_abs, wd = root, show = TRUE)
 
-  # --- End Header ---
+  # --- UI Footer ---
+  # Provides a clean "closing bracket" for the script output.
   div_end <- cli::cli_div(theme = list(rule = list(color = "cyan")))
   cli::cli_rule(
     left = cli::style_bold(cli::bg_cyan(cli::col_white(" runWithOutputs() "))),
@@ -46,11 +52,13 @@ runWithOutputs <- function(
   )
   cli::cli_end(div_end)
 
-  # Snapshot after
+  # 3. Capture Final State
   after <- fs::dir_info(root, recurse = TRUE, type = "file") %>%
     dplyr::select(path, modification_time, size)
 
-  # Detect changes
+  # 4. Compute State Differences
+  # Identify files where the (path, time, size) tuple in the 'after' snapshot
+  # does not strictly match the 'before' snapshot.
   changed <- dplyr::anti_join(
     after,
     before,
@@ -58,15 +66,17 @@ runWithOutputs <- function(
   ) %>%
     dplyr::mutate(rel_path = fs::path_rel(path, start = root))
 
-  # Filter exclusions using regex
-  if (length(exclude_dirs) > 0) {
-    safe_dirs <- gsub(".", "\\.", exclude_dirs, fixed = TRUE)
-    # Ensure we match directories at the start of the relative path
-    pattern <- paste0("^(", paste(safe_dirs, collapse = "|"), ")/")
-    changed <- dplyr::filter(changed, !grepl(pattern, rel_path))
+  # 5. Apply Exclusions
+  # Filter out files where the top-level directory matches an exclusion pattern.
+  if (length(exclude_dirs) > 0 && nrow(changed) > 0) {
+    changed <- changed %>%
+      dplyr::filter(
+        !fs::path_split(rel_path) %>%
+          purrr::map_lgl(~ .x[1] %in% exclude_dirs)
+      )
   }
 
-  # Output
+  # 6. Report Results
   out_paths <- sort(changed$rel_path)
 
   if (length(out_paths) > 0) {
@@ -74,7 +84,7 @@ runWithOutputs <- function(
     cli::cli_code(yaml::as.yaml(list(outputs = out_paths)))
     invisible(out_paths)
   } else {
-    cli::cli_alert_success(cli::col_silver("No files were saved."))
+    cli::cli_alert_info(cli::col_silver("No files were saved."))
     invisible(character(0))
   }
 }
