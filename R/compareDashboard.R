@@ -92,7 +92,7 @@ compareDashboard <- function(.path) {
     })
 
     svn_log <- shiny::reactive({
-      getRevHistory(.file = current_file())
+      getRevHistory(.file = pathFromLogRoot(current_file()))
     })
 
     selection <- shiny::reactiveVal(list(ids = character(), prior = NULL, newer = NULL))
@@ -101,8 +101,15 @@ compareDashboard <- function(.path) {
       current_file(),
       {
         sv <- svn_log()
-        default_sel <- default_selection_from_log(sv)
-        selection(compute_selection(default_sel))
+        available <- as.character(sv$rev)
+        current_ids <- selection()$ids
+        has_same <- length(current_ids) >= 2L && all(current_ids %in% available)
+        if (has_same) {
+          selection(compute_selection(current_ids))
+        } else {
+          default_sel <- default_selection_from_log(sv)
+          selection(compute_selection(default_sel))
+        }
       },
       ignoreInit = FALSE
     )
