@@ -12,8 +12,8 @@ Folder containing figures tracked in SVN.}
 }
 \description{
 \code{figureDashboard()} opens a Shiny app that lets you select a figure (PDF/PNG)
-from a folder and compare any two SVN revisions. The app shows one revision
-at a time so you can flip between the older and newer versions.
+from a folder and compare any two SVN revisions. The app shows the older and
+newer revisions side by side.
 }
 \examples{
 \dontrun{

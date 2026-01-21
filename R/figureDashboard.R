@@ -2,8 +2,8 @@
 #'
 #' @description
 #' `figureDashboard()` opens a Shiny app that lets you select a figure (PDF/PNG)
-#' from a folder and compare any two SVN revisions. The app shows one revision
-#' at a time so you can flip between the older and newer versions.
+#' from a folder and compare any two SVN revisions. The app shows the older and
+#' newer revisions side by side.
 #'
 #' @param .path `character(1)`
 #'   Folder containing figures tracked in SVN.
@@ -86,6 +86,9 @@ figureDashboard <- function(.path) {
         .badge.n  { background:#f4f4f4; color:#6c757d; }
         .badge.local { background:#eef3ff; color:#0d6efd; border-color:#d8e3ff; }
         .side-scroll { max-height: calc(100vh - 220px); overflow:auto; padding-right:4px; }
+        .fig-panel { border:1px solid #dee2e6; border-radius:6px; padding:12px; background:#fff; }
+        .fig-caption { margin-bottom: 8px; font-weight: 600; }
+        .fig-asset { width:100%; border:1px solid #e9ecef; }
       "
       )),
       shiny::tags$script(htmltools::HTML(
@@ -101,24 +104,11 @@ figureDashboard <- function(.path) {
       shiny::div(
         class = "text-muted mb-2",
         shiny::tags$i(
-          "Click two revisions to compare, then toggle the view.",
+          "Click two revisions to compare side by side.",
           style = "font-size: smaller;"
         )
       ),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
-    ),
-    shiny::fluidRow(
-      class = "mb-3",
-      shiny::column(
-        4,
-        shiny::radioButtons(
-          "view_revision",
-          "View",
-          choices = c("Older", "Newer"),
-          selected = "Newer",
-          inline = TRUE
-        )
-      )
     ),
     shiny::uiOutput("figure_ui")
   )
@@ -206,53 +196,51 @@ figureDashboard <- function(.path) {
         ))
       }
 
-      view_side <- if (is.null(input$view_revision)) "Newer" else input$view_revision
-      view_rev <- if (identical(view_side, "Older")) {
-        p$prior
-      } else {
-        if (is.null(p$newer)) "Local" else p$newer
-      }
+      render_panel <- function(.rev, .label) {
+        file_path <- current_file()
+        rev_file <- get_revision_file(file_path, .rev, rev_dir)
+        ext <- tolower(tools::file_ext(rev_file))
+        src <- if (identical(.rev, "Local")) {
+          file.path("figures", basename(file_path))
+        } else {
+          file.path("revisions", basename(rev_file))
+        }
+        src <- utils::URLencode(src)
 
-      file_path <- current_file()
-      rev_file <- get_revision_file(file_path, view_rev, rev_dir)
-      ext <- tolower(tools::file_ext(rev_file))
-      src <- if (identical(view_rev, "Local")) {
-        file.path("figures", basename(file_path))
-      } else {
-        file.path("revisions", basename(rev_file))
-      }
-      src <- utils::URLencode(src)
+        caption <- if (identical(.rev, "Local")) {
+          paste0(.label, " (Local)")
+        } else {
+          paste0(.label, " (Rev: ", .rev, ")")
+        }
 
-      caption <- if (identical(view_rev, "Local")) {
-        "Local"
-      } else {
-        paste0("Rev: ", view_rev)
-      }
-
-      if (ext == "png") {
-        shiny::tags$div(
-          shiny::tags$div(
-            style = "margin-bottom: 8px; font-weight: 600;",
-            caption
-          ),
+        asset <- if (ext == "png") {
           shiny::tags$img(
             src = src,
-            style = "max-width:100%; height:auto; border:1px solid #dee2e6;"
+            style = "max-width:100%; height:auto;",
+            class = "fig-asset"
           )
-        )
-      } else {
-        shiny::tags$div(
-          shiny::tags$div(
-            style = "margin-bottom: 8px; font-weight: 600;",
-            caption
-          ),
+        } else {
           shiny::tags$embed(
             src = src,
             type = "application/pdf",
-            style = "width:100%; height: calc(100vh - 220px); border:1px solid #dee2e6;"
+            style = "height: calc(100vh - 260px);",
+            class = "fig-asset"
           )
+        }
+
+        shiny::tags$div(
+          class = "fig-panel",
+          shiny::tags$div(class = "fig-caption", caption),
+          asset
         )
       }
+
+      newer_rev <- if (is.null(p$newer)) "Local" else p$newer
+
+      shiny::fluidRow(
+        shiny::column(6, render_panel(p$prior, "Older")),
+        shiny::column(6, render_panel(newer_rev, "Newer"))
+      )
     })
   }
 
