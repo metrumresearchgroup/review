@@ -29,10 +29,9 @@ reference:
     - dirSummary
     - renderQCSummary
     - renderQCReport
-    - compareFigures
-    - compareTables
     - fileSummary
     - diffDashboard
+    - compareDashboard
   - title: SVN Tools
     desc: Easily access information about SVN repos
     contents:

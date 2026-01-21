@@ -1,3 +1,11 @@
+# review development
+
+## New features and changes
+
+- Added new function `compareDashboard` to allow users to compare different revisions of output files. (#187)
+
+- Removed functions `compareTables` and `compareFigures` as `compareDashboard` is an improved solution. (#187)
+
 # review 3.12.1
 
 ## Bug fixes
