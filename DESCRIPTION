@@ -26,7 +26,6 @@ Imports:
     fs,
     cli,
     rmarkdown,
-    tinytex,
     pmtables,
     tidyr,
     stats,

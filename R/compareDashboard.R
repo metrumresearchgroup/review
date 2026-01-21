@@ -1,7 +1,7 @@
 #' Launch an interactive figure revision dashboard
 #'
 #' @description
-#' `figureDashboard()` opens a Shiny app that lets you select a figure (PDF/PNG)
+#' `compareDashboard()` opens a Shiny app that lets you select a figure (PDF/PNG)
 #' from a folder and compare any two SVN revisions. The app shows the older and
 #' newer revisions side by side.
 #'
@@ -11,11 +11,11 @@
 #' @examples
 #' \dontrun{
 #' # Review figure revisions interactively
-#' figureDashboard("deliv/figure")
+#' compareDashboard("deliv/figure")
 #' }
 #'
 #' @export
-figureDashboard <- function(.path) {
+compareDashboard <- function(.path) {
   if (!fs::is_dir(.path)) {
     stop("`.path` must be a directory containing figure files.")
   }
@@ -85,7 +85,7 @@ figureDashboard <- function(.path) {
   server <- function(input, output, session) {
     session$onSessionEnded(function() shiny::stopApp())
 
-    show_app_exit_hint("figureDashboard")
+    show_app_exit_hint("compareDashboard")
 
     current_file <- shiny::reactive({
       fig_map[[input$figure_file]]
