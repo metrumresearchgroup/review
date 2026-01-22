@@ -6,6 +6,10 @@
 
 - Removed functions `compareTables` and `compareFigures` as `compareDashboard` is an improved solution. (#187)
 
+## Bug fixes
+
+- Updated `diffQCed` error message when file is out of sync with SVN. (#188)
+
 # review 3.12.1
 
 ## Bug fixes
