@@ -5,6 +5,11 @@
 #' The output will appear in the viewer and only rows where there have been
 #' additions, deletions or modifications in the script will be shown.
 #'
+#' @details
+#' The file must be part of an SVN working copy that is in sync with the repo.
+#' If the local copy is out of date or has local modifications, the function
+#' will stop and prompt you to update or review local changes.
+#'
 #' @param .file file path from working directory
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
@@ -31,7 +36,7 @@ diffQced <- function(.file,
   
   if (!inherits(up_to_date, "error")) {
     if (!is.null(up_to_date$target$entry)) {
-      stop("Please svn up '", .file, "' before running comparison")
+      stop("The local copy of '", .file, "' is out of sync with the repo. Please svn up or check the local copy for changes.")
     }
   }
   

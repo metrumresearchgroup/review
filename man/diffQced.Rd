@@ -28,6 +28,11 @@ Compares the local version of a script with the most recent QCed version.
 The output will appear in the viewer and only rows where there have been
 additions, deletions or modifications in the script will be shown.
 }
+\details{
+The file must be part of an SVN working copy that is in sync with the repo.
+If the local copy is out of date or has local modifications, the function
+will stop and prompt you to update or review local changes.
+}
 \examples{
 with_demoRepo({
   diffQced("script/data-assembly.R")
