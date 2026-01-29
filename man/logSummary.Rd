@@ -9,6 +9,11 @@ logSummary(directory = getwd())
 \arguments{
 \item{directory}{the directory containing the log, or any directory below it}
 }
+\value{
+A data frame containing one row per file. Columns include \code{file},
+\code{origin}, \code{revf}, \code{headf}, \code{revo}, \code{heado},
+\code{reviewer}, and \code{time}.
+}
 \description{
 Summarize the review log associated with a particular directory.
 }
@@ -19,6 +24,10 @@ of the file column is missing.
 
 The log is read, then sorted on file, revision, time.  The last record
 for each file is retained.
+
+The output includes the latest revisions for the file and origin, plus the
+reviewer and time information. Times are returned as character strings in
+GMT.
 }
 \examples{
 with_demoRepo({

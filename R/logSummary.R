@@ -12,6 +12,15 @@
 #'
 #' The log is read, then sorted on file, revision, time.  The last record 
 #' for each file is retained.
+#'
+#' The output includes the latest revisions for the file and origin, plus the
+#' reviewer and time information. Times are returned as character strings in
+#' GMT.
+#' 
+#' @return
+#' A data frame containing one row per file. Columns include \code{file}, 
+#' \code{origin}, \code{revf}, \code{headf}, \code{revo}, \code{heado}, 
+#' \code{reviewer}, and \code{time}.
 #' 
 #' @examples 
 #' with_demoRepo({
