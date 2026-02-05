@@ -51,7 +51,7 @@ fileSummary <- function(.file) {
       return(invisible(list()))
     }
 
-    out <- lapply(files, fileSummary)
+    out <- lapply(files, fileSummary_one)
     names(out) <- files
 
     return(invisible(out))
@@ -168,4 +168,9 @@ fileSummary <- function(.file) {
   cli::cli_bullets(out$authors)
   
   return(invisible(out))
+}
+
+# Internal helper for per-file summaries.
+fileSummary_one <- function(.file) {
+  fileSummary(.file = .file)
 }
