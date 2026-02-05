@@ -20,6 +20,28 @@ test_that("Works correctly for a directory input", {
   expect_true(all(vapply(da_directory, is.list, logical(1))))
 })
 
+test_that("Directory input matches purrr::walk-based file summaries", {
+  testthat::skip_if_not_installed("purrr")
+
+  da_files <- list.files("script/data-assembly", full.names = TRUE)
+  da_files <- da_files[!fs::is_dir(da_files)]
+
+  from_directory <- fileSummary("script/data-assembly")
+
+  from_walk <- list()
+  purrr::walk(
+    da_files,
+    ~ {
+      from_walk[[.x]] <<- fileSummary(.file = .x)
+    }
+  )
+
+  from_directory <- from_directory[order(names(from_directory))]
+  from_walk <- from_walk[order(names(from_walk))]
+
+  expect_equal(from_directory, from_walk)
+})
+
 test_that("Works correctly for a single file QC filed", {
   da_functions <- fileSummary("script/data-assembly/da-functions.R")
   
