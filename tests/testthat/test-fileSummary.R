@@ -2,9 +2,22 @@ create_test_svn()
 logAccept("script/data-assembly/da-functions.R")
 logAssign("script/model-summary.Rmd")
 
-test_that("Function requires single file input", {
+test_that("Function requires single file or directory input", {
+  da_files <- c(
+    "script/data-assembly/da-functions.R",
+    "script/data-assembly/da-study-abc.Rmd"
+  )
+  expect_error(fileSummary(da_files), "must be a single file or directory path")
+})
+
+test_that("Works correctly for a directory input", {
+  da_directory <- fileSummary("script/data-assembly")
   da_files <- list.files("script/data-assembly", full.names = TRUE)
-  expect_error(fileSummary(da_files), "must be a single file path")
+  da_files <- da_files[!fs::is_dir(da_files)]
+
+  expect_true(is.list(da_directory))
+  expect_setequal(names(da_directory), da_files)
+  expect_true(all(vapply(da_directory, is.list, logical(1))))
 })
 
 test_that("Works correctly for a single file QC filed", {
