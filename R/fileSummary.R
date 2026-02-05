@@ -170,7 +170,8 @@ fileSummary <- function(.file) {
   return(invisible(out))
 }
 
-# Internal helper for per-file summaries.
+#' Internal helper for per-file summaries.
+#' @noRd
 fileSummary_one <- function(.file) {
   fileSummary(.file = .file)
 }
