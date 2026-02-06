@@ -1,4 +1,4 @@
-#' Summarize revision and QC history for a file
+#' Summarize revision and QC history for a file or directory
 #'
 #' @description
 #' Generates a comprehensive summary of the revision and quality control (QC) history
@@ -8,12 +8,14 @@
 #' * Historical information about previous authors
 #' * Historical information about previous QC reviewers
 #'
-#' @param .file File path.
+#' @param .file File or directory path.
 #'
 #' @details
 #' The function prints a formatted summary to the console and invisibly returns
-#' the data for programmatic use. Non-existent files generate warnings and are
-#' skipped. Files not found in the repository history are also skipped.
+#' the data for programmatic use. If a directory is supplied, each immediate
+#' file in that directory is summarized and a named list of results is returned.
+#' Non-existent files generate warnings and are skipped. Files not found in the
+#' repository history are also skipped.
 #'
 #' QC status can be:
 #' * "QC up to date" - Latest revision has been QC'd
@@ -26,18 +28,33 @@
 #' fileSummary("script/data-assembly/study-101.R")
 #'
 #' # Process all files in a directory
-#' purrr::walk(list.files("script/data-assembly", full.names = TRUE), ~ fileSummary(.file = .x))
+#' fileSummary("script/data-assembly")
 #' }
 #'
 #' @export
 fileSummary <- function(.file) {
   if (length(.file) != 1) {
-    stop("'.file' must be a single file path")
+    stop("'.file' must be a single file or directory path")
   }
   
   if (!file.exists(.file)) {
     warning(paste0(.file, " does not exist"))
     return(invisible(NULL))
+  }
+
+  if (fs::is_dir(.file)) {
+    files <- list.files(.file, full.names = TRUE)
+    files <- files[!fs::is_dir(files)]
+
+    if (length(files) == 0) {
+      warning(paste0(.file, " contains no files"))
+      return(invisible(list()))
+    }
+
+    out <- lapply(files, fileSummary_one)
+    names(out) <- files
+
+    return(invisible(out))
   }
   
   log_df <- tryCatch(
@@ -151,4 +168,10 @@ fileSummary <- function(.file) {
   cli::cli_bullets(out$authors)
   
   return(invisible(out))
+}
+
+#' Internal helper for per-file summaries.
+#' @noRd
+fileSummary_one <- function(.file) {
+  fileSummary(.file = .file)
 }

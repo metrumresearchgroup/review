@@ -2,9 +2,44 @@ create_test_svn()
 logAccept("script/data-assembly/da-functions.R")
 logAssign("script/model-summary.Rmd")
 
-test_that("Function requires single file input", {
+test_that("Function requires single file or directory input", {
+  da_files <- c(
+    "script/data-assembly/da-functions.R",
+    "script/data-assembly/da-study-abc.Rmd"
+  )
+  expect_error(fileSummary(da_files), "must be a single file or directory path")
+})
+
+test_that("Works correctly for a directory input", {
+  da_directory <- fileSummary("script/data-assembly")
   da_files <- list.files("script/data-assembly", full.names = TRUE)
-  expect_error(fileSummary(da_files), "must be a single file path")
+  da_files <- da_files[!fs::is_dir(da_files)]
+
+  expect_true(is.list(da_directory))
+  expect_setequal(names(da_directory), da_files)
+  expect_true(all(vapply(da_directory, is.list, logical(1))))
+})
+
+test_that("Directory input matches purrr::walk-based file summaries", {
+  testthat::skip_if_not_installed("purrr")
+
+  da_files <- list.files("script/data-assembly", full.names = TRUE)
+  da_files <- da_files[!fs::is_dir(da_files)]
+
+  from_directory <- fileSummary("script/data-assembly")
+
+  from_walk <- list()
+  purrr::walk(
+    da_files,
+    ~ {
+      from_walk[[.x]] <<- fileSummary(.file = .x)
+    }
+  )
+
+  from_directory <- from_directory[order(names(from_directory))]
+  from_walk <- from_walk[order(names(from_walk))]
+
+  expect_equal(from_directory, from_walk)
 })
 
 test_that("Works correctly for a single file QC filed", {

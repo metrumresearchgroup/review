@@ -2,12 +2,12 @@
 % Please edit documentation in R/fileSummary.R
 \name{fileSummary}
 \alias{fileSummary}
-\title{Summarize revision and QC history for a file}
+\title{Summarize revision and QC history for a file or directory}
 \usage{
 fileSummary(.file)
 }
 \arguments{
-\item{.file}{File path.}
+\item{.file}{File or directory path.}
 }
 \description{
 Generates a comprehensive summary of the revision and quality control (QC) history
@@ -21,8 +21,10 @@ for a file. The function reports:
 }
 \details{
 The function prints a formatted summary to the console and invisibly returns
-the data for programmatic use. Non-existent files generate warnings and are
-skipped. Files not found in the repository history are also skipped.
+the data for programmatic use. If a directory is supplied, each immediate
+file in that directory is summarized and a named list of results is returned.
+Non-existent files generate warnings and are skipped. Files not found in the
+repository history are also skipped.
 
 QC status can be:
 \itemize{
@@ -37,7 +39,7 @@ QC status can be:
 fileSummary("script/data-assembly/study-101.R")
 
 # Process all files in a directory
-purrr::walk(list.files("script/data-assembly", full.names = TRUE), ~ fileSummary(.file = .x))
+fileSummary("script/data-assembly")
 }
 
 }
