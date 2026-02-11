@@ -138,7 +138,7 @@ compareDashboard <- function(.path) {
       p <- selection()
       if (is.null(p$prior)) {
         return(shiny::tags$div(
-          style = "padding: 20px; text-align: center; color: #6c757d;",
+          style = "padding: 20px; text-align: center; color: #004085; background-color: #cce5ff; border: 1px solid #b8daff; border-radius: 6px;",
           "Select two revisions to display a figure."
         ))
       }
