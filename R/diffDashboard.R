@@ -123,10 +123,10 @@ diffDashboard <- function(.file) {
         prior_label <- paste0("Rev: ", p$prior)
 
         shiny::tags$div(
-          style = "padding: 20px; text-align: center; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 6px;",
+          style = "padding: 20px; text-align: center; color: #004085; background-color: #cce5ff; border: 1px solid #b8daff; border-radius: 6px;",
           shiny::HTML(
             sprintf(
-              "The two versions are identical.<br/><span style='font-weight: 600;'>Compared <span style='padding:2px 6px; background:#e2e3e5; border-radius:4px;'>%s</span> to <span style='padding:2px 6px; background:#e2e3e5; border-radius:4px;'>%s</span>.</span>",
+              "<span style='font-size: 1.1em; font-weight: 600;'>No differences found</span><br/><span style='font-size: 0.95em;'>%s and %s are identical.</span>",
               prior_label,
               newer_label
             )
