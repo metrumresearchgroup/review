@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.13.0</span>
       </span>
     </div>
 
@@ -32,9 +32,6 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/compare-tools.html">A Guide to Using Compare Functions in review</a>
-    </li>
-    <li>
       <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
@@ -83,6 +80,12 @@
 <dd><p>the directory containing the log, or any directory below it</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>A data frame containing one row per file. Columns include <code>file</code>,
+<code>origin</code>, <code>revf</code>, <code>headf</code>, <code>revo</code>, <code>heado</code>,
+<code>reviewer</code>, and <code>time</code>.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Whereas the review log can have any number of records for the same file, the
@@ -90,6 +93,9 @@ summary reduces the data to one record per file.  It is an error if any element
 of the file column is missing.</p>
 <p>The log is read, then sorted on file, revision, time.  The last record
 for each file is retained.</p>
+<p>The output includes the latest revisions for the file and origin, plus the
+reviewer and time information. Times are returned as character strings in
+GMT.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -107,10 +113,10 @@ for each file is retained.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   script/examp-txt.txt   script/examp-txt.txt    0     1    0     1   anyone</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  script/pk/load-spec.R  script/pk/load-spec.R    1     4    1     4 anderson</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2025-12-03 17:55:58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2025-12-03 17:55:58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2025-12-03 17:55:58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2025-12-03 17:55:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2026-02-17 19:48:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2026-02-17 19:48:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2026-02-17 19:48:29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2026-02-17 19:48:29</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

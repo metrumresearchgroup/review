@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.13.0</span>
       </span>
     </div>
 
@@ -32,9 +32,6 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/compare-tools.html">A Guide to Using Compare Functions in review</a>
-    </li>
-    <li>
       <a href="../articles/diff-tools.html">A Guide to Using Diff Functions in review</a>
     </li>
     <li>
@@ -66,6 +63,21 @@
       <small>Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.13.0" id="review-3130">review 3.13.0<a class="anchor" aria-label="anchor" href="#review-3130"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-changes-3-13-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-13-0"></a></h3>
+<ul><li><p>Added new function <code>compareDashboard</code> to allow users to compare different revisions of output files. (<a href="https://github.com/metrumresearchgroup/review/issues/187" class="external-link">#187</a>)</p></li>
+<li><p>Removed functions <code>compareTables</code> and <code>compareFigures</code> as <code>compareDashboard</code> is an improved solution. (<a href="https://github.com/metrumresearchgroup/review/issues/187" class="external-link">#187</a>)</p></li>
+<li><p><code>compareDashboard</code> now displays a blue banner when there are no differences between revisions. (<a href="https://github.com/metrumresearchgroup/review/issues/191" class="external-link">#191</a>)</p></li>
+<li><p><code>fileSummary</code> now supports directory inputs and can summarize all contained files. (<a href="https://github.com/metrumresearchgroup/review/issues/190" class="external-link">#190</a>)</p></li>
+<li><p>Added new function <code>getTFs</code> to extract file paths of tables and figures from PDF reports. (<a href="https://github.com/metrumresearchgroup/review/issues/184" class="external-link">#184</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-13-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-13-0"></a></h3>
+<ul><li>Updated <code>diffQCed</code> error message when file is out of sync with SVN. (<a href="https://github.com/metrumresearchgroup/review/issues/188" class="external-link">#188</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.12.1" id="review-3121">review 3.12.1<a class="anchor" aria-label="anchor" href="#review-3121"></a></h2>
 <div class="section level3">
