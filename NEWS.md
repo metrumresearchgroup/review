@@ -1,10 +1,16 @@
-# review development
+# review 3.13.0
 
 ## New features and changes
 
 - Added new function `compareDashboard` to allow users to compare different revisions of output files. (#187)
 
 - Removed functions `compareTables` and `compareFigures` as `compareDashboard` is an improved solution. (#187)
+
+- `compareDashboard` now displays a blue banner when there are no differences between revisions. (#191)
+
+- `fileSummary` now supports directory inputs and can summarize all contained files. (#190)
+
+- Added new function `getTFs` to extract file paths of tables and figures from PDF reports. (#184)
 
 ## Bug fixes
 
