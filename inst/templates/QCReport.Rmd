@@ -35,6 +35,6 @@ params$logSum %>%
   dplyr::arrange(Status, as.numeric(`QCed...revision`)) %>% 
   pmtables::st_new() %>% 
   pmtables::st_left(File = pmtables::col_ragged(8)) %>% 
-  pmtables::stable_long() %>%
+  pmtables::stable_long(r_file = NULL) %>%
   pmtables::st_asis()
 ```

@@ -28,6 +28,25 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     expect_true(file.exists(file.path(temp_dir, paste0("qc-summary-", Sys.Date(), ".pdf"))))
     
   })
+
+  test_that("renderQCSummary does not inherit source code from mrg.script", {
+
+    withr::local_options(list(mrg.script = "script/pmtables-driver.R"))
+
+    expect_null({
+      renderQCSummary(.output_dir = logRoot())
+    })
+
+    pdf_path <- file.path(logRoot(), paste0("qc-summary-", Sys.Date(), ".pdf"))
+    expect_true(file.exists(pdf_path))
+
+    pdf_content <- pdftools::pdf_text(pdf_path)
+    combined_text <- paste(pdf_content, collapse = " ")
+
+    expect_false(grepl("Source code:", combined_text, fixed = TRUE))
+    expect_false(grepl("script/pmtables-driver.R", combined_text, fixed = TRUE))
+
+  })
   
   test_that("renderQCSummary errors gracefully if QC log does not exist", {
     file.remove("QClog.csv")
