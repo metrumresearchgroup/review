@@ -120,20 +120,31 @@ dashboard_title <- function(label, path) {
 timeline_assets <- function(side_scroll_height, extra_css = NULL) {
   base_css <- paste0(
     "
-    .timeline { position: relative; padding-left: 20px; }
-    .timeline:before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:#e9ecef; }
-    .rev { position:relative; margin:0 0 8px 0; padding:10px 10px 10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; cursor:pointer; }
-    .rev:before { content:''; position:absolute; left:-6px; top:14px; width:12px; height:12px; border-radius:50%; background:#adb5bd; border:2px solid #fff; box-shadow:0 0 0 2px #e9ecef; }
-    .rev:hover { box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-    .rev.sel { border-color:#0d6efd; background:#f5f9ff; }
-    .rev.sel:before { background:#0d6efd; }
-    .rev .h  { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .rev .id { font-weight:600; }
-    .rev .m  { color:#6c757d; font-size:0.9rem; }
-    .rev .msg{ margin-top:4px; color:#343a40; }
-    .badge    { display:inline-block; padding:0.15rem 0.4rem; border-radius:999px; font-size:.72rem; border:1px solid #e9ecef; }
-    .badge.y  { background:#e7f6ec; color:#2f8f4e; border-color:#ccebd7; }
-    .badge.n  { background:#f4f4f4; color:#6c757d; }
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline:before { content:''; position:absolute; left:11px; top:8px; bottom:0; width:2px; background:#e2e8f0; }
+    .rev { position:relative; margin:0 0 10px 0; cursor:pointer; }
+    .rev:last-child { margin-bottom:0; }
+    .rev:before { content:''; position:absolute; left:-23px; top:18px; width:14px; height:14px; border-radius:50%; background:#94a3b8; border:3px solid #f8fafc; box-shadow:0 0 0 2px #e2e8f0; transition:background-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+    .rev:hover:before { transform:scale(1.04); box-shadow:0 0 0 2px #cbd5e1; }
+    .rev-card { border:1px solid #e2e8f0; border-radius:10px; background:#ffffff; padding:12px; box-shadow:0 1px 2px rgba(15,23,42,0.06); transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease; }
+    .rev:hover .rev-card { box-shadow:0 4px 12px rgba(15,23,42,0.08); }
+    .rev.sel:before { background:#4f46e5; box-shadow:0 0 0 3px #c7d2fe; }
+    .rev.sel .rev-card { border-color:#818cf8; background:#f8faff; box-shadow:0 0 0 1px rgba(99,102,241,0.16), 0 6px 16px rgba(79,70,229,0.10); }
+    .rev-main { display:flex; gap:10px; align-items:flex-start; min-width:0; }
+    .rev-avatar { width:28px; height:28px; border-radius:999px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; margin-top:1px; font-size:0.82rem; font-weight:700; color:#4338ca; background:linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
+    .rev-body { flex:1 1 auto; min-width:0; }
+    .rev-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+    .rev-meta { display:flex; flex-wrap:wrap; gap:4px 6px; align-items:center; min-width:0; font-size:0.82rem; color:#64748b; line-height:1.3; }
+    .rev-author { color:#0f172a; font-weight:600; }
+    .rev-action, .rev-elapsed { white-space:nowrap; }
+    .rev-tags { display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:flex-end; flex:0 0 auto; }
+    .rev-id { display:inline-block; padding:0.2rem 0.45rem; border-radius:7px; border:1px solid #e2e8f0; background:#f8fafc; color:#475569; font-size:.72rem; font-weight:600; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; line-height:1; }
+    .rev.sel .rev-id { background:#eef2ff; border-color:#c7d2fe; color:#3730a3; }
+    .rev-msg { margin-top:5px; color:#1e293b; font-size:0.92rem; font-weight:500; line-height:1.35; }
+    .rev-msg em { color:#94a3b8; font-style:normal; font-weight:400; }
+    .badge { display:inline-block; padding:0.15rem 0.45rem; border-radius:999px; font-size:.68rem; border:1px solid #e2e8f0; line-height:1.1; }
+    .badge.y { background:#e7f6ec; color:#2f8f4e; border-color:#ccebd7; }
+    .badge.n { background:#f4f4f4; color:#6c757d; }
     .badge.local { background:#eef3ff; color:#0d6efd; border-color:#d8e3ff; }
     .side-scroll { max-height: ", side_scroll_height, "; overflow:auto; padding-right:4px; }
     ",
@@ -183,22 +194,43 @@ render_timeline <- function(svn_log, chosen) {
     }
     id <- as.character(row$rev)
     cls <- if (id %in% chosen) "rev sel" else "rev"
+    author <- trimws(as.character(row$author))
+    avatar <- substr(author, 1L, 1L)
+    if (!nzchar(avatar) || is.na(avatar)) {
+      avatar <- "?"
+    }
+    message <- if (!is.null(row$msg) && nzchar(row$msg)) {
+      row$msg
+    } else {
+      shiny::tags$em("(no message)")
+    }
     shiny::div(
       class = cls,
       `data-rev` = id,
       shiny::div(
-        class = "h",
-        shiny::span(class = "id", row$rev_display),
-        shiny::span(class = "m", paste(row$author, ":", row$elapsed)),
-        qc
-      ),
-      shiny::div(
-        class = "msg",
-        if (!is.null(row$msg) && nzchar(row$msg)) {
-          row$msg
-        } else {
-          shiny::tags$em("(no message)")
-        }
+        class = "rev-card",
+        shiny::div(
+          class = "rev-main",
+          shiny::div(class = "rev-avatar", toupper(avatar)),
+          shiny::div(
+            class = "rev-body",
+            shiny::div(
+              class = "rev-top",
+              shiny::div(
+                class = "rev-meta",
+                shiny::span(class = "rev-author", author),
+                shiny::span(class = "rev-action", "committed"),
+                shiny::span(class = "rev-elapsed", row$elapsed)
+              ),
+              shiny::div(
+                class = "rev-tags",
+                qc,
+                shiny::span(class = "rev-id", row$rev_display)
+              )
+            ),
+            shiny::div(class = "rev-msg", message)
+          )
+        )
       )
     )
   })
