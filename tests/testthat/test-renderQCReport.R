@@ -24,7 +24,22 @@ if (Sys.getenv("METWORX_VERSION") != "") {
     expected_file <- file.path(logRoot(), paste0(tolower("abc-study-ONE"), "-qc-report-", Sys.Date(), ".pdf"))
     expect_true(file.exists(expected_file))
   })
-  
+
+  test_that("renderQCReport does not inherit source code from mrg.script", {
+    withr::local_options(list(mrg.script = "script/pmtables-driver.R"))
+
+    renderQCReport(.output_dir = logRoot())
+
+    pdf_path <- file.path(logRoot(), paste0("tests-qc-report-", Sys.Date(), ".pdf"))
+    expect_true(file.exists(pdf_path))
+
+    pdf_content <- pdftools::pdf_text(pdf_path)
+    combined_text <- paste(pdf_content, collapse = " ")
+
+    expect_false(grepl("Source code:", combined_text, fixed = TRUE))
+    expect_false(grepl("script/pmtables-driver.R", combined_text, fixed = TRUE))
+  })
+
   test_that("renderQCReport errors if directory does not exist", {
     expect_error(
       renderQCReport(.output_dir = tempfile()),
