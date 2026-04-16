@@ -18,6 +18,8 @@
 diffDashboard <- function(.file) {
   # --- Data prep ---
   svn_log <- getRevHistory(.file = .file)
+  qced_revision <- getQcedRevision(.file)
+  latest_revision <- max(as.numeric(svn_log$rev[svn_log$rev != "Local"]), na.rm = TRUE)
 
   default_sel <- default_selection_from_log(svn_log)
 
@@ -37,6 +39,7 @@ diffDashboard <- function(.file) {
           style = "font-size: smaller;"
         )
       ),
+      shiny::uiOutput("quick_actions"),
       shiny::div(class = "side-scroll", shiny::uiOutput("timeline_ui"))
     ),
 
@@ -86,6 +89,71 @@ diffDashboard <- function(.file) {
       },
       ignoreInit = TRUE
     )
+
+    shiny::observeEvent(
+      input$jump_qc_local,
+      {
+        selection(compute_selection(c(as.character(qced_revision), "Local")))
+      },
+      ignoreInit = TRUE
+    )
+
+    shiny::observeEvent(
+      input$jump_latest_local,
+      {
+        selection(compute_selection(default_sel))
+      },
+      ignoreInit = TRUE
+    )
+
+    output$quick_actions <- shiny::renderUI({
+      current <- selection()
+
+      base_style <- "width:100%; white-space:normal;"
+      active_style <- paste0(
+        base_style,
+        " background-color:#eef4ff; border-color:#9bbcff; color:#1f4fa3;",
+        " box-shadow:0 0 0 2px rgba(44,123,229,0.16); font-weight:600;"
+      )
+
+      latest_active <- isTRUE(
+        !is.null(current$prior) &&
+          is.null(current$newer) &&
+          !is.na(latest_revision) &&
+          current$prior == latest_revision
+      )
+
+      if (!is.na(qced_revision)) {
+        qc_active <- isTRUE(
+          !is.null(current$prior) &&
+            is.null(current$newer) &&
+            current$prior == qced_revision
+        )
+
+        return(shiny::div(
+          style = "display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px; margin-bottom:12px;",
+          shiny::actionButton(
+            "jump_qc_local",
+            "Last QC -> Local",
+            style = if (qc_active) active_style else base_style
+          ),
+          shiny::actionButton(
+            "jump_latest_local",
+            "Latest SVN -> Local",
+            style = if (latest_active) active_style else base_style
+          )
+        ))
+      }
+
+      shiny::div(
+        style = "display:flex; margin-bottom:12px;",
+        shiny::actionButton(
+          "jump_latest_local",
+          "Latest SVN -> Local",
+          style = if (latest_active) active_style else base_style
+        )
+      )
+    })
 
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
