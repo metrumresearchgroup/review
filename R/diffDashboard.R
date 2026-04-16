@@ -110,6 +110,11 @@ diffDashboard <- function(.file) {
       current <- selection()
 
       base_style <- "width:100%; white-space:normal;"
+      disabled_style <- paste0(
+        base_style,
+        " background-color:#f3f4f6; border-color:#d1d5db; color:#9ca3af;",
+        " box-shadow:none; font-weight:400; cursor:not-allowed;"
+      )
       active_style <- paste0(
         base_style,
         " background-color:#eef4ff; border-color:#9bbcff; color:#1f4fa3;",
@@ -123,30 +128,23 @@ diffDashboard <- function(.file) {
           current$prior == latest_revision
       )
 
+      qc_active <- FALSE
       if (!is.na(qced_revision)) {
         qc_active <- isTRUE(
           !is.null(current$prior) &&
             is.null(current$newer) &&
             current$prior == qced_revision
         )
-
-        return(shiny::div(
-          style = "display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px; margin-bottom:12px;",
-          shiny::actionButton(
-            "jump_qc_local",
-            "Last QC -> Local",
-            style = if (qc_active) active_style else base_style
-          ),
-          shiny::actionButton(
-            "jump_latest_local",
-            "Latest SVN -> Local",
-            style = if (latest_active) active_style else base_style
-          )
-        ))
       }
 
       shiny::div(
-        style = "display:flex; margin-bottom:12px;",
+        style = "display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px; margin-bottom:12px;",
+        shiny::actionButton(
+          "jump_qc_local",
+          "Last QC -> Local",
+          style = if (is.na(qced_revision)) disabled_style else if (qc_active) active_style else base_style,
+          disabled = if (is.na(qced_revision)) "disabled" else NULL
+        ),
         shiny::actionButton(
           "jump_latest_local",
           "Latest SVN -> Local",
