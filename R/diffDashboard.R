@@ -34,7 +34,7 @@ diffDashboard <- function(.file) {
       timeline_assets("calc(100vh - 160px)"),
       shiny::div(
         class = "text-muted",
-        style = "margin-top:-8px; margin-bottom:0;",
+        style = "margin-top:-8px; margin-bottom:8px;",
         shiny::tags$i(
           "Click two to compare. Older is red, newer is green.",
           style = "font-size: smaller;"
@@ -122,7 +122,7 @@ diffDashboard <- function(.file) {
       active_style <- paste0(
         base_style,
         " border-color:#8fb4ff;",
-        " box-shadow:0 0 0 5px rgba(44,123,229,0.20), inset 0 0 0 1px rgba(143,180,255,0.55);",
+        " box-shadow:0 0 0 4px rgba(44,123,229,0.20), inset 0 0 0 1px rgba(143,180,255,0.55);",
         " font-weight:600;"
       )
 
@@ -143,7 +143,7 @@ diffDashboard <- function(.file) {
       }
 
       shiny::div(
-        style = "margin-top:-24px; margin-bottom:12px;",
+        style = "margin-top:-18px; margin-bottom:12px;",
         shiny::div(
           class = "text-muted",
           style = "font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px;",
