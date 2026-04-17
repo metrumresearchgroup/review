@@ -121,7 +121,7 @@ diffDashboard <- function(.file) {
       active_style <- paste0(
         base_style,
         " border-color:#8fb4ff;",
-        " box-shadow:0 0 0 6px rgba(44,123,229,0.20), inset 0 0 0 1px rgba(143,180,255,0.55);",
+        " box-shadow:0 0 0 5px rgba(44,123,229,0.20), inset 0 0 0 1px rgba(143,180,255,0.55);",
         " font-weight:600;"
       )
 
