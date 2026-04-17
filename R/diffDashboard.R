@@ -33,7 +33,8 @@ diffDashboard <- function(.file) {
       # minimal styles and a simple click handler
       timeline_assets("calc(100vh - 160px)"),
       shiny::div(
-        class = "text-muted mb-2",
+        class = "text-muted",
+        style = "margin-top:-8px; margin-bottom:0;",
         shiny::tags$i(
           "Click two to compare. Older is red, newer is green.",
           style = "font-size: smaller;"
@@ -142,7 +143,7 @@ diffDashboard <- function(.file) {
       }
 
       shiny::div(
-        style = "margin-top:-18px; margin-bottom:12px;",
+        style = "margin-top:-24px; margin-bottom:12px;",
         shiny::div(
           class = "text-muted",
           style = "font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px;",
