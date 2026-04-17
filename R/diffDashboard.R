@@ -109,7 +109,10 @@ diffDashboard <- function(.file) {
     output$quick_actions <- shiny::renderUI({
       current <- selection()
 
-      base_style <- "width:100%; white-space:normal;"
+      base_style <- paste0(
+        "width:100%; white-space:normal;",
+        " background-color:#3f4348; border-color:#3f4348; color:#ffffff;"
+      )
       disabled_style <- paste0(
         base_style,
         " background-color:#f3f4f6; border-color:#d1d5db; color:#9ca3af;",
@@ -117,8 +120,9 @@ diffDashboard <- function(.file) {
       )
       active_style <- paste0(
         base_style,
-        " background-color:#f8fbff; border-color:#8fb4ff; color:#1f4fa3;",
-        " box-shadow:inset 0 0 0 1px rgba(44,123,229,0.24); font-weight:600;"
+        " border-color:#8fb4ff;",
+        " box-shadow:0 0 0 2px rgba(44,123,229,0.28), inset 0 0 0 1px rgba(143,180,255,0.55);",
+        " font-weight:600;"
       )
 
       latest_active <- isTRUE(
@@ -138,7 +142,7 @@ diffDashboard <- function(.file) {
       }
 
       shiny::div(
-        style = "margin-bottom:12px;",
+        style = "margin-top:-2px; margin-bottom:12px;",
         shiny::div(
           class = "text-muted",
           style = "font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px;",
