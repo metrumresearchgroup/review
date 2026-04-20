@@ -1,3 +1,13 @@
+# review 3.14.0
+
+## New features and changes
+
+- Refreshed the revision-history timeline used by `diffDashboard` and `compareDashboard` with a more compact card layout and clearer selected-state styling. (#194)
+
+## Bug fixes
+
+- `renderQCReport` and `renderQCSummary` no longer inherit `pmtables` source-code notes from the `mrg.script` option. (#195)
+
 # review 3.13.0
 
 ## New features and changes
