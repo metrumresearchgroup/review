@@ -29,6 +29,7 @@ globalVariables(
     "path",
     "page",
     "type",
-    "code_path"
+    "code_path",
+    "QCLOG"
   )
 )

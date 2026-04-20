@@ -1,3 +1,9 @@
+# review development
+
+## New features and changes
+
+- Added argument to return summary table to `fileSummary` when given a directory. 
+
 # review 3.14.0
 
 ## New features and changes

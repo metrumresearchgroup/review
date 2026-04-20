@@ -9,6 +9,7 @@
 #' * Historical information about previous QC reviewers
 #'
 #' @param .file File or directory path.
+#' @param .return_dir_table Set to TRUE to print a table summarizing QC status of all files in a directory. Defaults to FALSE.
 #'
 #' @details
 #' The function prints a formatted summary to the console and invisibly returns
@@ -28,11 +29,11 @@
 #' fileSummary("script/data-assembly/study-101.R")
 #'
 #' # Process all files in a directory
-#' fileSummary("script/data-assembly")
+#' fileSummary("script/data-assembly", .return_dir_table = TRUE)
 #' }
 #'
 #' @export
-fileSummary <- function(.file) {
+fileSummary <- function(.file, .return_dir_table = FALSE) {
   if (length(.file) != 1) {
     stop("'.file' must be a single file or directory path")
   }
@@ -53,6 +54,23 @@ fileSummary <- function(.file) {
 
     out <- lapply(files, fileSummary_one)
     names(out) <- files
+    
+    if (.return_dir_table) {
+      
+      cli::cli_h2(glue::glue(.file, " directory summary"))
+      
+      return(
+        do.call(rbind, lapply(out, function(x) {
+          data.frame(
+            QCLOG    = as.character(x$qclog),
+            QCSTATUS = as.character(x$qcstatus),
+            stringsAsFactors = FALSE
+          )
+        })) %>% 
+          dplyr::mutate(dplyr::across(dplyr::everything(), cli::ansi_strip)) %>% 
+          dplyr::rename(`In QC Log` = QCLOG, `QC Status` = QCSTATUS)
+      )
+    }
 
     return(invisible(out))
   }
