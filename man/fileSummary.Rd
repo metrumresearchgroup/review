@@ -4,10 +4,12 @@
 \alias{fileSummary}
 \title{Summarize revision and QC history for a file or directory}
 \usage{
-fileSummary(.file)
+fileSummary(.file, .return_df = FALSE)
 }
 \arguments{
 \item{.file}{File or directory path.}
+
+\item{.return_df}{Set to TRUE to print a table summarizing QC status of all files in a directory. Defaults to FALSE.}
 }
 \description{
 Generates a comprehensive summary of the revision and quality control (QC) history
@@ -39,7 +41,7 @@ QC status can be:
 fileSummary("script/data-assembly/study-101.R")
 
 # Process all files in a directory
-fileSummary("script/data-assembly")
+fileSummary("script/data-assembly", .return_df = TRUE)
 }
 
 }

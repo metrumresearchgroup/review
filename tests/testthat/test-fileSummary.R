@@ -65,3 +65,12 @@ test_that("Function handles non-existent files appropriately", {
   )
   expect_null(non_nonexistent)
 })
+
+test_that("Function prints data.frame when .return_df argument set to TRUE", {
+  x1 <- fileSummary(.file = "script", .return_df = F) %>% suppressMessages()
+  x2 <- fileSummary(.file = "script", .return_df = T) %>% suppressMessages()
+  
+  expect_true(inherits(x2, "data.frame"))
+  expect_true(length(x2) == 2)
+  expect_equal(nrow(x2), length(x1))
+})
