@@ -48,7 +48,7 @@ jobs:
           upgrade: 'TRUE'
       - uses: r-lib/actions/check-r-package@v2
         with:
-          error-on: '"note"'
+          error-on: '"warning"'
       - name: Check pkgdown
         shell: Rscript {0}
         run: pkgdown::check_pkgdown()

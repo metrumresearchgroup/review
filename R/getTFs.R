@@ -551,8 +551,11 @@ correct_report_tex_path <- function(path, type, tex_paths) {
   if (!is.na(page_num) && page_num > 1) {
     base_stem <- sub("\\.[[:alnum:]]+$", "", base_path)
     expected_stem <- paste0(base_stem, "-page", page_num)
+    expected_basename_stem <- basename(expected_stem)
+    candidate_stems <- sub("\\.[[:alnum:]]+$", "", candidates)
     exact_paged <- candidates[
-      sub("\\.[[:alnum:]]+$", "", candidates) == expected_stem
+      candidate_stems == expected_stem |
+        basename(candidate_stems) == expected_basename_stem
     ]
     if (length(exact_paged)) {
       return(exact_paged[[1]])
