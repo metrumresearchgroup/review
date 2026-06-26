@@ -18,11 +18,11 @@
 update_selection <- function(ids, clicked, max_sel = 2L) {
   clicked <- as.character(clicked)
   ids <- as.character(ids)
-  
+
   if (length(clicked) != 1L || is.na(clicked) || !nzchar(clicked)) {
     return(ids)
   }
-  
+
   if (clicked %in% ids) {
     new <- setdiff(ids, clicked)
   } else {
@@ -30,7 +30,7 @@ update_selection <- function(ids, clicked, max_sel = 2L) {
     new <- new[!duplicated(new)]
     if (length(new) > max_sel) new <- utils::tail(new, max_sel)
   }
-  
+
   new
 }
 
@@ -73,7 +73,7 @@ compute_selection <- function(ids) {
   if (length(ids) < 2) {
     return(list(ids = ids, prior = NULL, newer = NULL))
   }
-  
+
   if ("Local" %in% ids) {
     other <- setdiff(ids, "Local")
     other_num <- suppressWarnings(as.numeric(other))
@@ -130,6 +130,12 @@ timeline_assets <- function(side_scroll_height, extra_css = NULL) {
     .rev:hover .rev-card { box-shadow:0 4px 12px rgba(15,23,42,0.08); }
     .rev.sel:before { background:#4f46e5; box-shadow:0 0 0 3px #c7d2fe; }
     .rev.sel .rev-card { border-color:#818cf8; background:#f8faff; box-shadow:0 0 0 1px rgba(99,102,241,0.16), 0 6px 16px rgba(79,70,229,0.10); }
+    .rev.sel-prior:before { background:#dc2626; box-shadow:0 0 0 3px #fecaca; }
+    .rev.sel-prior .rev-card { border-color:#f87171; background:#fff8f8; box-shadow:0 0 0 1px rgba(220,38,38,0.16),0 6px 16px rgba(220,38,38,0.10); }
+    .rev.sel-prior .rev-id { background:#fee2e2; border-color:#fca5a5; color:#991b1b; }
+    .rev.sel-newer:before { background:#16a34a; box-shadow:0 0 0 3px #bbf7d0; }
+    .rev.sel-newer .rev-card { border-color:#4ade80; background:#f0fdf4; box-shadow:0 0 0 1px rgba(22,163,74,0.16),0 6px 16px rgba(22,163,74,0.10); }
+    .rev.sel-newer .rev-id { background:#dcfce7; border-color:#86efac; color:#166534; }
     .rev-main { display:flex; gap:10px; align-items:flex-start; min-width:0; }
     .rev-avatar { width:28px; height:28px; border-radius:999px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; margin-top:1px; font-size:0.82rem; font-weight:700; color:#4338ca; background:linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
     .rev-body { flex:1 1 auto; min-width:0; }
@@ -146,7 +152,9 @@ timeline_assets <- function(side_scroll_height, extra_css = NULL) {
     .badge.y { background:#e7f6ec; color:#2f8f4e; border-color:#ccebd7; }
     .badge.n { background:#f4f4f4; color:#6c757d; }
     .badge.local { background:#eef3ff; color:#0d6efd; border-color:#d8e3ff; }
-    .side-scroll { max-height: ", side_scroll_height, "; overflow:auto; padding-right:4px; }
+    .side-scroll { max-height: ",
+    side_scroll_height,
+    "; overflow:auto; padding-right:4px; }
     ",
     if (!is.null(extra_css)) extra_css else "",
     "
@@ -182,18 +190,36 @@ default_selection_from_log <- function(svn_log) {
 #' Build a timeline UI for revision selection
 #'
 #' @param svn_log `data.frame` from `getRevHistory()`.
-#' @param chosen `character()` currently selected revision IDs.
+#' @param sel `list` from `compute_selection()` with elements `ids`, `prior`, `newer`.
 #'
 #' @return `shiny::tag` timeline wrapper with revision items.
 #' @noRd
-render_timeline <- function(svn_log, chosen) {
+render_timeline <- function(svn_log, sel) {
+  chosen <- sel$ids
+  prior_id <- if (!is.null(sel$prior)) as.character(sel$prior) else NULL
+  newer_id <- if (!is.null(sel$newer)) {
+    as.character(sel$newer)
+  } else if ("Local" %in% chosen) {
+    "Local"
+  } else {
+    NULL
+  }
+
   rev_items <- lapply(seq_len(nrow(svn_log)), function(i) {
     row <- svn_log[i, ]
     qc <- if (identical(row$QCed, "Yes")) {
       shiny::span(class = "badge y", "QCed")
     }
     id <- as.character(row$rev)
-    cls <- if (id %in% chosen) "rev sel" else "rev"
+    cls <- if (!id %in% chosen) {
+      "rev"
+    } else if (!is.null(prior_id) && id == prior_id) {
+      "rev sel sel-prior"
+    } else if (!is.null(newer_id) && id == newer_id) {
+      "rev sel sel-newer"
+    } else {
+      "rev sel"
+    }
     author <- trimws(as.character(row$author))
     avatar <- substr(author, 1L, 1L)
     if (!nzchar(avatar) || is.na(avatar)) {
