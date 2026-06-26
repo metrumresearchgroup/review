@@ -83,12 +83,7 @@ diffDashboard <- function(.file) {
         cur <- selection()
         clicked <- as.character(input$rev_clicked)
         new_ids <- if (length(cur$ids) >= 2L && !clicked %in% cur$ids) {
-          prior_id <- if (!is.null(cur$prior)) {
-            as.character(cur$prior)
-          } else {
-            cur$ids[1L]
-          }
-          c(setdiff(cur$ids, prior_id), clicked)
+          resolve_third_click(cur$ids, clicked, svn_log)
         } else {
           update_selection(cur$ids, clicked, max_sel = 2L)
         }
