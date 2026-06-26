@@ -25,10 +25,10 @@ update_selection <- function(ids, clicked, max_sel = 2L) {
 
   if (clicked %in% ids) {
     new <- setdiff(ids, clicked)
-  } else if (length(ids) >= max_sel) {
-    return(ids)
   } else {
     new <- c(ids, clicked)
+    new <- new[!duplicated(new)]
+    if (length(new) > max_sel) new <- utils::tail(new, max_sel)
   }
 
   new
@@ -160,9 +160,7 @@ timeline_assets <- function(side_scroll_height, extra_css = NULL) {
     .side-scroll { max-height: ",
     side_scroll_height,
     "; overflow:auto; padding-right:4px; }
-    .rev-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1e293b; color:#f8fafc; padding:8px 16px; border-radius:8px; font-size:0.85rem; pointer-events:none; opacity:0; transition:opacity .2s ease; z-index:9999; white-space:nowrap; }
-    .rev-toast.show { opacity:1; }
-    ",
+",
     if (!is.null(extra_css)) extra_css else "",
     "
     "
@@ -170,28 +168,13 @@ timeline_assets <- function(side_scroll_height, extra_css = NULL) {
 
   list(
     shiny::tags$style(htmltools::HTML(base_css)),
-    shiny::tags$div(id = "rev-toast", class = "rev-toast", "Deselect a revision first"),
     shiny::tags$script(htmltools::HTML(
       "
-      (function() {
-        var toastTimer;
-        function showToast() {
-          var t = document.getElementById('rev-toast');
-          if (!t) return;
-          t.classList.add('show');
-          clearTimeout(toastTimer);
-          toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2000);
-        }
-        document.addEventListener('click', function(e){
-          var el = e.target.closest('.rev'); if(!el) return;
-          var r = el.getAttribute('data-rev');
-          if (!r) return;
-          var selected = document.querySelectorAll('.rev.sel, .rev.sel-prior, .rev.sel-newer');
-          var isSelected = el.classList.contains('sel') || el.classList.contains('sel-prior') || el.classList.contains('sel-newer');
-          if (selected.length >= 2 && !isSelected) { showToast(); return; }
-          if(window.Shiny) Shiny.setInputValue('rev_clicked', r, {priority:'event'});
-        }, true);
-      })();
+      document.addEventListener('click', function(e){
+        var el = e.target.closest('.rev'); if(!el) return;
+        var r = el.getAttribute('data-rev');
+        if(window.Shiny && r) Shiny.setInputValue('rev_clicked', r, {priority:'event'});
+      }, true);
     "
     ))
   )
