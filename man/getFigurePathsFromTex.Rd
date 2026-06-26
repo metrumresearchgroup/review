@@ -17,8 +17,8 @@ from. Defaults to the parent of a \code{sections} directory when \code{.file} is
 one, otherwise \code{dirname(.file)}.}
 }
 \value{
-Character vector of normalized paths relative to the current working directory
-when possible, otherwise relative to \code{here::here()}.
+Character vector of normalized paths relative to the current working
+directory when possible, otherwise relative to \code{here::here()}.
 }
 \description{
 \code{getFigurePathsFromTex()} reads \verb{\\includegraphics\{\}} entries from a TeX file.

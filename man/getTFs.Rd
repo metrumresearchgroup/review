@@ -13,15 +13,15 @@ getTFs(.file, .figures_tex = "auto", .tables_tex = "auto")
 \verb{\\includegraphics\{\}} entries used to validate and correct extracted figure
 paths. The default, \code{"auto"}, looks for \code{sections/figures.tex} next to
 \code{.file}. TeX-derived paths are normalized relative to the current working
-directory when possible, otherwise relative to \code{here::here()}. Use
-\code{NULL} to skip figure TeX validation.}
+directory when possible, otherwise relative to \code{here::here()}.
+Use \code{NULL} to skip figure TeX validation.}
 
 \item{.tables_tex}{Optional file path to a LaTeX file containing \verb{\\input\{\}}
 entries used to validate and correct extracted table paths. The default,
 \code{"auto"}, looks for \code{sections/tables.tex} next to \code{.file}. TeX-derived
-paths are normalized relative to the current working directory when possible,
-otherwise relative to \code{here::here()}. Use \code{NULL} to skip table TeX
-validation.}
+paths are normalized relative to the current working directory when
+possible, otherwise relative to \code{here::here()}. Use \code{NULL} to skip table
+TeX validation.}
 }
 \description{
 Parses a PDF and extracts the file paths printed in lines beginning with
