@@ -35,6 +35,10 @@ compareDashboard <- function(.path) {
   fig_names <- basename(fig_files)
   fig_map <- stats::setNames(fig_files, fig_names)
 
+  sv_status <- svnStatus(fs::path_abs(.path))
+  modified <- sv_status$path[sv_status$status == "modified"]
+  fig_labels <- ifelse(fig_names %in% modified, paste0(fig_names, " (M)"), fig_names)
+
   fig_dir <- fs::path_abs(.path)
   rev_dir <- file.path(tempdir(), "review-figure-dashboard")
   dir.create(rev_dir, showWarnings = FALSE, recursive = TRUE)
@@ -69,7 +73,7 @@ compareDashboard <- function(.path) {
         .fig-asset { width:100%; border:1px solid #e9ecef; }
         "
       ),
-      shiny::selectInput("figure_file", "Figure", choices = fig_names),
+      shiny::selectInput("figure_file", "Figure", choices = stats::setNames(fig_names, fig_labels)),
       shiny::div(
         class = "text-muted mb-2",
         shiny::tags$i(
