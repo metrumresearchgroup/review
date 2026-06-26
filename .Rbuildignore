@@ -6,3 +6,7 @@
 ^\.github$
 pkgr.yml
 ^README\.Rmd$
+^bbr-nonmem-poppk-foce$
+^review\.Rcheck$
+^review_[^/]*[.]tar[.]gz$
+^\.claude$

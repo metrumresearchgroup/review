@@ -1,3 +1,6 @@
+# Force sequential execution so tests match CI behaviour and don't spawn extra workers.
+future::plan("sequential")
+
 # Developer sys and svn info
 user_lookup <- dplyr::tribble(
   ~sys, ~svn,
@@ -23,8 +26,11 @@ create_test_svn <- function(.user_lookup = user_lookup) {
   .command <-
     glue::glue("svn co svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests {remote_repo_local} -q -q")
   
-  system(.command)
+  checkout_status <- system(.command)
+  testthat::skip_if(
+    checkout_status != 0 || !dir.exists(remote_repo_local),
+    "Skipped SVN integration tests because the test repository could not be checked out"
+  )
   
   setwd(remote_repo_local)
 }
-

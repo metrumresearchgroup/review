@@ -4,19 +4,41 @@
 \alias{getTFs}
 \title{Extract file path of tables and figures}
 \usage{
-getTFs(.file)
+getTFs(.file, .figures_tex = "auto", .tables_tex = "auto")
 }
 \arguments{
 \item{.file}{File path of PDF containing tables and figures}
+
+\item{.figures_tex}{Optional file path to a LaTeX file containing
+\verb{\\includegraphics\{\}} entries used to validate and correct extracted figure
+paths. The default, \code{"auto"}, looks for \code{sections/figures.tex} next to
+\code{.file}. TeX-derived paths are normalized relative to the current working
+directory when possible, otherwise relative to \code{here::here()}. Use
+\code{NULL} to skip figure TeX validation.}
+
+\item{.tables_tex}{Optional file path to a LaTeX file containing \verb{\\input\{\}}
+entries used to validate and correct extracted table paths. The default,
+\code{"auto"}, looks for \code{sections/tables.tex} next to \code{.file}. TeX-derived
+paths are normalized relative to the current working directory when possible,
+otherwise relative to \code{here::here()}. Use \code{NULL} to skip table TeX
+validation.}
 }
 \description{
 Parses a PDF and extracts the file paths printed in lines beginning with
 \code{Source graphic:} (figures) and \code{Source file:} (tables), along with
 the most recently encountered \code{Source code:} path. Page numbers are
-retained to help trace where each entry was found.
+retained to help trace where each entry was found. The returned data frame
+includes row-level checks for whether the artifact path exists, whether the
+source code path exists, whether the artifact was found in the PDF, and
+whether it was listed in supplied or auto-discovered TeX files.
 }
 \examples{
 \dontrun{
   getTFs(here::here("deliv/report/pk-report.pdf"))
+  getTFs(
+    here::here("deliv/report/report.pdf"),
+    .figures_tex = here::here("deliv/report/sections/figures.tex"),
+    .tables_tex = here::here("deliv/report/sections/tables.tex")
+  )
 }
 }
