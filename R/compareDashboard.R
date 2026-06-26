@@ -151,7 +151,7 @@ compareDashboard <- function(.path) {
         ))
       }
 
-      render_panel <- function(.rev, .label) {
+      render_panel <- function(.rev, .role) {
         file_path <- current_file()
         rev_file <- get_revision_file(file_path, .rev, rev_dir)
         ext <- tolower(tools::file_ext(rev_file))
@@ -162,10 +162,16 @@ compareDashboard <- function(.path) {
         }
         src <- utils::URLencode(src)
 
-        caption <- if (identical(.rev, "Local")) {
-          paste0(.label, " (Local)")
+        rev_label <- if (identical(.rev, "Local")) {
+          "Local"
         } else {
-          paste0(.label, " (Rev: ", .rev, ")")
+          paste0("Revision ", .rev)
+        }
+        caption_text <- paste0(basename(file_path), ": ", rev_label)
+        caption_style <- if (.role == "prior") {
+          "color:#991b1b; background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:4px 10px;"
+        } else {
+          "color:#166534; background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:4px 10px;"
         }
 
         asset <- if (ext == "png") {
@@ -185,7 +191,11 @@ compareDashboard <- function(.path) {
 
         shiny::tags$div(
           class = "fig-panel",
-          shiny::tags$div(class = "fig-caption", caption),
+          shiny::tags$div(
+            class = "fig-caption",
+            style = caption_style,
+            caption_text
+          ),
           asset
         )
       }
@@ -193,8 +203,8 @@ compareDashboard <- function(.path) {
       newer_rev <- if (is.null(p$newer)) "Local" else p$newer
 
       shiny::fluidRow(
-        shiny::column(6, render_panel(p$prior, "Older")),
-        shiny::column(6, render_panel(newer_rev, "Newer"))
+        shiny::column(6, render_panel(p$prior, "prior")),
+        shiny::column(6, render_panel(newer_rev, "newer"))
       )
     })
   }
