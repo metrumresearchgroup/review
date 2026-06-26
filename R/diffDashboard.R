@@ -23,11 +23,10 @@ diffDashboard <- function(.file) {
 
   sv_status <- svnStatus(dirname(fs::path_abs(.file)))
   is_modified <- basename(.file) %in% sv_status$path[sv_status$status == "modified"]
-  title_label <- if (is_modified) "Revision Comparison: (M)" else "Revision Comparison:"
 
   # --- UI ---
   ui <- bslib::page_sidebar(
-    title = dashboard_title(title_label, .file),
+    title = dashboard_title("Revision Comparison:", .file, modified = is_modified),
     theme = bslib::bs_theme(bootswatch = "cosmo"),
     sidebar = bslib::sidebar(
       open = "always",

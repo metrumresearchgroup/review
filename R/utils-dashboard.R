@@ -99,13 +99,18 @@ compute_selection <- function(ids) {
 #'
 #' @return `htmltools::tag` for use in a title slot.
 #' @noRd
-dashboard_title <- function(label, path) {
+dashboard_title <- function(label, path, modified = FALSE) {
+  path_text <- if (modified) {
+    paste0(fs::path_rel(path), " (M)")
+  } else {
+    fs::path_rel(path)
+  }
   htmltools::div(
     style = "display:flex; gap:.35rem; align-items:baseline; font-weight:600;",
     htmltools::span(label),
     htmltools::span(
       style = "opacity:.7; font-weight:400;",
-      fs::path_rel(path)
+      path_text
     )
   )
 }
