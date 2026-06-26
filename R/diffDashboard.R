@@ -82,7 +82,11 @@ diffDashboard <- function(.file) {
       {
         cur <- selection()
         clicked <- as.character(input$rev_clicked)
-        new_ids <- update_selection(cur$ids, clicked, max_sel = 2L)
+        new_ids <- if (length(cur$ids) >= 2L && !clicked %in% cur$ids) {
+          resolve_third_click(cur$ids, clicked, svn_log)
+        } else {
+          update_selection(cur$ids, clicked, max_sel = 2L)
+        }
         selection(compute_selection(new_ids))
       },
       ignoreInit = TRUE

@@ -34,6 +34,22 @@ update_selection <- function(ids, clicked, max_sel = 2L) {
   new
 }
 
+#' Resolve which selected revision to replace when a third is clicked
+#'
+#' @param ids `character(2)` currently selected revision IDs.
+#' @param clicked `character(1)` newly clicked revision ID.
+#' @param svn_log `data.frame` from `getRevHistory()`, used for positional rank.
+#'
+#' @return `character(2)` updated selection with the nearer endpoint replaced.
+#' @noRd
+resolve_third_click <- function(ids, clicked, svn_log) {
+  all_revs <- as.character(svn_log$rev)
+  rank <- stats::setNames(seq_along(all_revs), all_revs)
+  click_rank <- rank[clicked]
+  id_ranks <- rank[ids]
+  replace <- ids[which.min(abs(id_ranks - click_rank))]
+  c(setdiff(ids, replace), clicked)
+}
 
 #' Compute a paired selection (prior/newer) from selected revision IDs
 #'
