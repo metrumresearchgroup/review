@@ -95,7 +95,11 @@ compareDashboard <- function(.path) {
       getRevHistory(.file = pathFromLogRoot(current_file()))
     })
 
-    selection <- shiny::reactiveVal(list(ids = character(), prior = NULL, newer = NULL))
+    selection <- shiny::reactiveVal(list(
+      ids = character(),
+      prior = NULL,
+      newer = NULL
+    ))
 
     shiny::observeEvent(
       current_file(),
@@ -117,21 +121,25 @@ compareDashboard <- function(.path) {
     shiny::observeEvent(
       input$rev_clicked,
       {
-        new_ids <- update_selection(
-          selection()$ids,
-          input$rev_clicked,
-          max_sel = 2L
-        )
+        cur <- selection()
+        clicked <- as.character(input$rev_clicked)
+        new_ids <- if (length(cur$ids) >= 2L && !clicked %in% cur$ids) {
+          prior_id <- if (!is.null(cur$prior)) {
+            as.character(cur$prior)
+          } else {
+            cur$ids[1L]
+          }
+          c(setdiff(cur$ids, prior_id), clicked)
+        } else {
+          update_selection(cur$ids, clicked, max_sel = 2L)
+        }
         selection(compute_selection(new_ids))
       },
       ignoreInit = TRUE
     )
 
     output$timeline_ui <- shiny::renderUI({
-      chosen <- selection()$ids
-      sv <- svn_log()
-
-      render_timeline(sv, chosen)
+      render_timeline(svn_log(), selection())
     })
 
     output$figure_ui <- shiny::renderUI({
