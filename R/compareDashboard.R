@@ -35,6 +35,47 @@ compareDashboard <- function(.path) {
   fig_names <- basename(fig_files)
   fig_map <- stats::setNames(fig_files, fig_names)
 
+  modified <- tryCatch(
+    {
+      status <- svnCommand("status", .file = fs::path_abs(.path))
+      entries <- if (is.list(status$target)) {
+        status$target
+      } else {
+        list(status$target)
+      }
+      paths <- vapply(
+        entries,
+        function(e) {
+          if (is.list(e) && !is.null(e$.attrs[["path"]])) {
+            basename(e$.attrs[["path"]])
+          } else {
+            NA_character_
+          }
+        },
+        character(1L)
+      )
+      items <- vapply(
+        entries,
+        function(e) {
+          if (is.list(e) && !is.null(e[["wc-status"]])) {
+            e[["wc-status"]][[".attrs"]][["item"]]
+          } else {
+            NA_character_
+          }
+        },
+        character(1L)
+      )
+      paths[!is.na(paths) & !is.na(items) & items == "modified"]
+    },
+    error = function(e) character()
+  )
+
+  fig_labels <- ifelse(
+    fig_names %in% modified,
+    paste0(fig_names, " (M)"),
+    fig_names
+  )
+
   fig_dir <- fs::path_abs(.path)
   rev_dir <- file.path(tempdir(), "review-figure-dashboard")
   dir.create(rev_dir, showWarnings = FALSE, recursive = TRUE)
@@ -69,7 +110,11 @@ compareDashboard <- function(.path) {
         .fig-asset { width:100%; border:1px solid #e9ecef; }
         "
       ),
-      shiny::selectInput("figure_file", "Figure", choices = fig_names),
+      shiny::selectInput(
+        "figure_file",
+        "Figure",
+        choices = stats::setNames(fig_names, fig_labels)
+      ),
       shiny::div(
         class = "text-muted mb-2",
         shiny::tags$i(
