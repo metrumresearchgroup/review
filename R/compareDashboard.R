@@ -73,7 +73,7 @@ compareDashboard <- function(.path) {
       shiny::div(
         class = "text-muted mb-2",
         shiny::tags$i(
-          "Click two revisions to compare side by side.",
+          "Click two to compare. Older is red, newer is green.",
           style = "font-size: smaller;"
         )
       ),
