@@ -41,6 +41,9 @@ tex_report_dir <- function(.file) {
 
 tex_read_lines <- function(.file) {
   lines <- readLines(.file, warn = FALSE)
+  text <- paste(lines, collapse = "\n")
+  text <- gsub("(?s)<!--.*?-->", "", text, perl = TRUE)
+  lines <- strsplit(text, "\n", fixed = TRUE)[[1]]
   sub("(^|[^\\\\])%.*$", "\\1", lines, perl = TRUE)
 }
 
