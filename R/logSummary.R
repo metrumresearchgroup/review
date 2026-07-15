@@ -53,7 +53,7 @@ logSummary <- function(directory=getwd()){
 	log
 }
 
-#' @keywords internal
+#' @exportS3Method
 print.logSummary <- function(x,...){
 	x$origin[x$origin==x$file] <- ''
 	x$revo[x$origin=='' & x$revo == x$revf] <- ''
