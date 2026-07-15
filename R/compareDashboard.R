@@ -35,6 +35,10 @@ compareDashboard <- function(.path) {
   fig_names <- basename(fig_files)
   fig_map <- stats::setNames(fig_files, fig_names)
 
+  sv_status <- svnStatus(fs::path_abs(.path))
+  modified <- sv_status$path[sv_status$status == "modified"]
+  fig_labels <- ifelse(fig_names %in% modified, paste0(fig_names, " (M)"), fig_names)
+
   fig_dir <- fs::path_abs(.path)
   rev_dir <- file.path(tempdir(), "review-figure-dashboard")
   dir.create(rev_dir, showWarnings = FALSE, recursive = TRUE)
@@ -69,11 +73,11 @@ compareDashboard <- function(.path) {
         .fig-asset { width:100%; border:1px solid #e9ecef; }
         "
       ),
-      shiny::selectInput("figure_file", "Figure", choices = fig_names),
+      shiny::selectInput("figure_file", "Figure", choices = stats::setNames(fig_names, fig_labels)),
       shiny::div(
         class = "text-muted mb-2",
         shiny::tags$i(
-          "Click two revisions to compare side by side.",
+          "Click two to compare. Older is red, newer is green.",
           style = "font-size: smaller;"
         )
       ),
@@ -95,7 +99,11 @@ compareDashboard <- function(.path) {
       getRevHistory(.file = pathFromLogRoot(current_file()))
     })
 
-    selection <- shiny::reactiveVal(list(ids = character(), prior = NULL, newer = NULL))
+    selection <- shiny::reactiveVal(list(
+      ids = character(),
+      prior = NULL,
+      newer = NULL
+    ))
 
     shiny::observeEvent(
       current_file(),
@@ -117,21 +125,16 @@ compareDashboard <- function(.path) {
     shiny::observeEvent(
       input$rev_clicked,
       {
-        new_ids <- update_selection(
-          selection()$ids,
-          input$rev_clicked,
-          max_sel = 2L
-        )
+        cur <- selection()
+        clicked <- as.character(input$rev_clicked)
+        new_ids <- update_selection(cur$ids, clicked, max_sel = 2L)
         selection(compute_selection(new_ids))
       },
       ignoreInit = TRUE
     )
 
     output$timeline_ui <- shiny::renderUI({
-      chosen <- selection()$ids
-      sv <- svn_log()
-
-      render_timeline(sv, chosen)
+      render_timeline(svn_log(), selection())
     })
 
     output$figure_ui <- shiny::renderUI({
@@ -143,7 +146,7 @@ compareDashboard <- function(.path) {
         ))
       }
 
-      render_panel <- function(.rev, .label) {
+      render_panel <- function(.rev, .role) {
         file_path <- current_file()
         rev_file <- get_revision_file(file_path, .rev, rev_dir)
         ext <- tolower(tools::file_ext(rev_file))
@@ -154,10 +157,16 @@ compareDashboard <- function(.path) {
         }
         src <- utils::URLencode(src)
 
-        caption <- if (identical(.rev, "Local")) {
-          paste0(.label, " (Local)")
+        rev_label <- if (identical(.rev, "Local")) {
+          "Local"
         } else {
-          paste0(.label, " (Rev: ", .rev, ")")
+          paste0("Revision ", .rev)
+        }
+        caption_text <- paste0(basename(file_path), ": ", rev_label)
+        caption_style <- if (.role == "prior") {
+          "color:#991b1b; background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:4px 10px;"
+        } else {
+          "color:#166534; background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:4px 10px;"
         }
 
         asset <- if (ext == "png") {
@@ -177,7 +186,11 @@ compareDashboard <- function(.path) {
 
         shiny::tags$div(
           class = "fig-panel",
-          shiny::tags$div(class = "fig-caption", caption),
+          shiny::tags$div(
+            class = "fig-caption",
+            style = caption_style,
+            caption_text
+          ),
           asset
         )
       }
@@ -185,8 +198,8 @@ compareDashboard <- function(.path) {
       newer_rev <- if (is.null(p$newer)) "Local" else p$newer
 
       shiny::fluidRow(
-        shiny::column(6, render_panel(p$prior, "Older")),
-        shiny::column(6, render_panel(newer_rev, "Newer"))
+        shiny::column(6, render_panel(p$prior, "prior")),
+        shiny::column(6, render_panel(newer_rev, "newer"))
       )
     })
   }
