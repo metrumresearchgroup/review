@@ -21,9 +21,12 @@ diffDashboard <- function(.file) {
 
   default_sel <- default_selection_from_log(svn_log)
 
+  sv_status <- svnStatus(dirname(fs::path_abs(.file)))
+  is_modified <- basename(.file) %in% sv_status$path[sv_status$status == "modified"]
+
   # --- UI ---
   ui <- bslib::page_sidebar(
-    title = dashboard_title("Revision Comparison:", .file),
+    title = dashboard_title("Revision Comparison:", .file, modified = is_modified),
     theme = bslib::bs_theme(bootswatch = "cosmo"),
     sidebar = bslib::sidebar(
       open = "always",
@@ -77,11 +80,9 @@ diffDashboard <- function(.file) {
     shiny::observeEvent(
       input$rev_clicked,
       {
-        new_ids <- update_selection(
-          selection()$ids,
-          input$rev_clicked,
-          max_sel = 2L
-        )
+        cur <- selection()
+        clicked <- as.character(input$rev_clicked)
+        new_ids <- update_selection(cur$ids, clicked, max_sel = 2L)
         selection(compute_selection(new_ids))
       },
       ignoreInit = TRUE
@@ -89,9 +90,7 @@ diffDashboard <- function(.file) {
 
     # --- Timeline UI (LOCAL first, then SVN revisions) ---
     output$timeline_ui <- shiny::renderUI({
-      chosen <- selection()$ids
-
-      render_timeline(svn_log, chosen)
+      render_timeline(svn_log, selection())
     })
 
     output$diff_html <- shiny::renderUI({

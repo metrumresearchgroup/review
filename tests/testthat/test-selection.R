@@ -10,7 +10,7 @@ testthat::test_that("update_selection: adds, toggles, de-duplicates, enforces ma
   ids <- update_selection(ids, "Local")
   testthat::expect_identical(ids, c("105", "Local"))
 
-  # add third -> keeps the most recent two (tail)
+  # add third -> drops oldest (FIFO)
   ids <- update_selection(ids, "103")
   testthat::expect_identical(ids, c("Local", "103"))
 
@@ -26,7 +26,7 @@ testthat::test_that("update_selection: adds, toggles, de-duplicates, enforces ma
 testthat::test_that("update_selection: preserves first-occurrence order before truncation", {
   ids <- c("Local", "110")
   ids <- update_selection(ids, "105") # => c("Local","110","105") -> tail 2
-  testthat::expect_identical(ids, c("110", "105")) # last two kept in order they appeared
+  testthat::expect_identical(ids, c("110", "105"))
 })
 
 testthat::test_that("update_selection: accepts non-character & invalid clicks gracefully", {
@@ -51,7 +51,7 @@ testthat::test_that("update_selection: configurable max_sel works", {
   ids <- update_selection(ids, "103", max_sel = 3L)
   testthat::expect_identical(ids, c("101", "102", "103"))
 
-  # adding a 4th keeps the last three
+  # adding a 4th drops the oldest (FIFO)
   ids <- update_selection(ids, "104", max_sel = 3L)
   testthat::expect_identical(ids, c("102", "103", "104"))
 })
@@ -119,7 +119,7 @@ testthat::test_that("integration: update_selection + compute_selection behave as
   ids <- character()
   ids <- update_selection(ids, "105")
   ids <- update_selection(ids, "Local")
-  # adding a third keeps last 2
+  # adding a third drops the oldest (FIFO)
   ids <- update_selection(ids, "103")
   testthat::expect_identical(ids, c("Local", "103"))
 
