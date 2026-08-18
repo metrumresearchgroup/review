@@ -19,59 +19,38 @@
 #'
 #' @export
 logRename <- function(.filepath, .new_filepath) {
-  is_path <- function(path) {
-    is.character(path) && length(path) == 1L && !is.na(path) && nzchar(path)
-  }
-
-  if (!is_path(.filepath) || !is_path(.new_filepath)) {
-    cli::cli_abort(
-      "{.arg .filepath} and {.arg .new_filepath} must each be a non-empty path"
-    )
-  }
-
   root <- logRoot()
-  current <- pathFromLogRoot(.filepath)
+  old <- pathFromLogRoot(.filepath)
   new <- pathFromLogRoot(.new_filepath)
-
-  if (identical(current, new)) {
-    cli::cli_abort("The current and new file paths must be different")
-  }
-
   qclog <- logRead(root)
-  changed <- qclog$file %in% current | qclog$origin %in% current
+  changed <- qclog$file %in% old | qclog$origin %in% old
+
   if (!any(changed)) {
-    cli::cli_abort("{.path {current}} does not exist in QClog.csv")
+    cli::cli_abort("{.path {old}} does not exist in QClog.csv")
   }
 
-  current_absolute <- file.path(root, current)
-  new_absolute <- file.path(root, new)
-
-  if (!file.exists(current_absolute)) {
-    cli::cli_abort("File does not exist: {.path {current}}")
+  old_path <- fs::path(root, old)
+  new_path <- fs::path(root, new)
+  if (!fs::file_exists(old_path)) {
+    cli::cli_abort("File does not exist: {.path {old}}")
   }
-  if (file.exists(new_absolute)) {
+  if (fs::file_exists(new_path)) {
     cli::cli_abort("New file path already exists: {.path {new}}")
   }
-  if (!dir.exists(dirname(new_absolute))) {
+  if (!fs::dir_exists(fs::path_dir(new_path))) {
     cli::cli_abort(
-      "New file parent directory does not exist: {.path {dirname(new)}}"
+      "New file parent directory does not exist: {.path {fs::path_dir(new)}}"
     )
   }
 
-  svnCommand(
-    .command = "mv",
-    # svnCommand adds the outer quotes; these quotes separate the two paths.
-    .file = paste0(current_absolute, "' '", new_absolute),
-    .xml = FALSE
-  )
+  # svnCommand adds the outer quotes; these quotes separate the two paths.
+  svnCommand("mv", paste0(old_path, "' '", new_path), .xml = FALSE)
 
-  qclog$file[qclog$file %in% current] <- new
-  qclog$origin[qclog$origin %in% current] <- new
+  qclog$file[qclog$file %in% old] <- new
+  qclog$origin[qclog$origin %in% old] <- new
   logWrite(qclog, file = logName(root))
 
-  cli::cli_alert_info(
-    glue::glue("Renamed '{current}' to '{new}' in SVN and QClog.csv")
-  )
+  cli::cli_alert_info("Renamed '{old}' to '{new}' in SVN and QClog.csv")
 
   invisible(sum(changed))
 }

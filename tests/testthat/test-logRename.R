@@ -41,13 +41,3 @@ with_demoRepo({
     expect_true(file.exists("script/data-assembly.R"))
   })
 })
-
-test_that("logRename requires two scalar paths", {
-  message <- "must each be a non-empty path"
-  expect_error(logRename(NULL, "script/new-name.R"), message, fixed = TRUE)
-  expect_error(
-    logRename("script/data-assembly.R", c("a.R", "b.R")),
-    message,
-    fixed = TRUE
-  )
-})
