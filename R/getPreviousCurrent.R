@@ -18,7 +18,7 @@ getPreviousCurrent <- function(.file, .previous_revision, .current_revision){
     
     .current_revision_temp_file <- tempfile(fileext = glue::glue(".{tools::file_ext(.file)}"))
     
-    system(glue::glue("cp {.file} {.current_revision_temp_file}"))
+    fs::file_copy(.file, .current_revision_temp_file)
     
     .current_revision_header <- glue::glue("{basename(.file)}: Local")
     
