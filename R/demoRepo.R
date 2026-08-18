@@ -86,7 +86,7 @@ demoRepo <- function(.project_name) {
   logCreate()
   
   # Check everything into SVN
-  system("svn add * -q -q")
+  system("svn add --force -q .")
   system(glue::glue("svn commit -m 'initial commit' -q -q"))
   
   # Assign and accept scripts in QC log
