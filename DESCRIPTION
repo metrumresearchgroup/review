@@ -33,6 +33,7 @@ Imports:
     htmltools,
     shiny,
     pdftools,
+    processx,
     stringi,
     here,
     purrr

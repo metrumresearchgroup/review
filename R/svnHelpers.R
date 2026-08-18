@@ -1,3 +1,23 @@
+#' Run 'svn ...' for side-effects.
+#'
+#' Standard output is discarded, and standard error is displayed only when an
+#' error is signaled.
+#'
+#' @param ... Arguments passed to svn.
+#' @noRd
+svnRun <- function(...) {
+  args <- purrr::flatten_chr(list(...))
+  processx::run(
+    command = "svn",
+    args = args,
+    echo = FALSE,
+    stdout = NULL,
+    error_on_status = TRUE
+  )
+
+  return(invisible(NULL))
+}
+
 #' @noRd
 svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xml = TRUE) {
   

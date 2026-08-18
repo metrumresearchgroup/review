@@ -24,7 +24,9 @@ svnExport <- function(.file, .revision = NULL, .output_dir = getwd(), .return_fi
   }
   
   if (is.null(.revision)) {
-    .revision <- as.numeric(svnInfo(.file = .file)[["rev"]])
+    .revision <- svnInfo(.file = .file)[["rev"]]
+  } else {
+    .revision <- as.character(.revision)
   }
   
   .file_rev_path <- 
@@ -38,24 +40,10 @@ svnExport <- function(.file, .revision = NULL, .output_dir = getwd(), .return_fi
         tools::file_ext(.file)
       )
     )
-  
-  # Add the single quotes in between the files
-  # svnCommand will add the outer quotes
-  .file_command <- paste0(.file, "' '", .file_rev_path)
-  
-  export_try <- tryCatch(
-    svnCommand(
-      .file = .file_command,
-      .command = "export",
-      .flags = paste0("--force -r", .revision),
-      .xml = FALSE
-    ),
-    error = identity
+
+  svnRun(
+    "export", "--force", "-r", .revision, .file, .file_rev_path
   )
-  
-  if (inherits(export_try, "error")) {
-    stop("svn export failed")
-  }
   
   if (!.quiet) {
     cli::cli_inform(paste0("File exported: ", .file_rev_path))

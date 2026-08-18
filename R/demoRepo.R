@@ -34,7 +34,7 @@ demoRepo <- function(.project_name) {
     fs::dir_delete(repoDir)
   }
   
-  system(glue::glue("svn co file://{repoInitPath} {repoDir} -q"))
+  svnRun("co", paste0("file://", repoInitPath), repoDir)
   
   setwd(repoDir)
   
@@ -86,8 +86,8 @@ demoRepo <- function(.project_name) {
   logCreate()
   
   # Check everything into SVN
-  system("svn add --force -q .")
-  system(glue::glue("svn commit -m 'initial commit' -q -q"))
+  svnRun("add", "--force", ".")
+  svnRun("commit", "-m", "initial commit")
   
   # Assign and accept scripts in QC log
   logAssign("script/data-assembly.R")
@@ -95,14 +95,14 @@ demoRepo <- function(.project_name) {
   logAssign("script/combine-da.R")
   logAssign("script/examp-txt.txt")
   
-  system(glue::glue("svn commit -m 'logAssign scripts ready for QC' -q -q"))
+  svnRun("commit", "-m", "logAssign scripts ready for QC")
   
   logAccept("script/data-assembly.R")
   logAccept("script/pk/load-spec.R")
   logAccept("script/combine-da.R")
   
   # Check in updates to QC log
-  system(glue::glue("svn commit -m 'logAccept scripts after QC' -q -q"))
+  svnRun("commit", "-m", "logAccept scripts after QC")
   
   # Make edits to QCed file
   writeLines(
@@ -110,7 +110,7 @@ demoRepo <- function(.project_name) {
     "script/pk/load-spec.R"
   )
   
-  system(glue::glue("svn commit -m 'modify load-spec script' -q -q"))
+  svnRun("commit", "-m", "modify load-spec script")
   
   writeLines(
     c(
@@ -127,7 +127,7 @@ demoRepo <- function(.project_name) {
     ),
     "script/data-assembly.R"
   )
-  system(glue::glue("svn commit -m 'modify data-assembly' -q -q"))
+  svnRun("commit", "-m", "modify data-assembly")
   
   writeLines(
     c("The following tasks are suggested to gain familiarity with the review package:",
@@ -182,13 +182,16 @@ demoRepo <- function(.project_name) {
     dir = "deliv/table"
   )
   
-  system("svn add 'deliv/figure/example-pdf1.pdf' -q -q")
-  system("svn add 'deliv/figure/example png1.png' -q -q")
-  system("svn add 'deliv/figure/example-pdf2.pdf' -q -q")
-  system("svn add 'deliv/figure/example-pdf3.pdf' -q -q")
-  system("svn add 'deliv/table/example-table-1.tex' -q -q")
-  system("svn add 'deliv/table/example-table-long-1.tex' -q -q")
-  system(glue::glue("svn commit -m 'add pdf' -q -q"))
+  svnRun(
+    "add",
+    "deliv/figure/example-pdf1.pdf",
+    "deliv/figure/example png1.png",
+    "deliv/figure/example-pdf2.pdf",
+    "deliv/figure/example-pdf3.pdf",
+    "deliv/table/example-table-1.tex",
+    "deliv/table/example-table-long-1.tex"
+  )
+  svnRun("commit", "-m", "add pdf")
   
   Sys.sleep(1)
   
