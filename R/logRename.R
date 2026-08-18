@@ -19,47 +19,48 @@
 #'
 #' @export
 logRename <- function(.filepath, .new_filepath) {
-  paths <- list(current = .filepath, new = .new_filepath)
-  valid_path <- purrr::map_lgl(
-    paths,
-    function(path) {
-      is.character(path) && length(path) == 1L && !is.na(path) && nzchar(path)
-    }
-  )
+  is_path <- function(path) {
+    is.character(path) && length(path) == 1L && !is.na(path) && nzchar(path)
+  }
 
-  if (!all(valid_path)) {
-    stop("`.filepath` and `.new_filepath` must each be a non-empty path")
+  if (!is_path(.filepath) || !is_path(.new_filepath)) {
+    cli::cli_abort(
+      "{.arg .filepath} and {.arg .new_filepath} must each be a non-empty path"
+    )
   }
 
   root <- logRoot()
-  qclog <- logRead(root)
   current <- pathFromLogRoot(.filepath)
   new <- pathFromLogRoot(.new_filepath)
 
   if (identical(current, new)) {
-    stop("The current and new file paths must be different")
+    cli::cli_abort("The current and new file paths must be different")
   }
 
+  qclog <- logRead(root)
   changed <- qclog$file %in% current | qclog$origin %in% current
   if (!any(changed)) {
-    stop(paste0(current, " does not exist in QClog.csv"))
+    cli::cli_abort("{.path {current}} does not exist in QClog.csv")
   }
 
-  absolute_path <- function(path) {
-    if (fs::is_absolute_path(path)) path else file.path(root, path)
-  }
-  current_absolute <- absolute_path(current)
-  new_absolute <- absolute_path(new)
+  current_absolute <- file.path(root, current)
+  new_absolute <- file.path(root, new)
 
   if (!file.exists(current_absolute)) {
-    stop(paste0("File does not exist: ", current))
+    cli::cli_abort("File does not exist: {.path {current}}")
   }
   if (file.exists(new_absolute)) {
-    stop(paste0("New file path already exists: ", new))
+    cli::cli_abort("New file path already exists: {.path {new}}")
+  }
+  if (!dir.exists(dirname(new_absolute))) {
+    cli::cli_abort(
+      "New file parent directory does not exist: {.path {dirname(new)}}"
+    )
   }
 
   svnCommand(
     .command = "mv",
+    # svnCommand adds the outer quotes; these quotes separate the two paths.
     .file = paste0(current_absolute, "' '", new_absolute),
     .xml = FALSE
   )

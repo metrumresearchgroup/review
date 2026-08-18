@@ -1,7 +1,7 @@
 with_demoRepo({
   test_that("logRename renames the SVN file and all QC log references", {
     old <- "script/data-assembly.R"
-    new <- "script/data-assembly-renamed.R"
+    new <- "script/data assembly renamed.R"
 
     logAssign("script/examp-txt.txt", origin = old)
     before <- logRead()
@@ -16,7 +16,7 @@ with_demoRepo({
     expect_false(old %in% after$origin)
     expect_equal(sum(after$file %in% new | after$origin %in% new), changed)
     expect_equal(nrow(after), nrow(before))
-    expect_true(any(grepl("data-assembly-renamed[.]R", svn_status)))
+    expect_true(any(grepl("data assembly renamed[.]R", svn_status)))
     expect_true(any(grepl("data-assembly[.]R", svn_status)))
   })
 })
@@ -33,6 +33,21 @@ with_demoRepo({
       "already exists",
       fixed = TRUE
     )
+    expect_error(
+      logRename("script/data-assembly.R", "missing/new-name.R"),
+      "parent directory does not exist",
+      fixed = TRUE
+    )
     expect_true(file.exists("script/data-assembly.R"))
   })
+})
+
+test_that("logRename requires two scalar paths", {
+  message <- "must each be a non-empty path"
+  expect_error(logRename(NULL, "script/new-name.R"), message, fixed = TRUE)
+  expect_error(
+    logRename("script/data-assembly.R", c("a.R", "b.R")),
+    message,
+    fixed = TRUE
+  )
 })
