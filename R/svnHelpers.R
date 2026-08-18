@@ -18,29 +18,19 @@ svnRun <- function(...) {
   return(invisible(NULL))
 }
 
+#' Run 'svn {subcommand} --xml ...', returning the parsed XML as a list.
+#'
+#' @param subcommand An svn subcommand.
+#' @param ... Arguments passed to the subcommand.
 #' @noRd
-svnCommand <- function(.command, .file = NULL, .flags = NULL, .quiet = TRUE, .xml = TRUE) {
-  
-  command_run <- paste("svn",
-                       .command,
-                       .flags,
-                       ifelse(.xml, "--xml", ""),
-                       paste0("'", .file, "'"),
-                       ifelse(.quiet, "2>/dev/null", ""),
-                       sep = " ")
-  
-  temp_loc <- system(command_run, intern = TRUE) %>% suppressWarnings()
-  
-  if (!is.null(attr(temp_loc, "status"))) {
-    stop("svn command failed")
-  }
-  
-  if (!.xml) {
-    return(invisible(NULL))
-  }
-  
-  parsed_results <- XML::xmlParse(temp_loc)
-  list_results <- XML::xmlToList(parsed_results)
-  
-  list_results
+svnXML <- function(subcommand, ...) {
+  args <- c(subcommand, "--xml", purrr::flatten_chr(list(...)))
+  proc <- processx::run(
+    command = "svn",
+    args = args,
+    error_on_status = TRUE,
+  )
+  out <- proc[["stdout"]]
+
+  return(XML::xmlToList(XML::xmlParse(out)))
 }

@@ -7,16 +7,7 @@
 #'
 #' @export
 repoHistory <- function() {
-  
-  svn_log_v <- tryCatch(
-    svnCommand("log", .flags = "-v"),
-    error = identity
-  )
-  
-  if (inherits(svn_log_v, "error")) {
-    stop("svn log failed")
-  }
-  
+  svn_log_v <- svnXML("log", "-v")
   svn_log_df <-
     dplyr::bind_rows(svn_log_v) %>% 
     tidyr::unnest(paths) %>% 

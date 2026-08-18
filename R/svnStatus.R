@@ -8,7 +8,7 @@
 #' @noRd
 svnStatus <- function(.file) {
   result <- tryCatch(
-    svnCommand(.file = .file, .command = "status"),
+    svnXML("status", .file),
     error = function(e) NULL
   )
   if (is.null(result)) {
