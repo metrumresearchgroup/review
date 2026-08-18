@@ -26,7 +26,7 @@ demoRepo <- function(.project_name) {
   }
   
   # Create svn repo at specified locations
-  system(glue::glue("svnadmin create {repoInitPath}"))
+  processx::run("svnadmin", c("create", repoInitPath))
   
   repoDir <- file.path(repoInitPath, .project_name)
   
