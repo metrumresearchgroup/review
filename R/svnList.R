@@ -5,16 +5,7 @@
 #' 
 #' @noRd
 svnList <- function(){
-  
-  svn_list <- tryCatch(
-    svnCommand("list", .flags = "--depth infinity"),
-    error = identity
-  )
-  
-  if (inherits(svn_list, "error")) {
-    stop("svn list failed")
-  }
-  
+  svn_list <- svnXML("list", "--depth", "infinity")
   list_return <- 
     dplyr::bind_rows(svn_list$list) %>% 
     tidyr::unnest(commit) %>% 

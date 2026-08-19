@@ -76,7 +76,7 @@ fileSummary <- function(.file, .return_df = FALSE) {
   }
   
   log_df <- tryCatch(
-    svnCommand(.file = .file, .command = "log"),
+    svnXML("log", .file),
     error = identity
   )
   

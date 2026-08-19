@@ -7,16 +7,7 @@
 #' 
 #' @noRd
 svnProjInfo <- function(.host_name = "mc1.metrumrg.com"){
-  
-  info_list <- tryCatch(
-    svnCommand(.command = "info"),
-    error = identity
-  )
-  
-  if (inherits(info_list, "error")) {
-    stop("svn info failed")
-  }
-  
+  info_list <- svnXML("info")
   svn_url <- info_list$entry$url
   svn_rev <- as.numeric(info_list$entry$commit$.attrs)
   

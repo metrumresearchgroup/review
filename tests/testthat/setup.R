@@ -20,10 +20,10 @@ create_test_svn <- function(.user_lookup = user_lookup) {
   
   remote_repo_local <- paste0(tempdir(), "/test")
   
-  .command <-
-    glue::glue("svn co svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests {remote_repo_local} -q -q")
-  
-  system(.command)
+  url <- glue::glue(
+    "svn+ssh://{this_user}@mc1-test.metrumrg.com/common/repo/svn-proj-review-tests"
+  )
+  svnRun("co", url, remote_repo_local)
   
   setwd(remote_repo_local)
 }
