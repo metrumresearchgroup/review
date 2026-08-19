@@ -6,9 +6,12 @@ with_demoRepo({
     logAssign("script/examp-txt.txt", origin = old)
     before <- logRead()
 
-    changed <- logRename(old, new)
+    expect_message(
+      changed <- logRename(old, new),
+      "Renamed"
+    )
+
     after <- logRead()
-    svn_status <- system2("svn", c("status", "script"), stdout = TRUE)
 
     expect_false(file.exists(old))
     expect_true(file.exists(new))
@@ -16,8 +19,11 @@ with_demoRepo({
     expect_false(old %in% after$origin)
     expect_equal(sum(after$file %in% new | after$origin %in% new), changed)
     expect_equal(nrow(after), nrow(before))
-    expect_true(any(grepl("data assembly renamed[.]R", svn_status)))
-    expect_true(any(grepl("data-assembly[.]R", svn_status)))
+
+    proc <- processx::run("svn", c("status", "script"))
+    svn_status <- proc[["stdout"]]
+    expect_match(svn_status, "data assembly renamed.R", fixed = TRUE)
+    expect_match(svn_status, "data-assembly.R", fixed = TRUE)
   })
 })
 
