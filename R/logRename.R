@@ -43,8 +43,7 @@ logRename <- function(.filepath, .new_filepath) {
     )
   }
 
-  # svnCommand adds the outer quotes; these quotes separate the two paths.
-  svnCommand("mv", paste0(old_path, "' '", new_path), .xml = FALSE)
+  svnRun("mv", old_path, new_path)
 
   qclog$file[qclog$file %in% old] <- new
   qclog$origin[qclog$origin %in% old] <- new
