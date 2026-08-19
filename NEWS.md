@@ -1,8 +1,23 @@
-# review development
+# review 3.15.0
 
 ## New features and changes
 
-- Added argument to return summary table to `fileSummary` when given a directory. 
+- `fileSummary` can now return a summary table when given a directory. (#199)
+
+- Added `getFigurePathsFromTex` and `getTablePathsFromTex` to extract figure
+  and table paths from TeX files. (#202)
+
+- Improved revision selection in `diffDashboard` and `compareDashboard` with
+  older/newer color coding and indicators for locally modified files. (#203)
+
+- Added `logRename` to rename a version-controlled file and update its paths in
+  `QClog.csv`. (#207)
+
+## Bug fixes
+
+- Subversion commands no longer run through a shell, preventing paths and
+  arguments containing spaces or shell-special characters from being
+  misinterpreted. (#209)
 
 # review 3.14.0
 
