@@ -30,7 +30,7 @@ diffQced <- function(.file,
   
   up_to_date <-
     tryCatch(
-      svnCommand("status", .file, "-u"),
+      svnXML("status", "-u", .file),
       error = identity
     )
   

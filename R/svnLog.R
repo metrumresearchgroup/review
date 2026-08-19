@@ -12,16 +12,7 @@
 #' 
 #' @export
 svnLog <- function(.file) {
-  
-  log_df <- tryCatch(
-    svnCommand(.file = .file, .command = "log"),
-    error = identity
-  )
-  
-  if (inherits(log_df, "error")) {
-    stop("svn log failed")
-  }
-  
+  log_df <- svnXML("log", .file)
   log_return <- 
     dplyr::bind_rows(log_df) %>% 
     dplyr::rename(rev = .attrs) %>% 

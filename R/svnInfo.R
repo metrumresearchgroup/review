@@ -7,16 +7,7 @@
 #' 
 #' @noRd
 svnInfo <- function(.file){
-  
-  info_list <- tryCatch(
-    svnCommand(.file = .file, .command = "info"),
-    error = identity
-  )
-  
-  if (inherits(info_list, "error")) {
-    stop("svn info failed")
-  }
-  
+  info_list <- svnXML("info", .file)
   info_return <- 
     dplyr::bind_rows(info_list$entry$commit) %>% 
     dplyr::rename(rev = .attrs) %>% 
