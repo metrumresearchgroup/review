@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.15.0</span>
       </span>
     </div>
 
@@ -63,6 +63,20 @@
       <small>Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.15.0" id="review-3150">review 3.15.0<a class="anchor" aria-label="anchor" href="#review-3150"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-changes-3-15-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-15-0"></a></h3>
+<ul><li><p><code>fileSummary</code> can now return a summary table when given a directory. (<a href="https://github.com/metrumresearchgroup/review/issues/199" class="external-link">#199</a>)</p></li>
+<li><p>Added <code>getFigurePathsFromTex</code> and <code>getTablePathsFromTex</code> to extract figure and table paths from TeX files. (<a href="https://github.com/metrumresearchgroup/review/issues/202" class="external-link">#202</a>)</p></li>
+<li><p>Improved revision selection in <code>diffDashboard</code> and <code>compareDashboard</code> with older/newer color coding and indicators for locally modified files. (<a href="https://github.com/metrumresearchgroup/review/issues/203" class="external-link">#203</a>)</p></li>
+<li><p>Added <code>logRename</code> to rename a version-controlled file and update its paths in <code>QClog.csv</code>. (<a href="https://github.com/metrumresearchgroup/review/issues/207" class="external-link">#207</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-15-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-15-0"></a></h3>
+<ul><li>Subversion commands no longer run through a shell, preventing paths and arguments containing spaces or shell-special characters from being misinterpreted. (<a href="https://github.com/metrumresearchgroup/review/issues/209" class="external-link">#209</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.14.0" id="review-3140">review 3.14.0<a class="anchor" aria-label="anchor" href="#review-3140"></a></h2>
 <div class="section level3">
