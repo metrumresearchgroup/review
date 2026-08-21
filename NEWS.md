@@ -1,5 +1,12 @@
 # review 3.15.0.9000
 
+## Bug fixes
+
+- Visual diffs from `diffPreviousRevisions` and `diffDashboard` now render as
+  styled HTML in Positron instead of being printed as plain console output.
+
+# review 3.15.0
+
 ## New features and changes
 
 - `fileSummary` can now return a summary table when given a directory. (#199)
@@ -14,9 +21,6 @@
   `QClog.csv`. (#207)
 
 ## Bug fixes
-
-- Visual diffs from `diffPreviousRevisions` and `diffDashboard` now render as
-  styled HTML in Positron instead of being printed as plain console output.
 
 - Subversion commands no longer run through a shell, preventing paths and
   arguments containing spaces or shell-special characters from being
