@@ -8,6 +8,10 @@ with_demoRepo({
     expect_equal(diffVer@current[2], "source(here::here(\"script\", \"data-assembly\", \"da-functions.R\"))")
     expect_equal(diffVer@target[1], diffVer@current[1])
     expect_equal(diffVer@current[10], "derived$tv$dosing <- ex_1")
+
+    diff_html <- paste(as.character(diffVer), collapse = "\n")
+    expect_match(diff_html, "<html", ignore.case = TRUE)
+    expect_match(diff_html, "<style", ignore.case = TRUE)
   })
   
   test_that("diffPreviousRevisions defaults current version of diff to local version", {
@@ -17,4 +21,3 @@ with_demoRepo({
     expect_equal(diffVer@current, "pk_spec <- yspec::load_spec(here::here(\"script\", \"examp-yaml.yaml\"))")
   })
 })
-

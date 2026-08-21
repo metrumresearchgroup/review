@@ -25,7 +25,10 @@ with_demoRepo({
     expect_true(length(diffqc@target) == 5)
     expect_true(length(diffqc@current) == 10)
     expect_equal(diffqc@target[1], diffqc@current[1])
+
+    diff_html <- paste(as.character(diffqc), collapse = "\n")
+    expect_match(diff_html, "<html", ignore.case = TRUE)
+    expect_match(diff_html, "<style", ignore.case = TRUE)
   })
   
 })
-

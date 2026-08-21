@@ -137,7 +137,7 @@ diffDashboard <- function(.file) {
         shiny::tags$iframe(
           srcdoc = html,
           style = "width:100%; height: calc(100vh - 180px); border:1px solid #dee2e6;",
-          sandbox = "allow-same-origin allow-forms allow-scripts allow-popups"
+          sandbox = ""
         )
       }
     })

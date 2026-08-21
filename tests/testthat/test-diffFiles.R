@@ -11,6 +11,12 @@ with_demoRepo({
     expect_equal(diff_data@target[4], "derived <- list(sl = list(),tv = list())")
     expect_equal(diff_data@target[6], "derived$sl$dm <- dm_0")
   })
-})
 
+  test_that("diffFiles produces a self-contained styled HTML page", {
+    diff_html <- paste(as.character(diff_data), collapse = "\n")
+
+    expect_match(diff_html, "<html", ignore.case = TRUE)
+    expect_match(diff_html, "<style", ignore.case = TRUE)
+  })
+})
 
