@@ -15,6 +15,9 @@
 
 ## Bug fixes
 
+- Visual diffs from `diffPreviousRevisions` and `diffDashboard` now render as
+  styled HTML in Positron instead of being printed as plain console output.
+
 - Subversion commands no longer run through a shell, preventing paths and
   arguments containing spaces or shell-special characters from being
   misinterpreted. (#209)
