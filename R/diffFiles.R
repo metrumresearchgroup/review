@@ -41,7 +41,7 @@ diffFiles <- function(.file_1,
   diffobj::diffFile(
     target = .file_1,
     current = .file_2,
-    # This function is consumed as a visual diff, including by diffDashboard().
+    # This is the common renderer for all text-diff functions and dashboards.
     # Do not rely on diffobj's IDE-specific `format = "auto"` detection: IDEs
     # other than RStudio can produce an unstyled HTML fragment here.
     format = "html",
