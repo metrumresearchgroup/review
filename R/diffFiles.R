@@ -40,7 +40,12 @@ diffFiles <- function(.file_1,
   
   diffobj::diffFile(
     target = .file_1,
-    current = .file_2, 
+    current = .file_2,
+    # This function is consumed as a visual diff, including by diffDashboard().
+    # Do not rely on diffobj's IDE-specific `format = "auto"` detection: IDEs
+    # other than RStudio can produce an unstyled HTML fragment here.
+    format = "html",
+    style = list(html.output = "page", scale = FALSE),
     color.mode = "rgb",
     mode = ifelse(.side_by_side, "sidebyside", "unified"),
     tar.banner = .banner_1,
