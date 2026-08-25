@@ -14,6 +14,11 @@ with_demoRepo({
     expect_true("example-pdf1.pdf" %in% modified)
   })
 
+  test_that("svnStatus can return paths relative to the working-copy root", {
+    s <- svnStatus(fs::path_abs("deliv/figure"), .relative_to = getwd())
+    expect_true("deliv/figure/example-pdf1.pdf" %in% s$path)
+  })
+
   test_that("svnStatus detects unversioned files", {
     s <- svnStatus("deliv/figure")
     unversioned <- s$path[s$status == "unversioned"]
