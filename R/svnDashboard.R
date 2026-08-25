@@ -106,12 +106,7 @@ svnDashboard <- function(.path = here::here()) {
     shiny::div(
       class = "p-2",
       shiny::uiOutput("file_actions"),
-      shiny::uiOutput("file_view"),
-      bslib::card(
-        class = "mt-3",
-        bslib::card_header("Command activity"),
-        shiny::uiOutput("activity_log")
-      )
+      shiny::uiOutput("file_view")
     )
   )
 
@@ -130,7 +125,6 @@ svnDashboard <- function(.path = here::here()) {
     selected_path <- shiny::reactiveVal(NULL)
     pending_command <- shiny::reactiveVal(NULL)
     commit_targets <- shiny::reactiveVal(NULL)
-    activity <- shiny::reactiveVal(list())
 
     refresh <- function(clear_selection = TRUE) {
       status_state(read_status())
@@ -138,18 +132,6 @@ svnDashboard <- function(.path = here::here()) {
         session$sendCustomMessage("setStatusSelection", character())
         shiny::updateSelectInput(session, "select_all_status", selected = "")
       }
-    }
-
-    append_activity <- function(command, result, outcome, note = NULL) {
-      entry <- list(
-        time = format(Sys.time(), "%H:%M:%S"),
-        outcome = outcome,
-        command = formatDashboardCommand(command),
-        stdout = if (is.null(result$stdout)) "" else result$stdout,
-        stderr = if (is.null(result$stderr)) "" else result$stderr,
-        note = note
-      )
-      activity(c(list(entry), activity()))
     }
 
     command_for <- function(command, args, title, effect, risk, paths,
@@ -568,9 +550,7 @@ svnDashboard <- function(.path = here::here()) {
 
       current <- read_status()
       if (!dashboardStatusIsCurrent(command, current)) {
-        result <- list(status = 1L, stdout = "", stderr = "")
         note <- "Not run: SVN status changed after the command was previewed."
-        append_activity(command, result, "BLOCKED", note)
         status_state(current)
         shiny::removeModal()
         shiny::showNotification(note, type = "error", duration = NULL)
@@ -579,10 +559,6 @@ svnDashboard <- function(.path = here::here()) {
 
       result <- runDashboardCommand(command)
       success <- identical(as.integer(result$status), 0L)
-      append_activity(
-        command, result,
-        if (success) "SUCCESS" else "FAILED"
-      )
       pending_command(NULL)
       shiny::removeModal()
       refresh()
@@ -595,41 +571,6 @@ svnDashboard <- function(.path = here::here()) {
           type = "error", duration = NULL
         )
       }
-    })
-
-    output$activity_log <- shiny::renderUI({
-      entries <- activity()
-      if (!length(entries)) {
-        return(shiny::div(
-          class = "text-muted p-3",
-          "No commands have been run in this session."
-        ))
-      }
-
-      shiny::div(lapply(entries, function(entry) {
-        outcome_class <- switch(
-          entry$outcome,
-          SUCCESS = "text-bg-success",
-          FAILED = "text-bg-danger",
-          BLOCKED = "text-bg-warning",
-          "text-bg-secondary"
-        )
-        output_text <- paste0(
-          if (nzchar(entry$stdout)) entry$stdout else "",
-          if (nzchar(entry$stderr)) paste0("\n", entry$stderr) else ""
-        )
-        shiny::div(
-          class = "border-bottom p-3",
-          shiny::div(
-            class = "d-flex gap-2 align-items-center mb-2",
-            shiny::span(entry$time, class = "text-muted"),
-            shiny::span(entry$outcome, class = paste("badge", outcome_class))
-          ),
-          shiny::tags$pre(class = "command-output", paste0("$ ", entry$command)),
-          if (!is.null(entry$note)) shiny::div(class = "text-danger", entry$note),
-          if (nzchar(output_text)) shiny::tags$pre(class = "command-output mt-2", output_text)
-        )
-      }))
     })
 
     output$file_view <- shiny::renderUI({
