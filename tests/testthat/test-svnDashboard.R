@@ -126,7 +126,11 @@ test_that("selected SVN statuses expose the appropriate actions", {
   shiny::testServer(app$serverFuncSource(), {
     expect_true(any(grepl("All listed files", output$selection_controls, fixed = TRUE)))
     expect_true(any(grepl("Modified (M)", output$selection_controls, fixed = TRUE)))
-    expect_true(any(grepl("Missing locally (!)", output$selection_controls, fixed = TRUE)))
+    expect_true(any(grepl(
+      "Deleted locally, not scheduled (!)",
+      output$selection_controls,
+      fixed = TRUE
+    )))
     expect_true(any(grepl("Untracked (?)", output$selection_controls, fixed = TRUE)))
     expect_true(any(grepl("Clear selection", output$selection_controls, fixed = TRUE)))
 

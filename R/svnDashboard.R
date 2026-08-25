@@ -291,7 +291,8 @@ svnDashboard <- function(.path = here::here()) {
       symbols <- symbol_order[symbol_order %in% symbols]
       status_labels <- c(
         M = "Modified (M)", A = "Added to SVN (A)",
-        D = "Deleted in SVN (D)", `!` = "Missing locally (!)",
+        D = "Scheduled for SVN deletion (D)",
+        `!` = "Deleted locally, not scheduled (!)",
         `?` = "Untracked (?)", R = "Replaced (R)",
         C = "Conflicted (C)", `~` = "Obstructed (~)",
         X = "External (X)", I = "Ignored (I)"
