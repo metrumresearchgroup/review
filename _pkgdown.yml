@@ -38,6 +38,7 @@ reference:
     contents:
     - svnLog
     - svnExport
+    - svnDashboard
     - demoRepo
     - logRemove
     - repoHistory
