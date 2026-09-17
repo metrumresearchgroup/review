@@ -50,7 +50,9 @@ test_that("getTablePathsFromTex returns stable relative paths and adds .tex exte
     getTablePathsFromTex(tables_tex()),
     c(
       expected_path("deliv/table/report/pk-data-sum.tex"),
-      expected_path("deliv/table/report/base-param-fixed.tex")
+      expected_path("deliv/table/report/base-param-fixed.tex"),
+      expected_path("deliv/table/report/base-param-finalPKRunno-tab.tex"),
+      expected_path("deliv/table/report/basePKRunno-param-fixed.tex")
     )
   )
 })
@@ -65,3 +67,4 @@ test_that("commented-out entries are ignored", {
     getTablePathsFromTex(tables_tex())
   )))
 })
+

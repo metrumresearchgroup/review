@@ -60,6 +60,10 @@ tex_command_args <- function(lines, command) {
     sub(pattern, "\\1", raw, perl = TRUE),
     '^["\']|["\']$'
   ))
+  
+  # Remove LaTeX macro backslashes so path normalizers don't convert them to '/'
+  args <- gsub("\\\\", "", args)
+  
   args[nzchar(args)]
 }
 
