@@ -1,3 +1,11 @@
+# review 3.15.0.9001
+
+## Bug fixes
+
+- Fixed TeX figure and table paths when reports use macros.
+- Restored a warning and an `NA` result when `svn info` fails while looking up
+  a revision.
+
 # review 3.15.0.9000
 
 ## Bug fixes
