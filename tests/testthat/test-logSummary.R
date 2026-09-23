@@ -18,5 +18,14 @@ with_demoRepo({
     expect_true(all(grepl(time_pattern, tempdf_sum$time)))
   })
   
+  test_that("logSummary warns when file no longer exists", {
+    svnRun("mv", "script/data-assembly.R", "script/data-assembly-new.R")
+    svnRun("commit", "-m", "move script")
+
+    # Expect two warnings because revision() is called on file column and origin
+    # column.
+    pat <- "svn info"
+    expect_warning(expect_warning(logSummary(), pat), pat)
+  })
 })
 
