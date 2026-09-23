@@ -81,6 +81,30 @@ demoRepo <- function(.project_name) {
   
   writeLines(c("This is the first version of the yml file"),
              "pkgr.yml")
+
+  writeLines(
+    c(
+      "# This tracked file is deleted locally for the SVN dashboard example.",
+      "example_value <- 1"
+    ),
+    "script/deleted-example.R"
+  )
+
+  writeLines(
+    c(
+      "# This file receives a commit from a second working copy.",
+      "remote_example_value <- 1"
+    ),
+    "script/remote-update-example.R"
+  )
+
+  writeLines(
+    c(
+      "# This file receives both remote and local changes.",
+      "remote_and_local_value <- 1"
+    ),
+    "script/remote-and-local-example.R"
+  )
   
   # Create QC log
   logCreate()
@@ -247,8 +271,56 @@ demoRepo <- function(.project_name) {
     file = "example-table-long-1.tex",
     dir = "deliv/table"
   )
+
+  fs::file_delete("script/deleted-example.R")
+
+  writeLines(
+    c(
+      "# This file is locally scheduled for addition.",
+      "new_example_value <- 2"
+    ),
+    "script/added-example.R"
+  )
+  svnRun("add", "script/added-example.R")
+
+  remote_repo_dir <- fs::path_temp(
+    paste0(.project_name, "-remote-update")
+  )
+  if (fs::dir_exists(remote_repo_dir)) {
+    fs::dir_delete(remote_repo_dir)
+  }
+  svnRun("co", paste0("file://", repoInitPath), remote_repo_dir)
+  withr::with_dir(remote_repo_dir, {
+    writeLines(
+      c(
+        "# This file receives a commit from a second working copy.",
+        "remote_example_value <- 2"
+      ),
+      "script/remote-update-example.R"
+    )
+    writeLines(
+      c(
+        "# This file receives both remote and local changes.",
+        "remote_and_local_value <- 2"
+      ),
+      "script/remote-and-local-example.R"
+    )
+    svnRun(
+      "commit", "-m", "remote update for svnDashboard example",
+      "script/remote-update-example.R",
+      "script/remote-and-local-example.R"
+    )
+  })
+
+  writeLines(
+    c(
+      "# This file receives both remote and local changes.",
+      "remote_and_local_value <- 3"
+    ),
+    "script/remote-and-local-example.R"
+  )
   
-  repoDir
+  normalizePath(repoDir, winslash = "/", mustWork = TRUE)
 }
 
 #' @rdname demoRepo

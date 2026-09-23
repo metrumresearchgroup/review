@@ -1,4 +1,9 @@
-# review 3.15.0.9000
+# review 3.15.0.9001
+
+## New features and changes
+
+- Added `svnDashboard` for reviewing local and incoming SVN changes, comparing
+  file contents, and previewing common working-copy actions before running them.
 
 ## Bug fixes
 

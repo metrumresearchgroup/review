@@ -18,6 +18,18 @@ svnRun <- function(...) {
   return(invisible(NULL))
 }
 
+#' Run 'svn ...' and return standard output.
+#'
+#' @param ... Arguments passed to svn.
+#' @noRd
+svnOutput <- function(...) {
+  processx::run(
+    command = "svn",
+    args = purrr::flatten_chr(list(...)),
+    error_on_status = TRUE
+  )[["stdout"]]
+}
+
 #' Run 'svn {subcommand} --xml ...', returning the parsed XML as a list.
 #'
 #' @param subcommand An svn subcommand.
