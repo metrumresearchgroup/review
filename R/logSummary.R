@@ -58,8 +58,8 @@ print.logSummary <- function(x,...){
 	x$origin[x$origin==x$file] <- ''
 	x$revo[x$origin=='' & x$revo == x$revf] <- ''
 	x$heado[x$origin=='' & x$heado == x$headf] <- ''
-	if(all(x$origin==''))x$origin <- NULL
-	if(all(x$revo==''))x$revo <- NULL
-	if(all(x$heado==''))x$heado <- NULL
+	if(isTRUE(all(x$origin=='')))x$origin <- NULL
+	if(isTRUE(all(x$revo=='')))x$revo <- NULL
+	if(isTRUE(all(x$heado=='')))x$heado <- NULL
 	NextMethod()
 }
