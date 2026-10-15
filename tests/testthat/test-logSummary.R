@@ -12,6 +12,14 @@ with_demoRepo({
     expect_true(inherits(logSummary(), "data.frame"))
   })
   
+  test_that("logSummary prints with missing values", {
+    tempdf_sum_na <- tempdf_sum
+    tempdf_sum_na$origin <- NA
+    tempdf_sum_na$revo <- NA
+    tempdf_sum_na$heado <- NA
+    expect_output(print(tempdf_sum_na), "file")
+  })
+  
   time_pattern <- "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}( GMT)?$"
   
   test_that("logSummary reduces time to nearest second", {
