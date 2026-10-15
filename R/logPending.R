@@ -29,6 +29,7 @@
 #' @export
 logPending <- function(directory=getwd()){
 	log <- logSummary(directory)
-	log[with(log, headf > revf | heado > revo),]
+	pending <- with(log, headf > revf | heado > revo)
+	log[is.na(pending) | pending,]
 }
 
