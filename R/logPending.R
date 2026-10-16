@@ -2,7 +2,7 @@
 #' 
 #' @description 
 #' Checks the log summary and returns entries where there exists a newer
-#'  revision of its file or origin.
+#'  revision of its file or origin, or where revisions are unknown.
 #'
 #' @usage 
 #' logPending(directory = getwd())
@@ -18,6 +18,8 @@
 #' its origin, or both have been revised.  If a file has changed but not its origin,
 #' an explanation is needed.  If a file is the same after a change to its origin, confirmation
 #' is needed.  It is not unusual for both a file and its origin to change.
+#' Entries with unknown revisions also remain pending, including when a file or
+#' its origin is unavailable.
 #' 
 #' @examples 
 #' with_demoRepo({
@@ -29,6 +31,7 @@
 #' @export
 logPending <- function(directory=getwd()){
 	log <- logSummary(directory)
-	log[with(log, headf > revf | heado > revo),]
+	pending <- with(log, headf > revf | heado > revo)
+	log[is.na(pending) | pending,]
 }
 
