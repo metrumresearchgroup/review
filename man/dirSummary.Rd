@@ -20,6 +20,8 @@ A list containing:
 \item \verb{Latest edit}: the latest date and time of modification.
 \item \verb{Latest rev}: the last revision number.
 \item \code{Status}: indicating whether the file is in SVN, in QC log, and if it needs QC.
+Missing revision information is reported as "QC status unknown" unless
+a known revision change already establishes that QC is needed.
 \item \code{QCer}: the reviewer name if the file is in QC log.
 }
 }

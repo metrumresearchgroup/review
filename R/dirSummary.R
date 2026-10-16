@@ -12,6 +12,8 @@
 #'     - `Latest edit`: the latest date and time of modification.
 #'     - `Latest rev`: the last revision number.
 #'     - `Status`: indicating whether the file is in SVN, in QC log, and if it needs QC.
+#'       Missing revision information is reported as "QC status unknown" unless
+#'       a known revision change already establishes that QC is needed.
 #'     - `QCer`: the reviewer name if the file is in QC log.
 #'
 #' @seealso 
@@ -86,6 +88,7 @@ dirSummary <- function(.dirs_exclude = NULL) {
   }
   
   # Build data --------------------------------------------------------------
+  log_summary$in_qc_log <- TRUE
   relevant_files_df <- relevant_files_df %>% dplyr::left_join(log_summary, by = "file")
   
   n_iter <- nrow(relevant_files_df)
@@ -127,8 +130,9 @@ dirSummary <- function(.dirs_exclude = NULL) {
       `Latest rev` = lastrev,
       Status = dplyr::case_when(
         insvn == "No" ~ "Not in SVN",
-        is.na(reviewer) ~ "Not in QC log",
+        is.na(in_qc_log) ~ "Not in QC log",
         headf > revf | heado > revo ~ "In QC log, needs QC",
+        is.na(headf) | is.na(revf) | is.na(heado) | is.na(revo) ~ "QC status unknown",
         TRUE ~ "QC up to date"
       ),
       QCer = reviewer
@@ -136,7 +140,7 @@ dirSummary <- function(.dirs_exclude = NULL) {
     dplyr::filter(Status !=  "Not in SVN") %>% 
     dplyr::mutate(Status = factor(
       Status,
-      levels = c("In QC log, needs QC", "QC up to date", "Not in QC log")
+      levels = c("In QC log, needs QC", "QC status unknown", "QC up to date", "Not in QC log")
     )) %>% 
     dplyr::arrange(Author, File)
   
