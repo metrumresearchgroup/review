@@ -20,3 +20,28 @@ with_demoRepo({
     expect_equal(pending$revo, expected$revo)
   })
 })
+
+test_that("logPending includes unavailable and pending files but excludes up-to-date files", {
+  with_demoRepo({
+    svnRun("update", "--set-depth", "empty", "script/pk")
+    summary <- suppressWarnings(logSummary())
+    pending <- suppressWarnings(logPending())
+
+    unavailable <- summary[summary$file == "script/pk/load-spec.R", ]
+    available_pending <- summary[summary$file == "script/data-assembly.R", ]
+    up_to_date <- summary[summary$file == "script/combine-da.R", ]
+
+    expect_false(file.exists(unavailable$file))
+    expect_true(is.na(unavailable$headf))
+    expect_true(file.exists(available_pending$file))
+    expect_gt(available_pending$headf, available_pending$revf)
+    expect_true(file.exists(up_to_date$file))
+    expect_equal(up_to_date$headf, up_to_date$revf)
+    expect_equal(up_to_date$heado, up_to_date$revo)
+    expect_setequal(pending$file, c(
+      "script/pk/load-spec.R",
+      "script/data-assembly.R",
+      "script/examp-txt.txt"
+    ))
+  })
+})

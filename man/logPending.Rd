@@ -11,7 +11,7 @@ logPending(directory = getwd())
 }
 \description{
 Checks the log summary and returns entries where there exists a newer
-revision of its file or origin.
+revision of its file or origin, or where revisions are unknown.
 }
 \details{
 One always wants to review the latest revision of a file, given the latest revision
@@ -22,6 +22,8 @@ independent of the file revision.  Further review is indicated if either the fil
 its origin, or both have been revised.  If a file has changed but not its origin,
 an explanation is needed.  If a file is the same after a change to its origin, confirmation
 is needed.  It is not unusual for both a file and its origin to change.
+Entries with unknown revisions also remain pending, including when a file or
+its origin is unavailable.
 }
 \examples{
 with_demoRepo({
