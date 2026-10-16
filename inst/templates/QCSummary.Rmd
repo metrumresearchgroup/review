@@ -3,6 +3,7 @@ title: "QC Summary"
 subtitle: "`r params$project`"
 date: "`r format(Sys.time(), '%d %B, %Y %H:%M %Z')`"
 params:
+  days: 20
   project: ""
   repoHistory: NULL
   qcLog: NULL
@@ -79,7 +80,7 @@ needs_qc %>%
 
 ```{r, results='asis'}
 
-at_risk_days <- 20
+at_risk_days <- params$days
 
 relevant_dirs <-
   c(

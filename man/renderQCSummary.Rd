@@ -4,11 +4,14 @@
 \alias{renderQCSummary}
 \title{Render a QC Summary Document}
 \usage{
-renderQCSummary(.output_dir = NULL)
+renderQCSummary(.output_dir = NULL, days = 20)
 }
 \arguments{
 \item{.output_dir}{Character string (optional). Path to the directory where the output PDF
 should be saved. If not provided, the document will not be saved locally.}
+
+\item{days}{Non-negative number of days to look back for files not in the QC log.
+Defaults to 20. Use Inf for all history; tables can span multiple pages.}
 }
 \value{
 Invisible. The function will save a PDF report named "qc-summary-(current date).pdf"
