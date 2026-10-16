@@ -1,5 +1,9 @@
 create_test_svn()
-logAccept("script/data-assembly/da-functions.R")
+# Match the local date used by fileSummary(), regardless of the GMT date.
+logAccept(
+  "script/data-assembly/da-functions.R",
+  time = paste(Sys.Date(), "12:00:00 GMT")
+)
 logAssign("script/model-summary.Rmd")
 
 test_that("Function requires single file or directory input", {
