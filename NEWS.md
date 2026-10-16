@@ -2,6 +2,10 @@
 
 ## Bug fixes
 
+- `dirSummary()` reports "QC status unknown" when revisions are missing,
+  preserves pending status for known changes, and recognizes QC-log records
+  even when the reviewer is missing.
+
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
   a revision.

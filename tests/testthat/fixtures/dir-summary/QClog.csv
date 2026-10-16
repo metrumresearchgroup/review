@@ -1,0 +1,13 @@
+file,origin,revf,revo,reviewer,time
+script/missing-origin.R,absent.txt,10,10,test,2026-01-01 12:00:00 GMT
+script/missing-head.R,origin.txt,10,10,test,2026-01-01 12:00:00 GMT
+script/missing-revf.R,origin.txt,.,10,test,2026-01-01 12:00:00 GMT
+script/missing-revo.R,origin.txt,10,.,test,2026-01-01 12:00:00 GMT
+script/missing-recorded.R,origin.txt,.,.,test,2026-01-01 12:00:00 GMT
+script/missing-reviewer.R,origin.txt,10,10,.,2026-01-01 12:00:00 GMT
+script/current.R,origin.txt,10,10,test,2026-01-01 12:00:00 GMT
+script/pending.R,origin.txt,9,9,test,2026-01-01 12:00:00 GMT
+script/pending-file-unknown.R,absent.txt,9,10,test,2026-01-01 12:00:00 GMT
+script/pending-origin-unknown.R,origin.txt,10,9,test,2026-01-01 12:00:00 GMT
+script/pending-reviewer.R,origin.txt,0,0,.,2026-01-01 12:00:00 GMT
+script/not-svn.R,origin.txt,10,10,test,2026-01-01 12:00:00 GMT
