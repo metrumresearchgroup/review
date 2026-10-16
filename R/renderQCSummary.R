@@ -8,6 +8,8 @@
 #'
 #' @param .output_dir Character string (optional). Path to the directory where the output PDF 
 #'   should be saved. If not provided, the document will not be saved locally.
+#' @param days Non-negative number of days to look back for files not in the QC log.
+#'   Defaults to 20. Use Inf for all history; tables can span multiple pages.
 #'
 #' @return Invisible. The function will save a PDF report named "qc-summary-(current date).pdf"
 #'   to the specified output directory (if available). If the R session is interactive, it will also 
@@ -21,7 +23,13 @@
 #' }
 #'
 #' @export
-renderQCSummary <- function(.output_dir = NULL) {
+renderQCSummary <- function(.output_dir = NULL, days = 20) {
+  if (!is.numeric(days) || length(days) != 1L || is.na(days) || days < 0) {
+    stop("days must be a single non-negative number or Inf")
+  }
+  if (is.infinite(days)) {
+    warning("days = Inf includes all history and may produce a very long report.", call. = FALSE)
+  }
   
   # Check if QC log is missing
   if (is.null(logRoot())) {
@@ -44,6 +52,7 @@ renderQCSummary <- function(.output_dir = NULL) {
   output_path <- file.path(.output_dir, output_file)
   
   params_in <- list(
+    days = days,
     project = project_id,
     repoHistory = repoHistory(),
     qcLog = logRead(),
