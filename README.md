@@ -122,6 +122,53 @@ An example output of `logSummary()` might look like this:
 
 ---
 
+# Review Handoffs
+
+Track feedback and responses before final acceptance with four handoff functions:
+
+```r
+file <- "script/analysis.R"
+
+# Author: request review (also assigns the file if it is not in QClog.csv).
+logReady(file, reviewer = "alice", comment = "Ready for initial review.")
+
+# Reviewer: add comments in the script, then hand it back to the author.
+logComments(file, comment = "Please check missing-value handling.")
+
+# Author: respond to comments and hand it back to the reviewer.
+logAddressed(file, comment = "Updated the handling.")
+
+# Repeat logComments()/logAddressed() as needed.
+# Reviewer: confirm responses are satisfactory and authorize comment removal.
+logResolved(file, comment = "Please remove the comments.")
+
+# Author: remove comments and request final acceptance.
+logReady(file, comment = "Comments removed.")
+
+# Reviewer: check the cleaned script and formally accept its SVN revision.
+logAccept(file)
+
+reviewHistory(file) # All handoffs, including acceptance
+reviewPending()     # Latest handoffs awaiting the current user
+```
+
+Each person runs their step under their own username. Sender names use the same
+operating-system usernames as the QC log. Later handoffs reuse the established
+author and reviewer; supplying an explicit `author` or `reviewer` updates that
+role. When no recipient is established, interactive calls offer a picker of
+usernames from the QC log and review history, or entry of a new username.
+Noninteractive calls require an explicit recipient when none is established.
+
+Commit script changes before each handoff so its recorded SVN revision identifies
+the reviewed content. Handoffs and optional comments are stored in a quoted
+`Reviewlog.csv` beside `QClog.csv`; add and commit both logs to share them with
+the team. Tags record whose turn it is and do not send external notifications.
+`logResolved()` authorizes cleanup; `logAccept()` records final acceptance and
+closes the pending handoff. `logPending()` continues to report revision-based
+QC needs independently of the handoff status.
+
+---
+
 # Workflow Example
 
 1. **Create the log**:

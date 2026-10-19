@@ -38,23 +38,15 @@ logAccept <- function(file=dir(),
                       force=FALSE,
                       ...){
 
-	fpath <- logTarget(file=file,directory=directory,force=force)
-	opath <- logTarget(file=origin,directory=directory,force=force)
-	revf <- sapply(fpath,revision)
-	revo <- sapply(opath,revision)
-	logAppend(
-		new=logQueue(
-			file=file,
-			directory=directory,
-			origin=origin,
-			revf=revf,
-			revo=revo,
-			reviewer=reviewer,
-			force=force,
-			...
-		),
-		directory=directory
-	)
-		
+  fpath <- logTarget(file=file,directory=directory,force=force)
+  opath <- logTarget(file=origin,directory=directory,force=force)
+  revf <- sapply(fpath,revision)
+  revo <- sapply(opath,revision)
+  new <- logQueue(
+    file = file, directory = directory, origin = origin,
+    revf = revf, revo = revo, reviewer = reviewer, force = force, ...
+  )
+  rows <- logAppend(new, directory = directory)
+  review_accept(new, logRoot(directory))
+  invisible(rows)
 }
-

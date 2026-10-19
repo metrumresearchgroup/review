@@ -2,7 +2,8 @@
 #'
 #' @description
 #' Renames a version-controlled file with `svn mv` and updates every reference
-#' to its path in the `file` and `origin` columns of `QClog.csv`.
+#' to its path in the `file` and `origin` columns of `QClog.csv`. Any handoff
+#' history in `Reviewlog.csv` is updated to follow the renamed file.
 #'
 #' Paths are resolved relative to the root of the QC log, including when the
 #' function is called from a subdirectory.
@@ -43,11 +44,18 @@ logRename <- function(.filepath, .new_filepath) {
     )
   }
 
+  history <- review_read(root)
+
   svnRun("mv", old_path, new_path)
 
   qclog$file[qclog$file %in% old] <- new
   qclog$origin[qclog$origin %in% old] <- new
   logWrite(qclog, file = logName(root))
+  if (any(history$file %in% old)) {
+    history <- history %>%
+      dplyr::mutate(file = dplyr::if_else(.data$file == old, new, .data$file))
+    review_write(history, root)
+  }
 
   cli::cli_alert_info("Renamed '{old}' to '{new}' in SVN and QClog.csv")
 

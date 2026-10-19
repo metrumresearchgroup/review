@@ -1,3 +1,16 @@
+# review 3.15.0.9002
+
+## New features and changes
+
+- Added `logReady()`, `logComments()`, `logAddressed()`, and `logResolved()`
+  for repeatable author/reviewer handoffs with optional comments. Recipients
+  default to the file's recorded author and reviewer, with an interactive picker
+  using existing QC and review usernames when a recipient is not established.
+- Handoffs are saved in `Reviewlog.csv`. `logReady()` assigns previously unlogged
+  files, `reviewHistory()` shows the conversation, and `reviewPending()` shows
+  the latest handoffs awaiting a user. `logAccept()` closes pending handoffs and
+  `logRename()` preserves review history under the new file path.
+
 # review 3.15.0.9001
 
 ## Bug fixes

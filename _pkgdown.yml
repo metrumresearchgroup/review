@@ -17,6 +17,12 @@ reference:
     - logAccept
     - logAssign
     - logCreate
+    - logReady
+    - logComments
+    - logAddressed
+    - logResolved
+    - reviewHistory
+    - reviewPending
     - logPending
     - logRename
     - logSummary

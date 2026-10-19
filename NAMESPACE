@@ -15,19 +15,31 @@ export(getQcedRevision)
 export(getTFs)
 export(getTablePathsFromTex)
 export(logAccept)
+export(logAddressed)
 export(logAssign)
+export(logComments)
 export(logCreate)
 export(logPending)
+export(logReady)
 export(logRemove)
 export(logRename)
+export(logResolved)
 export(logSummary)
 export(renderQCReport)
 export(renderQCSummary)
 export(repoHistory)
+export(reviewHistory)
+export(reviewPending)
 export(svnExport)
 export(svnLog)
 export(with_demoRepo)
 importFrom(magrittr,"%>%")
-importFrom(utils,file_test)
-importFrom(utils,read.table)
-importFrom(utils,write.table)
+importFrom(rlang,
+  .data,
+  .env
+)
+importFrom(utils,
+  file_test,
+  read.table,
+  write.table
+)
