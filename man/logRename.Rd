@@ -16,7 +16,8 @@ Invisibly returns the number of rows changed in \code{QClog.csv}.
 }
 \description{
 Renames a version-controlled file with \verb{svn mv} and updates every reference
-to its path in the \code{file} and \code{origin} columns of \code{QClog.csv}.
+to its path in the \code{file} and \code{origin} columns of \code{QClog.csv}. Any handoff
+history in \code{Reviewlog.csv} is updated to follow the renamed file.
 
 Paths are resolved relative to the root of the QC log, including when the
 function is called from a subdirectory.
