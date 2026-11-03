@@ -10,7 +10,7 @@
 #' summary reduces the data to one record per file.  It is an error if any element
 #' of the file column is missing.  
 #'
-#' The log is read, then sorted on file, revision, time.  The last record 
+#' The log is read, then sorted on file and time (ties retain log order).  The last record
 #' for each file is retained.
 #'
 #' The output includes the latest revisions for the file and origin, plus the
@@ -36,7 +36,7 @@
 logSummary <- function(directory=getwd()){
 	log <- logRead(directory)
 	if(any(is.na(log$file)))stop("missing file names in log")
-	log <- log[order(log$file, log$revf, log$time),]
+	log <- log[order(log$file, log$time),]
 	log <- log[!duplicated(log$file,fromLast=TRUE),]
 	cols <- c('file','origin','revf','headf','revo','heado','reviewer','time')
 	if(!nrow(log))return(cbind(log,data.frame(headf=numeric(0),heado=numeric(0))))[,cols]
