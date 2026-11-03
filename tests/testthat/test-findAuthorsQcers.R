@@ -1,5 +1,6 @@
 create_test_svn()
 
+review::logAssign("script/data-assembly/da-functions.R")
 review::logAccept("script/data-assembly/da-functions.R")
 
 qclog <- logRead()

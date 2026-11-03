@@ -3,6 +3,7 @@ if (Sys.getenv("METWORX_VERSION") != "") {
   create_test_svn()
   
   logAssign("script/model-management.R")
+  logAssign("script/box-sample-code.R")
   logAccept("script/box-sample-code.R")
   
   test_that("renderQCReport errors if .output_dir is missing", {

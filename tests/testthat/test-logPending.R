@@ -45,3 +45,33 @@ test_that("logPending includes unavailable and pending files but excludes up-to-
     ))
   })
 })
+
+test_that("reassignment reopens QC even when entries share a timestamp", {
+  with_demoRepo({
+    file <- "script/examp-yaml.yaml"
+    time <- "2099-01-01 00:00:00 GMT"
+    for (round in 1:2) {
+      logAssign(file, reviewer = "alice", time = time)
+      pending <- logPending()
+      expect_true(file %in% pending$file)
+      expect_equal(pending$revf[pending$file == file], 0)
+      expect_equal(pending$reviewer[pending$file == file], "alice")
+      logAccept(file, reviewer = "alice", time = time)
+      expect_false(file %in% logPending()$file)
+    }
+  })
+})
+
+test_that("later revisions can still be accepted without reassignment", {
+  with_demoRepo({
+    file <- "script/examp-yaml.yaml"
+    logAssign(file)
+    logAccept(file)
+    expect_false(file %in% logPending()$file)
+    cat("\n# Updated for another QC round\n", file = file, append = TRUE)
+    svnRun("commit", "-m", "update file for QC")
+    expect_true(file %in% logPending()$file)
+    logAccept(file)
+    expect_false(file %in% logPending()$file)
+  })
+})

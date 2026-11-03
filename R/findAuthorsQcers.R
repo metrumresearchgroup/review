@@ -10,7 +10,8 @@ findAuthorsQcers <- function(.repoHistory, .qcLog) {
   rH_qclog <-
     .repoHistory %>%
     dplyr::left_join(qclog, by = c("file", "rev")) %>%
-    dplyr::arrange(file, -rev) %>% 
+    dplyr::arrange(file, -rev, author != reviewer) %>%
+    dplyr::distinct(file, rev, .keep_all = TRUE) %>%
     dplyr::group_by(file) %>% 
     tidyr::fill(reviewer, .direction = "down") %>%
     dplyr::ungroup()
