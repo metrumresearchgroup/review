@@ -6,7 +6,8 @@ logQueue <- function(file=dir(),
                      revo=0,
                      reviewer="anyone",
                      time=paste(as.character(as.POSIXlt(Sys.time(), "GMT")),"GMT"),
-                     force=FALSE){
+                     force=FALSE,
+                     requester=NA_character_){
   
 	coerce <- function(arg){
 		x <- get(arg)
@@ -38,6 +39,7 @@ logQueue <- function(file=dir(),
 	origin <- coerce("origin")
 	reviewer <- coerce("reviewer")
 	time <- coerce("time")
+	requester <- coerce("requester")
 	target <- logTarget(file=file,directory=directory,force=force)
 	data.frame(
 		file=relPath(file=file,directory=directory),
@@ -46,6 +48,7 @@ logQueue <- function(file=dir(),
 		revo=revo,
 		reviewer=reviewer,
 		time=time,
+		requester=requester,
 		stringsAsFactors=FALSE
 	)
 }

@@ -8,7 +8,8 @@ logAssign(
  file = dir(), 
  directory = getwd(), 
  origin = file,
- ...)
+ ...,
+ requester = Sys.info()['user'])
 }
 \arguments{
 \item{file}{a character vector of filenames (paths) relative to directory}
@@ -18,6 +19,8 @@ logAssign(
 \item{origin}{the file from which 'file' originates}
 
 \item{...}{arguments passed to logQueue}
+
+\item{requester}{person requesting QC; defaults to the current system user}
 }
 \description{
 Appends a log with defaults supplied by logQueue().  These are appropriate
