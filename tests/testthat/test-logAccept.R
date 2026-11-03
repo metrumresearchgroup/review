@@ -26,3 +26,19 @@ test_that("logAccept creates a row in the QClog for the specified file", {
     )
   })
 })
+
+test_that("logAccept requires a prior assignment for every file", {
+  with_demoRepo({
+    file <- "script/examp-yaml.yaml"
+    old <- logRead()
+    logWrite(old[old$file != file, ], logName())
+    before <- logRead()
+    expect_error(
+      logAccept(c("script/data-assembly.R", file)),
+      "Run logAssign() before logAccept()", fixed = TRUE
+    )
+    expect_equal(logRead(), before)
+    logAssign(file)
+    expect_error(logAccept(file), NA)
+  })
+})
