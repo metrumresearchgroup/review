@@ -147,7 +147,7 @@ fileSummary <- function(.file, .return_df = FALSE) {
       
       out$qcstatus <- 
         ifelse(
-          last_rev > qc_rev,
+          last_rev > qc_rev || tail(qc_file$revf[order(qc_file$time)], 1) == 0,
           cli::col_red("Needs QC"), 
           cli::col_green("QC up to date")
         )

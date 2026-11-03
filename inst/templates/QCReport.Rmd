@@ -24,7 +24,8 @@ params$logSum %>%
       TRUE ~ "Needs QC"
     ),
     `QC date` = dplyr::if_else(revf == headf, time, NA_character_),
-    `QC date` = as.Date(`QC date`)
+    `QC date` = as.Date(`QC date`),
+    revf = dplyr::na_if(revf, 0)
   ) %>% 
   dplyr::select(-time) %>% 
   dplyr::rename(

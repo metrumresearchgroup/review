@@ -50,12 +50,12 @@ needs_qc <-
     needs_qc %>% 
       dplyr::group_by(file) %>%
       dplyr::summarize(
-        `Previous QCers` = paste(unique(reviewer), collapse = ", ")
+        `Previous QCers` = paste(unique(reviewer[!is.na(revf) & revf != 0]), collapse = ", ")
       ) %>% 
       dplyr::ungroup() %>% 
       dplyr::mutate(
         `Previous QCers` = gsub("anyone, ", "", `Previous QCers`, fixed = TRUE),
-        `Previous QCers` = ifelse(`Previous QCers` == "anyone", "none", `Previous QCers`)
+        `Previous QCers` = ifelse(`Previous QCers` %in% c("", "anyone"), "none", `Previous QCers`)
       ) %>% 
       dplyr::left_join(latest_authors, by = "file") %>% 
       dplyr::select(

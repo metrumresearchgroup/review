@@ -40,8 +40,9 @@ myQC <- function(.within_days = Inf) {
     
       qclog %>%
       dplyr::mutate(rev = as.numeric(revf)) %>%
+      dplyr::arrange(file, time) %>%
       dplyr::group_by(file) %>%
-      dplyr::filter(rev == max(rev)) %>%
+      dplyr::slice_tail(n = 1) %>%
       dplyr::ungroup() %>%
       dplyr::transmute(file, QCREV = rev) %>% 
       dplyr::distinct()
