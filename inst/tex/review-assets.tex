@@ -1,0 +1,29 @@
+% Record actual file, figure, and table usage without changing report content.
+\makeatletter
+\newwrite\review@trace
+\immediate\openout\review@trace=\jobname.review-assets
+\def\review@emit#1#2{\begingroup\edef\review@value{#2}\immediate\write\review@trace{#1|\expandafter\detokenize\expandafter{\review@value}}\endgroup}
+\def\review@current{\ifx\CurrentFilePathUsed\@empty\else\CurrentFilePathUsed/\fi\CurrentFileUsed}
+\AddToHook{file/before}{\review@emit{B}{\review@current}}
+\AddToHook{file/after}{\review@emit{E}{\review@current}}
+\AddToHook{package/graphics/after}{%
+  \let\review@original@setfile\Gin@setfile
+  \def\Gin@setfile#1#2#3{\review@emit{G}{#3}\review@original@setfile{#1}{#2}{#3}}}
+\AddToHook{env/table/before}{\review@emit{T}{}}
+\AddToHook{env/table/after}{\review@emit{t}{}}
+\AddToHook{env/table*/before}{\review@emit{T}{}}
+\AddToHook{env/table*/after}{\review@emit{t}{}}
+\AddToHook{env/tabular/before}{\review@emit{A}{}}
+\AddToHook{env/tabular/after}{\review@emit{a}{}}
+\AddToHook{env/longtable/before}{\review@emit{A}{}}
+\AddToHook{env/longtable/after}{\review@emit{a}{}}
+\AddToHook{env/tabular*/before}{\review@emit{A}{}}
+\AddToHook{env/tabular*/after}{\review@emit{a}{}}
+\AddToHook{env/tabularx/before}{\review@emit{A}{}}
+\AddToHook{env/tabularx/after}{\review@emit{a}{}}
+\AddToHook{env/longtblr/before}{\review@emit{A}{}}
+\AddToHook{env/longtblr/after}{\review@emit{a}{}}
+\AddToHook{env/tblr/before}{\review@emit{A}{}}
+\AddToHook{env/tblr/after}{\review@emit{a}{}}
+\AddToHook{enddocument/end}{\review@emit{Z}{}}
+\makeatother

@@ -42,5 +42,4 @@ reference:
     - logRemove
     - repoHistory
     - getTFs
-    - getFigurePathsFromTex
-    - getTablePathsFromTex
+    - getAssetPathsFromTex

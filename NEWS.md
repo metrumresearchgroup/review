@@ -2,13 +2,11 @@
 
 ## Bug fixes
 
-- TeX path extraction now follows nested report sections from the report root,
-  handles circular includes, and returns table assets instead of section wrappers.
-  It also handles multiline and starred graphics commands, path macro definitions,
-  imported sections, image search paths and extensions, and common conditional
-  exclusions. Custom section directories and external macro values can be supplied
-  with `.section_dirs` and `.macros`. Undefined path macros now warn and skip the
-  reference instead of returning a filename containing the macro name.
+- Replaced `getFigurePathsFromTex()` and `getTablePathsFromTex()` with
+  `getAssetPathsFromTex()`. Pass the main report path to get a list of `figures`
+  and `tables` from one LaTeX build. LaTeX resolves macros, conditions, imports,
+  and nested sections; failed builds raise an error instead of returning a
+  partial list. The source-only parser has been removed.
 
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
