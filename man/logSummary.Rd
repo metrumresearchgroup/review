@@ -12,7 +12,7 @@ logSummary(directory = getwd())
 \value{
 A data frame containing one row per file. Columns include \code{file},
 \code{origin}, \code{revf}, \code{headf}, \code{revo}, \code{heado},
-\code{reviewer}, and \code{time}.
+\code{reviewer}, \code{time}, and \code{requester}.
 }
 \description{
 Summarize the review log associated with a particular directory.

@@ -30,7 +30,8 @@ logCreate <- function(directory=getwd()){
 			revf=integer(0),
 			revo=integer(0),
 			reviewer=character(0),
-			time=character(0)
+			time=character(0),
+			requester=character(0)
 		),
 		file=logName(directory)
 	)
