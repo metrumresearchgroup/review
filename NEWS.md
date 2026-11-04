@@ -4,6 +4,11 @@
 
 - TeX path extraction now follows nested report sections from the report root,
   handles circular includes, and returns table assets instead of section wrappers.
+  It also handles multiline and starred graphics commands, path macro definitions,
+  imported sections, image search paths and extensions, and common conditional
+  exclusions. Custom section directories and external macro values can be supplied
+  with `.section_dirs` and `.macros`. Undefined path macros now warn and skip the
+  reference instead of returning a filename containing the macro name.
 
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up

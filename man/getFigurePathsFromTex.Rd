@@ -5,9 +5,19 @@
 \alias{getTablePathsFromTex}
 \title{Extract figure and table paths from TeX files}
 \usage{
-getFigurePathsFromTex(.file, .report_dir = NULL)
+getFigurePathsFromTex(
+  .file,
+  .report_dir = NULL,
+  .section_dirs = "sections",
+  .macros = character()
+)
 
-getTablePathsFromTex(.file, .report_dir = NULL)
+getTablePathsFromTex(
+  .file,
+  .report_dir = NULL,
+  .section_dirs = "sections",
+  .macros = character()
+)
 }
 \arguments{
 \item{.file}{TeX file to parse. Use the main report file to collect assets
@@ -15,11 +25,21 @@ from all included sections, including methods and appendices.}
 
 \item{.report_dir}{Directory that relative TeX paths should be resolved
 from. Defaults to the parent of a \code{sections} directory when \code{.file} is in
-one, otherwise \code{dirname(.file)}.}
+one, otherwise \code{dirname(.file)}. Set explicitly when starting in another
+section directory.}
+
+\item{.section_dirs}{Directories containing section wrappers, relative to
+\code{.report_dir} or absolute. Defaults to \code{"sections"}. Add custom directories
+to distinguish empty or not-yet-created sections from table assets.}
+
+\item{.macros}{Named character vector of initial path macro values, without
+backslashes in the names, e.g. \code{c(runNumber = "106")}. Definitions in the
+parsed files can replace these values.}
 }
 \value{
-Character vector of normalized paths relative to the current working
-directory when possible, otherwise relative to \code{here::here()}.
+Character vector of unique normalized paths, relative to the most
+specific containing directory among the working directory and \code{here::here()},
+or absolute when neither contains the path.
 }
 \description{
 \code{getFigurePathsFromTex()} reads \verb{\\includegraphics\{\}} entries from a TeX file.
@@ -27,13 +47,34 @@ directory when possible, otherwise relative to \code{here::here()}.
 extension when the TeX input omits it. Commented-out entries are ignored.
 }
 \details{
-Both functions follow nested \verb{\\input\{\}} and \verb{\\include\{\}} section files,
-with protection against circular includes. Includes resolve from the report
-directory first, then from the including file's directory as a fallback.
-For tables, files under \verb{.report_dir/sections/} are section wrappers to
-traverse, not table assets; inputs outside that directory are returned as
-table paths, whether or not those assets exist. Missing section files are
-skipped. Figure extraction follows all existing included files.
+Both functions follow nested \verb{\\input\{\}}, \verb{\\include\{\}}, and import-package
+commands, with protection against circular includes. Standard includes resolve
+from the report directory first, then the including file's directory. Imported
+files and their assets resolve from the imported directory. Commands can span
+lines; starred graphics commands and balanced arguments are supported.
+
+Definitions made with \verb{\newcommand}, \verb{\renewcommand}, \verb{\\providecommand},
+and \verb{\\def} (including simple arguments) are expanded in paths, in source order.
+Undefined or recursive path macros warn and skip that reference. Use \code{.macros}
+when definitions live outside the file tree being parsed. Inactive \verb{\\iffalse},
+\verb{\\iftrue}, \verb{\\ifdefined}, and \verb{\\newif} branches, \verb{\\includeonly} exclusions,
+and verbatim examples are ignored.
+
+Figures honor \verb{\\graphicspath} and \verb{\\DeclareGraphicsExtensions}. Extensionless
+images are matched to existing files using PDF graphics extension order by
+default (PDF, PNG, JPEG, then other supported suffixes). If no matching image
+exists, the extensionless path is returned with a warning.
+
+For tables, files in \code{.section_dirs} are wrappers to traverse. Other existing
+files with report structure, definitions, or nested includes are also traversed.
+Inputs inside table environments or directories named \code{table} or \code{tables},
+and leaf files containing tabular material, are treated as table assets.
+Explicit \code{.section_dirs} takes precedence when the layout is ambiguous.
+Missing section files are skipped; table assets need not exist to be listed.
+This is a static reader, not a full TeX interpreter: arbitrary executable
+macros, package-specific logic, and TeX grouping semantics are not evaluated.
+Unsupported conditionals warn and skip their branches; simple \verb{\\ifthenelse}
+equality and boolean tests are supported.
 }
 \examples{
 \dontrun{
