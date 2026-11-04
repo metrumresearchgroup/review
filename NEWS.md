@@ -2,6 +2,9 @@
 
 ## Bug fixes
 
+- TeX path extraction now follows nested report sections from the report root,
+  handles circular includes, and returns table assets instead of section wrappers.
+
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
   a revision.

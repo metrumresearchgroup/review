@@ -4,7 +4,16 @@
 #' `getTablePathsFromTex()` reads `\input{}` entries and adds a `.tex`
 #' extension when the TeX input omits it. Commented-out entries are ignored.
 #'
-#' @param .file TeX file to parse.
+#' Both functions follow nested `\input{}` and `\include{}` section files,
+#' with protection against circular includes. Includes resolve from the report
+#' directory first, then from the including file's directory as a fallback.
+#' For tables, files under `.report_dir/sections/` are section wrappers to
+#' traverse, not table assets; inputs outside that directory are returned as
+#' table paths, whether or not those assets exist. Missing section files are
+#' skipped. Figure extraction follows all existing included files.
+#'
+#' @param .file TeX file to parse. Use the main report file to collect assets
+#'   from all included sections, including methods and appendices.
 #' @param .report_dir Directory that relative TeX paths should be resolved
 #'   from. Defaults to the parent of a `sections` directory when `.file` is in
 #'   one, otherwise `dirname(.file)`.
@@ -67,46 +76,52 @@ tex_command_args <- function(lines, command) {
   args[nzchar(args)]
 }
 
-tex_extract_paths <- function(.file, type, report_dir, recurse = TRUE) {
-  lines <- tex_read_lines(.file)
-  command <- if (identical(type, "figure")) "includegraphics" else "input"
-  paths <- tex_command_args(lines, command)
-
-  sub_paths <- if (identical(type, "figure") && isTRUE(recurse)) {
-    tex_sub_paths(.file, type, report_dir, lines)
-  } else {
-    character()
-  }
-
-  unique(c(tex_normalize_paths(paths, type, report_dir), sub_paths))
-}
-
-# \input{} in a figures file points to a sub-section TeX file, not a figure.
-# Recurse into any that resolve to an existing .tex file (one level only).
-tex_sub_paths <- function(.file, type, report_dir, lines) {
-  refs <- tex_command_args(lines, "input")
-  if (!length(refs)) {
+tex_extract_paths <- function(.file, type, report_dir, visited = character()) {
+  file <- normalizePath(.file, winslash = "/", mustWork = TRUE)
+  if (file %in% visited) {
     return(character())
   }
+  visited <- c(visited, file)
+  report_dir <- normalizePath(report_dir, winslash = "/", mustWork = FALSE)
+  lines <- tex_read_lines(file)
+  inputs <- tex_command_args(lines, "input")
+  includes <- tex_command_args(lines, "include")
+  refs <- c(inputs, includes)
+  sub_files <- vapply(refs, tex_resolve_input, character(1),
+    file = file, report_dir = report_dir, USE.NAMES = FALSE)
 
-  no_ext <- !grepl("\\.[[:alnum:]]+$", refs)
-  refs[no_ext] <- paste0(refs[no_ext], ".tex")
+  if (identical(type, "figure")) {
+    paths <- tex_command_args(lines, "includegraphics")
+    traverse <- rep(TRUE, length(refs))
+  } else {
+    # Section files organize the report; inputs elsewhere are table assets.
+    sections <- normalizePath(file.path(report_dir, "sections"),
+      winslash = "/", mustWork = FALSE)
+    traverse <- startsWith(sub_files, paste0(sections, "/"))
+    paths <- inputs[!traverse[seq_along(inputs)]]
+  }
 
-  sub_files <- ifelse(
-    grepl("^(/|[A-Za-z]:[/\\\\])", refs),
-    refs,
-    file.path(dirname(.file), refs)
-  )
-  sub_files <- sub_files[file.exists(sub_files)]
+  sub_paths <- lapply(sub_files[traverse & file.exists(sub_files)],
+    tex_extract_paths, type = type, report_dir = report_dir, visited = visited)
+  unique(c(tex_normalize_paths(paths, type, report_dir),
+    unlist(sub_paths, use.names = FALSE)))
+}
 
-  purrr::map(
-    sub_files,
-    tex_extract_paths,
-    type = type,
-    report_dir = report_dir,
-    recurse = FALSE
-  ) %>%
-    purrr::list_c()
+# TeX includes are normally relative to the report root. Keep sibling lookup
+# as a fallback for section files that use bare names such as figures-pk.
+tex_resolve_input <- function(ref, file, report_dir) {
+  if (!grepl("\\.[[:alnum:]]+$", ref)) {
+    ref <- paste0(ref, ".tex")
+  }
+  candidates <- if (grepl("^(/|[A-Za-z]:[/\\\\])", ref)) {
+    ref
+  } else {
+    c(file.path(report_dir, ref), file.path(dirname(file), ref))
+  }
+  existing <- candidates[file.exists(candidates)]
+  path <- if (length(existing)) existing[[1]] else candidates[[1]]
+  normalizePath(as.character(fs::path_norm(path)),
+    winslash = "/", mustWork = FALSE)
 }
 
 tex_normalize_paths <- function(paths, type, report_dir) {

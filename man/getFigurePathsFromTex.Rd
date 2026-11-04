@@ -10,7 +10,8 @@ getFigurePathsFromTex(.file, .report_dir = NULL)
 getTablePathsFromTex(.file, .report_dir = NULL)
 }
 \arguments{
-\item{.file}{TeX file to parse.}
+\item{.file}{TeX file to parse. Use the main report file to collect assets
+from all included sections, including methods and appendices.}
 
 \item{.report_dir}{Directory that relative TeX paths should be resolved
 from. Defaults to the parent of a \code{sections} directory when \code{.file} is in
@@ -24,6 +25,15 @@ directory when possible, otherwise relative to \code{here::here()}.
 \code{getFigurePathsFromTex()} reads \verb{\\includegraphics\{\}} entries from a TeX file.
 \code{getTablePathsFromTex()} reads \verb{\\input\{\}} entries and adds a \code{.tex}
 extension when the TeX input omits it. Commented-out entries are ignored.
+}
+\details{
+Both functions follow nested \verb{\\input\{\}} and \verb{\\include\{\}} section files,
+with protection against circular includes. Includes resolve from the report
+directory first, then from the including file's directory as a fallback.
+For tables, files under \verb{.report_dir/sections/} are section wrappers to
+traverse, not table assets; inputs outside that directory are returned as
+table paths, whether or not those assets exist. Missing section files are
+skipped. Figure extraction follows all existing included files.
 }
 \examples{
 \dontrun{
