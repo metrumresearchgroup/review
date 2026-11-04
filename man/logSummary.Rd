@@ -22,7 +22,7 @@ Whereas the review log can have any number of records for the same file, the
 summary reduces the data to one record per file.  It is an error if any element
 of the file column is missing.
 
-The log is read, then sorted on file, revision, time.  The last record
+The log is read, then sorted on file and time (ties retain log order).  The last record
 for each file is retained.
 
 The output includes the latest revisions for the file and origin, plus the

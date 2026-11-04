@@ -3,6 +3,7 @@ user_lookup <- dplyr::tribble(
   ~sys, ~svn,
   "michaelm", "michaelm",
   "anderson", "andersone",
+  "andersone", "andersone",
   "graceo", "graceo"
 )
 

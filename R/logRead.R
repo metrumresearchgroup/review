@@ -22,7 +22,7 @@ logRead <- function(directory=getwd()){
   	  log$file[i] <- pathFromLogRoot(log$file[i])
   	  log$origin[i] <- pathFromLogRoot(log$origin[i])
   	}
-  	unique_rows <- !duplicated(log)
+	unique_rows <- !duplicated(log, fromLast=TRUE)
   	log <- log[unique_rows,]
   	rm(unique_rows)
 	}
