@@ -39,6 +39,9 @@ logAccept <- function(file=dir(),
                       ...){
 
 	fpath <- logTarget(file=file,directory=directory,force=force)
+	old <- logRead(directory)
+	unassigned <- file[!relPath(file, directory) %in% old$file[!is.na(old$revf) & old$revf == 0]]
+	if(length(unassigned))stop(paste("Run logAssign() before logAccept() for:", paste(unassigned, collapse=", ")))
 	opath <- logTarget(file=origin,directory=directory,force=force)
 	revf <- sapply(fpath,revision)
 	revo <- sapply(opath,revision)
