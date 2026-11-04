@@ -2,6 +2,12 @@
 
 ## Bug fixes
 
+- Replaced `getFigurePathsFromTex()` and `getTablePathsFromTex()` with
+  `getAssetPathsFromTex()`. Pass the main report path to get a list of `figures`
+  and `tables` from one LaTeX build. LaTeX resolves macros, conditions, imports,
+  and nested sections; failed builds raise an error instead of returning a
+  partial list. The source-only parser has been removed.
+
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
   a revision.
