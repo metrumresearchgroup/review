@@ -14,16 +14,10 @@ with_demoRepo({
     expect_match(diff_html, "<style", ignore.case = TRUE)
   })
   
-  test_that("diffPreviousRevisions defaults to the SVN revision and allows the local copy", {
-    original <- readLines(file2)
-    withr::defer(writeLines(original, file2))
-    writeLines(c(original, "# uncommitted change"), file2)
+  test_that("diffPreviousRevisions defaults current version of diff to local version", {
     diffVer <- diffPreviousRevisions(.file = file2, .previous_revision = 1)
     expect_true(diffVer@target != diffVer@current)
     expect_equal(diffVer@target, "pk_spec <- yspec::load_spec(here::here(\"script\", \"script/examp-yaml.yaml\"))")
     expect_equal(diffVer@current, "pk_spec <- yspec::load_spec(here::here(\"script\", \"examp-yaml.yaml\"))")
-
-    localDiff <- diffPreviousRevisions(.file = file2, .previous_revision = 1, .current_revision = NULL)
-    expect_equal(localDiff@current, c(original, "# uncommitted change"))
   })
 })

@@ -2,12 +2,12 @@
 % Please edit documentation in R/diffPreviousRevisions.R
 \name{diffPreviousRevisions}
 \alias{diffPreviousRevisions}
-\title{Visual diff of previous revision of a file to the current revision.}
+\title{Visual diff of previous revision of a file to the local version.}
 \usage{
 diffPreviousRevisions(
   .file,
   .previous_revision,
-  .current_revision = svnInfo(.file)$rev,
+  .current_revision = NULL,
   .side_by_side = TRUE,
   .ignore_white_space = FALSE,
   .display_entire_file = FALSE,
@@ -19,8 +19,7 @@ diffPreviousRevisions(
 
 \item{.previous_revision}{revision to compare to current revision}
 
-\item{.current_revision}{current revision (defaults to \code{svnInfo(.file)$rev});
-use \code{NULL} to compare against the local copy, including uncommitted changes}
+\item{.current_revision}{current revision (defaults to local copy)}
 
 \item{.side_by_side}{Logical. Should diffs be displayed side by side?}
 

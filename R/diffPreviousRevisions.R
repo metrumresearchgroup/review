@@ -1,4 +1,4 @@
-#' Visual diff of previous revision of a file to the current revision.
+#' Visual diff of previous revision of a file to the local version.
 #' 
 #' @description 
 #' Compares the current version of a script with a previous revision.
@@ -7,8 +7,7 @@
 #'
 #' @param .file file path from working directory
 #' @param .previous_revision revision to compare to current revision
-#' @param .current_revision current revision (defaults to `svnInfo(.file)$rev`);
-#'   use `NULL` to compare against the local copy, including uncommitted changes
+#' @param .current_revision current revision (defaults to local copy)
 #' @param .side_by_side Logical. Should diffs be displayed side by side?
 #' @param .ignore_white_space Logical. Should white space be ignored?
 #' @param .display_entire_file Logical. Should the entire file be displayed?
@@ -23,7 +22,7 @@
 #' @export
 diffPreviousRevisions <- function(.file,
                                   .previous_revision,
-                                  .current_revision = svnInfo(.file)$rev,
+                                  .current_revision = NULL,
                                   .side_by_side = TRUE,
                                   .ignore_white_space = FALSE,
                                   .display_entire_file = FALSE,

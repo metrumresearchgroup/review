@@ -24,6 +24,7 @@ reference:
     desc: View difference between script versions
     contents:
     - diffPreviousRevisions
+    - diffLocal
     - diffQced
     - getQcedRevision
     - diffFiles
