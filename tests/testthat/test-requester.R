@@ -6,12 +6,14 @@ with_demoRepo({
     logAssign(file, requester = "alice")
     assigned <- logRead()
     expect_equal(tail(assigned$requester, 1), "alice")
+    expect_false("requester" %in% names(logSummary()))
+    expect_false("requester" %in% names(logPending()))
     logAccept(file, reviewer = "bob")
     expect_true(is.na(tail(logRead()$requester, 1)))
     expect_equal(head(logRead(), -1), assigned)
     expect_equal(tail(logRead()$reviewer, 1), "bob")
     summary <- logSummary()
-    expect_true(is.na(summary$requester[summary$file == file]))
+    expect_false("requester" %in% names(summary))
   })
 
   test_that("legacy logs can be read and extended", {
@@ -23,5 +25,11 @@ with_demoRepo({
     updated <- logRead()
     expect_true(all(is.na(head(updated$requester, -1))))
     expect_equal(tail(updated$requester, 1), "carol")
+  })
+
+  test_that("empty summaries omit requester", {
+    logWrite(logRead()[0, ], logName())
+    expect_false("requester" %in% names(logSummary()))
+    expect_false("requester" %in% names(logPending()))
   })
 })

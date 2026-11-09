@@ -20,7 +20,7 @@
 #' @return
 #' A data frame containing one row per file. Columns include \code{file}, 
 #' \code{origin}, \code{revf}, \code{headf}, \code{revo}, \code{heado}, 
-#' \code{reviewer}, \code{time}, and \code{requester}.
+#' \code{reviewer}, and \code{time}.
 #' 
 #' @examples 
 #' with_demoRepo({
@@ -38,8 +38,8 @@ logSummary <- function(directory=getwd()){
 	if(any(is.na(log$file)))stop("missing file names in log")
 	log <- log[order(log$file, log$revf, log$time),]
 	log <- log[!duplicated(log$file,fromLast=TRUE),]
-	cols <- c('file','origin','revf','headf','revo','heado','reviewer','time','requester')
-	if(!nrow(log))return(cbind(log,data.frame(headf=numeric(0),heado=numeric(0))))[,cols]
+	cols <- c('file','origin','revf','headf','revo','heado','reviewer','time')
+	if(!nrow(log))return(cbind(log,data.frame(headf=numeric(0),heado=numeric(0)))[,cols])
 	absFile <- logTarget(file=log$file,directory=logRoot(directory),force=TRUE)
 	absOrigin <- logTarget(file=log$origin,directory=logRoot(directory),force=TRUE)
 	log$headf <- sapply(absFile,revision)
