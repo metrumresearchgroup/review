@@ -1,5 +1,7 @@
 # Getting Started with review
 
+Development version: `3.15.0.9004`.
+
 **review** is a toolkit for ensuring critical files are reviewed on a project. It manages the quality control (QC) process by tracking the assignment and acceptance of files in a centralized log file, **QClog.csv**. **review** is tailored to Subversion (SVN)-based workflows and contains a slightly different log structure.
 
 By integrating with SVN, **review** uses file revisions to detect when a file has been modified and flags it for re-evaluation. It provides functions to assign reviewers, check outstanding QC needs, and summarize the QC status of all files.

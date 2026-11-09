@@ -1,6 +1,10 @@
-# review 3.15.0.9003
+# review 3.15.0.9004
 
 ## New features and changes
+
+- QC logs now record the requester on assignment rows, defaulting to the user
+  assigning QC. Existing logs remain supported. Requester is omitted from
+  summaries and pending lists. (#225)
 
 - Added `diffLocal()` to compare local edits against the checked-out SVN
   revision, like `svn diff`. (#231)
@@ -28,25 +32,11 @@
   is missing, unless another revision comparison establishes that QC is
   needed. (#221)
 
-# review 3.15.0.9002
-
-## Bug fixes
-
 - Fixed printing of `logSummary()` results containing missing values. (#218)
-
-# review 3.15.0.9001
-
-- QC logs now record the requester, defaulting to the user assigning QC. Existing logs remain supported.
-
-## Bug fixes
 
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
   a revision.
-
-# review 3.15.0.9000
-
-## Bug fixes
 
 - Visual diffs from `diffPreviousRevisions` and `diffDashboard` now render as
   styled HTML in Positron instead of being printed as plain console output.
