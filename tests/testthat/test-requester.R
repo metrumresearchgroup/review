@@ -1,14 +1,17 @@
 with_demoRepo({
-  test_that("requester is recorded and retained on acceptance", {
+  test_that("requester is recorded only on the assignment row", {
     file <- "script/examp-yaml.yaml"
     logAssign(file)
     expect_equal(tail(logRead()$requester, 1), unname(Sys.info()["user"]))
     logAssign(file, requester = "alice")
+    assigned <- logRead()
+    expect_equal(tail(assigned$requester, 1), "alice")
     logAccept(file, reviewer = "bob")
-    expect_equal(tail(logRead()$requester, 1), "alice")
+    expect_true(is.na(tail(logRead()$requester, 1)))
+    expect_equal(head(logRead(), -1), assigned)
     expect_equal(tail(logRead()$reviewer, 1), "bob")
     summary <- logSummary()
-    expect_equal(summary$requester[summary$file == file], "alice")
+    expect_true(is.na(summary$requester[summary$file == file]))
   })
 
   test_that("legacy logs can be read and extended", {

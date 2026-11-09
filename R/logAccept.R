@@ -51,19 +51,9 @@ logAccept <- function(file=dir(),
 			revo=revo,
 			reviewer=reviewer,
 			force=force,
-			requester=logRequester(file, directory),
 			...
 		),
 		directory=directory
 	)
 		
-}
-
-
-# Return the requester from the most recent record for each file.
-logRequester <- function(file, directory) {
-  old <- logRead(directory)
-  paths <- relPath(file=file, directory=directory)
-  latest <- old[!duplicated(old$file, fromLast=TRUE), ]
-  as.character(latest$requester[match(paths, latest$file)])
 }
