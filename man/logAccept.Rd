@@ -27,6 +27,9 @@ force=FALSE,
 }
 \description{
 Indicate acceptance of a file by logging an entry with nonzero version.
+Files must already have an entry in the log. Use logAssign() before
+accepting a file with no log history; an existing entry at any revision
+satisfies this requirement.
 }
 \details{
 Can be undone with logRevert(). Calls logAppend(), which gives an error if
