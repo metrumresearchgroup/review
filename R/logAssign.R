@@ -31,8 +31,8 @@
 #'  file = dir(), 
 #'  directory = getwd(), 
 #'  origin = file,
-#'  ...,
-#'  requester = Sys.info()['user'])
+#'  requester = Sys.info()['user'],
+#'  ...)
 #' 
 #' @author Tim Bergsma
 #' 
@@ -40,8 +40,8 @@
 logAssign <- function(file=dir(),
                       directory=getwd(),
                       origin=file,
-                      ...,
-                      requester=Sys.info()['user']) {
+                      requester=Sys.info()['user'],
+                      ...) {
   logAppend(
 	new=logQueue(file=file,directory=directory,origin=origin,requester=requester,...),
 	directory=logRoot(directory)

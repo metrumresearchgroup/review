@@ -36,7 +36,7 @@ Under the hood, **review** creates an empty **QClog.csv** with the following col
 - **revo**: Original revision of the file when assigned or accepted.
 - **reviewer**: Who is assigned to review the file. 
 - **time**: Timestamp of the QC action.
-- **requester**: Person requesting QC, recorded by `logAssign()` using the current system user by default. Override with `logAssign("script/example.R", requester = "alice")`. Acceptance retains the requester; historical entries in older logs have an unknown requester.
+- **requester**: Person requesting QC, recorded only on the assignment row by `logAssign()` using the current system user by default. Override with `logAssign("script/example.R", requester = "alice")`. Acceptance leaves requester empty. Requester is omitted from summaries and pending lists; historical entries in older logs have an unknown requester.
 
 ### Example Log (Pre-existing)
 

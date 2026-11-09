@@ -28,8 +28,6 @@ export(svnExport)
 export(svnLog)
 export(with_demoRepo)
 importFrom(magrittr,"%>%")
-importFrom(utils,
-  file_test,
-  read.table,
-  write.table
-)
+importFrom(utils,file_test)
+importFrom(utils,read.table)
+importFrom(utils,write.table)

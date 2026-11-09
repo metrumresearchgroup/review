@@ -16,6 +16,7 @@ logRead <- function(directory=getwd()){
 	)
 	
 	if (!"requester" %in% names(log)) log$requester <- rep(NA_character_, nrow(log))
+	log$requester <- as.character(log$requester)
 
 	if (nrow(log) > 0) {
   	for (i in 1:nrow(log)) {

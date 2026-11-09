@@ -3,7 +3,7 @@ with_demoRepo({
     file <- "script/examp-yaml.yaml"
     logAssign(file)
     expect_equal(tail(logRead()$requester, 1), unname(Sys.info()["user"]))
-    logAssign(file, requester = "alice")
+    logAssign(file, getwd(), file, "alice")
     assigned <- logRead()
     expect_equal(tail(assigned$requester, 1), "alice")
     expect_false("requester" %in% names(logSummary()))
@@ -21,14 +21,24 @@ with_demoRepo({
     old$requester <- NULL
     logWrite(old, logName())
     expect_true(all(is.na(logRead()$requester)))
+    expect_type(logRead()$requester, "character")
     logAssign("script/examp-yaml.yaml", requester = "carol")
     updated <- logRead()
     expect_true(all(is.na(head(updated$requester, -1))))
     expect_equal(tail(updated$requester, 1), "carol")
   })
 
+  test_that("an all-missing requester column is read as character", {
+    old <- logRead()
+    old$requester <- NA_character_
+    logWrite(old, logName())
+    expect_true(all(is.na(logRead()$requester)))
+    expect_type(logRead()$requester, "character")
+  })
+
   test_that("empty summaries omit requester", {
     logWrite(logRead()[0, ], logName())
+    expect_type(logRead()$requester, "character")
     expect_false("requester" %in% names(logSummary()))
     expect_false("requester" %in% names(logPending()))
   })
