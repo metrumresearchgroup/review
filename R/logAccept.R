@@ -63,4 +63,3 @@ logAccept <- function(file=dir(),
 	)
 		
 }
-

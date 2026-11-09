@@ -39,7 +39,7 @@ logSummary <- function(directory=getwd()){
 	log <- log[order(log$file, log$revf, log$time),]
 	log <- log[!duplicated(log$file,fromLast=TRUE),]
 	cols <- c('file','origin','revf','headf','revo','heado','reviewer','time')
-	if(!nrow(log))return(cbind(log,data.frame(headf=numeric(0),heado=numeric(0))))[,cols]
+	if(!nrow(log))return(cbind(log,data.frame(headf=numeric(0),heado=numeric(0)))[,cols])
 	absFile <- logTarget(file=log$file,directory=logRoot(directory),force=TRUE)
 	absOrigin <- logTarget(file=log$origin,directory=logRoot(directory),force=TRUE)
 	log$headf <- sapply(absFile,revision)

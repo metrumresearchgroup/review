@@ -36,6 +36,8 @@
 
 # review 3.15.0.9001
 
+- QC logs now record the requester, defaulting to the user assigning QC. Existing logs remain supported.
+
 ## Bug fixes
 
 - Fixed TeX figure and table paths when reports use macros.

@@ -8,6 +8,7 @@
 #' @param file a character vector of filenames (paths) relative to directory
 #' @param directory the parent of the file
 #' @param origin the file from which 'file' originates
+#' @param requester person requesting QC; defaults to the current system user
 #' @param ... arguments passed to logQueue
 #' 
 #' @details 
@@ -30,6 +31,7 @@
 #'  file = dir(), 
 #'  directory = getwd(), 
 #'  origin = file,
+#'  requester = Sys.info()['user'],
 #'  ...)
 #' 
 #' @author Tim Bergsma
@@ -38,9 +40,10 @@
 logAssign <- function(file=dir(),
                       directory=getwd(),
                       origin=file,
+                      requester=Sys.info()['user'],
                       ...) {
   logAppend(
-	new=logQueue(file=file,directory=directory,origin=origin,...),
+	new=logQueue(file=file,directory=directory,origin=origin,requester=requester,...),
 	directory=logRoot(directory)
   )
 }
