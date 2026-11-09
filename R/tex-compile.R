@@ -109,6 +109,7 @@ tex_compiled_assets <- function(trace_file, recorder_file, root, main, output) {
   # also open files. Only graphics events identify figure assets.
   figures <- character()
   tables <- character()
+  active_tables <- character()
   stack <- character()
   table_depth <- 0L
   for (line in trace) {
@@ -118,23 +119,29 @@ tex_compiled_assets <- function(trace_file, recorder_file, root, main, output) {
       support_file <- grepl("\\.(sty|cls|clo|cfg|def|fd|ldf|aux|toc|out|lof|lot|bbl|bst)$",
         path, ignore.case = TRUE)
       candidate <- if (support_file) NA_character_ else resolve(path)
-      nested_asset <- any(stack %in% tables)
+      nested_asset <- any(stack %in% active_tables)
       stack <- c(stack, candidate)
       if (table_depth > 0L && !is.na(candidate) && candidate != main && !nested_asset) {
         tables <- c(tables, candidate)
+        active_tables <- c(active_tables, candidate)
       }
     } else if (event == "E") {
       stack <- utils::head(stack, -1L)
     } else if (event == "G") {
       figures <- c(figures, resolve(path))
     } else if (event %in% c("A", "T")) {
-      if (event == "A" && length(stack) && !any(stack %in% tables)) {
+      if (event == "A" && length(stack) && !any(stack %in% active_tables)) {
         candidate <- utils::tail(stack, 1L)
-        if (!is.na(candidate) && candidate != main) tables <- c(tables, candidate)
+        if (!is.na(candidate) && candidate != main) {
+          tables <- c(tables, candidate)
+          active_tables <- c(active_tables, candidate)
+        }
       }
       table_depth <- table_depth + 1L
     } else if (event %in% c("a", "t")) {
       table_depth <- max(0L, table_depth - 1L)
+      # A completed inline table must not hide later assets in the same section.
+      if (table_depth == 0L) active_tables <- character()
     }
   }
   assets <- unique(c(figures, tables))

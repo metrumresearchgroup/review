@@ -82,6 +82,24 @@ test_that("inline tables do not invent external asset paths", {
   expect_identical(getAssetPathsFromTex(main)$tables, character())
 })
 
+test_that("inline section tables do not hide later external table assets", {
+  report <- latex_test_report()
+  main <- report$write("main.tex", c(
+    "% !TeX program = pdflatex", "\\documentclass{article}",
+    "\\begin{document}", "\\input{sections/results}", "\\end{document}"))
+  report$write("sections/results.tex", c(
+    "\\begin{tabular}{c}\\input{data/inline-rows}\\end{tabular}",
+    "\\begin{table}\\input{data/summary}\\end{table}",
+    "\\input{data/standalone}"))
+  report$write("data/inline-rows.tex", "Inline")
+  report$write("data/summary.tex", "\\begin{tabular}{c}\\input{data/summary-rows}\\end{tabular}")
+  report$write("data/summary-rows.tex", "Summary")
+  report$write("data/standalone.tex", "\\begin{tabular}{c}Standalone\\end{tabular}")
+
+  expect_equal(getAssetPathsFromTex(main)$tables,
+    file.path(report$root, c("sections/results.tex", "data/summary.tex", "data/standalone.tex")))
+})
+
 test_that("runtime input search paths disambiguate identically named table files", {
   report <- latex_test_report()
   report$write("first/shared.tex", "\\begin{tabular}{c}First\\end{tabular}")
