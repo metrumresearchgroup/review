@@ -2,6 +2,9 @@
 #' 
 #' @description 
 #' Indicate acceptance of a file by logging an entry with nonzero version.
+#' Files must already have an entry in the log. Use logAssign() before
+#' accepting a file with no log history; an existing entry at any revision
+#' satisfies this requirement.
 #' 
 #' @param file one or more files to accept
 #' @param directory the parent of the file
@@ -40,7 +43,7 @@ logAccept <- function(file=dir(),
 
 	fpath <- logTarget(file=file,directory=directory,force=force)
 	old <- logRead(directory)
-	unassigned <- file[!relPath(file, directory) %in% old$file[!is.na(old$revf) & old$revf == 0]]
+	unassigned <- file[!relPath(file, directory) %in% old$file]
 	if(length(unassigned))stop(paste("Run logAssign() before logAccept() for:", paste(unassigned, collapse=", ")))
 	opath <- logTarget(file=origin,directory=directory,force=force)
 	revf <- sapply(fpath,revision)
