@@ -1,12 +1,42 @@
-# review 3.15.0.9001
+# review 3.15.0.9003
 
-## Bug fixes
+## New features and changes
+
+- Added `diffLocal()` to compare local edits against the checked-out SVN
+  revision, like `svn diff`. (#231)
+
+- `renderQCSummary()` now accepts a `days` lookback for files not in the QC
+  log, defaulting to 20 days. Use `Inf` to include all history; tables can
+  span multiple pages. (#220)
 
 - Replaced `getFigurePathsFromTex()` and `getTablePathsFromTex()` with
   `getAssetPathsFromTex()`. Pass the main report path to get a list of `figures`
   and `tables` from one LaTeX build. LaTeX resolves macros, conditions, imports,
   and nested sections; failed builds raise an error instead of returning a
-  partial list. The source-only parser has been removed.
+  partial list. The source-only parser has been removed. (#228)
+
+## Bug fixes
+
+- `logAccept()` now requires an existing log entry for every file. Use
+  `logAssign()` for files with no log history; an entry at any revision
+  satisfies the requirement. Rejected batches leave the log unchanged. (#226)
+
+- `logPending()` now retains files with missing revision information,
+  including unavailable files. (#219)
+
+- `dirSummary()` now reports "QC status unknown" when revision information
+  is missing, unless another revision comparison establishes that QC is
+  needed. (#221)
+
+# review 3.15.0.9002
+
+## Bug fixes
+
+- Fixed printing of `logSummary()` results containing missing values. (#218)
+
+# review 3.15.0.9001
+
+## Bug fixes
 
 - Fixed TeX figure and table paths when reports use macros.
 - Restored a warning and an `NA` result when `svn info` fails while looking up
