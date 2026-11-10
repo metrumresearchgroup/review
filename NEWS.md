@@ -21,6 +21,9 @@
 
 ## Bug fixes
 
+- Fixed TeX asset discovery omitting external tables after an inline table in
+  the same report section.
+
 - `logAccept()` now requires an existing log entry for every file. Use
   `logAssign()` for files with no log history; an entry at any revision
   satisfies the requirement. Rejected batches leave the log unchanged. (#226)
