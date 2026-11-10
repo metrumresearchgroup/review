@@ -100,6 +100,23 @@ test_that("inline section tables do not hide later external table assets", {
     file.path(report$root, c("sections/results.tex", "data/summary.tex", "data/standalone.tex")))
 })
 
+test_that("top-level table files report later inputs that contain their own tabular", {
+  # Without a table environment, a table file and a section with an inline table
+  # look the same in the trace; prefer over-reporting to silently dropping assets.
+  report <- latex_test_report()
+  main <- report$write("main.tex", c(
+    "% !TeX program = pdflatex", "\\documentclass{article}",
+    "\\begin{document}", "\\input{data/summary}", "\\end{document}"))
+  report$write("data/summary.tex", c(
+    "\\begin{tabular}{c}\\input{data/summary-rows}\\end{tabular}",
+    "\\input{data/continued}"))
+  report$write("data/summary-rows.tex", "Summary")
+  report$write("data/continued.tex", "\\begin{tabular}{c}Continued\\end{tabular}")
+
+  expect_equal(getAssetPathsFromTex(main)$tables,
+    file.path(report$root, c("data/summary.tex", "data/continued.tex")))
+})
+
 test_that("runtime input search paths disambiguate identically named table files", {
   report <- latex_test_report()
   report$write("first/shared.tex", "\\begin{tabular}{c}First\\end{tabular}")
