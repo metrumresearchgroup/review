@@ -8,7 +8,6 @@ logAssign(
  file = dir(), 
  directory = getwd(), 
  origin = file,
- requester = Sys.info()['user'],
  ...)
 }
 \arguments{
@@ -17,8 +16,6 @@ logAssign(
 \item{directory}{the parent of the file}
 
 \item{origin}{the file from which 'file' originates}
-
-\item{requester}{person requesting QC; defaults to the current system user}
 
 \item{...}{arguments passed to logQueue}
 }

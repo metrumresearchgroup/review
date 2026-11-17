@@ -57,6 +57,7 @@ logAccept <- function(file=dir(),
 			revo=revo,
 			reviewer=reviewer,
 			force=force,
+			requester=NA_character_,
 			...
 		),
 		directory=directory

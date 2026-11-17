@@ -1,6 +1,7 @@
 create_test_svn()
 
 logAssign("script/model-management.R")
+logAssign("script/box-sample-code.R")
 logAccept("script/box-sample-code.R")
 
 dirSummaryRes <- dirSummary()
