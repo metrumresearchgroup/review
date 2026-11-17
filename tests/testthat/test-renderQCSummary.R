@@ -2,6 +2,7 @@ if (Sys.getenv("METWORX_VERSION") != "") {
   
   create_test_svn()
   
+  logAssign("script/data-assembly/da-combine-studies.Rmd")
   logAccept("script/data-assembly/da-combine-studies.Rmd")
   logAssign("script/data-assembly/da-functions.R")
   

@@ -2,10 +2,10 @@ with_demoRepo({
   test_that("requester is recorded only on the assignment row", {
     file <- "script/examp-yaml.yaml"
     logAssign(file)
-    expect_equal(tail(logRead()$requester, 1), unname(Sys.info()["user"]))
-    logAssign(file, getwd(), file, "alice")
     assigned <- logRead()
-    expect_equal(tail(assigned$requester, 1), "alice")
+    expect_equal(tail(assigned$requester, 1), unname(Sys.info()["user"]))
+    expect_error(logAssign(file, requester = "alice"))
+    expect_error(logAccept(file, requester = "alice"))
     expect_false("requester" %in% names(logSummary()))
     expect_false("requester" %in% names(logPending()))
     logAccept(file, reviewer = "bob")
@@ -22,10 +22,10 @@ with_demoRepo({
     logWrite(old, logName())
     expect_true(all(is.na(logRead()$requester)))
     expect_type(logRead()$requester, "character")
-    logAssign("script/examp-yaml.yaml", requester = "carol")
+    logAssign("script/examp-yaml.yaml")
     updated <- logRead()
     expect_true(all(is.na(head(updated$requester, -1))))
-    expect_equal(tail(updated$requester, 1), "carol")
+    expect_equal(tail(updated$requester, 1), unname(Sys.info()["user"]))
   })
 
   test_that("an all-missing requester column is read as character", {

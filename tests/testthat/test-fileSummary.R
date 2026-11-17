@@ -1,4 +1,5 @@
 create_test_svn()
+logAssign("script/data-assembly/da-functions.R")
 # Match the local date used by fileSummary(), regardless of the GMT date.
 logAccept(
   "script/data-assembly/da-functions.R",

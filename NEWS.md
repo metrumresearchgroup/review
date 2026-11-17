@@ -2,9 +2,9 @@
 
 ## New features and changes
 
-- QC logs now record the requester on assignment rows, defaulting to the user
-  assigning QC. Existing logs remain supported. Requester is omitted from
-  summaries and pending lists. (#225)
+- QC logs now record the requester on assignment rows: the system user name
+  of whoever runs `logAssign()`. Existing logs remain supported. Requester is
+  omitted from summaries and pending lists. (#225)
 
 - Added `diffLocal()` to compare local edits against the checked-out SVN
   revision, like `svn diff`. (#231)
