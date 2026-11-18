@@ -1,6 +1,6 @@
 # Getting Started with review
 
-Development version: `3.15.0.9004`.
+Version: `3.16.0`.
 
 **review** is a toolkit for ensuring critical files are reviewed on a project. It manages the quality control (QC) process by tracking the assignment and acceptance of files in a centralized log file, **QClog.csv**. **review** is tailored to Subversion (SVN)-based workflows and contains a slightly different log structure.
 
@@ -44,41 +44,41 @@ Under the hood, **review** creates an empty **QClog.csv** with the following col
 
 For demonstration, assume **QClog.csv** already contains some entries.
 
-| file                      | origin                    | revf | revo | reviewer   | time                | requester |
-|---------------------------|---------------------------|------|------|------------|---------------------|-----------|
-| script/analysis.R         | script/analysis.R         | 0    | 0    | Jane Doe   | 2025-01-03 09:00:00 | Kim Chen  |
-| script/data-prep.R        | script/data-prep.R        | 0    | 0    | John Smith | 2025-01-03 09:05:00 | Kim Chen  |
-| script/visualize.R        | script/visualize.R        | 0    | 0    | Bob Miller | 2025-01-03 09:10:00 | Pat Lee   |
-| script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe   | 2025-01-06 10:00:00 | .         |
-| script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith | 2025-01-06 11:30:00 | .         |
-| script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller | 2025-01-06 13:00:00 | .         |
+| file                      | origin                    | revf | revo | reviewer | time                | requester |
+|---------------------------|---------------------------|------|------|----------|---------------------|-----------|
+| script/analysis.R         | script/analysis.R         | 0    | 0    | jdoe     | 2025-01-03 09:00:00 | kchen     |
+| script/data-prep.R        | script/data-prep.R        | 0    | 0    | jsmith   | 2025-01-03 09:05:00 | kchen     |
+| script/visualize.R        | script/visualize.R        | 0    | 0    | bmiller  | 2025-01-03 09:10:00 | plee      |
+| script/analysis.R         | script/analysis.R         | 12   | 12   | jdoe     | 2025-01-06 10:00:00 | .         |
+| script/data-prep.R        | script/data-prep.R        | 15   | 15   | jsmith   | 2025-01-06 11:30:00 | .         |
+| script/visualize.R        | script/visualize.R        | 20   | 20   | bmiller  | 2025-01-06 13:00:00 | .         |
 
 ## logAssign()
 
-Suppose we have authored `script/model-fitting.R` and it is ready for review. We can assign it to Alice Johnson using `logAssign()`. Below is the code for this operation and the updated log.
+Suppose we have authored `script/model-fitting.R` and it is ready for review. We can assign it to Alice Johnson (user name `ajohnson`) using `logAssign()`. Below is the code for this operation and the updated log.
 
 ```r
 logAssign(
   file     = "script/model-fitting.R",
-  reviewer = "Alice Johnson"
+  reviewer = "ajohnson"
 )
 ```
 
-| file                      | origin                    | revf | revo | reviewer       | time                | requester |
-|---------------------------|---------------------------|------|------|----------------|---------------------|-----------|
-| script/analysis.R         | script/analysis.R         | 0    | 0    | Jane Doe       | 2025-01-03 09:00:00 | Kim Chen  |
-| script/data-prep.R        | script/data-prep.R        | 0    | 0    | John Smith     | 2025-01-03 09:05:00 | Kim Chen  |
-| script/visualize.R        | script/visualize.R        | 0    | 0    | Bob Miller     | 2025-01-03 09:10:00 | Pat Lee   |
-| script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 | .         |
-| script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 | .         |
-| script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 | .         |
-| **script/model-fitting.R** | **script/model-fitting.R** | **0** | **0** | **Alice Johnson** | **2025-01-06 14:00:00** | **Sam Patel** |
+| file                      | origin                    | revf | revo | reviewer | time                | requester |
+|---------------------------|---------------------------|------|------|----------|---------------------|-----------|
+| script/analysis.R         | script/analysis.R         | 0    | 0    | jdoe     | 2025-01-03 09:00:00 | kchen     |
+| script/data-prep.R        | script/data-prep.R        | 0    | 0    | jsmith   | 2025-01-03 09:05:00 | kchen     |
+| script/visualize.R        | script/visualize.R        | 0    | 0    | bmiller  | 2025-01-03 09:10:00 | plee      |
+| script/analysis.R         | script/analysis.R         | 12   | 12   | jdoe     | 2025-01-06 10:00:00 | .         |
+| script/data-prep.R        | script/data-prep.R        | 15   | 15   | jsmith   | 2025-01-06 11:30:00 | .         |
+| script/visualize.R        | script/visualize.R        | 20   | 20   | bmiller  | 2025-01-06 13:00:00 | .         |
+| **script/model-fitting.R** | **script/model-fitting.R** | **0** | **0** | **ajohnson** | **2025-01-06 14:00:00** | **spatel** |
 
 > **Note**: Assignment rows have **revf** and **revo** of 0, which marks them as assignments rather than acceptances.
 
 ## logAccept()
 
-Once Alice Johnson reviews `script/model-fitting.R`, she can accept it by using `logAccept()`.
+Once Alice Johnson reviews `script/model-fitting.R`, she can accept it by using `logAccept()`. The reviewer defaults to the system user name of whoever runs it.
 
 ```r
 logAccept(file = "script/model-fitting.R")
@@ -86,16 +86,16 @@ logAccept(file = "script/model-fitting.R")
 
 This appends the acceptance to **QClog.csv**. The assignment row keeps its requester; the acceptance row has none:
 
-| file                      | origin                    | revf | revo | reviewer       | time                | requester |
-|---------------------------|---------------------------|------|------|----------------|---------------------|-----------|
-| script/analysis.R         | script/analysis.R         | 0    | 0    | Jane Doe       | 2025-01-03 09:00:00 | Kim Chen  |
-| script/data-prep.R        | script/data-prep.R        | 0    | 0    | John Smith     | 2025-01-03 09:05:00 | Kim Chen  |
-| script/visualize.R        | script/visualize.R        | 0    | 0    | Bob Miller     | 2025-01-03 09:10:00 | Pat Lee   |
-| script/analysis.R         | script/analysis.R         | 12   | 12   | Jane Doe       | 2025-01-06 10:00:00 | .         |
-| script/data-prep.R        | script/data-prep.R        | 15   | 15   | John Smith     | 2025-01-06 11:30:00 | .         |
-| script/visualize.R        | script/visualize.R        | 20   | 20   | Bob Miller     | 2025-01-06 13:00:00 | .         |
-| script/model-fitting.R    | script/model-fitting.R    | 0    | 0    | Alice Johnson  | 2025-01-06 14:00:00 | Sam Patel |
-| **script/model-fitting.R** | **script/model-fitting.R** | **26** | **26** | **Alice Johnson** | **2025-01-06 15:00:00** | **.** |
+| file                      | origin                    | revf | revo | reviewer | time                | requester |
+|---------------------------|---------------------------|------|------|----------|---------------------|-----------|
+| script/analysis.R         | script/analysis.R         | 0    | 0    | jdoe     | 2025-01-03 09:00:00 | kchen     |
+| script/data-prep.R        | script/data-prep.R        | 0    | 0    | jsmith   | 2025-01-03 09:05:00 | kchen     |
+| script/visualize.R        | script/visualize.R        | 0    | 0    | bmiller  | 2025-01-03 09:10:00 | plee      |
+| script/analysis.R         | script/analysis.R         | 12   | 12   | jdoe     | 2025-01-06 10:00:00 | .         |
+| script/data-prep.R        | script/data-prep.R        | 15   | 15   | jsmith   | 2025-01-06 11:30:00 | .         |
+| script/visualize.R        | script/visualize.R        | 20   | 20   | bmiller  | 2025-01-06 13:00:00 | .         |
+| script/model-fitting.R    | script/model-fitting.R    | 0    | 0    | ajohnson | 2025-01-06 14:00:00 | spatel    |
+| **script/model-fitting.R** | **script/model-fitting.R** | **26** | **26** | **ajohnson** | **2025-01-06 15:00:00** | **.** |
 
 > **Note**: Here, `revf=26` is the revision of the file that was reviewed and accepted.
 
@@ -105,12 +105,13 @@ This appends the acceptance to **QClog.csv**. The assignment row keeps its reque
 
 1. Assigned but not yet reviewed or accepted.  
 2. Modified (i.e., has a newer SVN revision) since its last QC entry.
+3. Missing revision information for the file or its origin, including when either is unavailable.
 
 An example output of `logPending()` might look like this:
 
-| file               | origin            | revf | headf | revo | heado | reviewer       | time                |
-|--------------------|-------------------|------|-------|------|-------|----------------|---------------------|
-| script/analysis.R  | script/analysis.R | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
+| file               | origin            | revf | headf | revo | heado | reviewer | time                |
+|--------------------|-------------------|------|-------|------|-------|----------|---------------------|
+| script/analysis.R  | script/analysis.R | 12   | 26    | 12   | 26    | jdoe     | 2025-01-06 10:00:00 |
 
 This indicates `script/analysis.R` was modified (or never finalized) and still needs to be accepted because both the file and its origin have newer revisions.
 
@@ -126,12 +127,12 @@ logSummary()
 
 An example output of `logSummary()` might look like this:
 
-| file                   | origin                    | revf | headf | revo | heado | reviewer       | time                |
-|------------------------|---------------------------|------|-------|------|-------|----------------|---------------------|
-| script/analysis.R      | script/analysis.R         | 12   | 26    | 12   | 26    | Jane Doe       | 2025-01-06 10:00:00 |
-| script/data-prep.R     | script/data-prep.R        | 15   | 15    | 15   | 15    | John Smith     | 2025-01-06 11:30:00 |
-| script/model-fitting.R | script/model-fitting.R    | 26   | 26    | 26   | 26    | Alice Johnson  | 2025-01-06 14:00:00 |
-| script/visualize.R     | script/visualize.R        | 20   | 20    | 20   | 20    | Bob Miller     | 2025-01-06 13:00:00 |
+| file                   | origin                    | revf | headf | revo | heado | reviewer | time                |
+|------------------------|---------------------------|------|-------|------|-------|----------|---------------------|
+| script/analysis.R      | script/analysis.R         | 12   | 26    | 12   | 26    | jdoe     | 2025-01-06 10:00:00 |
+| script/data-prep.R     | script/data-prep.R        | 15   | 15    | 15   | 15    | jsmith   | 2025-01-06 11:30:00 |
+| script/model-fitting.R | script/model-fitting.R    | 26   | 26    | 26   | 26    | ajohnson | 2025-01-06 15:00:00 |
+| script/visualize.R     | script/visualize.R        | 20   | 20    | 20   | 20    | bmiller  | 2025-01-06 13:00:00 |
 
 ---
 
@@ -146,7 +147,7 @@ An example output of `logSummary()` might look like this:
 2. **Assign files for review**:
 
     ```r
-    logAssign(file = "script/model-fitting.R", reviewer = "Alice Johnson")
+    logAssign(file = "script/model-fitting.R", reviewer = "ajohnson")
     ```
 
 3. **Mark files as accepted after review**:
