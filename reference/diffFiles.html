@@ -21,7 +21,7 @@ an existing script."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.16.0</span>
       </span>
     </div>
 
@@ -127,26 +127,367 @@ an existing script.</p>
 <span class="r-in"><span> <span class="fu">diffFiles</span><span class="op">(</span>.file_1 <span class="op">=</span> <span class="st">"script/data-assembly.R"</span>, </span></span>
 <span class="r-in"><span>           .file_2 <span class="op">=</span> <span class="st">"script/combine-da.R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">data-assembly.R</span>                        <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">combine-da.R</span>                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">@@ 1,10 @@                             </span>  <span style="color: #00BBBB;">@@ 1,6 @@                              </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   library(tidyverse)                       library(tidyverse)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">source(here::here("script",</span> <span style="color: #BB0000;">"data-ass</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">studies</span> &lt;- <span style="color: #00BB00;">list()</span>                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">embly",</span> <span style="color: #BB0000;">"da-functions.R"))</span>             <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">src_abc</span> &lt;- <span style="color: #BB0000;">mrgda::read_src_dir(here::</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">studies$pk_abc</span> <span style="color: #00BB00;">&lt;-</span> <span style="color: #00BB00;">readr::read_rds(her</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">here(</span>"data", <span style="color: #BB0000;">"source"</span>, <span style="color: #BB0000;">"STUDY-ABC"</span>))   <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">e::here(</span>"data", <span style="color: #00BB00;">"derived"</span>, <span style="color: #00BB00;">"studies",</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span>  <span style="color: #00BB00;">"pk-abc.rds"</span>))                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">list(sl</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">list(),tv</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">list</span>  <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">())</span>                                    <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">dm_0</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">src_abc$dm</span> <span style="color: #BB0000;">%&gt;%</span> <span style="color: #BB0000;">filter(ACTARM</span>   <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">!=</span> <span style="color: #BB0000;">"Screen Failure")</span>                   <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$sl$dm</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">dm_0</span>                  <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> pk_0 &lt;- <span style="color: #BB0000;">src_abc$pc</span> %&gt;% <span style="color: #BB0000;">filter(PCTEST</span>   <span style="color: #00BB00;">&gt;</span> pk_0 &lt;- <span style="color: #00BB00;">bind_rows(studies)</span> %&gt;% <span style="color: #00BB00;">arrang</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">==</span> <span style="color: #BB0000;">"TEST OF INTEREST"</span>)                 <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">e(USUBJID,</span> <span style="color: #00BB00;">DATETIME</span>)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$tv$pc</span> &lt;- pk_0                  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_1</span> &lt;- pk_0 %&gt;% <span style="color: #00BB00;">mrgda::assign_id(.,</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">~</span>                                        <span style="color: #00BB00;">:</span> <span style="color: #00BB00;">"USUBJID"</span>)                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">ex_1</span> <span style="color: #BB0000;">&lt;-</span> <span style="color: #BB0000;">src_abc$ex</span> %&gt;% <span style="color: #BB0000;">filter(EXTRT</span> <span style="color: #BB0000;">=</span>  <span style="color: #00BB00;">&gt;</span> <span style="color: #00BB00;">pk_out</span> &lt;- <span style="color: #00BB00;">pk_1</span>                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">:</span> <span style="color: #BB0000;">=</span> <span style="color: #BB0000;">"DRUG OF INTEREST"</span>)                  <span style="color: #555555;">~</span>                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">&lt;</span> <span style="color: #BB0000;">derived$tv$dosing</span> &lt;- <span style="color: #BB0000;">ex_1</span>              <span style="color: #555555;">~</span>                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;!DOCTYPE html&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;html&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;head&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"/&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;style type='text/css'&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* Structural CSS ------------------------------------------------------------*/</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * TBD whether we want a more fully table like structure; some of the visual</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * cues provided by the current set-up are useful (line wraps, etc.)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container PRE.diffobj-content {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   white-space: pre-wrap;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   margin: 0;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: 100%;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   font-family: monospace;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   table-layout: fixed;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: auto;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table-cell;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   overflow: hidden;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line&gt;DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: 100%;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   table-layout: auto;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line.banner&gt;DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   table-layout: auto; /* set to fixed in JS */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table-cell;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: 100%;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-gutter {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table-cell;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   padding: 0 0.2em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-gutter DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   display: table-cell;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #diffobj_content_meta DIV.diffobj-container DIV.diffobj-row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: auto;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #diffobj_banner_meta DIV.diffobj-container DIV.diffobj-line.banner&gt;DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   table-layout: auto;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #diffobj_outer {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   overflow: hidden;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* Summary -------------------------------------------------------------------*/ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-summary DIV.map {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   word-wrap: break-word;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 1em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-summary DIV.detail {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 1em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* Common elements -----------------------------------------------------------*/</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line.banner {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 1.2em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   font-weight: bold;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   overflow: hidden;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* truncate banners */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line.banner DIV.diffobj-text DIV{</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   white-space: nowrap;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   overflow: hidden;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   text-overflow: ellipsis;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   width: 100%;             /* need to compute and set in JS */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-gutter,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-guide,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-fill,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.context_sep,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container SPAN.diffobj-trim {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color: #999;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-header {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 1.1em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV.diffobj-match,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV.diffobj-guide {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #ffffff;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV.diffobj-fill {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: transparent;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 3px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #888888;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #eeeeee;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-text&gt;DIV,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-header {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 0.5em;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line&gt;DIV.diffobj-match,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line&gt;DIV.diffobj-fill,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container DIV.diffobj-line&gt;DIV.diffobj-guide {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #888888;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* github inspired color scheme - default ------------------------------------*/</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb SPAN.diffobj-word.insert,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-line&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #a6f3a6;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb SPAN.diffobj-word.delete,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-line&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #f8c2c2;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-text&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #efffef;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-text&gt;DIV.insert,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-line&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #33bb33;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-text&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #ffefef;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-text&gt;DIV.delete,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-line&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #cc6666;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.rgb DIV.diffobj-header {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #e0e6fa;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #9894b6;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /* Yellow Blue variation -----------------------------------------------------*/</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb SPAN.diffobj-word.insert,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-line&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #c0cfff;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb SPAN.diffobj-word.delete,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-line&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #e7e780;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-text&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #efefff;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-text&gt;DIV.insert,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-line&gt;DIV.insert {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #3333bb;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-text&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #fefee5;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-text&gt;DIV.delete,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-line&gt;DIV.delete {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #aaaa55;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-header {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #afafaf;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   border-left: 1px solid #e3e3e3;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color: #e9e9e9;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DIV.diffobj-container.light.yb DIV.diffobj-line {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #eeeeee;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/style&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;/head&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;body&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;div id='diffobj_outer'&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;div id='diffobj_meta' style='display: none; position: absolute; top: 0px; z-index: -1;'&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;div id='diffobj_banner_meta'&gt;&lt;div class='diffobj-container light rgb'&gt;&lt;pre class='diffobj-content'&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line banner'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&amp;nbsp;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line banner'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&amp;nbsp;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;div id='diffobj_content_meta'&gt;&lt;div class='diffobj-container light rgb'&gt;&lt;pre class='diffobj-content'&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;/div&gt;&lt;div id='diffobj_content'&gt;&lt;div class='diffobj-container light rgb'&gt;&lt;pre class='diffobj-content'&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line banner'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-word delete'&gt;data-assembly.R&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line banner'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-word insert'&gt;combine-da.R&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-header'&gt;@@ 1,10 @@&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-header'&gt;@@ 1,6 @@&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-match'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-match'&gt;&amp;nbsp;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-match'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;library(tidyverse)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-match'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-match'&gt;&amp;nbsp;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-match'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;library(tidyverse)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;source&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(here::here(&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;"script"&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;,&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;"data-assembly"&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;,&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;"da-functions.R"&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;))&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;studies&lt;/span&gt; &amp;lt;- &lt;span class='diffobj-word insert'&gt;list&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;()&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;src_abc&lt;/span&gt; &amp;lt;- &lt;span class='diffobj-word delete'&gt;mrgda&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;::read_src_dir(here::here(&lt;/span&gt;"data", &lt;span class='diffobj-word delete'&gt;"source"&lt;/span&gt;, &lt;span class='diffobj-word delete'&gt;"STUDY-ABC"&lt;/span&gt;))&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;studies&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;$pk_abc&lt;/span&gt; &lt;span class='diffobj-word insert'&gt;&amp;lt;-&lt;/span&gt; &lt;span class='diffobj-word insert'&gt;readr&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;::read_rds(here::here(&lt;/span&gt;"data", &lt;span class='diffobj-word insert'&gt;"derived"&lt;/span&gt;, &lt;span class='diffobj-word insert'&gt;"studies"&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;,&lt;/span&gt; &lt;span class='diffobj-word insert'&gt;"pk-abc.rds"&lt;/span&gt;))&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;derived&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;&amp;lt;-&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;list&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(sl&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;=&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;list&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(),tv&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;=&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;list&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;())&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-fill'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-fill'&gt;~&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-fill'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;dm_0&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;&amp;lt;-&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;src_abc&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$dm&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;%&amp;gt;%&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;filter&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(ACTARM&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;!=&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;"Screen Failure"&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;)&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-fill'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-fill'&gt;~&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-fill'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;derived&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$sl$dm&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;&amp;lt;-&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;dm_0&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-fill'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-fill'&gt;~&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-fill'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;pk_0 &amp;lt;- &lt;span class='diffobj-word delete'&gt;src_abc&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$pc&lt;/span&gt; %&amp;gt;% &lt;span class='diffobj-word delete'&gt;filter&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(PCTEST&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;==&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;"TEST OF INTEREST"&lt;/span&gt;)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;pk_0 &amp;lt;- &lt;span class='diffobj-word insert'&gt;bind_rows&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;(studies)&lt;/span&gt; %&amp;gt;% &lt;span class='diffobj-word insert'&gt;arrange&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;(USUBJID,&lt;/span&gt; &lt;span class='diffobj-word insert'&gt;DATETIME&lt;/span&gt;)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;derived&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$tv$pc&lt;/span&gt; &amp;lt;- pk_0&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;pk_1&lt;/span&gt; &amp;lt;- pk_0 %&amp;gt;% &lt;span class='diffobj-word insert'&gt;mrgda&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;::assign_id(.,&lt;/span&gt; &lt;span class='diffobj-word insert'&gt;"USUBJID"&lt;/span&gt;)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;ex_1&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;&amp;lt;-&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;src_abc&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$ex&lt;/span&gt; %&amp;gt;% &lt;span class='diffobj-word delete'&gt;filter&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;(EXTRT&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;==&lt;/span&gt; &lt;span class='diffobj-word delete'&gt;"DRUG OF INTEREST"&lt;/span&gt;)&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='insert'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='insert'&gt;&amp;gt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='insert'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word insert'&gt;pk_out&lt;/span&gt; &amp;lt;- &lt;span class='diffobj-word insert'&gt;pk_1&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-row'&gt;&lt;div class='diffobj-line'&gt;&lt;div class='delete'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='delete'&gt;&amp;lt;&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='delete'&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;derived&lt;/span&gt;&lt;span class='diffobj-word delete'&gt;$tv$dosing&lt;/span&gt; &amp;lt;- &lt;span class='diffobj-word delete'&gt;ex_1&lt;/span&gt;&lt;span class='diffobj-trim'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-line'&gt;&lt;div class='diffobj-fill'&gt;&lt;div class='diffobj-gutter'&gt;&lt;div class='diffobj-fill'&gt;~&lt;/div&gt;&lt;div class='pad'&gt; &lt;/div&gt;&lt;/div&gt;&lt;div class='diffobj-text'&gt;&lt;div class='diffobj-fill'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;script type="text/javascript"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             var scale=false;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;/script&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/div&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;script type='text/javascript'&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // diffobj - Compare R Objects with a Diff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // Copyright (C) 2021 Brodie Gaslam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> //</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // This program is free software: you can redistribute it and/or modify</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // it under the terms of the GNU General Public License as published by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // the Free Software Foundation, either version 3 of the License, or</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // (at your option) any later version.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> //</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // This program is distributed in the hope that it will be useful,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // GNU General Public License for more details.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> //</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // Go to &lt;https://www.r-project.org/Licenses/GPL-3&gt; for a copy of the license.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * Resizes diff by changing font-size using a hidden row of sample output as</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * a reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * NOTE: this code is intended to be loaded after the HTML has been rendered</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * and is assumed to be the only JS on the page.  It should only be included</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * as part of output when in "page" mode and should not be embedded in other</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * content.  For that, use the HTML/CSS only outputs.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta = document.getElementById("diffobj_meta");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta_cont = document.getElementById("diffobj_content_meta");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta_banner = document.getElementById("diffobj_banner_meta");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var content = document.getElementById("diffobj_content");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var outer = document.getElementById("diffobj_outer");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> if(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   meta == null || content == null || outer == null ||</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   meta_cont == null || meta_banner == null</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   throw new Error("Unable to find meta and content; contact maintainer.");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var row = meta_cont.getElementsByClassName("row");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> if(row.length != 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   throw new Error("Unexpected row struct in meta block; contact maintainer.");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var lines = meta_cont.getElementsByClassName("line");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> if(lines.length != 1 &amp;&amp; lines.length != 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   throw new Error("Unexpected lines in meta block; contact maintainer.");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta_bnr_gutter =</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   document.querySelector("#diffobj_banner_meta .line .gutter");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta_bnr_delete =</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   document.querySelector("#diffobj_banner_meta .line .text&gt;.delete");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var meta_bnr_text =</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   document.querySelector("#diffobj_banner_meta .line .text");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var bnr_gutters =</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   document.querySelectorAll("#diffobj_content .line.banner .gutter");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var bnr_text_div =</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   document.querySelectorAll("#diffobj_content .line.banner .text&gt;DIV");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> if(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     meta_bnr_gutter == null || meta_bnr_delete == null ||</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     bnr_gutters.length != 2 || bnr_text_div.length != 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   )</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   throw new Error("Unable to get meta banner objects")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // Set the banners to 'fixed'; need to be in auto by default</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> for(i = 0; i &lt; 2; i++) bnr_text_div[i].style.tableLayout = "fixed";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // - Set Min Width -------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // Makes sure that we don't wrap under "native" width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> // Note we need to pad because scrollWidth appears to truncate floats to int</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> meta.style.display = "block";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var min_width = 0;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> for(i = 0; i &lt; lines.length; i++) min_width += lines[i].scrollWidth + 1;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> meta.style.display = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> content.style.minWidth = min_width + "px";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function resize_diff_out(scale) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   // - Get object refs ---------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   // - Get Sizes ---------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   meta.style.display = "block";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   // The getComputedStyle business won't work on IE9 or lower; need to detect</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   // and implement work-around</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var b_t, b_d_w, b_d_o, b_g;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_g = parseFloat(window.getComputedStyle(meta_bnr_gutter).width);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_d_o = meta_bnr_delete.offsetWidth;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_d_w = parseFloat(window.getComputedStyle(meta_bnr_delete).width);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_t = parseFloat(window.getComputedStyle(meta_bnr_text).width);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   meta.style.display = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   // - Set Sizes ---------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   for(i = 0; i &lt; 2; i++) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     bnr_gutters[i].style.width = b_g + "px";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     // for some reason table fixed width computation doesn't properly account</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     // for padding and lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     bnr_text_div[i].style.width = b_t - b_d_o + b_d_w + "px";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var w = document.body.clientWidth;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var scale_size = w / min_width;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   if(scale_size &lt; 1) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if(scale) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.transform = "scale(" + scale_size + ")";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.transformOrigin = "top left";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.webkitTransform = "scale(" + scale_size + ")";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.webkitTransformOrigin = "top left";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.msTransform = "scale(" + scale_size + ")";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.msTransformOrigin = "top left";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.MozTransform = "scale(" + scale_size + ")";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.MozTransformOrigin = "top left";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.oTransform = "scale(" + scale_size + ")";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       content.style.oTransformOrigin = "top left";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       var cont_rec_h = content.getBoundingClientRect().height;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       if(cont_rec_h) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         outer.style.height = cont_rec_h + "px";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     var cont_rec_w = content.getBoundingClientRect().width;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if(cont_rec_w) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       outer.style.width = cont_rec_w + "px";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   } else {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     content.style.transform = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     content.style.MozTransform = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     content.style.webkitTransform = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     content.style.msTransform = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     content.style.oTransform = "none";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     outer.style.height = "auto";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     outer.style.width = "auto";</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> };</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /*</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * Manage resize timeout based on how large the object is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var out_rows = content.getElementsByClassName("row").length;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var timeout_time;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> if(out_rows &lt; 100) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   timeout_time = 25;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> } else {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   timeout_time = Math.min(25 + (out_rows - 100) / 4, 500)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var timeout;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function resize_window(f, scale) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   clearTimeout(timeout);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   timeout = setTimeout(f, timeout_time, scale);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function resize_diff_out_scale() {resize_window(resize_diff_out, true);}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function resize_diff_out_no_scale() {resize_window(resize_diff_out, false);}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('resize', resize_diff_out_no_scale, true);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  resize_diff_out_no_scale();</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/script&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;/body&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;/html&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -162,7 +503,7 @@ an existing script.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

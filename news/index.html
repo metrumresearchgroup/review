@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">review</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.16.0</span>
       </span>
     </div>
 
@@ -63,6 +63,27 @@
       <small>Source: <a href="https://github.com/metrumresearchgroup/review/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.16.0" id="review-3160">review 3.16.0<a class="anchor" aria-label="anchor" href="#review-3160"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-changes-3-16-0">New features and changes<a class="anchor" aria-label="anchor" href="#new-features-and-changes-3-16-0"></a></h3>
+<ul><li><p>QC logs now record the requester on assignment rows: the system user name of whoever runs <code><a href="../reference/logAssign.html">logAssign()</a></code>. Existing logs remain supported. Requester is omitted from summaries and pending lists. (<a href="https://github.com/metrumresearchgroup/review/issues/225" class="external-link">#225</a>, <a href="https://github.com/metrumresearchgroup/review/issues/234" class="external-link">#234</a>)</p></li>
+<li><p>Added <code><a href="../reference/diffLocal.html">diffLocal()</a></code> to compare local edits against the checked-out SVN revision, like <code>svn diff</code>. (<a href="https://github.com/metrumresearchgroup/review/issues/231" class="external-link">#231</a>)</p></li>
+<li><p><code><a href="../reference/renderQCSummary.html">renderQCSummary()</a></code> now accepts a <code>days</code> lookback for files not in the QC log, defaulting to 20 days. Use <code>Inf</code> to include all history; tables can span multiple pages. (<a href="https://github.com/metrumresearchgroup/review/issues/220" class="external-link">#220</a>)</p></li>
+<li><p>Replaced <code>getFigurePathsFromTex()</code> and <code>getTablePathsFromTex()</code> with <code><a href="../reference/getAssetPathsFromTex.html">getAssetPathsFromTex()</a></code>. Pass the main report path to get a list of <code>figures</code> and <code>tables</code> from one LaTeX build. LaTeX resolves macros, conditions, imports, and nested sections; failed builds raise an error instead of returning a partial list. The source-only parser has been removed. (<a href="https://github.com/metrumresearchgroup/review/issues/228" class="external-link">#228</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-16-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-0"></a></h3>
+<ul><li><p>Fixed TeX asset discovery omitting external tables after an inline table in the same report section. (<a href="https://github.com/metrumresearchgroup/review/issues/233" class="external-link">#233</a>)</p></li>
+<li><p><code><a href="../reference/logAccept.html">logAccept()</a></code> now requires an existing log entry for every file. Use <code><a href="../reference/logAssign.html">logAssign()</a></code> for files with no log history; an entry at any revision satisfies the requirement. Rejected batches leave the log unchanged. (<a href="https://github.com/metrumresearchgroup/review/issues/226" class="external-link">#226</a>)</p></li>
+<li><p><code><a href="../reference/logPending.html">logPending()</a></code> now retains files with missing revision information, including unavailable files. (<a href="https://github.com/metrumresearchgroup/review/issues/219" class="external-link">#219</a>)</p></li>
+<li><p><code><a href="../reference/dirSummary.html">dirSummary()</a></code> now reports “QC status unknown” when revision information is missing, unless another revision comparison establishes that QC is needed. (<a href="https://github.com/metrumresearchgroup/review/issues/221" class="external-link">#221</a>)</p></li>
+<li><p>Fixed printing of <code><a href="../reference/logSummary.html">logSummary()</a></code> results containing missing values. (<a href="https://github.com/metrumresearchgroup/review/issues/218" class="external-link">#218</a>)</p></li>
+<li><p>Fixed TeX figure and table paths when reports use macros. (<a href="https://github.com/metrumresearchgroup/review/issues/214" class="external-link">#214</a>)</p></li>
+<li><p>Restored a warning and an <code>NA</code> result when <code>svn info</code> fails while looking up a revision. (<a href="https://github.com/metrumresearchgroup/review/issues/215" class="external-link">#215</a>)</p></li>
+<li><p>Visual diffs from <code>diffPreviousRevisions</code> and <code>diffDashboard</code> now render as styled HTML in Positron instead of being printed as plain console output. (<a href="https://github.com/metrumresearchgroup/review/issues/211" class="external-link">#211</a>)</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.15.0" id="review-3150">review 3.15.0<a class="anchor" aria-label="anchor" href="#review-3150"></a></h2>
 <div class="section level3">
@@ -298,7 +319,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
