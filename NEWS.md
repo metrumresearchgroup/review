@@ -1,10 +1,10 @@
-# review 3.15.0.9004
+# review 3.16.0
 
 ## New features and changes
 
 - QC logs now record the requester on assignment rows: the system user name
   of whoever runs `logAssign()`. Existing logs remain supported. Requester is
-  omitted from summaries and pending lists. (#225)
+  omitted from summaries and pending lists. (#225, #234)
 
 - Added `diffLocal()` to compare local edits against the checked-out SVN
   revision, like `svn diff`. (#231)
@@ -22,7 +22,7 @@
 ## Bug fixes
 
 - Fixed TeX asset discovery omitting external tables after an inline table in
-  the same report section.
+  the same report section. (#233)
 
 - `logAccept()` now requires an existing log entry for every file. Use
   `logAssign()` for files with no log history; an entry at any revision
@@ -37,12 +37,13 @@
 
 - Fixed printing of `logSummary()` results containing missing values. (#218)
 
-- Fixed TeX figure and table paths when reports use macros.
+- Fixed TeX figure and table paths when reports use macros. (#214)
+
 - Restored a warning and an `NA` result when `svn info` fails while looking up
-  a revision.
+  a revision. (#215)
 
 - Visual diffs from `diffPreviousRevisions` and `diffDashboard` now render as
-  styled HTML in Positron instead of being printed as plain console output.
+  styled HTML in Positron instead of being printed as plain console output. (#211)
 
 # review 3.15.0
 
