@@ -87,7 +87,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="getting-started-with-review">Getting Started with review<a class="anchor" aria-label="anchor" href="#getting-started-with-review"></a>
 </h1></div>
-<p>Development version: <code>3.15.0.9004</code>.</p>
+<p>Version: <code>3.16.0</code>.</p>
 <p><strong>review</strong> is a toolkit for ensuring critical files are reviewed on a project. It manages the quality control (QC) process by tracking the assignment and acceptance of files in a centralized log file, <strong>QClog.csv</strong>. <strong>review</strong> is tailored to Subversion (SVN)-based workflows and contains a slightly different log structure.</p>
 <p>By integrating with SVN, <strong>review</strong> uses file revisions to detect when a file has been modified and flags it for re-evaluation. It provides functions to assign reviewers, check outstanding QC needs, and summarize the QC status of all files.</p>
 <p>The core functions of <strong>review</strong> are:</p>
@@ -154,11 +154,11 @@
 <p>For demonstration, assume <strong>QClog.csv</strong> already contains some entries.</p>
 <table class="table">
 <colgroup>
-<col width="24%">
-<col width="24%">
+<col width="25%">
+<col width="25%">
 <col width="5%">
 <col width="5%">
-<col width="10%">
+<col width="9%">
 <col width="19%">
 <col width="10%">
 </colgroup>
@@ -177,34 +177,34 @@
 <td>script/analysis.R</td>
 <td>0</td>
 <td>0</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-03 09:00:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/data-prep.R</td>
 <td>script/data-prep.R</td>
 <td>0</td>
 <td>0</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-03 09:05:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/visualize.R</td>
 <td>script/visualize.R</td>
 <td>0</td>
 <td>0</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-03 09:10:00</td>
-<td>Pat Lee</td>
+<td>plee</td>
 </tr>
 <tr>
 <td>script/analysis.R</td>
 <td>script/analysis.R</td>
 <td>12</td>
 <td>12</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-06 10:00:00</td>
 <td>.</td>
 </tr>
@@ -213,7 +213,7 @@
 <td>script/data-prep.R</td>
 <td>15</td>
 <td>15</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-06 11:30:00</td>
 <td>.</td>
 </tr>
@@ -222,7 +222,7 @@
 <td>script/visualize.R</td>
 <td>20</td>
 <td>20</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-06 13:00:00</td>
 <td>.</td>
 </tr>
@@ -233,21 +233,21 @@
 <div class="section level2">
 <h2 id="logassign">logAssign()<a class="anchor" aria-label="anchor" href="#logassign"></a>
 </h2>
-<p>Suppose we have authored <code>script/model-fitting.R</code> and it is ready for review. We can assign it to Alice Johnson using <code><a href="reference/logAssign.html">logAssign()</a></code>. Below is the code for this operation and the updated log.</p>
+<p>Suppose we have authored <code>script/model-fitting.R</code> and it is ready for review. We can assign it to Alice Johnson (user name <code>ajohnson</code>) using <code><a href="reference/logAssign.html">logAssign()</a></code>. Below is the code for this operation and the updated log.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/logAssign.html">logAssign</a></span><span class="op">(</span></span>
 <span>  file     <span class="op">=</span> <span class="st">"script/model-fitting.R"</span>,</span>
-<span>  reviewer <span class="op">=</span> <span class="st">"Alice Johnson"</span></span>
+<span>  reviewer <span class="op">=</span> <span class="st">"ajohnson"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="23%">
-<col width="23%">
+<col width="25%">
+<col width="25%">
 <col width="5%">
 <col width="5%">
-<col width="14%">
-<col width="18%">
 <col width="9%">
+<col width="19%">
+<col width="10%">
 </colgroup>
 <thead><tr>
 <th>file</th>
@@ -264,34 +264,34 @@
 <td>script/analysis.R</td>
 <td>0</td>
 <td>0</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-03 09:00:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/data-prep.R</td>
 <td>script/data-prep.R</td>
 <td>0</td>
 <td>0</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-03 09:05:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/visualize.R</td>
 <td>script/visualize.R</td>
 <td>0</td>
 <td>0</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-03 09:10:00</td>
-<td>Pat Lee</td>
+<td>plee</td>
 </tr>
 <tr>
 <td>script/analysis.R</td>
 <td>script/analysis.R</td>
 <td>12</td>
 <td>12</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-06 10:00:00</td>
 <td>.</td>
 </tr>
@@ -300,7 +300,7 @@
 <td>script/data-prep.R</td>
 <td>15</td>
 <td>15</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-06 11:30:00</td>
 <td>.</td>
 </tr>
@@ -309,7 +309,7 @@
 <td>script/visualize.R</td>
 <td>20</td>
 <td>20</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-06 13:00:00</td>
 <td>.</td>
 </tr>
@@ -318,9 +318,9 @@
 <td><strong>script/model-fitting.R</strong></td>
 <td><strong>0</strong></td>
 <td><strong>0</strong></td>
-<td><strong>Alice Johnson</strong></td>
+<td><strong>ajohnson</strong></td>
 <td><strong>2025-01-06 14:00:00</strong></td>
-<td><strong>Sam Patel</strong></td>
+<td><strong>spatel</strong></td>
 </tr>
 </tbody>
 </table>
@@ -331,19 +331,19 @@
 <div class="section level2">
 <h2 id="logaccept">logAccept()<a class="anchor" aria-label="anchor" href="#logaccept"></a>
 </h2>
-<p>Once Alice Johnson reviews <code>script/model-fitting.R</code>, she can accept it by using <code><a href="reference/logAccept.html">logAccept()</a></code>.</p>
+<p>Once Alice Johnson reviews <code>script/model-fitting.R</code>, she can accept it by using <code><a href="reference/logAccept.html">logAccept()</a></code>. The reviewer defaults to the system user name of whoever runs it.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/logAccept.html">logAccept</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"script/model-fitting.R"</span><span class="op">)</span></span></code></pre></div>
 <p>This appends the acceptance to <strong>QClog.csv</strong>. The assignment row keeps its requester; the acceptance row has none:</p>
 <table class="table">
 <colgroup>
-<col width="23%">
-<col width="23%">
+<col width="25%">
+<col width="25%">
 <col width="5%">
 <col width="5%">
-<col width="14%">
-<col width="18%">
 <col width="9%">
+<col width="19%">
+<col width="10%">
 </colgroup>
 <thead><tr>
 <th>file</th>
@@ -360,34 +360,34 @@
 <td>script/analysis.R</td>
 <td>0</td>
 <td>0</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-03 09:00:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/data-prep.R</td>
 <td>script/data-prep.R</td>
 <td>0</td>
 <td>0</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-03 09:05:00</td>
-<td>Kim Chen</td>
+<td>kchen</td>
 </tr>
 <tr>
 <td>script/visualize.R</td>
 <td>script/visualize.R</td>
 <td>0</td>
 <td>0</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-03 09:10:00</td>
-<td>Pat Lee</td>
+<td>plee</td>
 </tr>
 <tr>
 <td>script/analysis.R</td>
 <td>script/analysis.R</td>
 <td>12</td>
 <td>12</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-06 10:00:00</td>
 <td>.</td>
 </tr>
@@ -396,7 +396,7 @@
 <td>script/data-prep.R</td>
 <td>15</td>
 <td>15</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-06 11:30:00</td>
 <td>.</td>
 </tr>
@@ -405,7 +405,7 @@
 <td>script/visualize.R</td>
 <td>20</td>
 <td>20</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-06 13:00:00</td>
 <td>.</td>
 </tr>
@@ -414,16 +414,16 @@
 <td>script/model-fitting.R</td>
 <td>0</td>
 <td>0</td>
-<td>Alice Johnson</td>
+<td>ajohnson</td>
 <td>2025-01-06 14:00:00</td>
-<td>Sam Patel</td>
+<td>spatel</td>
 </tr>
 <tr>
 <td><strong>script/model-fitting.R</strong></td>
 <td><strong>script/model-fitting.R</strong></td>
 <td><strong>26</strong></td>
 <td><strong>26</strong></td>
-<td><strong>Alice Johnson</strong></td>
+<td><strong>ajohnson</strong></td>
 <td><strong>2025-01-06 15:00:00</strong></td>
 <td><strong>.</strong></td>
 </tr>
@@ -441,18 +441,19 @@
 <li>Assigned but not yet reviewed or accepted.<br>
 </li>
 <li>Modified (i.e., has a newer SVN revision) since its last QC entry.</li>
+<li>Missing revision information for the file or its origin, including when either is unavailable.</li>
 </ol>
 <p>An example output of <code><a href="reference/logPending.html">logPending()</a></code> might look like this:</p>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="19%">
-<col width="18%">
-<col width="5%">
-<col width="6%">
-<col width="5%">
-<col width="6%">
-<col width="15%">
 <col width="20%">
+<col width="19%">
+<col width="6%">
+<col width="7%">
+<col width="6%">
+<col width="7%">
+<col width="10%">
+<col width="21%">
 </colgroup>
 <thead><tr>
 <th>file</th>
@@ -471,7 +472,7 @@
 <td>26</td>
 <td>12</td>
 <td>26</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-06 10:00:00</td>
 </tr></tbody>
 </table>
@@ -489,14 +490,14 @@
 <p>An example output of <code><a href="reference/logSummary.html">logSummary()</a></code> might look like this:</p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="21%">
-<col width="23%">
+<col width="22%">
+<col width="25%">
 <col width="5%">
 <col width="6%">
 <col width="5%">
 <col width="6%">
-<col width="14%">
-<col width="18%">
+<col width="9%">
+<col width="19%">
 </colgroup>
 <thead><tr>
 <th>file</th>
@@ -516,7 +517,7 @@
 <td>26</td>
 <td>12</td>
 <td>26</td>
-<td>Jane Doe</td>
+<td>jdoe</td>
 <td>2025-01-06 10:00:00</td>
 </tr>
 <tr>
@@ -526,7 +527,7 @@
 <td>15</td>
 <td>15</td>
 <td>15</td>
-<td>John Smith</td>
+<td>jsmith</td>
 <td>2025-01-06 11:30:00</td>
 </tr>
 <tr>
@@ -536,8 +537,8 @@
 <td>26</td>
 <td>26</td>
 <td>26</td>
-<td>Alice Johnson</td>
-<td>2025-01-06 14:00:00</td>
+<td>ajohnson</td>
+<td>2025-01-06 15:00:00</td>
 </tr>
 <tr>
 <td>script/visualize.R</td>
@@ -546,7 +547,7 @@
 <td>20</td>
 <td>20</td>
 <td>20</td>
-<td>Bob Miller</td>
+<td>bmiller</td>
 <td>2025-01-06 13:00:00</td>
 </tr>
 </tbody>
@@ -566,7 +567,7 @@
 <li>
 <p><strong>Assign files for review</strong>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/logAssign.html">logAssign</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"script/model-fitting.R"</span>, reviewer <span class="op">=</span> <span class="st">"Alice Johnson"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/logAssign.html">logAssign</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"script/model-fitting.R"</span>, reviewer <span class="op">=</span> <span class="st">"ajohnson"</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p><strong>Mark files as accepted after review</strong>:</p>
